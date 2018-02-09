@@ -192,7 +192,7 @@
         }
         
 	if (@$_GET['accion'] == 'subirnot')
-		$resultaop = $System->NoticiaNueva($_POST['titulo'], $_POST['TitleS'], $_POST['DescriptionS'], $_POST['KeyS'], $_POST['contenido'], $_POST['titulo2'], $_POST['contenido2'], $_POST['titulo3'], $_POST['contenido3'], $_POST['titulo4'], $_POST['contenido4'], $_POST['titulo5'], $_POST['contenido5'], $_POST['titulo6'], $_POST['contenido6'], $_POST['titulo7'], $_POST['contenido7'], $_POST['titulo8'], $_POST['contenido8'], $_POST['categoria1'], $_FILES['imagennoticia']);
+		$resultaop = $System->NoticiaNueva($_POST['titulo'], $_POST['TitleS'], $_POST['DescriptionS'], $_POST['KeyS'], $_POST['contenido'], $_POST['titulo2'], $_POST['contenido2'], $_POST['titulo3'], $_POST['contenido3'], $_POST['titulo4'], $_POST['contenido4'], $_POST['titulo5'], $_POST['contenido5'], $_POST['titulo6'], $_POST['contenido6'], $_POST['titulo7'], $_POST['contenido7'], $_POST['titulo8'], $_POST['contenido8'], $_POST['categoria1'], $_FILES['imagennoticia'], $_FILES['imagenportada']);
 	
 	if (@$_GET['accion'] == 'subircur')
 		$resultaop = $System->NuevoCurso($_POST['curso'], $_POST['edicion'], $_POST['contenido'], $_POST['inicio'], $_POST['fin'], $_POST['color'], $_POST['precio']);

@@ -58,7 +58,7 @@ $permitidas= array ("","","","","","","","","","","","","","","","","","","","",
 					}
 					?>
 					<div class="publicacion">
-                                            <a href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>pagina/<?=$entrada['id']?>/<?=strtolower(str_replace('--', '-', str_replace(':', '', str_replace('¿', '', str_replace('?', '', str_replace(' ', '-', str_replace($no_permitidas, $permitidas ,$entrada['nombre'])))))))?>" title="Ver &laquo;<?=$entrada['nombre']?>&raquo;">
+                                            <a href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>pagina/<?=$entrada['id']?>/<?=str_replace('Ñ','N',strtolower(str_replace('--', '-', str_replace(':', '', str_replace('¿', '', str_replace('?', '', str_replace(' ', '-', str_replace($no_permitidas, $permitidas ,$entrada['nombre']))))))))?>" title="Ver &laquo;<?=$entrada['nombre']?>&raquo;">
 							<h2 style="font-family: <?=$fuente1?>"><?=$entrada['nombre']?></h2>
 							<?php
 								if ($entrada['imagen'] != null)
@@ -102,10 +102,18 @@ $permitidas= array ("","","","","","","","","","","","","","","","","","","","",
 					}
 					?>
 					<div class="publicacion">
-						<a href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>pagina/<?=$entrada['id']?>/<?=strtolower(str_replace('--', '-', str_replace(' ', '-', str_replace($no_permitidas, $permitidas ,$entrada['nombre']))))?>" title="Ver &laquo;<?=$entrada['nombre']?>&raquo;">
+						<a href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>pagina/<?=$entrada['id']?>/<?=str_replace('Ñ','N',strtolower(str_replace('--', '-', str_replace(' ', '-', str_replace($no_permitidas, $permitidas ,$entrada['nombre'])))))?>" title="Ver &laquo;<?=$entrada['nombre']?>&raquo;">
 							<h2 style="font-family: <?=$fuente1?>"><?=$entrada['nombre']?></h2>
 							<?php
-								if ($entrada['imagen'] != null)
+								if ($entrada['imagenportada'] != null)
+								{
+									?>
+									<span style="display: block; margin-bottom: 10px; max-height: 100px; overflow: hidden; text-align: center; width: 100%;">
+										<img class="zoom" src="<?=$draizp?>/imagenes/<?=$entrada['imagenportada']?>" alt="<?=$entrada['nombre']?>">
+									</span>
+									<?php
+								}
+								elseif ($entrada['imagen'] != null)
 								{
 									?>
 									<span style="display: block; margin-bottom: 10px; max-height: 100px; overflow: hidden; text-align: center; width: 100%;">

@@ -854,7 +854,7 @@
 		global $dbi;
 		$noticia = array();
 		
-		$sql = "SELECT id, nombre, imagen, fecha, contenido
+		$sql = "SELECT id, nombre, imagen, fecha, contenido, imagenportada
 				FROM bd_paginas 
 				WHERE noticia=1 ORDER BY fecha DESC LIMIT $n;";
 		$query = mysqli_query($dbi, $sql);
@@ -876,6 +876,7 @@
                         "id" => $assoc['id'],
                         "nombre" => $assoc['nombre'],
                         "imagen" => $assoc['imagen'],
+                        "imagenportada" => $assoc['imagenportada'],
                         "fecha" => $assoc['fecha'],
                         "contenido" => $assoc['contenido']
                     );
@@ -886,6 +887,7 @@
                             "id" => $assoc['id'],
                             "nombre" => $categoria_idioma['nombre'],
                             "imagen" => $assoc['imagen'],
+                            "imagenportada" => $assoc['imagenportada'],
                             "fecha" => $assoc['fecha'],
                             "contenido" => $categoria_idioma['contenido']
                         );
@@ -992,7 +994,7 @@ function MenuCategoriasGal()
 		global $dbi;
 		$noticia = array();
 		
-		$sql = "SELECT id, nombre, imagen, fecha, contenido 
+		$sql = "SELECT id, nombre, imagen, fecha, contenido, imagenportada 
 				FROM bd_paginas 
 				WHERE noticia=1 AND idcat = $idp ORDER BY fecha, id DESC LIMIT $n;";
 
@@ -1004,7 +1006,8 @@ function MenuCategoriasGal()
 				(
 					"id" => $assoc['id'],
 					"nombre" => $assoc['nombre'],
-					"imagen" => $assoc['imagen'],
+                    "imagen" => $assoc['imagen'],
+                    "imagenportada" => $assoc['imagenportada'],
 					"fecha" => $assoc['fecha'],
 					"contenido" => $assoc['contenido']
 				);

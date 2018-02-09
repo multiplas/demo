@@ -197,6 +197,55 @@
     background: rgba(47, 47, 47, 0.3) no-repeat center;
 }
 
+/* Incluido para buscador*/
+#resultAutoComplete {
+    width: 215px !important;
+    margin-right: 15px;
+    height: 38px;
+    line-height: 38px;
+}
+
+.buscarForm .suggest {
+    width: 100% !important;
+    max-width: 190px !important;
+    margin-right: 20px !important;
+}
+
+#resultAutoComplete p {
+    padding: 0px 0px 0px 10px !important;
+    width: 200px !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #333;
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+}
+
+.buscarForm .input-group:hover {
+    border: 1px solid #ffdddd !important;
+}
+
+.buscarForm input:focus {outline:0;}
+
+div.buscarForm
+{
+    float:right;
+    padding-top:2.5%;
+}
+
+p.resultAutoComplete
+{
+    border-bottom:1px solid black;background:white;padding:2.5px;
+}
+p.resultAutoComplete:hover
+{
+    cursor: pointer;
+    background:darkgrey;
+}
+
 
 #cabecera{
     width: 90% !important;
@@ -513,14 +562,7 @@
         <?php } ?>
         <?php include($draiz.'/temas/10/bloques/logos_sociales.php'); ?>
         
-        <div class="posicion buscarForm" style="float: right; margin-top: 10px; margin-right: 20px">
-            <form action="<?=$draizp?>/es/" method="post">
-                <div class="input-group suggest">
-                    <input style="width: 200px;" class="" name="buscar" value="" placeholder="Buscar..." type="text">
-                    <span class="input-group-btn"><button type="submit" name="submit_search" class="btn btn-secondary" style="background-color: transparent; color:black;"><i class="fa fa-search  fa-lg"></i> </button></span>
-                </div>
-            </form>
-        </div>  
+        <?php include_once('buscador.php');?>
     
         
 

@@ -1,6 +1,6 @@
 				<?php require_once('blocks/cabecera.php'); ?>
 
- <?php if($resultadosfeed) { 
+ <?php if(isset($resultadosfeed)) { 
                 $file = fopen("feed/blog.xml", "w");
                 fwrite($file, '<?xml version="1.0" encoding="utf-8"?>'. PHP_EOL);
                 fwrite($file, '<rss version="2.0">'. PHP_EOL);
@@ -394,6 +394,12 @@
                                                 </div>
                                             </div>
                                             <div class="control-group">
+                                                <label class="control-label" for="nfilePortadaInput">Imagen Portada</label>
+                                                <div class="controls">
+                                                    <input class="input-file uniform_on" id="nfilePortadaInput" name="imagenportada" type="file">
+                                                </div>
+                                            </div>
+                                            <div class="control-group">
                                               <label class="control-label" for="ncategoria1">Categoría</label>
                                               <div class="controls">
                                                 <select id="ncategoria1" name="categoria1" class="chzn-select span4" required>
@@ -671,14 +677,14 @@
                                                 </div>
                                             </div>
                                             <div class="control-group">
-                                                <label class="control-label" for="fileInput">Imagen Portada</label>
+                                                <label class="control-label" for="filePortadaInput">Imagen Portada</label>
                                                 <div class="controls">
-                                                    <input class="input-file uniform_on" id="fileInput" name="imagennoticia" type="file">
+                                                    <input class="input-file uniform_on" id="filePortadaInput" name="imagenportada" type="file">
                                                     <?php
-                                                    if ($elemento['imagen'] != null)
+                                                    if ($elemento['imagenportada'] != null)
                                                     {
                                                        ?>
-                                                        <a style="color: #09F; font-size: 0.70rem;" href="../imagenes/<?=$elemento['imagen']?>" target="_blank">ver imagen actual</a>
+                                                        <a style="color: #09F; font-size: 0.70rem;" href="../imagenes/<?=$elemento['imagenportada']?>" target="_blank">ver imagen actual</a>
                                                        <?php
                                                     }
                                                     ?>
