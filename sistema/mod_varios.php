@@ -514,8 +514,10 @@
                             $assoc2 = mysqli_fetch_assoc($query2);
                             $no_permitidas= array ("á","é","í","ó","ú","Á","É","Í","Ó","Ú","ñ","À","Ã","Ì","Ò","Ù","Ã™","Ã ","Ã¨","Ã¬","Ã²","Ã¹","ç","Ç","Ã¢","ê","Ã®","Ã´","Ã»","Ã‚","ÃŠ","ÃŽ","Ã”","Ã›","ü","Ã¶","Ã–","Ã¯","Ã¤","«","Ò","Ã","Ã„","Ã‹");
                             $permitidas= array ("a","e","i","o","u","A","E","I","O","U","n","N","A","E","I","O","U","a","e","i","o","u","c","C","a","e","i","o","u","A","E","I","O","U","u","o","O","i","a","e","U","I","A","E");
-
-                            $path .= "<a href='".$draizp."/".$_SESSION['lenguaje']."/entradas/".$assoc2['id']."/".str_replace(' ', '-', str_replace($no_permitidas, $permitidas ,$assoc2['nombre']))."'>". $assoc2['nombre'] ."</a> > <a href='".$draizp."/".$_SESSION['lenguaje']."/pagina/".$assoc['id']."/".str_replace(' ', '-', str_replace($no_permitidas, $permitidas ,$assoc['nombre']))."'>". $assoc['nombre'] . "</a>";
+                            if(isset($_SESSION['lenguaje']) && !empty($_SESSION['lenguaje']))
+                                $path .= "<a href='".$draizp."/".$_SESSION['lenguaje']."/entradas/".$assoc2['id']."/".str_replace(' ', '-', str_replace($no_permitidas, $permitidas ,$assoc2['nombre']))."'>". $assoc2['nombre'] ."</a> > <a href='".$draizp."/".$_SESSION['lenguaje']."/pagina/".$assoc['id']."/".str_replace(' ', '-', str_replace($no_permitidas, $permitidas ,$assoc['nombre']))."'>". $assoc['nombre'] . "</a>";
+                            else
+                            $path .= "<a href='".$draizp."/entradas/".$assoc2['id']."/".str_replace(' ', '-', str_replace($no_permitidas, $permitidas ,$assoc2['nombre']))."'>". $assoc2['nombre'] ."</a> > <a href='".$draizp."/pagina/".$assoc['id']."/".str_replace('Ñ','N',str_replace(' ', '-', str_replace($no_permitidas, $permitidas ,$assoc['nombre'])))."'>". $assoc['nombre'] . "</a>";
                         }	
 		}
 		else
