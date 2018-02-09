@@ -1,0 +1,18 @@
+body {
+	margin: 0;
+	padding: 0;
+	font-family: 'source-sans-pro', Helvetica, Arial, sans-serif;
+	font-size: 14px;
+}
+.demo_wrapper {
+	width: auto;
+	margin: 0 auto;
+}
+@media (max-width: 500px) {
+  .demo_wrapper {
+	display: none;
+	}
+}
+.demo_block {
+	width: 100%;
+}

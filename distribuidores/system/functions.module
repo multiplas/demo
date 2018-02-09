@@ -1,0 +1,2077 @@
+<?php
+	class MySystem
+	{
+		private $cnst_svr = 'localhost';
+		private $cnst_usr = 'c0cegradio';
+		private $cnst_pwd = 'MnJgb_28';
+		private $cnst_dbn = 'cegradio_db';
+		private $cnst_prt = '3306';
+		private $conexion = null;
+		private $usuario = null;
+		private $empresa = null;
+		private $prefijo = '@CamaltecFiltros!';
+		private $sufijo = '?Cierre</>@';
+		
+		function ControlDeSesiones()
+		{
+			if (@$_SESSION['usr'] != null)
+				$this->usuario = $_SESSION['usr'];
+			if (@$_SESSION['empresa'] != null)
+				$this->empresa = $_SESSION['empresa'];
+			
+			if ($this->usuario == null && basename($_SERVER['PHP_SELF']) != 'login.php')
+				header('Location: login.php');
+			else if ($this->usuario != null && basename($_SERVER['PHP_SELF']) == 'login.php')
+				header('Location: index.php');
+		}
+		
+		function Conectar()
+		{
+			$this->conexion = mysqli_connect($this->cnst_svr, $this->cnst_usr, $this->cnst_pwd, $this->cnst_dbn, $this->cnst_prt);
+			mysqli_set_charset($this->conexion, 'UTF8');
+		}
+		
+		function Desconectar()
+		{
+			mysqli_close($this->conexion);
+			$this->conexion = null;
+		}
+		
+		function ExisteUsuario()
+		{
+			if ($this->usuario != null)
+				return true;
+			else
+				return false;
+		}
+		
+		function Usuario($clave)
+		{
+			if (@$this->usuario[$clave] != null)
+				return $this->usuario[$clave];
+			else
+				return null;
+		}
+		
+		function filtropass($pass)
+		{
+			return sha1(md5($this->prefijo.$pass.$this->sufijo));
+		}
+		
+		function setUsuario($array)
+		{
+			$_SESSION['usr'] = $array;
+			$this->usuario = $array;
+		}
+		
+		function unsetUsuario()
+		{
+			$_SESSION['usr'] = null;
+			$this->usuario = null;
+		}
+		
+		function setEmpresa($array)
+		{
+			$_SESSION['empresa'] = $array;
+			$this->empresa = $array;
+		}
+		
+		function unsetEmpresa()
+		{
+			$_SESSION['empresa'] = null;
+			$this->empresa = null;
+		}
+		
+		function Entrar($usuario, $pass)
+		{
+			$usuario = mysqli_real_escape_string($this->conexion, htmlspecialchars($usuario));
+			$pass = mysqli_real_escape_string($this->conexion, htmlspecialchars($pass));
+			
+			$sql = "SELECT id, nombre, apellidos, email, razonsocial
+					FROM bd_distribuidores
+					WHERE email = '$usuario'
+					AND pass = '$pass';";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) == 1)
+			{
+				while ($assoc = mysqli_fetch_assoc($query))
+					$this->setUsuario($assoc);
+				header('Location: login.php');
+			}
+		}
+		
+		function Salir()
+		{
+			$this->unsetUsuario();
+			header('Location: login.php');
+		}
+		
+		function UsuarioEstado($id)
+		{
+			$id = mysqli_real_escape_string($this->conexion, htmlspecialchars($id));
+			
+			$sql = "UPDATE bd_users
+					SET estado = IF(estado = 'A', 'S', 'A')
+					WHERE id = '$id'";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			return $query;
+		}
+		
+		function UsuarioEliminar($id)
+		{
+			$id = mysqli_real_escape_string($this->conexion, htmlspecialchars($id));
+			
+			$sql = "DELETE FROM bd_users
+					WHERE id = $id
+					AND rol <> 1;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			return $query;
+		}
+		
+		function ProductoEstado($id)
+		{
+			$id = mysqli_real_escape_string($this->conexion, htmlspecialchars($id));
+			
+			$sql = "UPDATE bd_productos
+					SET disponible = ABS(disponible - 1)
+					WHERE id = $id;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			return $query;
+		}
+		
+		function ProductoDestacado($id)
+		{
+			$id = mysqli_real_escape_string($this->conexion, htmlspecialchars($id));
+			
+			$sql = "UPDATE bd_productos
+					SET destacado = ABS(destacado - 1)
+					WHERE id = $id;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			return $query;
+		}
+		
+		function ProductoEliminar($id)
+		{
+			$id = mysqli_real_escape_string($this->conexion, htmlspecialchars($id));
+			
+			$sql = "DELETE FROM bd_productos
+					WHERE id = $id;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			return $query;
+		}
+		
+		function PackEliminar($id)
+		{
+			$id = mysqli_real_escape_string($this->conexion, htmlspecialchars($id));
+			
+			$sql = "UPDATE bd_pack
+					SET eliminado = 1
+					WHERE id = $id;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			return $query;
+		}
+		
+		function ProductoRelacionadoCrear($id, $id2)
+		{
+			$id = mysqli_real_escape_string($this->conexion, htmlspecialchars($id));
+			$id2 = mysqli_real_escape_string($this->conexion, htmlspecialchars($id2));
+			
+			$sql = "INSERT INTO bd_productos_relacionados
+					VALUES (null, $id, $id2);";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			return $query;
+		}
+		
+		function ProductoAtributoCrear($idp, $ida, $idad, $precio)
+		{
+			$idp = mysqli_real_escape_string($this->conexion, htmlspecialchars($idp));
+			$ida = mysqli_real_escape_string($this->conexion, htmlspecialchars($ida));
+			$idad = mysqli_real_escape_string($this->conexion, htmlspecialchars($idad));
+			$precio = mysqli_real_escape_string($this->conexion, htmlspecialchars($precio));
+            
+            if ($idad == '') $idad = 'null';
+            if ($precio == '') $precio = 'null';
+			
+			$sql = "INSERT INTO bd_producto_atributo
+					VALUES (null, $ida, $idp, $idad, $precio);";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			return $query;
+		}
+		
+		function ProductoRelacionadoEliminar($id, $id2)
+		{
+			$id = mysqli_real_escape_string($this->conexion, htmlspecialchars($id));
+			$id2 = mysqli_real_escape_string($this->conexion, htmlspecialchars($id2));
+			
+			$sql = "DELETE FROM bd_productos_relacionados
+					WHERE idproducto1 = $id
+					AND idproducto2 = $id2;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			return $query;
+		}
+		
+		function ProductoAtributoEliminar($idrel)
+		{
+			$idrel = mysqli_real_escape_string($this->conexion, htmlspecialchars($idrel));
+			
+			$sql = "DELETE FROM bd_producto_atributo
+					WHERE id = $idrel;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			return $query;
+		}
+		
+		function CursoEstado($id)
+		{
+			$id = mysqli_real_escape_string($this->conexion, htmlspecialchars($id));
+			
+			$sql = "UPDATE bd_cursos
+					SET visible = ABS(visible - 1)
+					WHERE id = $id;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			return $query;
+		}
+		
+		function PaginaEstado($id)
+		{
+			$id = mysqli_real_escape_string($this->conexion, htmlspecialchars($id));
+			
+			$sql = "UPDATE bd_paginas
+					SET visible = ABS(visible - 1)
+					WHERE id ='$id';";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			return $query;
+		}
+		
+		function NoticiaEstado($id)
+		{
+			$id = mysqli_real_escape_string($this->conexion, htmlspecialchars($id));
+			
+			$sql = "UPDATE bd_paginas
+					SET visible = ABS(visible - 1)
+					WHERE id ='$id';";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			return $query;
+		}
+		
+		function PaginaEliminar($id)
+		{
+			$id = mysqli_real_escape_string($this->conexion, htmlspecialchars($id));
+			
+			$sql = "DELETE FROM bd_paginas
+					WHERE id = $id
+					AND eliminable <> 0;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			return $query;
+		}
+		
+		function NoticiaEliminar($id)
+		{
+			$id = mysqli_real_escape_string($this->conexion, htmlspecialchars($id));
+			
+			$sql = "DELETE FROM bd_paginas
+					WHERE id = $id;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			return $query;
+		}
+		
+		function PortesEliminar($id)
+		{
+			$id = mysqli_real_escape_string($this->conexion, htmlspecialchars($id));
+			
+			$sql = "DELETE FROM bd_portes
+					WHERE region = '$id';";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			return $query;
+		}
+		
+		function CategoriaAtribuosEliminar($id)
+		{
+			$id = mysqli_real_escape_string($this->conexion, htmlspecialchars($id));
+			
+			$sql = "DELETE FROM bd_atributo_tipo
+					WHERE id = $id;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			return $query;
+		}
+		
+		function AtributoEliminar($id)
+		{
+			$id = mysqli_real_escape_string($this->conexion, htmlspecialchars($id));
+			
+			$sql = "DELETE FROM bd_atributo
+					WHERE id = $id;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			return $query;
+		}
+		
+		function CursoEliminar($id)
+		{
+			$id = mysqli_real_escape_string($this->conexion, htmlspecialchars($id));
+			
+			$sql = "DELETE FROM bd_cursos
+					WHERE id = $id;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			return $query;
+		}
+		
+		function NuevoAtributo($tipoid, $nombre)
+		{
+			$tipoid = mysqli_real_escape_string($this->conexion, htmlspecialchars($tipoid));
+			$nombre = mysqli_real_escape_string($this->conexion, htmlspecialchars($nombre));
+			
+			$sql = "INSERT INTO bd_atributo
+					VALUES (null, $tipoid, '$nombre');";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			return $query;
+		}
+		
+		function NuevoPorte($region, $precio, $max)
+		{
+			$region = mysqli_real_escape_string($this->conexion, htmlspecialchars($region));
+			$precio = mysqli_real_escape_string($this->conexion, htmlspecialchars($precio));
+			$max = mysqli_real_escape_string($this->conexion, htmlspecialchars($max));
+			
+			$sql = "INSERT INTO bd_portes
+					VALUES (null, '$region', 0, $precio, $max);";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			return $query;
+		}
+		
+		function ModificarAtributo($id, $tipoid, $nombre)
+		{
+			$id = mysqli_real_escape_string($this->conexion, htmlspecialchars($id));
+			$tipoid = mysqli_real_escape_string($this->conexion, htmlspecialchars($tipoid));
+			$nombre = mysqli_real_escape_string($this->conexion, htmlspecialchars($nombre));
+			
+			$sql = "UPDATE bd_atributo
+					SET atributo = '$nombre', tipoid = $tipoid
+                    WHERE id = $id;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			return $query;
+		}
+        
+		function NuevaCategoriaAtributo($nombre, $dependiente)
+		{
+			$nombre = mysqli_real_escape_string($this->conexion, htmlspecialchars($nombre));
+			$dependiente = mysqli_real_escape_string($this->conexion, htmlspecialchars($dependiente));
+            
+            if (@$dependiente == 'dependiente')
+                $dependiente = 1;
+            else
+                $dependiente = 0;
+			
+			$sql = "INSERT INTO bd_atributo_tipo
+					VALUES (null, '$nombre', $dependiente);";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			return $query;
+		}
+		
+		function ModificarCategoriaAtributo($id, $nombre, $dependiente)
+		{
+			$id = mysqli_real_escape_string($this->conexion, htmlspecialchars($id));
+			$nombre = mysqli_real_escape_string($this->conexion, htmlspecialchars($nombre));
+			$dependiente = mysqli_real_escape_string($this->conexion, htmlspecialchars($dependiente));
+            
+            if (@$dependiente == 'dependiente')
+                $dependiente = 1;
+            else
+                $dependiente = 0;
+			
+			$sql = "UPDATE bd_atributo_tipo
+					SET atributo = '$nombre', dependiente = '$dependiente'
+                    WHERE id = $id;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			return $query;
+		}
+		
+		function FacturaNueva($idcompra)
+		{
+            $id = 0;
+			$idcompra = mysqli_real_escape_string($this->conexion, htmlspecialchars($idcompra));
+            
+			$sql = "SELECT *
+					FROM bd_compra
+                    WHERE estado IN ('transferencia', 'contrareembolso', 'tienda')
+                    AND id = $idcompra;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) == 1)
+			{
+				$assoc = mysqli_fetch_assoc($query);
+                $sql = "INSERT INTO bd_facturas
+                        VALUES (null, null, $assoc[precio], $assoc[precio], null, $assoc[abono], $assoc[portes], $assoc[idusuario], NOW(), '$assoc[estado]', null, null, 1, '$assoc[secreto]', '', null, null, ".date('Y').", null, null, null, null, null);";
+                $query = mysqli_query($this->conexion, $sql);
+                $id = mysqli_insert_id($this->conexion);
+                $sql = "UPDATE bd_compra
+                        SET estado = 'pagado'
+                        WHERE estado IN ('transferencia', 'contrareembolso', 'tienda')
+                        AND id = $idcompra;";
+                $query = mysqli_query($this->conexion, $sql);
+			}
+			
+			return $id;
+		}
+		
+		function MenuNuevo($nombre, $padre = null, $categoria = null)
+		{
+			$siguiente = 1;
+			$nombre = mysqli_real_escape_string($this->conexion, htmlspecialchars($nombre));
+			$padre = mysqli_real_escape_string($this->conexion, htmlspecialchars($padre));
+			
+			if ($padre != null)
+				$idpadre = '= '.$padre;
+			else
+			{
+				$padre = 'NULL';
+				$idpadre = 'IS '.$padre;
+			}
+			
+			if ($categoria != null)
+				$categoria = 1;
+            else
+                $categoria = 0;
+			
+			$sql = "SELECT MAX(orden) AS siguiente
+					FROM bd_menu
+					WHERE id_padre $idpadre
+					ORDER BY id ASC, orden ASC;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) == 1)
+			{
+				$assoc = mysqli_fetch_assoc($query);
+				$siguiente += $assoc['siguiente'];
+			}
+			
+			$sql = "INSERT INTO bd_menu
+					VALUES (null, '$nombre', $siguiente, $padre, $categoria);";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			return $query;
+		}
+		
+		function MenuModificar($id, $nombre, $padre = null, $categoria = null)
+		{
+			$id = mysqli_real_escape_string($this->conexion, htmlspecialchars($id));
+			$nombre = mysqli_real_escape_string($this->conexion, htmlspecialchars($nombre));
+			$padre = mysqli_real_escape_string($this->conexion, htmlspecialchars($padre));
+			
+			if ($padre == null)
+				$padre = 'NULL';
+			
+			if ($categoria != null)
+				$categoria = 1;
+            else
+                $categoria = 0;
+			
+			$sql = "UPDATE bd_menu
+					SET nombre = '$nombre', id_padre = $padre, categoria = $categoria
+					WHERE id = $id;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			return $query;
+		}
+		
+		function MenuEliminar($id)
+		{
+			$id = mysqli_real_escape_string($this->conexion, htmlspecialchars($id));
+			
+			$sql = "DELETE FROM bd_menu
+					WHERE id = $id;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			return $query;
+		}
+		
+		function ImagenProductoNueva($id, $img)
+		{
+			if ($img['error'] != 4)
+			{
+				$imgname = uniqid().'_'.$img['name'];
+				move_uploaded_file($img['tmp_name'], '../imagenesproductos/'.$imgname);
+				
+				$sql = "INSERT INTO bd_fotos
+						VALUES (null, $id, '$imgname');";
+				$query = mysqli_query($this->conexion, $sql);
+			}
+			else
+				$query = false;
+			
+			return $query;
+		}
+		
+		function SliderNuevo($texto, $img)
+		{
+			$siguiente = 1;
+			$texto = mysqli_real_escape_string($this->conexion, htmlspecialchars($texto));
+			
+			if ($img['error'] != 4)
+			{
+				$imgname = uniqid().'_'.$img['name'];
+				move_uploaded_file($img['tmp_name'], './uploads/'.$imgname);
+				$sql = "SELECT MAX(orden) AS siguiente
+						FROM bd_slider
+						ORDER BY id ASC, orden ASC;";
+				$query = mysqli_query($this->conexion, $sql);
+				
+				if (mysqli_num_rows($query) == 1)
+				{
+					$assoc = mysqli_fetch_assoc($query);
+					$siguiente += $assoc['siguiente'];
+				}
+				
+				$sql = "INSERT INTO bd_slider
+						VALUES (null, '$imgname', $siguiente, '$texto');";
+				$query = mysqli_query($this->conexion, $sql);
+			}
+			else
+				$query = false;
+			
+			return $query;
+		}
+		
+		function SliderEliminar($id)
+		{
+			$id = mysqli_real_escape_string($this->conexion, htmlspecialchars($id));
+			
+			$sql = "DELETE FROM bd_slider
+					WHERE id = $id;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			return $query;
+		}
+		
+		function ImagenProductoEliminar($id)
+		{
+			$id = mysqli_real_escape_string($this->conexion, htmlspecialchars($id));
+			
+			$sql = "DELETE FROM bd_fotos
+					WHERE id = $id;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			return $query;
+		}
+		
+		function CargarContadores()
+		{
+            $contadores = array();
+            
+			$sql = "SELECT COUNT(id) AS contador
+					FROM bd_productos
+                    WHERE id IN (SELECT id_producto FROM bd_distribuidor_producto WHERE id_proveedor = ".$_SESSION['usr']['id'].")
+					AND disponible = 1;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) == 1)
+			{
+				$assoc = mysqli_fetch_assoc($query);
+				$contadores['productosv'] = $assoc['contador'];
+			}
+            
+			$sql = "SELECT COUNT(id) AS contador
+					FROM bd_productos
+                    WHERE id IN (SELECT id_producto FROM bd_distribuidor_producto WHERE id_proveedor = ".$_SESSION['usr']['id'].")
+					AND disponible = 0;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) == 1)
+			{
+				$assoc = mysqli_fetch_assoc($query);
+				$contadores['productoso'] = $assoc['contador'];
+			}
+            
+			$sql = "SELECT COUNT(id) AS contador
+					FROM bd_pack
+					WHERE eliminado = 0;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) == 1)
+			{
+				$assoc = mysqli_fetch_assoc($query);
+				$contadores['packs'] = $assoc['contador'];
+			}
+            
+			$sql = "SELECT COUNT(id) AS contador
+					FROM bd_compra
+					WHERE estado = 'contrareembolso';";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) == 1)
+			{
+				$assoc = mysqli_fetch_assoc($query);
+				$contadores['contrareembolso'] = $assoc['contador'];
+			}
+            
+			$sql = "SELECT COUNT(id) AS contador
+					FROM bd_compra
+					WHERE estado = 'transferencia';";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) == 1)
+			{
+				$assoc = mysqli_fetch_assoc($query);
+				$contadores['transferencias'] = $assoc['contador'];
+			}
+            
+			$sql = "SELECT COUNT(id) AS contador
+					FROM bd_compra
+					WHERE estado IN ('transferencia', 'contrareembolso', 'tienda');";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) == 1)
+			{
+				$assoc = mysqli_fetch_assoc($query);
+				$contadores['compras_pendientes'] = $assoc['contador'];
+			}
+            
+			$sql = "SELECT COUNT(id) AS contador
+					FROM bd_users
+					WHERE estado = 'A'
+					AND rol = 3;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) == 1)
+			{
+				$assoc = mysqli_fetch_assoc($query);
+				$contadores['usuarios'] = $assoc['contador'];
+			}
+            
+			$sql = "SELECT COUNT(id) AS contador
+					FROM bd_users
+					WHERE estado = 'R'
+					AND rol = 3;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) == 1)
+			{
+				$assoc = mysqli_fetch_assoc($query);
+				$contadores['usuariosr'] = $assoc['contador'];
+			}
+            
+			$sql = "SELECT COUNT(id) AS contador
+					FROM bd_facturas
+					WHERE fecha >= date_add(NOW(), INTERVAL -1 DAY);";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) == 1)
+			{
+				$assoc = mysqli_fetch_assoc($query);
+				$contadores['facturas'] = $assoc['contador'];
+			}
+            
+            return $contadores;
+		}
+		
+		function CargarEmpresa()
+		{
+			$sql = "SELECT *
+					FROM bd_empresa
+					WHERE activa = 1;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) == 1)
+			{
+				while ($assoc = mysqli_fetch_assoc($query))
+					$this->setEmpresa($assoc);
+			}
+		}
+		
+		function Empresa($clave)
+		{
+			if (@$this->empresa[$clave] != null)
+				return $this->empresa[$clave];
+			else
+				return null;
+		}
+		
+		function UsuarioNuevo($nombre, $apellidos, $nif, $telefono, $email, $calle, $provincia, $poblacion, $cp, $pass)
+		{
+			$nombre = mysqli_real_escape_string($this->conexion, htmlspecialchars($nombre));
+			$apellidos = mysqli_real_escape_string($this->conexion, htmlspecialchars($apellidos));
+			$nif = mysqli_real_escape_string($this->conexion, htmlspecialchars($nif));
+			$telefono = mysqli_real_escape_string($this->conexion, htmlspecialchars($telefono));
+			$email = mysqli_real_escape_string($this->conexion, htmlspecialchars($email));
+			$calle = mysqli_real_escape_string($this->conexion, htmlspecialchars($calle));
+			$provincia = mysqli_real_escape_string($this->conexion, htmlspecialchars($provincia));
+			$poblacion = mysqli_real_escape_string($this->conexion, htmlspecialchars($poblacion));
+			$cp = mysqli_real_escape_string($this->conexion, htmlspecialchars($cp));
+			$pass = mysqli_real_escape_string($this->conexion, $this->filtropass(htmlspecialchars($pass)));
+			
+			$sql = "INSERT INTO bd_users
+					VALUES (null, '$nombre', '$apellidos', '$pass', 2, '$email', '$telefono', '$calle', '', 'Registrado', '$nif', '$cp', '$poblacion', $provincia, 'ESP', 0, 'R');";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			return $query;
+		}
+		
+		function UsuarioModificar($id, $nombre, $apellidos, $nif, $telefono, $email, $direccion, $provincia, $poblacion, $cp, $pass = null)
+		{
+			$id = mysqli_real_escape_string($this->conexion, htmlspecialchars($id));
+			$nombre = mysqli_real_escape_string($this->conexion, htmlspecialchars($nombre));
+			$apellidos = mysqli_real_escape_string($this->conexion, htmlspecialchars($apellidos));
+			$nif = mysqli_real_escape_string($this->conexion, htmlspecialchars($nif));
+			$telefono = mysqli_real_escape_string($this->conexion, htmlspecialchars($telefono));
+			$email = mysqli_real_escape_string($this->conexion, htmlspecialchars($email));
+			$direccion = mysqli_real_escape_string($this->conexion, htmlspecialchars($direccion));
+			$provincia = mysqli_real_escape_string($this->conexion, htmlspecialchars($provincia));
+			$poblacion = mysqli_real_escape_string($this->conexion, htmlspecialchars($poblacion));
+			$cp = mysqli_real_escape_string($this->conexion, htmlspecialchars($cp));
+			
+			if ($pass != null)
+			{
+				$pass = mysqli_real_escape_string($this->conexion, $this->filtropass(htmlspecialchars($pass)));
+				$pass = ", pass = '$pass'";
+			}
+			
+			$sql = "UPDATE bd_users
+					SET nombre = '$nombre', apellidos = '$apellidos', dni = '$nif', telefono = '$telefono',
+                        email = '$email', provincia = $provincia, poblacion = '$poblacion',
+                        direccion = '$direccion', cp = '$cp'$pass
+					WHERE id = $id;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			return $query;
+		}
+		
+		function PackNuevo($nombre, $descripcion, $imagen, $precio, $iva, $descuento)
+		{
+			$nombre = mysqli_real_escape_string($this->conexion, htmlspecialchars($nombre));
+			$descripcion = mysqli_real_escape_string($this->conexion, $descripcion);
+			$precio = mysqli_real_escape_string($this->conexion, htmlspecialchars($precio));
+			$iva = mysqli_real_escape_string($this->conexion, htmlspecialchars($iva));
+			$descuento = mysqli_real_escape_string($this->conexion, htmlspecialchars($descuento));
+            
+            $imgname = "null";
+			if ($imagen['error'] != 4)
+			{
+				$imgname = uniqid().'_'.$imagen['name'];
+				move_uploaded_file($imagen['tmp_name'], '../imagenesproductos/'.$imgname);
+				$imgname = "'$imgname'";
+			}
+			
+			$sql = "INSERT INTO bd_pack
+					VALUES (null, '$nombre', '$descripcion', $descuento, $precio, $iva, 0, $imgname, 0);";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			return $query;
+		}
+		
+		function PackModificar($id, $nombre, $descripcion, $imagen, $precio, $iva, $descuento)
+		{
+			$id = mysqli_real_escape_string($this->conexion, htmlspecialchars($id));
+			$nombre = mysqli_real_escape_string($this->conexion, htmlspecialchars($nombre));
+			$descripcion = mysqli_real_escape_string($this->conexion, $descripcion);
+			$precio = mysqli_real_escape_string($this->conexion, htmlspecialchars($precio));
+			$iva = mysqli_real_escape_string($this->conexion, htmlspecialchars($iva));
+			$descuento = mysqli_real_escape_string($this->conexion, htmlspecialchars($descuento));
+            
+            $imgname = "";
+			if ($imagen['error'] != 4)
+			{
+				$imgname = uniqid().'_'.$imagen['name'];
+				move_uploaded_file($imagen['tmp_name'], '../imagenesproductos/'.$imgname);
+				$imgname = ", imagen = '$imgname'";
+			}
+			
+			$sql = "UPDATE bd_pack
+					SET nombre = '$nombre', descripcion = '$descripcion', precio = $precio,
+                    iva = $iva, descuento = $descuento$imgname
+                    WHERE id = $id;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			return $query;
+		}
+		
+		function ProductoNuevo($nombre, $descripcion, $imagen, $unidades, $stock, $precio, $iva, $descuento, $descuentoe, $peso, $referencia, $cat1, $cat2 = null, $cat3 = null, $cat4 = null, $cat5 = null, $disponible = null)
+		{
+			$nombre = mysqli_real_escape_string($this->conexion, htmlspecialchars($nombre));
+			$descripcion = mysqli_real_escape_string($this->conexion, $descripcion);
+			$unidades = mysqli_real_escape_string($this->conexion, htmlspecialchars($unidades));
+			$stock = mysqli_real_escape_string($this->conexion, htmlspecialchars($stock));
+			$precio = mysqli_real_escape_string($this->conexion, htmlspecialchars($precio));
+			$iva = mysqli_real_escape_string($this->conexion, htmlspecialchars($iva));
+			$descuento = mysqli_real_escape_string($this->conexion, htmlspecialchars($descuento));
+			$descuentoe = mysqli_real_escape_string($this->conexion, htmlspecialchars($descuentoe));
+			$peso = mysqli_real_escape_string($this->conexion, htmlspecialchars($peso));
+			$referencia = mysqli_real_escape_string($this->conexion, htmlspecialchars($referencia));
+			$cat1 = mysqli_real_escape_string($this->conexion, htmlspecialchars($cat1));
+            
+            if ($cat2 != null && $cat2 != '')
+                $cat2 = mysqli_real_escape_string($this->conexion, htmlspecialchars($cat2));
+            else
+                $cat2 = '0';
+            
+            if ($cat3 != null && $cat3 != '')
+                $cat3 = mysqli_real_escape_string($this->conexion, htmlspecialchars($cat3));
+            else
+                $cat3 = '0';
+            
+            if ($cat4 != null && $cat4 != '')
+                $cat4 = mysqli_real_escape_string($this->conexion, htmlspecialchars($cat4));
+            else
+                $cat4 = '0';
+            
+            if ($cat5 != null && $cat5 != '')
+                $cat5 = mysqli_real_escape_string($this->conexion, htmlspecialchars($cat5));
+            else
+                $cat5 = '0';
+            
+            if ($disponible != null)
+                $disponible = 1;
+            else
+                $disponible = 0;
+            
+            $imgname = "null";
+			if ($imagen['error'] != 4)
+			{
+				$imgname = uniqid().'_'.$imagen['name'];
+				move_uploaded_file($imagen['tmp_name'], '../imagenesproductos/'.$imgname);
+				$imgname = "'$imgname'";
+			}
+			
+			$sql = "INSERT INTO bd_productos
+					VALUES (null, '$nombre', '', '$descripcion', '', $imgname, $unidades, $stock, $precio, 0, $descuento, $descuentoe, 0, $cat1, $cat2, $cat3, $cat4, $cat5, 0, $peso, '$referencia', $iva, $disponible, 0, 0, null, null);";
+			$query = mysqli_query($this->conexion, $sql);
+			$lastidp = mysqli_insert_id($this->conexion);
+            
+			$sql = "INSERT INTO bd_distribuidor_producto
+					VALUES ($lastidp, ".$_SESSION['usr']['id'].");";
+			$query2 = mysqli_query($this->conexion, $sql);
+			
+			return $query;
+		}
+		
+		function ProductoModificar($id, $nombre, $descripcion, $imagen, $unidades, $stock, $precio, $iva, $descuento, $descuentoe, $peso, $referencia, $cat1, $cat2 = null, $cat3 = null, $cat4 = null, $cat5 = null, $disponible = null)
+		{
+			$id = mysqli_real_escape_string($this->conexion, htmlspecialchars($id));
+			$nombre = mysqli_real_escape_string($this->conexion, htmlspecialchars($nombre));
+			$descripcion = mysqli_real_escape_string($this->conexion, $descripcion);
+			$unidades = mysqli_real_escape_string($this->conexion, htmlspecialchars($unidades));
+			$stock = mysqli_real_escape_string($this->conexion, htmlspecialchars($stock));
+			$precio = mysqli_real_escape_string($this->conexion, htmlspecialchars($precio));
+			$iva = mysqli_real_escape_string($this->conexion, htmlspecialchars($iva));
+			$descuento = mysqli_real_escape_string($this->conexion, htmlspecialchars($descuento));
+			$descuentoe = mysqli_real_escape_string($this->conexion, htmlspecialchars($descuentoe));
+			$peso = mysqli_real_escape_string($this->conexion, htmlspecialchars($peso));
+			$referencia = mysqli_real_escape_string($this->conexion, htmlspecialchars($referencia));
+			$cat1 = mysqli_real_escape_string($this->conexion, htmlspecialchars($cat1));
+            
+            if ($cat2 != null && $cat2 != '')
+                $cat2 = mysqli_real_escape_string($this->conexion, htmlspecialchars($cat2));
+            else
+                $cat2 = 'null';
+            
+            if ($cat3 != null && $cat3 != '')
+                $cat3 = mysqli_real_escape_string($this->conexion, htmlspecialchars($cat3));
+            else
+                $cat3 = 'null';
+            
+            if ($cat4 != null && $cat4 != '')
+                $cat4 = mysqli_real_escape_string($this->conexion, htmlspecialchars($cat4));
+            else
+                $cat4 = 'null';
+            
+            if ($cat5 != null && $cat5 != '')
+                $cat5 = mysqli_real_escape_string($this->conexion, htmlspecialchars($cat5));
+            else
+                $cat5 = 'null';
+            
+            if ($disponible != null)
+                $disponible = 1;
+            else
+                $disponible = 0;
+            
+            $imgname = "";
+			if ($imagen['error'] != 4)
+			{
+				$imgname = uniqid().'_'.$imagen['name'];
+				move_uploaded_file($imagen['tmp_name'], '../imagenesproductos/'.$imgname);
+				$imgname = ", imagen = '$imgname'";
+			}
+			
+			$sql = "UPDATE bd_productos
+					SET nombre = '$nombre', descripcion = '$descripcion', unidades = $unidades, stockminimo = $stock, precio = $precio,
+                    iva = $iva, descuento = $descuento, descuentoe = $descuentoe, idcat = $cat1, idcat2 = $cat2, idcat3 = $cat3,
+                    idcat4 = $cat4, idcat5 = $cat5, peso = $peso, referencia = '$referencia', disponible = $disponible $imgname
+                    WHERE id = $id;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			return $query;
+		}
+		
+		function CargarFacturas($limit = 10000)
+		{
+			$resultados = array();
+			
+			$sql = "SELECT f.id AS id, CONCAT(f.ano, f.id) AS numero, f.fecha AS fecha, u.nombre AS nombre, u.apellidos AS apellidos,
+                    u.dni AS nif, u.telefono AS telefono, cd.direccion AS direccion, cd.provincia AS provincia, cd.localidad AS localidad, cd.cp AS cp,
+                    cd.pais AS pais, (c.precio + c.portes) AS total, f.sesion AS sesion, f.estado AS estado, f.formapago AS formapago
+					FROM bd_facturas f, bd_compra c, bd_compra_direccion cd, bd_users u
+                    WHERE f.sesion = c.secreto
+                    AND (cd.idcompra = c.id OR c.id NOT IN (SELECT idcompra FROM bd_compra_direccion))
+                    AND u.id = c.idusuario
+                    GROUP BY f.id
+					ORDER BY f.fecha DESC, f.id DESC
+					LIMIT $limit;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) > 0)
+				while ($assoc = mysqli_fetch_assoc($query))
+					$resultados[] = $assoc;
+
+			return $resultados;
+		}
+		
+		function CargarFactura($id)
+		{
+			$resultados = array();
+			$id = mysqli_real_escape_string($this->conexion, htmlspecialchars($id));
+			
+			$sql = "SELECT p.id AS idp, p.nombre AS nombre, CONCAT(f.ano, f.id) AS numero, cp.cantidad AS cantidad,
+                    cp.extra AS extra, cp.talla AS talla
+					FROM bd_facturas f, bd_compra c, bd_compra_productos cp, bd_productos p
+                    WHERE f.sesion = c.secreto
+                    AND cp.idcompra = c.id
+                    AND p.id = cp.idproducto
+                    AND f.id = $id
+                    AND (cp.pack = 1 OR cp.packid IS NULL)
+					ORDER BY nombre ASC, idp ASC;";
+					
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) > 0)
+				while ($assoc = mysqli_fetch_assoc($query))
+					$resultados[] = $assoc;
+
+			return $resultados;
+		}
+		
+		function FacturaEstado($id, $estado)
+		{
+			$id = mysqli_real_escape_string($this->conexion, htmlspecialchars($id));
+			$estado = mysqli_real_escape_string($this->conexion, htmlspecialchars($estado));
+			
+			$sql = "UPDATE bd_facturas
+					SET estado = $estado
+					WHERE id = $id;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			return $query;
+		}
+		
+		function CargarContrareembolsos($limit = 10000)
+		{
+			$resultados = array();
+			
+			$sql = "SELECT u.nombre AS nombre, u.apellidos AS apellidos, c.secreto AS secreto,
+                    c.fecha AS fecha, c.precio AS precio, c.id AS id
+					FROM bd_compra c, bd_users u
+                    WHERE c.estado = 'contrareembolso'
+                    AND c.idusuario = u.id
+					ORDER BY c.fecha DESC, c.id DESC
+					LIMIT $limit;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) > 0)
+				while ($assoc = mysqli_fetch_assoc($query))
+					$resultados[] = $assoc;
+
+			return $resultados;
+		}
+		
+		function CargarTransferencias($limit = 10000)
+		{
+			$resultados = array();
+			
+			$sql = "SELECT u.nombre AS nombre, u.apellidos AS apellidos, c.secreto AS secreto,
+                    c.fecha AS fecha, c.precio AS precio, c.id AS id
+					FROM bd_compra c, bd_users u
+                    WHERE c.estado = 'transferencia'
+                    AND c.idusuario = u.id
+					ORDER BY c.fecha DESC, c.id DESC
+					LIMIT $limit;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) > 0)
+				while ($assoc = mysqli_fetch_assoc($query))
+					$resultados[] = $assoc;
+
+			return $resultados;
+		}
+		
+		function CargarComprasPendientesDePago($limit = 10000)
+		{
+			$resultados = array();
+			
+			$sql = "SELECT u.nombre AS nombre, u.apellidos AS apellidos, c.secreto AS secreto,
+                    c.fecha AS fecha, c.precio AS precio, c.id AS id, c.estado AS estado
+					FROM bd_compra c, bd_users u
+                    WHERE c.estado IN ('transferencia', 'contrareembolso', 'tienda')
+                    AND c.idusuario = u.id
+					ORDER BY c.fecha DESC, c.id DESC
+					LIMIT $limit;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) > 0)
+				while ($assoc = mysqli_fetch_assoc($query))
+					$resultados[] = $assoc;
+
+			return $resultados;
+		}
+		
+		function CargarDescuentos($limit = 10000)
+		{
+			$resultados = array();
+			
+			$sql = "SELECT *
+					FROM bd_descuentos
+					ORDER BY cantidad ASC
+					LIMIT $limit;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) > 0)
+				while ($assoc = mysqli_fetch_assoc($query))
+					$resultados[] = $assoc;
+
+			return $resultados;
+		}
+		
+		function NuevoDescuento($cantidad, $porcentaje)
+		{
+			$cantidad = mysqli_real_escape_string($this->conexion, htmlspecialchars($cantidad));
+			$porcentaje = mysqli_real_escape_string($this->conexion, htmlspecialchars($porcentaje));
+			
+			$sql = "INSERT INTO bd_descuentos
+					VALUES ($cantidad, '$porcentaje');";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			return $query;
+		}
+		
+		function DescuentoEliminar($cantidad)
+		{
+			$cantidad = mysqli_real_escape_string($this->conexion, htmlspecialchars($cantidad));
+			
+			$sql = "DELETE FROM bd_descuentos
+					WHERE cantidad = $cantidad;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			return $query;
+		}
+		
+		function CargarPacksProductos($idp, $limit = 10000)
+		{
+			$resultados = array();
+			$idp = mysqli_real_escape_string($this->conexion, htmlspecialchars($idp));
+			
+			$sql = "SELECT pp.id AS id, GROUP_CONCAT(p.nombre SEPARATOR ', ') AS productos, GROUP_CONCAT(p.id SEPARATOR ', ') AS pids
+					FROM bd_pack_productos pp, bd_productos p
+                    WHERE pp.idpack = $idp
+                    AND p.id IN (pp.idpro1, pp.idpro2, pp.idpro3, pp.idpro4)
+                    GROUP BY pp.id
+					ORDER BY pp.id ASC, p.nombre ASC, p.id ASC
+					LIMIT $limit;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) > 0)
+				while ($assoc = mysqli_fetch_assoc($query))
+					$resultados[] = $assoc;
+
+			return $resultados;
+		}
+		
+		function NuevoPacksProductos($pack, $pr1, $pr2, $pr3, $pr4)
+		{
+			$pack = mysqli_real_escape_string($this->conexion, htmlspecialchars($pack));
+			$pr1 = mysqli_real_escape_string($this->conexion, htmlspecialchars($pr1));
+			$pr2 = mysqli_real_escape_string($this->conexion, htmlspecialchars($pr2));
+			$pr3 = mysqli_real_escape_string($this->conexion, htmlspecialchars($pr3));
+			$pr4 = mysqli_real_escape_string($this->conexion, htmlspecialchars($pr4));
+            
+            $pr2 = $pr2 != "" ? $pr2 : 'null';
+            $pr3 = $pr3 != "" ? $pr3 : 'null';
+            $pr4 = $pr4 != "" ? $pr4 : 'null';
+			
+			$sql = "INSERT INTO bd_pack_productos
+					VALUES (null, $pack, $pr1, $pr2, $pr3, $pr4);";
+			$querya = mysqli_query($this->conexion, $sql);
+			$sql = "UPDATE bd_pack
+					SET unidades = (SELECT COUNT(id) FROM bd_pack_productos WHERE idpack = $pack)
+                    WHERE id = $pack;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			return $querya;
+		}
+		
+		function PacksProductosEliminar($id, $pack)
+		{
+			$id = mysqli_real_escape_string($this->conexion, htmlspecialchars($id));
+			
+			$sql = "DELETE FROM bd_pack_productos
+					WHERE id = $id;";
+			$querya = mysqli_query($this->conexion, $sql);
+			$sql = "UPDATE bd_pack
+					SET unidades = (SELECT COUNT(id) FROM bd_pack_productos WHERE idpack = $pack)
+                    WHERE id = $pack;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			return $querya;
+		}
+		
+		function CargarPacks($limit = 10000)
+		{
+			$resultados = array();
+			
+			$sql = "SELECT *
+					FROM bd_pack
+                    WHERE eliminado = 0
+					ORDER BY id ASC
+					LIMIT $limit;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) > 0)
+				while ($assoc = mysqli_fetch_assoc($query))
+					$resultados[] = $assoc;
+
+			return $resultados;
+		}
+		
+		function CargarPack($id)
+		{
+			$resultado = null;
+			$id = mysqli_real_escape_string($this->conexion, htmlspecialchars($id));
+			
+			$sql = "SELECT *
+					FROM bd_pack
+                    WHERE eliminado = 0
+					AND id = $id;";
+					
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) == 1)
+			{
+				$assoc = mysqli_fetch_assoc($query);
+				$resultado = $assoc;
+			}
+
+			return $resultado;
+		}
+		
+		function CargarProductos($limit = 10000)
+		{
+			$resultados = array();
+			
+			$sql = "SELECT *
+					FROM bd_productos
+                    WHERE id IN (SELECT id_producto FROM bd_distribuidor_producto WHERE id_proveedor = ".$_SESSION['usr']['id'].")
+					ORDER BY nombre ASC, id ASC
+					LIMIT $limit;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) > 0)
+				while ($assoc = mysqli_fetch_assoc($query))
+					$resultados[] = $assoc;
+
+			return $resultados;
+		}
+		
+		function CargarProducto($id)
+		{
+			$resultado = null;
+			$id = mysqli_real_escape_string($this->conexion, htmlspecialchars($id));
+			
+			$sql = "SELECT *
+					FROM bd_productos
+                    WHERE id IN (SELECT id_producto FROM bd_distribuidor_producto WHERE id_proveedor = ".$_SESSION['usr']['id'].")
+					AND id = $id;";
+					
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) == 1)
+			{
+				$assoc = mysqli_fetch_assoc($query);
+				$resultado = $assoc;
+			}
+
+			return $resultado;
+		}
+		
+		function CargarImagenesProducto($id)
+		{
+			$resultados = array();
+			$id = mysqli_real_escape_string($this->conexion, htmlspecialchars($id));
+			
+			$sql = "SELECT null AS id, imagenprincipal
+					FROM bd_productos
+                    WHERE id IN (SELECT id_producto FROM bd_distribuidor_producto WHERE id_proveedor = ".$_SESSION['usr']['id'].")
+					AND id = $id;";
+					
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) == 1)
+			{
+				$assoc = mysqli_fetch_assoc($query);
+				$resultados[] = $assoc;
+			}
+			
+			$sql = "SELECT id, imagen
+					FROM bd_fotos
+					WHERE idproducto = $id
+                    AND idproducto IN (SELECT id_producto FROM bd_distribuidor_producto WHERE id_proveedor = ".$_SESSION['usr']['id'].");";
+					
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) > 0)
+			{
+				while($assoc = mysqli_fetch_assoc($query))
+				$resultados[] = $assoc;
+			}
+
+			return $resultados;
+		}
+		
+		function CargarProductosRelacionados($limit = 10000)
+		{
+			$resultados = array();
+			
+			$sql = "SELECT p.id AS id, p.nombre AS nombre, p2.id AS id2, p2.nombre AS nombre2
+                    FROM bd_productos p, bd_productos p2, bd_productos_relacionados pr
+                    WHERE p.eliminado = 0
+                    AND p.id = pr.idproducto1
+                    AND p2.id = pr.idproducto2
+                    AND pr.idproducto1 <> pr.idproducto2
+					ORDER BY nombre ASC, nombre2 ASC, id ASC, id2 ASC
+					LIMIT $limit;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) > 0)
+				while ($assoc = mysqli_fetch_assoc($query))
+					$resultados[] = $assoc;
+
+			return $resultados;
+		}
+		
+		function CargarProductosAtributos($limit = 10000)
+		{
+			$resultados = array();
+			
+			$sql = "SELECT p.nombre AS producto, a.atributo AS atributo, at.atributo AS atributocat, p.id AS idp, a.id AS ida, NULL AS idad, NULL AS atributod, NULL AS atributocatd, pa.precio AS precio, pa.id AS idpa
+					FROM bd_productos p, bd_atributo a, bd_atributo_tipo at, bd_producto_atributo pa
+                    WHERE p.eliminado = 0
+                    AND p.id = pa.idproducto
+                    AND a.id = pa.idatributo
+                    AND a.tipoid = at.id
+                    AND pa.iddependencia IS NULL
+                    UNION
+                    SELECT p.nombre AS producto, a.atributo AS atributo, at.atributo AS atributocat, p.id AS idp, a.id AS ida, a2.id AS idad, a2.atributo AS atributod, at2.atributo AS atributocatd, pa.precio AS precio, pa.id AS idpa
+					FROM bd_productos p, bd_atributo a, bd_atributo a2, bd_atributo_tipo at, bd_atributo_tipo at2, bd_producto_atributo pa
+                    WHERE p.eliminado = 0
+                    AND p.id = pa.idproducto
+                    AND a.id = pa.idatributo
+                    AND a2.id = pa.iddependencia
+                    AND a.tipoid = at.id
+                    AND a2.tipoid = at2.id
+					ORDER BY producto ASC, atributocat ASC, atributo ASC, idp ASC, ida ASC
+					LIMIT $limit;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) > 0)
+				while ($assoc = mysqli_fetch_assoc($query))
+					$resultados[] = $assoc;
+
+			return $resultados;
+		}
+		
+		function CargarUsuarios($limit = 10000, $especial = '"A"')
+		{
+			$resultados = array();
+			
+			$sql = "SELECT u.*, r.rol
+					FROM bd_users u, bd_rol r
+					WHERE u.rol = r.id
+					AND estado IN ($especial)
+					ORDER BY id ASC
+					LIMIT $limit;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) > 0)
+				while ($assoc = mysqli_fetch_assoc($query))
+					$resultados[] = $assoc;
+
+			return $resultados;
+		}
+		
+		function CargarUsuario($id)
+		{
+			$resultado = null;
+			$id = mysqli_real_escape_string($this->conexion, htmlspecialchars($id));
+			
+			$sql = "SELECT *
+					FROM bd_users
+					WHERE id = $id;";
+					
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) == 1)
+			{
+				$assoc = mysqli_fetch_assoc($query);
+				$resultado = $assoc;
+			}
+
+			return $resultado;
+		}
+		
+		function CargarDistribuidores($limit = 10000, $especial = '"A"')
+		{
+			$resultados = array();
+			
+			$sql = "SELECT *
+					FROM bd_distribuidores
+                    WHERE estado IN ($especial)
+					ORDER BY id ASC
+					LIMIT $limit;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) > 0)
+				while ($assoc = mysqli_fetch_assoc($query))
+					$resultados[] = $assoc;
+
+			return $resultados;
+		}
+		
+		function CargarDistribuidor($id)
+		{
+			$resultado = null;
+			$id = mysqli_real_escape_string($this->conexion, htmlspecialchars($id));
+			
+			$sql = "SELECT *
+					FROM bd_distribuidores
+					WHERE id = $id;";
+					
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) == 1)
+			{
+				$assoc = mysqli_fetch_assoc($query);
+				$resultado = $assoc;
+			}
+
+			return $resultado;
+		}
+		
+		function NuevoCurso($curso, $edicion, $contenido, $inicio, $fin, $color, $precio)
+		{
+			$curso = mysqli_real_escape_string($this->conexion, htmlspecialchars($curso));
+			$edicion = mysqli_real_escape_string($this->conexion, htmlspecialchars($edicion));
+			$inicio = mysqli_real_escape_string($this->conexion, htmlspecialchars($inicio));
+			$fin = mysqli_real_escape_string($this->conexion, htmlspecialchars($fin));
+			$precio = mysqli_real_escape_string($this->conexion, htmlspecialchars($precio));
+			$color = mysqli_real_escape_string($this->conexion, htmlspecialchars($color));
+			$contenido = mysqli_real_escape_string($this->conexion, $contenido);
+			
+			$sql = "INSERT INTO bd_cursos
+					VALUES (null, '$curso', '$edicion', '$contenido', STR_TO_DATE('$inicio', '%m/%d/%Y'), STR_TO_DATE('$fin', '%m/%d/%Y'), '$color', '$precio', 1);";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			return $query;
+		}
+		
+		function ModificarCurso($id, $curso, $edicion, $contenido, $inicio, $fin, $color, $precio)
+		{
+			$id = mysqli_real_escape_string($this->conexion, htmlspecialchars($id));
+			$curso = mysqli_real_escape_string($this->conexion, htmlspecialchars($curso));
+			$edicion = mysqli_real_escape_string($this->conexion, htmlspecialchars($edicion));
+			$inicio = mysqli_real_escape_string($this->conexion, htmlspecialchars($inicio));
+			$fin = mysqli_real_escape_string($this->conexion, htmlspecialchars($fin));
+			$precio = mysqli_real_escape_string($this->conexion, htmlspecialchars($precio));
+			$color = mysqli_real_escape_string($this->conexion, htmlspecialchars($color));
+			$contenido = mysqli_real_escape_string($this->conexion, $contenido);
+			
+			$sql = "UPDATE bd_cursos
+					SET curso = '$curso', edicion = '$edicion', descripcion = '$contenido', inicio = STR_TO_DATE('$inicio', '%m/%d/%Y'), fin = STR_TO_DATE('$fin', '%m/%d/%Y'), color = '$color', precio = $precio
+                    WHERE id = $id;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			return $query;
+		}
+		
+		function NoticiaNueva($titulo, $contenido, $img)
+		{
+			$titulo = mysqli_real_escape_string($this->conexion, htmlspecialchars($titulo));
+			$contenido = mysqli_real_escape_string($this->conexion, $contenido);
+			
+            $imgname = "";
+			if ($img['error'] != 4)
+			{
+				$imgname = uniqid().'_'.$img['name'];
+				move_uploaded_file($img['tmp_name'], '../imagenesproductos/'.$imgname);
+				$imgname = "'$imgname'";
+			}
+            else
+                $imgname = "null";
+			
+			$sql = "INSERT INTO bd_paginas
+					VALUES (null, '$titulo', '$contenido', $imgname, 1, NOW(), 1);";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			return $query;
+		}
+		
+		function PaginaModificar($id, $titulo, $contenido, $img)
+		{
+			$id = mysqli_real_escape_string($this->conexion, htmlspecialchars($id));
+			$titulo = mysqli_real_escape_string($this->conexion, htmlspecialchars($titulo));
+			$contenido = mysqli_real_escape_string($this->conexion, $contenido);
+			
+            $imgname = "";
+			if ($img['error'] != 4)
+			{
+				$imgname = uniqid().'_'.$img['name'];
+				move_uploaded_file($img['tmp_name'], '../imagenes/'.$imgname);
+				$imgname = ", imagen = '$imgname'";
+			}
+			
+			$sql = "UPDATE bd_paginas
+					SET nombre = '$titulo', contenido = '$contenido', fecha = NOW()$imgname
+					WHERE id = $id;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			return $query;
+		}
+		
+		function NoticiaModificar($id, $titulo, $contenido, $img)
+		{
+			$id = mysqli_real_escape_string($this->conexion, htmlspecialchars($id));
+			$titulo = mysqli_real_escape_string($this->conexion, htmlspecialchars($titulo));
+			$contenido = mysqli_real_escape_string($this->conexion, $contenido);
+			
+            $imgname = "";
+			if ($img['error'] != 4)
+			{
+				$imgname = uniqid().'_'.$img['name'];
+				move_uploaded_file($img['tmp_name'], '../imagenes/'.$imgname);
+				$imgname = ", imagen = '$imgname'";
+			}
+			
+			$sql = "UPDATE bd_paginas
+					SET nombre = '$titulo', contenido = '$contenido'$imgname
+					WHERE id = $id AND noticia = 1;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			return $query;
+		}
+		
+		function CargarPaginas($limit = 10000, $orden = 'id DESC', $especial = 1)
+		{
+			$resultados = array();
+			
+			$sql = "SELECT *, nombre AS titulo
+					FROM bd_paginas
+					WHERE visible IN ($especial)
+					ORDER BY $orden
+					LIMIT $limit;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) > 0)
+				while ($assoc = mysqli_fetch_assoc($query))
+					$resultados[] = $assoc;
+
+			return $resultados;
+		}
+		
+		function CargarPagina($id = 1)
+		{
+			$resultado = null;
+			
+			$sql = "SELECT *, nombre AS titulo
+					FROM bd_paginas
+					WHERE id = $id;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) > 0)
+			{
+				$assoc = mysqli_fetch_assoc($query);
+				$resultado = $assoc;
+			}
+
+			return $resultado;
+		}
+		
+		function CargarNoticias($limit = 10000, $orden = 'id DESC')
+		{
+			$resultados = array();
+			
+			$sql = "SELECT *
+					FROM bd_paginas
+                    WHERE noticia = 1
+					ORDER BY $orden
+					LIMIT $limit;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) > 0)
+				while ($assoc = mysqli_fetch_assoc($query))
+					$resultados[] = $assoc;
+
+			return $resultados;
+		}
+		
+		function CargarNoticia($id = 1)
+		{
+			$resultado = null;
+			
+			$sql = "SELECT *
+					FROM bd_paginas
+					WHERE id = $id;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) > 0)
+			{
+				$assoc = mysqli_fetch_assoc($query);
+				$resultado = $assoc;
+			}
+
+			return $resultado;
+		}
+		
+		function CargarProvincias($limit = 10000)
+		{
+			$resultados = array();
+			
+			$sql = "SELECT id, ciudad
+					FROM bd_ciudad
+					WHERE codigo_pais IN ('ESP', 'ESX')
+					ORDER BY ciudad ASC, id ASC
+					LIMIT $limit;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) > 0)
+				while ($assoc = mysqli_fetch_assoc($query))
+					$resultados[] = $assoc;
+
+			return $resultados;
+		}
+		
+		function CargarPaises($limit = 10000)
+		{
+			$resultados = array();
+			
+			$sql = "SELECT codigo, pais
+					FROM bd_paises
+					WHERE activo = 1
+					ORDER BY pais ASC, codigo ASC
+					LIMIT $limit;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) > 0)
+				while ($assoc = mysqli_fetch_assoc($query))
+					$resultados[] = $assoc;
+
+			return $resultados;
+		}
+		
+		function CargarPortes($limit = 10000)
+		{
+			$resultados = array();
+			
+			$sql = "SELECT bd_portes.region AS region, precio, max, codigo, pais
+					FROM bd_portes, bd_paises
+					WHERE codigo = bd_portes.region
+					AND activo = 1
+					ORDER BY pais ASC, precio ASC
+					LIMIT $limit;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) > 0)
+				while ($assoc = mysqli_fetch_assoc($query))
+					$resultados[] = $assoc;
+
+			return $resultados;
+		}
+		
+		function CargarSliders($limit = 10000)
+		{
+			$resultados = array();
+			
+			$sql = "SELECT *
+					FROM bd_slider
+					ORDER BY orden ASC, id ASC
+					LIMIT $limit;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) > 0)
+				while ($assoc = mysqli_fetch_assoc($query))
+					$resultados[] = $assoc;
+
+			return $resultados;
+		}
+		
+		function CargarSlider($id)
+		{
+			$resultado = null;
+			$id = mysqli_real_escape_string($this->conexion, htmlspecialchars($id));
+			
+			$sql = "SELECT id, nombre, id_padre
+					FROM bd_slider
+					WHERE id = $id;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) > 0)
+			{
+				$assoc = mysqli_fetch_assoc($query);
+				$resultado = $assoc;
+			}
+
+			return $resultado;
+		}
+		
+		function CargarCursos($limit = 10000)
+		{
+			$resultados = array();
+			
+			$sql = "SELECT *
+					FROM bd_cursos
+					ORDER BY inicio ASC, fin ASC, id ASC
+					LIMIT $limit;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) > 0)
+				while ($assoc = mysqli_fetch_assoc($query))
+					$resultados[] = $assoc;
+
+			return $resultados;
+		}
+		
+		function CargarCurso($id)
+		{
+			$resultado = null;
+			$id = mysqli_real_escape_string($this->conexion, htmlspecialchars($id));
+			
+			$sql = "SELECT *
+					FROM bd_cursos
+					WHERE id = $id;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) > 0)
+			{
+				$assoc = mysqli_fetch_assoc($query);
+				$resultado = $assoc;
+			}
+
+			return $resultado;
+		}
+		
+		/*function CargarCategorias($limit = 10000)
+		{
+			$resultados = array();
+			
+			$sql = "SELECT *
+					FROM bd_categorias
+					ORDER BY categoria ASC, id ASC
+					LIMIT $limit;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) > 0)
+				while ($assoc = mysqli_fetch_assoc($query))
+					$resultados[] = $assoc;
+
+			return $resultados;
+		}*/
+		
+		function CargarCategoriasAtribuos($limit = 10000)
+		{
+			$resultados = array();
+			
+			$sql = "SELECT *
+					FROM bd_atributo_tipo
+					ORDER BY atributo ASC, id ASC
+					LIMIT $limit;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) > 0)
+				while ($assoc = mysqli_fetch_assoc($query))
+					$resultados[] = $assoc;
+
+			return $resultados;
+		}
+		
+		function CargarCategoriaAtribuos($id)
+		{
+			$resultado = null;
+			$id = mysqli_real_escape_string($this->conexion, htmlspecialchars($id));
+			
+			$sql = "SELECT *
+					FROM bd_atributo_tipo
+					WHERE id = $id
+					ORDER BY atributo ASC, id ASC;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) > 0)
+			{
+				$assoc = mysqli_fetch_assoc($query);
+				$resultado = $assoc;
+			}
+
+			return $resultado;
+		}
+		
+		function CargarAtributos($limit = 10000)
+		{
+			$resultados = array();
+			
+			$sql = "SELECT a.id AS id, a.atributo AS atributo, at.atributo AS atributocat
+					FROM bd_atributo a, bd_atributo_tipo at
+					WHERE a.tipoid = at.id
+					AND at.dependiente = 1
+					ORDER BY atributocat ASC, atributo ASC, id ASC
+					LIMIT $limit;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) > 0)
+				while ($assoc = mysqli_fetch_assoc($query))
+					$resultados[] = $assoc;
+
+			return $resultados;
+		}
+		
+		function CargarAtributosDependencia($limit = 10000)
+		{
+			$resultados = array();
+			
+			$sql = "SELECT a.id AS id, a.atributo AS atributo, at.atributo AS atributocat
+					FROM bd_atributo a, bd_atributo_tipo at
+					WHERE a.tipoid = at.id
+					AND at.dependiente = 0
+					ORDER BY atributocat ASC, atributo ASC, id ASC
+					LIMIT $limit;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) > 0)
+				while ($assoc = mysqli_fetch_assoc($query))
+					$resultados[] = $assoc;
+
+			return $resultados;
+		}
+		
+		function CargarAtributo($id)
+		{
+			$resultado = null;
+			$id = mysqli_real_escape_string($this->conexion, htmlspecialchars($id));
+			
+			$sql = "SELECT *
+					FROM bd_atributo
+					WHERE id = $id
+					ORDER BY atributo ASC, id ASC;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) > 0)
+			{
+				$assoc = mysqli_fetch_assoc($query);
+				$resultado = $assoc;
+			}
+
+			return $resultado;
+		}
+		
+		function CargarMenus($limit = 10000)
+		{
+			$resultados = array();
+			
+			$sql = "SELECT m1.id AS id, m1.nombre AS nombre, m1.orden AS orden, m1.categoria AS categoria, m2.nombre AS padre
+					FROM bd_menu m1, bd_menu m2
+					WHERE m1.id_padre = m2.id
+                    UNION
+                    SELECT id AS id, nombre AS nombre, orden AS orden, categoria AS categoria, '-' AS padre
+					FROM bd_menu
+					WHERE id_padre IS null
+					ORDER BY id ASC, orden ASC
+					LIMIT $limit;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) > 0)
+				while ($assoc = mysqli_fetch_assoc($query))
+					$resultados[] = $assoc;
+
+			return $resultados;
+		}
+		
+		function CargarMenu($id)
+		{
+			$resultado = null;
+			$id = mysqli_real_escape_string($this->conexion, htmlspecialchars($id));
+			
+			$sql = "SELECT id, nombre, id_padre, categoria
+					FROM bd_menu
+					WHERE id = $id;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) > 0)
+			{
+				$assoc = mysqli_fetch_assoc($query);
+				$resultado = $assoc;
+			}
+
+			return $resultado;
+		}
+		
+		function CargarConfiguracion()
+		{
+			$resultado = null;
+			
+			$sql = "SELECT *
+					FROM bd_empresa
+					WHERE activa = 1;";
+					
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) == 1)
+			{
+				$assoc = mysqli_fetch_assoc($query);
+				$resultado = $assoc;
+			}
+
+			return $resultado;
+		}
+		
+		function PaisEstado($id)
+		{
+			$id = mysqli_real_escape_string($this->conexion, htmlspecialchars($id));
+			
+			$sql = "UPDATE bd_paises
+					SET activo = ABS(activo - 1)
+					WHERE codigo = '$id';";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			return $query;
+		}
+		
+		function CargarTodosLosPaises($limit = 10000)
+		{
+			$resultados = array();
+			
+			$sql = "SELECT codigo, pais, country, activo
+					FROM bd_paises
+					ORDER BY activo DESC, pais ASC, codigo ASC
+					LIMIT $limit;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) > 0)
+				while ($assoc = mysqli_fetch_assoc($query))
+					$resultados[] = $assoc;
+
+			return $resultados;
+		}
+		
+		function CargarCategorias($limit = 10000)
+		{
+			$resultados = array();
+			
+			$sql = "SELECT *
+					FROM bd_categorias
+					ORDER BY categoria ASC, id ASC
+					LIMIT $limit;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) > 0)
+				while ($assoc = mysqli_fetch_assoc($query))
+					$resultados[] = $assoc;
+
+			return $resultados;
+		}
+		
+		function CargarCategoria($id)
+		{
+			$resultado =null;
+			
+			$sql = "SELECT *
+					FROM bd_categorias
+                    WHERE id = $id;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) > 0)
+				while ($assoc = mysqli_fetch_assoc($query))
+					$resultado = $assoc;
+
+			return $resultado;
+		}
+		
+		function CargarCategoriasAmpliados($limit = 10000)
+		{
+			$resultados = array();
+			
+			$sql = "SELECT c.id AS id, c.idpadre AS idpadre, c.categoria AS categoria, c.imagen AS imagen, c2.id AS idp, c2.categoria AS categoriap
+					FROM bd_categorias c, bd_categorias c2
+                    WHERE c.idpadre = c2.id
+                    UNION
+                    SELECT c.id AS id, c.idpadre AS idpadre, c.categoria AS categoria, c.imagen AS imagen, NULL AS idp, NULL AS categoriap
+					FROM bd_categorias c
+                    WHERE c.idpadre IS NULL
+					ORDER BY categoria ASC, id ASC
+					LIMIT $limit;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) > 0)
+				while ($assoc = mysqli_fetch_assoc($query))
+					$resultados[] = $assoc;
+
+			return $resultados;
+		}
+		
+		function CategoriaNueva($nombre, $imagen, $padre = null)
+		{
+			$nombre = mysqli_real_escape_string($this->conexion, htmlspecialchars($nombre));
+			if (@$padre == null || @$padre == '') $padre = 'null';
+			$padre = mysqli_real_escape_string($this->conexion, htmlspecialchars($padre));
+			if ($imagen['error'] != 4)
+			{
+				$imgname = uniqid().'_'.$imagen['name'];
+				move_uploaded_file($imagen['tmp_name'], '../imagenesproductos/'.$imgname);
+				$imgname = "'$imgname'";
+			}
+			else
+				$imgname = 'null';
+			
+			$sql = "INSERT INTO bd_categorias
+					VALUES (null, '$nombre', $padre, 0, $imgname);";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			return $query;
+		}
+		
+		function ModificarCategoria($id, $nombre, $imagen, $padre)
+		{
+			$id = mysqli_real_escape_string($this->conexion, htmlspecialchars($id));
+			$nombre = mysqli_real_escape_string($this->conexion, htmlspecialchars($nombre));
+			if (@$padre == null || @$padre == '') $padre = 'null';
+			$padre = mysqli_real_escape_string($this->conexion, htmlspecialchars($padre));
+			if ($imagen['error'] != 4)
+			{
+				$imgname = uniqid().'_'.$imagen['name'];
+				move_uploaded_file($imagen['tmp_name'], '../imagenesproductos/'.$imgname);
+				$imgname = "'$imgname'";
+			}
+			else
+				$imgname = 'imagen';
+			
+			$sql = "UPDATE bd_categorias
+					SET categoria = '$nombre', idpadre = $padre, imagen = $imgname
+                    WHERE id = $id;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			return $query;
+		}
+		
+		function CategoriaEliminar($id)
+		{
+			$id = mysqli_real_escape_string($this->conexion, htmlspecialchars($id));
+			
+			$sql = "DELETE FROM bd_categorias
+					WHERE id = $id;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			return $query;
+		}
+		
+		function ConfiguracionModificar($empresa, $cif, $email, $telefono, $telefono2, $fax,
+                $horario, $facebook, $googlep, $twitter, $youtube, $pinterest, $instagram,
+                $direccion, $direccion2, $provincia, $poblacion, $cp, $pais, $portes, $contrareembolso,
+                $cuenta, $recogida, $paypal, $msgtop, $msgbottom, $dominio)
+		{
+			$empresa = mysqli_real_escape_string($this->conexion, htmlspecialchars($empresa));
+			$cif = mysqli_real_escape_string($this->conexion, htmlspecialchars($cif));
+			$email = mysqli_real_escape_string($this->conexion, htmlspecialchars($email));
+			$telefono = mysqli_real_escape_string($this->conexion, htmlspecialchars($telefono));
+			$telefono2 = mysqli_real_escape_string($this->conexion, htmlspecialchars($telefono2));
+			$fax = mysqli_real_escape_string($this->conexion, htmlspecialchars($fax));
+			$horario = mysqli_real_escape_string($this->conexion, htmlspecialchars($horario));
+			$facebook = mysqli_real_escape_string($this->conexion, htmlspecialchars($facebook));
+			$googlep = mysqli_real_escape_string($this->conexion, htmlspecialchars($googlep));
+			$twitter = mysqli_real_escape_string($this->conexion, htmlspecialchars($twitter));
+			$youtube = mysqli_real_escape_string($this->conexion, htmlspecialchars($youtube));
+			$pinterest = mysqli_real_escape_string($this->conexion, htmlspecialchars($pinterest));
+			$instagram = mysqli_real_escape_string($this->conexion, htmlspecialchars($instagram));
+			$direccion = mysqli_real_escape_string($this->conexion, htmlspecialchars($direccion));
+			$direccion2 = mysqli_real_escape_string($this->conexion, htmlspecialchars($direccion2));
+			$provincia = mysqli_real_escape_string($this->conexion, htmlspecialchars($provincia));
+			$poblacion = mysqli_real_escape_string($this->conexion, htmlspecialchars($poblacion));
+			$cp = mysqli_real_escape_string($this->conexion, htmlspecialchars($cp));
+			$pais = mysqli_real_escape_string($this->conexion, htmlspecialchars($pais));
+			$portes = mysqli_real_escape_string($this->conexion, htmlspecialchars($portes));
+			$contrareembolso = mysqli_real_escape_string($this->conexion, htmlspecialchars($contrareembolso));
+			$cuenta = mysqli_real_escape_string($this->conexion, htmlspecialchars($cuenta));
+			$recogida = mysqli_real_escape_string($this->conexion, htmlspecialchars($recogida));
+			$paypal = mysqli_real_escape_string($this->conexion, htmlspecialchars($paypal));
+			$msgtop = mysqli_real_escape_string($this->conexion, htmlspecialchars($msgtop));
+			$msgbottom = mysqli_real_escape_string($this->conexion, htmlspecialchars($msgbottom));
+			$dominio = mysqli_real_escape_string($this->conexion, htmlspecialchars($dominio));
+			
+			$sql = "UPDATE bd_empresa
+					SET nombre = '$empresa', cif = '$cif', email = '$email',
+						telefono = '$telefono', telefono2 = '$telefono2', facebook = '$facebook', 
+						google = '$googlep', twitter = '$twitter', youtube = '$youtube', pinterest = '$pinterest', instagram = '$instagram',
+						direccion = '$direccion', direccion2 = '$direccion2',
+						provincia = '$provincia', localidad = '$poblacion', cp = '$cp', pais = '$pais',
+                        portesgratis = '$portes', tasacontrareembolso = '$contrareembolso', recogida = '$recogida',
+                        cuenta = '$cuenta', paypal = '$paypal', fax = '$fax', horario = '$horario',
+                        msgtop = '$msgtop', msgbottom = '$msgbottom', dominio = '$dominio'
+					WHERE activa = 1;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			return $query;
+		}
+		
+		function ConfiguracionModificarBloques($blq1, $blq2, $blq3, $blq4, $blq5, $blq6, $blq7, $blq8)
+		{
+			$blq1 = mysqli_real_escape_string($this->conexion, htmlspecialchars($blq1));
+			$blq2 = mysqli_real_escape_string($this->conexion, htmlspecialchars($blq2));
+			$blq3 = mysqli_real_escape_string($this->conexion, htmlspecialchars($blq3));
+			$blq4 = mysqli_real_escape_string($this->conexion, htmlspecialchars($blq4));
+			$blq5 = mysqli_real_escape_string($this->conexion, htmlspecialchars($blq5));
+			$blq6 = mysqli_real_escape_string($this->conexion, htmlspecialchars($blq6));
+			$blq7 = mysqli_real_escape_string($this->conexion, htmlspecialchars($blq7));
+			$blq8 = mysqli_real_escape_string($this->conexion, htmlspecialchars($blq8));
+            
+            if ($blq1 != '') $blq1 = "'$blq1'"; else $blq1 = 'null';
+            if ($blq2 != '') $blq2 = "'$blq2'"; else $blq2 = 'null';
+            if ($blq3 != '') $blq3 = "'$blq3'"; else $blq3 = 'null';
+            if ($blq4 != '') $blq4 = "'$blq4'"; else $blq4 = 'null';
+            if ($blq5 != '') $blq5 = "'$blq5'"; else $blq5 = 'null';
+            if ($blq6 != '') $blq6 = "'$blq6'"; else $blq6 = 'null';
+            if ($blq7 != '') $blq7 = "'$blq7'"; else $blq7 = 'null';
+            if ($blq8 != '') $blq8 = "'$blq8'"; else $blq8 = 'null';
+			
+			$sql = "UPDATE bd_empresa
+					SET idcate1 = $blq1, idcate2 = $blq2, idcate3 = $blq3,
+                    idcate4 = $blq4, idcate5 = $blq5, idcate6 = $blq6,
+                    idcate7 = $blq7, idcate8 = $blq8
+					WHERE activa = 1;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			return $query;
+		}
+	}
+?>

@@ -1,0 +1,94 @@
+<?php $control = 0;
+                        $cola = count($categorias);
+                        $primera = 0;
+                    foreach ($categorias AS $padre){
+                        $control++;
+                        $nombre = utf8_encode(strtr(utf8_decode($padre['nombre']), utf8_decode($tofind), $replac));
+                        $nombre = strtolower($nombre);
+                        $nombre = preg_replace('([^A-Za-z0-9])', '-', $nombre);
+                        $nombre = preg_replace('([,.])', '', $nombre);
+                        $nombre = str_replace('--', '-', $nombre);
+                        if($control < $Napartados){ ?>
+                            <li class="ruby-menu-mega-shop<?=$padre['id'] == $bar ? ' ruby-active-menu-item':''?>"><a  <?=$padre['url'] != '' ? 'target="_blank"' : ''?> href="<?=$padre['url'] == '' ? $draizp.'/'.$_SESSION['lenguaje'].'productos/'.$padre['id'].'/'.$nombre.'/' : $padre['url']?>"><?=$padre['nombre']?></a>
+                                <?php if ($padre['id'] == $bar) $barpath = '<a href="'.$draizp.'/'.$_SESSION['lenguaje'].'productos/'.$padre['id'].'/'.$nombre.'/"'.(count($padre['categorias']) < 1 ? '' : '').'>'.$padre['nombre'].'</a>';  
+                                if (count($padre['categorias']) > 0 && $padre['categorias'] != null){ ?> 
+                                  <div>
+                                    <ul>  
+                                        <?php foreach ($padre['categorias'] AS $hijo1){ 
+                                            $nombre2 = utf8_encode(strtr(utf8_decode($hijo1['nombre']), utf8_decode($tofind), $replac));
+                                            $nombre2 = strtolower($nombre2);
+                                            $nombre2 = preg_replace('([^A-Za-z0-9])', '-', $nombre2);
+                                            $nombre2 = str_replace('--', '-', $nombre2);
+                                            if ($hijo1['id'] == $bar)
+                                                $barpath = '<a href="'.$draizp.'/'.$_SESSION['lenguaje'].'productos/'.$padre['id'].'/'.$nombre.'/">'.$padre['nombre'].'</a> &gt; '.
+                                                '<a href="'.$draizp.'/'.$_SESSION['lenguaje'].'productos/'.$hijo1['id'].'/'.$nombre2.'/"'.(count($hijo1['categorias']) < 1 ? '' : '').'>'.$hijo1['nombre'].'</a>'; 
+                                        ?>  
+                                            <li class=""><a <?=$hijo1['url'] != '' ? 'target="_blank"' : ''?> href="<?=$hijo1['url'] == '' ? $draizp.'/'.$_SESSION['lenguaje'].'productos/'.$hijo1['id'].'/'.$nombre2.'/' : $hijo1['url']?>"><?=$hijo1['nombre']?></a>
+                                                <?php if (count($hijo1['categorias']) > 0 && $hijo1['categorias'] != null){ ?>
+                                                    <div class="ruby-grid ruby-grid-lined">
+                                                        <div class="ruby-row">
+                                                                <?php foreach ($hijo1['categorias'] AS $hijo2){ 
+                                                                    $nombre3 = utf8_encode(strtr(utf8_decode($hijo2['nombre']), utf8_decode($tofind), $replac));
+                                                                    $nombre3 = strtolower($nombre3);
+                                                                    $nombre3 = preg_replace('([^A-Za-z0-9])', '-', $nombre3);	
+                                                                    $nombre3 = str_replace('--', '-', $nombre3);
+                                                                    if ($hijo2['id'] == $bar)
+                                                                        $barpath = '<a href="'.$draizp.'/'.$_SESSION['lenguaje'].'productos/'.$padre['id'].'/'.$nombre.'/">'.$padre['nombre'].'</a> &gt; '.
+                                                                        '<a href="'.$draizp.'/'.$_SESSION['lenguaje'].'productos/'.$hijo1['id'].'/'.$nombre2.'/">'.$hijo1['nombre'].'</a> &gt; '.
+                                                                        '<a href="'.$draizp.'/'.$_SESSION['lenguaje'].'productos/'.$hijo2['id'].'/'.$nombre3.'/"'.(count($hijo2['categorias']) < 1 ? '' : '').'>'.$hijo2['nombre'].'</a>';
+                                                                ?>
+                                                                    <div class="ruby-col-3">
+                                                                        <img src="<?=$hijo2['imagen'] != '' ? $draizp.'/imagenesproductos/'.$hijo2['imagen'] : 'http://placehold.it/292x210'?>">
+                                                                    </div>
+                                                                <?php } ?>
+                                                        </div>
+                                                    </div>
+                                                <?php } ?>
+                                            </li>
+                                        <?php } ?>
+                                    </ul>
+                                  </div>    
+                                <?php } ?>
+                            </li>  
+                   <?php }else{ 
+                       if($primera == 0){ $primera++;?>
+                            <li class="ruby-menu-mega-shop<?=$padre['id'] == $bar ? ' ruby-active-menu-item':''?>"><a href="#">Otros Productos</a>
+                                <div>
+                                    <ul> 
+                       <?php } 
+                            $nombre = utf8_encode(strtr(utf8_decode($padre['nombre']), utf8_decode($tofind), $replac));
+                            $nombre = strtolower($nombre);
+                            $nombre = preg_replace('([^A-Za-z0-9])', '-', $nombre);
+                            $nombre = preg_replace('([,.])', '', $nombre);
+                            $nombre = str_replace('--', '-', $nombre);
+                            if ($padre['id'] == $bar) $barpath = '<a href="'.$draizp.'/'.$_SESSION['lenguaje'].'productos/'.$padre['id'].'/'.$nombre.'/"'.(count($padre['categorias']) < 1 ? '' : '').'>'.$padre['nombre'].'</a>';  
+                       ?>
+                                        <li class=""><a <?=$padre['url'] != '' ? 'target="_blank"' : ''?> href="<?=$padre['url'] == '' ? $draizp.'/'.$_SESSION['lenguaje'].'productos/'.$padre['id'].'/'.$nombre.'/' : $padre['url']?>"><?=$padre['nombre']?></a>
+                                                <?php if (count($padre['categorias']) > 0 && $padre['categorias'] != null){ ?>
+                                                    <div class="ruby-grid ruby-grid-lined">
+                                                        <div class="ruby-row">
+                                                                <?php foreach ($padre['categorias'] AS $hijo1){ 
+                                                                    $nombre2 = utf8_encode(strtr(utf8_decode($hijo1['nombre']), utf8_decode($tofind), $replac));
+                                                                    $nombre2 = strtolower($nombre2);
+                                                                    $nombre2 = preg_replace('([^A-Za-z0-9])', '-', $nombre2);
+                                                                    $nombre2 = str_replace('--', '-', $nombre2);
+                                                                    if ($hijo1['id'] == $bar)
+                                                                        $barpath = '<a href="'.$draizp.'/'.$_SESSION['lenguaje'].'productos/'.$padre['id'].'/'.$nombre.'/">'.$padre['nombre'].'</a> &gt; '.
+                                                                        '<a href="'.$draizp.'/'.$_SESSION['lenguaje'].'productos/'.$hijo1['id'].'/'.$nombre2.'/"'.(count($hijo1['categorias']) < 1 ? '' : '').'>'.$hijo1['nombre'].'</a>'; 
+                                            ?>
+                                                                    <div class="ruby-col-3">
+                                                                        <img src="<?=$hijo1['imagen'] != '' ? $draizp.'/imagenesproductos/'.$hijo1['imagen'] : 'http://placehold.it/292x210'?>">
+                                                                    </div>
+                                                            <?php } ?>
+                                                        </div>
+                                                    </div>
+                                                <?php } ?>
+                                        </li>
+                                    <?php if($cola == $control){ ?>
+                                    </ul>
+                                </div> 
+                            </li>
+                    <?php           }
+                
+                            }
+                    } ?>

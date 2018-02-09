@@ -1,0 +1,35 @@
+<?php
+	if (count($sliders) > 0)
+	{
+?>
+<section class="demo_wrapper">
+	<article class="demo_block">
+		<ul id="demo1">
+			<?php
+				foreach ($sliders AS $slider)
+				{
+				?>
+					<li><a href="#slide<?=$slider['id']?>"><img src="<?=$draizp?>/back/uploads/<?=$slider['imagen']?>" alt="<?=@$slider['contenido']?>"></a></li>
+				<?php
+				}
+			?>
+		</ul>
+	</article>
+</section>		
+
+<script>
+	$(function() {
+		var demo1 = $("#demo1").slippry({
+			// transition: 'fade',
+			// useCSS: true,
+			// speed: 1000,
+			// pause: 3000,
+			// auto: true,
+			// preload: 'visible',
+			// autoHover: false
+		});
+	});
+</script>
+<?php 
+	}
+?>

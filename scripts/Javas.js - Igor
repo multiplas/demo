@@ -1,0 +1,471 @@
+// JavaScript Document
+
+$draiz = '';
+
+function CargaDeProvincias()
+{
+	$estado = $("#pais").val();
+	$idpro = $("#idpro").val();
+	$idioma = 'Elige un país';
+ 
+	if($estado == ""){
+		$("#provincia").prop('disabled', 'disabled');
+	}
+	else {
+		$("#provincia").prop('disabled', false);
+		$.ajax({
+			dataType: "json",
+			data: {"estado": $estado, "idpro": $idpro, "idioma": $idioma},
+			url:   $draiz + '/scripts/ciudades.php',
+			type:  'post',
+			beforeSend: function(){
+				//Lo que se hace antes de enviar el formulario
+				},
+			success: function(respuesta){
+				//lo que se si el destino devuelve algo
+				$("#provincia").html(respuesta.html);
+			},
+			error:    function(xhr,err){
+				//alert("readyState: "+xhr.readyState+"\nstatus: "+xhr.status+"\n \n responseText: "+xhr.responseText);
+			}
+		});
+	}
+}
+
+function CargaDeProvincias2()
+{
+	$estado = $("#paisE").val();
+	$idpro = $("#idpro2").val();
+	$idioma = 'Elige un país';
+ 
+	if($estado == ""){
+		$("#provinciaE").prop('disabled', 'disabled');
+	}
+	else {
+		$("#provinciaE").prop('disabled', false);
+		$.ajax({
+			dataType: "json",
+			data: {"estado": $estado, "idpro": $idpro, "idioma": $idioma},
+			url:   $draiz + '/scripts/ciudades.php',
+			type:  'post',
+			beforeSend: function(){
+				//Lo que se hace antes de enviar el formulario
+				},
+			success: function(respuesta){
+				//lo que se si el destino devuelve algo
+				$("#provinciaE").html(respuesta.html);
+			},
+			error:    function(xhr,err){
+				//alert("readyState: "+xhr.readyState+"\nstatus: "+xhr.status+"\n \n responseText: "+xhr.responseText);
+			}
+		});
+	}
+}
+
+function AbrirMenu()
+{ // Marca del color por defecto para errores de formulario los que no se han validado.
+    $('#grupo-submenu #submenu-r').addClass('menuabierto');
+    $('#grupo-submenu #submenu-op').addClass('menuabiertobt');
+	$('ul#despl').css('display', 'block');
+    /*$('#grupo-submenu #submenu-r ul').addClass('menuabierto');*/
+}
+
+
+function CerrarMenu()
+{ // Marca del color por defecto para errores de formulario los que no se han validado.
+    $('#grupo-submenu #submenu-r').removeClass('menuabierto');
+    $('#grupo-submenu #submenu-op').removeClass('menuabiertobt');
+	$('ul#despl').css('display', 'none');
+    /*$('#grupo-submenu #submenu-r ul').removeClass('menuabierto');*/
+}
+
+
+function ValidarFormularios(formulario)
+{
+	var valido = true;
+	var campos = '';
+	var comprobar;
+    var mensajeserr = [];
+	
+	switch (formulario)
+	{
+		case 'login':
+			
+			$('input[name="user"]').removeClass("noValido");
+			comprobar = $('input[name="user"]').val();
+			if(comprobar.length < 8)
+			{
+				campos += 'input:user;';
+				mensajeserr.push( 'El correo electrónico debe tener mínimo 8 caracteres.' );
+				valido = false;
+			}
+			
+			$('input[name="pass"]').removeClass("noValido");
+			comprobar = $('input[name="pass"]').val();
+			if(comprobar.length < 4)
+			{
+				campos += 'input:pass;';
+				mensajeserr.push( 'La contraseña debe tener mínimo 4 caracteres.' );
+				valido = false;
+			}
+			
+			break;
+		
+		case 'modpwd':
+			
+			$('input[name="pass"]').removeClass("noValido");
+			comprobar = $('input[name="pass"]').val();
+			if(comprobar.length < 4)
+			{
+				campos += 'input:pass;';
+				mensajeserr.push( 'Hay que rellenar la contraseña actual para poder verfificar los cambios.' );
+				valido = false;
+			}
+			
+			$('input[name="npass"]').removeClass("noValido");
+			comprobar = $('input[name="npass"]').val();
+			if(comprobar.length < 4)
+			{
+				campos += 'input:npass;';
+				mensajeserr.push( 'La contraseña debe tener mínimo 4 caracteres.' );
+				valido = false;
+			}
+			
+			$('input[name="rnpass"]').removeClass("noValido");
+			comprobar = $('input[name="rnpass"]').val();
+			if(comprobar.length < 4 || comprobar != $('input[name="npass"]').val())
+			{
+				campos += 'input:rnpass;';
+				mensajeserr.push( 'La contraseña debe tener mínimo 4 caracteres y deben coincidir en ambos campos.' );
+				valido = false;
+			}
+			
+			break;
+		
+		case 'modema':
+			
+			$('input[name="nemail"]').removeClass("noValido");
+			comprobar = $('input[name="nemail"]').val();
+			if(comprobar.length < 8)
+			{
+				campos += 'input:nemail;';
+				mensajeserr.push( 'El correo electrónico debe tener mínimo 8 caracteres.' );
+				valido = false;
+			}
+			
+			$('input[name="rnemail"]').removeClass("noValido");
+			comprobar = $('input[name="rnemail"]').val();
+			if(comprobar.length < 8 || comprobar != $('input[name="nemail"]').val())
+			{
+				campos += 'input:rnemail;';
+				mensajeserr.push( 'El correo electrónico debe tener mínimo 8 caracteres y deben coincidir en ambos campos.' );
+				valido = false;
+			}
+			
+			$('input[name="epass"]').removeClass("noValido");
+			comprobar = $('input[name="epass"]').val();
+			if(comprobar.length < 4)
+			{
+				campos += 'input:epass;';
+				mensajeserr.push( 'Hay que rellenar la contraseña actual para poder verfificar los cambios.' );
+				valido = false;
+			}
+			
+			break;
+			
+		case 'moddat':
+			
+			$('input[name="nombre"]').removeClass("noValido");
+			comprobar = $('input[name="nombre"]').val();
+			if(comprobar.length < 3)
+			{
+				campos += 'input:nombre;';
+				mensajeserr.push( 'El nombre debe tener mínimo 4 caracteres.' );
+				valido = false;
+			}
+			
+			$('input[name="dni"]').removeClass("noValido");
+			comprobar = $('input[name="dni"]').val();
+			if(comprobar.length < 9)
+			{
+				campos += 'input:dni;';
+				mensajeserr.push( 'El DNI tiene que ser valido.' );
+				valido = false;
+			}
+			
+			$('input[name="telefono"]').removeClass("noValido");
+			comprobar = $('input[name="telefono"]').val();
+			if(comprobar.length < 9)
+			{
+				campos += 'input:telefono;';
+				mensajeserr.push( 'El telefono tiene que ser valido.' );
+				valido = false;
+			}
+			
+			$('input[name="direccion"]').removeClass("noValido");
+			comprobar = $('input[name="direccion"]').val();
+			if(comprobar.length < 4)
+			{
+				campos += 'input:direccion;';
+				mensajeserr.push( 'La dirección debe tener mínimo 4 caracteres.' );
+				valido = false;
+			}
+			
+			$('select[name="provincia"]').removeClass("noValido");
+			comprobar = $('select[name="provincia"]').val();
+			if(comprobar.length < 1)
+			{
+				campos += 'select:provincia;';
+				mensajeserr.push( 'Debe seleccionar una provincia.' );
+				valido = false;
+			}
+                        
+                        $('select[name="provinciaE"]').removeClass("noValido");
+			comprobar = $('select[name="provinciaE"]').val();
+			if(comprobar.length < 1)
+			{
+				campos += 'select:provinciaE;';
+				mensajeserr.push( 'Debe seleccionar una provincia.' );
+				valido = false;
+			}
+			
+			$('input[name="localidad"]').removeClass("noValido");
+			comprobar = $('input[name="localidad"]').val();
+			if(comprobar.length < 3)
+			{
+				campos += 'input:localidad;';
+				mensajeserr.push( 'Debe rellenar la localidad.' );
+				valido = false;
+			}
+			
+			$('input[name="cp"]').removeClass("noValido");
+			comprobar = $('input[name="cp"]').val();
+			if(comprobar.length < 5)
+			{
+				campos += 'input:cp;';
+				mensajeserr.push( 'El código postal debe estar relleno.' );
+				valido = false;
+			}
+			
+			$('input[name="dpass"]').removeClass("noValido");
+			comprobar = $('input[name="dpass"]').val();
+			if(comprobar.length < 8)
+			{
+				campos += 'input:dpass;';
+				mensajeserr.push( 'Hay que rellenar la contraseña actual para poder verfificar los cambios.' );
+				valido = false;
+			}
+			
+			break;
+			
+		case 'sigin':
+			
+			$('input[name="nombre"]').removeClass("noValido");
+			comprobar = $('input[name="nombre"]').val();
+			if(comprobar.length < 3)
+			{
+				campos += 'input:nombre;';
+				mensajeserr.push( 'El nombre debe tener mínimo 4 caracteres.' );
+				valido = false;
+			}
+			
+			$('input[name="apellidos"]').removeClass("noValido");
+			comprobar = $('input[name="apellidos"]').val();
+			if(comprobar.length < 3)
+			{
+				campos += 'input:apellidos;';
+				mensajeserr.push( 'El/los apellidos deben tener mínimo 4 caracteres.' );
+				valido = false;
+			}
+			
+			$('input[name="dni"]').removeClass("noValido");
+			comprobar = $('input[name="dni"]').val();
+			if(comprobar.length < 9)
+			{
+				campos += 'input:dni;';
+				mensajeserr.push( 'El DNI tiene que ser valido.' );
+				valido = false;
+			}
+			
+			$('input[name="telefono"]').removeClass("noValido");
+			comprobar = $('input[name="telefono"]').val();
+			if(comprobar.length < 9)
+			{
+				campos += 'input:telefono;';
+				mensajeserr.push( 'El DNI telefono que ser valido.' );
+				valido = false;
+			}
+			
+			$('input[name="direccion"]').removeClass("noValido");
+			comprobar = $('input[name="direccion"]').val();
+			if(comprobar.length < 4)
+			{
+				campos += 'input:direccion;';
+				mensajeserr.push( 'La dirección debe tener mínimo 4 caracteres.' );
+				valido = false;
+			}
+			
+			$('select[name="provincia"]').removeClass("noValido");
+			comprobar = $('select[name="provincia"]').val();
+			if(comprobar.length < 1)
+			{
+				campos += 'select:provincia;';
+				mensajeserr.push( 'Debe seleccionar una provincia.' );
+				valido = false;
+			}
+                        
+                        $('select[name="provinciaE"]').removeClass("noValido");
+			comprobar = $('select[name="provinciaE"]').val();
+			if(comprobar.length < 1)
+			{
+				campos += 'select:provinciaE;';
+				mensajeserr.push( 'Debe seleccionar una provincia.' );
+				valido = false;
+			}
+			
+			$('input[name="localidad"]').removeClass("noValido");
+			comprobar = $('input[name="localidad"]').val();
+			if(comprobar.length < 3)
+			{
+				campos += 'input:localidad;';
+				mensajeserr.push( 'Debe indicar una localidad.' );
+				valido = false;
+			}
+			
+			$('input[name="cp"]').removeClass("noValido");
+			comprobar = $('input[name="cp"]').val();
+			if(comprobar.length < 5)
+			{
+				campos += 'input:cp;';
+				mensajeserr.push( 'Debe indicar un código postal.' );
+				valido = false;
+			}
+			
+			$('input[name="email"]').removeClass("noValido");
+			comprobar = $('input[name="email"]').val();
+			if(comprobar.length < 8)
+			{
+				campos += 'input:email;';
+				mensajeserr.push( 'El correo electrónico debe tener mínimo 8 caracteres.' );
+				valido = false;
+			}
+			
+			$('input[name="cemail"]').removeClass("noValido");
+			comprobar = $('input[name="cemail"]').val();
+			if(comprobar.length < 8 || comprobar != $('input[name="email"]').val())
+			{
+				campos += 'input:cemail;';
+				mensajeserr.push( 'El correo electrónico debe tener mínimo 8 caracteres y deben coincidir en ambos campos.' );
+				valido = false;
+			}
+			
+			$('input[name="password"]').removeClass("noValido");
+			comprobar = $('input[name="password"]').val();
+			if(comprobar.length < 4)
+			{
+				campos += 'input:password;';
+				mensajeserr.push( 'La contraseña debe tener mínimo 4 caracteres.' );
+				valido = false;
+			}
+			
+			$('input[name="rpassword"]').removeClass("noValido");
+			comprobar = $('input[name="rpassword"]').val();
+			if(comprobar.length < 4 || comprobar != $('input[name="password"]').val())
+			{
+				campos += 'input:rpassword;';
+				mensajeserr.push( 'La contraseña debe tener mínimo 4 caracteres y deben coincidir en ambos campos.' );
+				valido = false;
+			}
+			
+			$('span[name="pcheckp"]').removeClass("noValido");
+			if(!$('input[name="checkp"]').prop('checked'))
+			{
+				campos += 'span:pcheckp;';
+				mensajeserr.push( 'Debe marcar la casilla de He leído y entiendo la Política de Privacidad.' );
+				valido = false;
+			}
+			
+			break;
+		
+		case 'recovery':
+			
+			$('input[name="user"]').removeClass("noValido");
+			comprobar = $('input[name="user"]').val();
+			if(comprobar.length < 8)
+			{
+				campos += 'input:user;';
+				mensajeserr.push( 'El correo electrónico debe tener mínimo 8 caracteres.' );
+				valido = false;
+			}
+			
+			break;
+	}
+	
+	if (campos.length > 0)
+		campos = campos.substring(0, campos.length-1);
+	
+	if (!valido)
+	{
+		marcarCamposNoValidos(campos);
+		mostrarMensajeF(mensajeserr, formulario);
+	}
+	
+	return valido;
+}
+
+
+function CloseMsg(me)
+{
+    $(me).parent().remove();
+}
+
+
+function mostrarMensaje(tipo, titulo, mensaje)
+{ // Muestra el mensaje correspondiente.
+    var msg = "";
+    var id = "LbMessage";
+
+    switch (tipo)
+    {
+        case "c": id = "LbMessage"; break;
+        case "a": id = "LbMessageWarning"; break;
+        case "e": id = "LbMessageError"; break;
+    }
+
+    msg = '<div id="' + id + '">' +
+			'<span class="BtClose" onclick="CloseMsg(this);">x</span>' +
+			'<span class="title">' + titulo + '</span>' +
+			'' + mensaje +
+		'</div>';
+
+    $("#Messages").html(msg);
+}
+
+
+function mostrarMensajeF(mensajes, lb)
+{ // Muestra el mensaje correspondiente.
+    var msg = "";
+    var id = "LbMessage" + lb;
+	
+	msg += '<br /><ul type="square">';
+	for (i = 0; i < mensajes.length; i++)
+	{
+		msg += '<li>'+mensajes[i]+'</li>';
+	}
+	msg += '</ul>';
+	
+    $('#'+id).html(msg);
+}
+
+
+function marcarCamposNoValidos(marcarCampos)
+{ // Marca del color por defecto para errores de formulario los que no se han validado.
+    var lista = marcarCampos.split(';');
+	var campo;
+
+    for (i = 0; i < lista.length; i++)
+	{
+		campo = lista[i].split(':');
+        $('' + campo[0] + '[name="' + campo[1] + '"]').addClass("noValido");
+	}
+}

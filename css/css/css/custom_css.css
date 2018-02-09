@@ -1,0 +1,172 @@
+#added_to_cart{
+    position: absolute;
+    display: none;
+    top: 0;
+    left: 0;
+    background: #00000042;
+    width: 100%;
+    height: 100%;
+    z-index: 100000;
+}
+.product_added_box {
+    top: 0 auto;
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    width: 400px;
+    margin-left: -200px;
+    height: 60px;
+    margin-top: -150px;
+   
+    padding: 5px;
+    background: white;
+    text-align: center;
+}
+#cart_product_name{
+    color: #333;
+}
+
+#cart_product_name span{
+    color: #333;
+    font-weight: bolder;
+}
+
+#close_cart, .presupuesto_button{
+    padding: 4px;
+    border: solid #333 1px;
+    width: 120px;
+    left: 16%;
+    margin-top: 5px;
+    border-radius: 2px;
+    cursor: pointer;
+    float: left;
+    margin-left: 10px;
+}
+
+.talla select, #ordenar select{
+    background: #fff;
+    color: #333;
+    border: solid #ccc 1px;
+    padding: 0px;
+    margin: 0;
+    width: 100%;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+}
+
+.product_quantity {
+    height: 37px;
+    border-radius: 2px;
+    width: 35px;
+    padding-left: 10px;
+    text-align: center;
+}
+
+#myModal2{
+    min-width: 300px;
+}
+
+.span_quantity {
+    font-size: 15px;
+    color: black;
+}
+
+#imagen_modal2{
+    cursor:pointer;
+}
+
+.presupuesto_articulo span.button{
+    position: absolute;
+    margin-top: 0px !important;
+    left: 25%;
+    cursor: pointer;
+}
+
+.vaciar_form{
+    left: 45%;
+}
+
+.vaciar_presupuesto{    
+    height: 39px !important;
+    background: #000;
+    border: none !important;
+    color: #fff !important;
+    cursor: pointer;
+}
+
+.clasetb2 #btSubmit{
+    color: white !important;
+}
+
+#thumbs7 {
+    margin-top: 0px !important;
+}
+/* Custom CSS Para textos Home*/
+#textos h1, #textos2 h1{
+    text-transform: uppercase;
+    font-size: 23px;
+    padding-bottom: 40px;
+    padding-top: 50px;
+}
+
+#textos, #textos2{
+    padding: 0px 115px !important;
+    text-align: center;
+    font-size: 16px;
+    line-height: 2;
+    top: 30px;
+    -ms-transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+#izquierda{
+    width: 50%;
+    color: rgb(255, 255, 255);
+    float: left;
+    height: 455px !important;
+    min-height: 425px;
+}
+
+#derecha{
+    height: 455px !important;
+}
+
+@media (max-width:1170px) { 
+    #textos, #textos2{
+        top: 0 !important;
+        padding: 0 !important;
+    }
+    #textos h1, #textos2 h1{
+        text-transform: uppercase;
+        font-size: 23px;
+        padding-bottom: 20px;
+        padding-top: 30px;
+    }
+}
+
+@media (max-width:767px) { 
+    #articulo span.button{
+        position: inherit;
+        left: auto;
+        cursor: pointer;
+    }
+
+    .vaciar_form{
+        left: 10%;
+        margin-bottom: 20px;
+    }
+    #submenu-r .fa-bars{
+        color: #333;
+    }
+    #textos h1, #textos2 h1{
+        text-transform: uppercase;
+        font-size: 23px;
+        padding-bottom: 35px;
+        padding-top: 10px;
+    }
+    #izquierda, #derecha{
+        height: 100% !important; 
+    }
+}

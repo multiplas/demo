@@ -1,0 +1,31 @@
+AddDefaultCharset utf-8
+
+<IfModule mod_rewrite.c>
+# Activar RewriteEngine
+RewriteEngine on
+RewriteBase /
+RewriteCond %{SCRIPT_FILENAME} !-d
+RewriteCond %{SCRIPT_FILENAME} !-f
+
+RewriteRule ^acc/entrar/logcompra/?$ index.php?sys_action=entrar&logcompra
+RewriteRule ^acc/anadir/(\w+)/?$ index.php?sys_action=anadir&addcart=$1&cantidad=1
+RewriteRule ^acc/anadir/(\w+)/([0-9]{1,2})/?$ index.php?sys_action=anadir&addcart=$1&cantidad=$2
+RewriteRule ^acc/anadirv/(.*)/?$ index.php?sys_action=anadirv&addcart=$1
+RewriteRule ^acc/quitar/(\w+)/(.*)/(.*)/?$ index.php?sys_action=quitar&removecart=$1&talla=$2&color=$3
+RewriteRule ^acc/actualizar/(\w+)/?$ index.php?sys_action=actualizar&prodact=$1
+RewriteRule ^acc/activar/(\w+)/?$ index.php?sys_action=activar&activador=$1
+RewriteRule ^acc/(\w+)/?$ index.php?sys_action=$1
+RewriteRule ^acc/rmace/(\w+)/?$ index.php?sys_action=rmace&id=$1
+RewriteRule ^quienessomos/?$ index.php?quienessomos
+RewriteRule ^cuenta/logcompra/?$ index.php?cuenta&logcompra
+RewriteRule ^contacto/(.*)/?$ index.php?contacto=$1
+RewriteRule ^(\w+)/(\w+)/(\w+)/([a-zA-Z]+)?$ index.php?lng=$1&$2=$3&nombre=$4
+RewriteRule ^(\w+)/(\w+)/(\w+)/([a-zA-Z]+)/?$ index.php?lng=$1&$2=$3&nombre=$4
+RewriteRule ^(\w+)/(\w+)/(\w+)/(\w+)/?$ index.php?lng=$1&$2=$3&pagina=$4
+RewriteRule ^(\w+)/(\w+)/(\w+)/([-_\w]+)/?$ index.php?lng=$1&$2=$3&nombre=$4
+RewriteRule ^(\w+)/(\w+)/(\w+)/([-_\w]+)/(\w+)/?$ index.php?lng=$1&$2=$3&nombre=$4&pagina=$5
+RewriteRule ^(\w+)/(\w+)/(\w+)/?$ index.php?lng=$1&$2=$3
+RewriteRule ^(\w+)/(\w+)/?$ index.php?lng=$1&$2
+RewriteRule ^(\w+)/?$ index.php?lng=$1
+errordocument 404 /temporal/error/error404.html
+</IfModule>

@@ -1,0 +1,46 @@
+<?php
+	$prefijo_img = '/back/uploads/';
+	
+	if ($producto['imagen'] != null)
+	{
+		$prefijo_img = '/imagenesproductos/';
+		$sliders =  $producto['imagenes'];
+		array_unshift($sliders, $producto['imagen']);
+	}
+	
+	if (count($sliders) > 0)
+	{
+?>
+<section class="demo_wrapper">
+	<article class="demo_block">
+		<ul id="demo1">
+			<?php
+				$i = 0;
+				foreach ($sliders AS $slider)
+				{
+					$i++;
+				?>
+					<li><a href="#slide<?=$i?>"><img src="<?=$prefijo_img.@$slider?>" alt=""></a></li>
+				<?php
+				}
+			?>
+		</ul>
+	</article>
+</section>		
+
+<script>
+	$(function() {
+		var demo1 = $("#demo1").slippry({
+			// transition: 'fade',
+			// useCSS: true,
+			// speed: 1000,
+			// pause: 3000,
+			// auto: true,
+			// preload: 'visible',
+			// autoHover: false
+		});
+	});
+</script>
+<?php 
+	}
+?>

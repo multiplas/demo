@@ -1,0 +1,397 @@
+<?php if ($Empresa['det_producto'] == 0){ ?>
+<script>
+    function openModal() {
+        document.getElementById('myModal').style.display = "block";
+        document.getElementById('myModal2').style.display = "block";
+    }
+
+    function closeModal() {
+        document.getElementById('myModal').style.display = "none";
+        document.getElementById('myModal2').style.display = "none";
+        document.getElementById('myModal3').style.display = "none";
+    }
+</script>
+
+<style>
+    /* The Modal (background) */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 10000000000;
+  padding-top: 35px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: black;
+  opacity: 0.5;
+}
+
+/* Modal Content */
+.modal-content {
+  position: relative;
+  background-color: #fefefe;
+  margin: auto;
+  padding: 0;
+  width: 90%;
+  max-width: 1020px;
+}
+
+/* The Close Button */
+.close {
+  color: white;
+  position: absolute;
+  top: -2px;
+  right: 5px;
+  font-size: 35px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+ @media (min-width:940px)
+{
+    .tamanoG{
+        width: auto;
+    }
+
+    .timgG{
+         height: 100%;
+        width: auto
+    }
+}
+
+ @media (max-width:940px)
+ {
+    .tamanoG{
+        width: 95%;
+    }
+
+    .timgG{
+        max-height: 100%; 
+        width: 100%;
+    }
+}
+
+</style>
+<div id="myModal" class="modal" onclick=""></div>
+<div id="myModal2" class="modal tamanoG" onclick="" style="opacity: 1;  height: auto; position: absolute; left: 50%; top: 50%; position: fixed; transform: translate(-50%, -50%); -webkit-transform: translate(-50%, -50%); background-color: #C0C0C0">
+    <span class="close cursor" onclick="closeModal()">&times;</span>
+    <div class="mySlides" style="text-align: center">
+        <img class="timgG" id="imagen_modal" src="http://babytravel.es/imagenesproductos/5853d55d9b703_37-home_default.jpg">
+        <?php if($Empresa['mcatalogo'] == 1){?><br><a id="nombre_modal" href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>contacto/Prueba" class="button" style="min-width: 10px !important; display:none;">Solicitar más información</a><?php } ?>
+        <span class="span_quantity">Cantidad:</span> <input id="quantity" class="product_quantity" type="number" min="1" max="50" value="1"/> <br>
+        <a id="add_to_cart" onclick="closeModal()" href="#" class="button" style="min-width: 10px !important;">Añadir al Presupuesto</a>
+    </div>
+</div>
+<div id="myModal3" class="modal" onclick="" style="opacity: 1; width: auto; height: auto; position: absolute; left: 50%; top: 50%; position: fixed; transform: translate(-50%, -50%); -webkit-transform: translate(-50%, -50%); background-color: #C0C0C0">
+    <span class="close cursor" onclick="">&times;</span>
+    <div class="mySlides" style="width: 200px; background-color: white; padding: 25px; font-size: 18px;" id="text_info">
+    </div>
+</div>
+<?php } ?>
+
+<style>
+     @media (min-width:940px){
+        #grupo-contenido #contenido #panel-izquierdo{
+           width: 24% !important;
+        }
+        #grupo-contenido #contenido #panel-superior{
+           width: 100% !important;
+        }
+        #grupo-contenido #contenido #productos{
+           width: 74% !important;
+        }
+     }
+                        .descripcion2{
+                            font-family: '<?=$fuente2?>',Arial,Helvetica,sans-serif;
+                            font-size: 18px;
+                            text-align: center; 
+                            width: 100%;
+                            display: block;
+                            color: <?=$colores['nombre_color']?> !important;
+                        }
+                        .descripcion2:hover{
+                            color: <?=$colores['nombre_color_hover']?>;
+                            cursor: pointer;
+                        }
+                        
+                        .botoncito{
+                            margin-top: 20px;
+                            text-align: center;
+                            width: 100%;
+                        }
+                        
+                        .vermas3{
+                            border: 1px solid #e74e4e;
+                            border-radius: 6px;
+                            color: <?=$colores['boton_letras']?>;
+                            font-size: 1rem;
+                            font-weight: bold;
+                            height: 1rem;
+                            line-height: 1rem;
+                            margin: 10px 0 0;
+                            max-width: 40%;
+                            padding: 4px 15px;
+                            transition: border 1s ease 0s, background 1s ease 0s, color 1s ease 0s;
+                            width: auto;
+                            background-color: <?=$colores['boton_fondo']?>;
+                        }
+                        
+                        .vermas3:hover{
+                            background-color: <?=$colores['boton_fondo_hover']?>;
+                            color: <?=$colores['boton_letras_hover']?>;
+                        }
+                        .sale-label{
+                            background-color: <?=$colores['oferta_fondo']?>;
+                            border-radius: 4px;
+                            color: <?=$colores['oferta_letra']?>; !important;
+                            float: right;
+                            font-size: 12px;
+                            font-weight: bold;
+                            padding: 2px 4px;
+                            text-transform: uppercase;
+                            z-index: 10;
+                            position: relative !important;
+                            margin-left: 2px;
+                        }
+                        
+                        .venta-label{
+                            background-color: <?=$colores['venta_fondo']?>;
+                            border-radius: 4px;
+                            color: <?=$colores['oferta_letra']?>; !important;
+                            float: right;
+                            font-size: 12px;
+                            font-weight: bold;
+                            padding: 2px 4px;
+                            text-transform: uppercase;
+                            z-index: 10;
+                            position: relative !important;
+                            margin-left: 2px;
+                        }
+                        
+                        .alquiler-label{
+                            background-color: <?=$colores['alquiler_fondo']?>;
+                            border-radius: 4px;
+                            color: <?=$colores['oferta_letra']?>; !important;
+                            float: right;
+                            font-size: 12px;
+                            font-weight: bold;
+                            padding: 2px 4px;
+                            text-transform: uppercase;
+                            z-index: 10;
+                            position: relative !important;
+                            margin-left: 2px;
+                        }
+                        
+                        .agotado-label{
+                            background-color: <?=$colores['agotado_fondo']?>;
+                            border-radius: 4px;
+                            color: <?=$colores['oferta_letra']?>; !important;
+                            float: right;
+                            font-size: 12px;
+                            font-weight: bold;
+                            padding: 2px 4px;
+                            text-transform: uppercase;
+                            z-index: 10;
+                            position: relative !important;
+                            margin-left: 2px;
+                        }
+                        
+                    </style>
+
+<div id="contenido">
+	<form action="<?=$_SERVER['REQUEST_URI']?>" method="post">
+            <div id="subcategoriaspr">
+            <div class="muestra">
+                <?php
+                    for ($i = 0; $i < count($subcategorias); $i++)
+                    {
+                        $nombre = strtolower($subcategorias[$i]['nombre']);
+                        $nombre = preg_replace('([^A-Za-z0-9])', '_', $nombre);	   
+                ?>
+                    <div class="producto">
+                        <a href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>productos/<?=$subcategorias[$i]['id']?>/<?=$nombre?>"><img src="<?=$draizp?>/imagenesproductos/<?=$subcategorias[$i]['imagen'] != null ? $subcategorias[$i]['imagen'] : 'no-img-pro.png'?>" alt="<?=$subcategorias[$i]['nombre']?>" /></a>
+                        <span class="descripcion"><?=$subcategorias[$i]['nombre']?></span>
+                        <span class="precio"><br></span>
+                        <a class="vermas" href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>productos/<?=$subcategorias[$i]['id']?>/<?=$nombre?>">entrar</a>
+                    </div>
+                <?php
+                    }
+                ?>
+            </div>
+		</div>
+             
+            <style>
+                @media (min-width:768px){
+                    .colum1{
+                       display: inline-block; height: auto; margin-top: 0; vertical-align: top; width: 29%;
+                    }
+                    .colum2{
+                       display: inline-block; height: auto; margin-top: 0px; vertical-align: top; width: 70%;
+                    }
+                }
+                @media (max-width:768px){
+                    .colum1{
+                       display: inline-block; height: auto; margin-top: 0; vertical-align: top; width: 95%; text-align: center;
+                    }
+                    .colum2{
+                       display: inline-block; height: auto; margin-top: 0; vertical-align: top; width: 95%; text-align: center;
+                    }
+                }
+                
+                #grupo-contenido #contenido #panel-superior div#ordenar {
+                    margin-left: 0px;
+                }
+            </style>
+            <?php if($Empresa['novedades'] == '1' && $Empresa['pnovlateral'] == 1){ ?>
+		<div id="panel-superior">
+                        <?php //include('./bloques/menu_prods.php'); ?>
+			<?php //include('./bloques/filtros.php'); ?>
+			<!-- <span name="BtReset" class="button">Limpiar Filtros</span> -->
+                        <?php include('./temas/4/bloques/novedades_lateral_2.php')?>
+		</div>
+            <?php } ?>
+            <?php if($Empresa['etiqAct'] == '1' && $Empresa['pnovlateral'] == 1){ ?><div id="panel-superior"><?php include('./temas/5/bloques/etiquetas.php')?></div><?php } ?>
+            <?php if($Empresa['novedades'] == '1' && $Empresa['pnovlateral'] == 0){ ?>
+		<div id="panel-izquierdo">
+                        <?php //include('./bloques/menu_prods.php'); ?>
+			<?php //include('./bloques/filtros.php'); ?>
+			<!-- <span name="BtReset" class="button">Limpiar Filtros</span> -->
+                        <?php include('./temas/4/bloques/novedades_lateral.php')?>
+		<?php if($Empresa['etiqAct'] == '0'){ ?>
+                    </div>
+                <?php } ?>
+            <?php } ?>
+            <?php if($Empresa['etiqAct'] == '1' && $Empresa['pnovlateral'] == 0){ if($Empresa['novedades'] == '0'){ ?><div id="panel-izquierdo"><?php } include('./temas/5/bloques/etiquetas.php')?></div><?php } ?>
+            <div id="productos" <?=$Empresa['novedades'] == '1' && ($Empresa['pnovlateral'] == 0 || $Empresa['pnovlateral'] == 2) ? '' : 'style="width: auto !important;"'?>>
+                   
+                    <div id="panel-superior">
+                    
+			<?php include('./bloques/paginador.php'); ?>
+			<?php include('./bloques/ordenador.php'); ?>
+		</div>
+                <br><br>
+                     <div style="height: auto !important; overflow: hidden; position: relative !important; top: -30px; margin-bottom: -60px; visibility: visible !important; width: 100% !important;">
+                        <?php
+                
+                            $sliders = array();
+
+                            $sql="SELECT * FROM bd_slider WHERE idcat = $_GET[productos]";
+                            $query = mysqli_query($dbi, $sql);
+                            if(mysqli_num_rows($query) >= 1){
+                                $slider = mysqli_fetch_array($query);
+                                echo '<img style="width: 100%;" src="/back/uploads/'.$slider['imagen'].'">';
+                            }
+
+                        if($imagenCategoria != 'null' && $imagenCategoria != ''){
+                            ?>
+                        <div class="colum1">
+                            <?=$imagenCategoria != '' ? '<img style="width: 100%;" src="'.$draizp.'/imagenesproductos/'.$imagenCategoria.'">' : '' ?>
+                        </div>
+                        <div class="colum2">
+                            <?=$descripcionCategoria?>
+                        </div>
+                         
+                        <?php } ?>
+                    </div>
+                    <br><br>
+                    
+			<?php
+                        
+				if (count($productos) < 1) echo 'No hay productos en esta categoría.';
+				for ($i = 0; $i < count($productos); $i++)
+				{
+                                    $nombre = utf8_encode(strtr(utf8_decode($productos[$i]['nombre']), utf8_decode($tofind), $replac));
+                                    $nombre = strtolower($nombre);
+                                    $nombre = preg_replace('([^A-Za-z0-9])', '-', $nombre);	   
+                                    $classex = 'producto3';
+                                    $no_permitidas= array ("á","é","í","ó","ú","Á","É","Í","Ó","Ú","ñ","À","Ã","Ì","Ò","Ù","Ã™","Ã ","Ã¨","Ã¬","Ã²","Ã¹","ç","Ç","Ã¢","ê","Ã®","Ã´","Ã»","Ã‚","ÃŠ","ÃŽ","Ã”","Ã›","ü","Ã¶","Ã–","Ã¯","Ã¤","«","Ò","Ã","Ã„","Ã‹");
+$permitidas= array ("a","e","i","o","u","A","E","I","O","U","n","N","A","E","I","O","U","a","e","i","o","u","c","C","a","e","i","o","u","A","E","I","O","U","u","o","O","i","a","e","U","I","A","E");
+
+			?>
+                    
+                                    <div class="<?=$classex?> <?=$Empresa['ftamano'] == 1 ? 'producto': ''?>" <?=$Empresa['ftamano'] == 1 ? 'style="border: 1px solid rgb(221, 221, 221);"': 'style="display: inline-block; border: 1px solid rgb(221, 221, 221);"'?>>
+                                        <?=$Empresa['etiqpro'] == 1 ? ($productos[$i]['mostraretq'] == 1 ? ($productos[$i]['tipo_prod'] == 0 ? '<span class="venta-label">Venta</span>' : ($productos[$i]['tipo_prod'] == 3 ? '<span class="alquiler-label">Alquiler</span>' : '')) : '') : '' ?>
+                                        <?=$productos[$i]['mostraretqAgo'] == 1 ? '<span class="agotado-label">¡Agotado!</span>' : ''?>
+                                        <?=$productos[$i]['mostraretqOfe'] == 1 ? '<span class="sale-label">¡Oferta!</span>' : ''?>
+                                        <?=$productos[$i]['mostraretqOfe'] == 0 ? ($productos[$i]['descuento'] != 0 ? '<span class="sale-label">¡Oferta!</span>' : '') : '' ?>
+                                        <?=$Empresa['ftamano'] == 0 ? '<br><br>' : '' ?>
+                                        <?php if ($Empresa['det_producto'] == 1){ ?><a href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>producto/<?=$productos[$i]['id']?>/<?=str_replace(".", "", str_replace("--", "-", $nombre))?>/"><?php } ?><img id="imagen_modal2" name="imagen_modal2" data-nombre="<?=preg_replace('([^A-Za-z0-9])', '_', str_replace($no_permitidas, $permitidas, $productos[$i]['nombre']))?>" <?=$Empresa['ftamano'] == 1 ? 'class="zoom"': 'class="nozoomf" style="width: 100%;"'?> src="<?=$draizp?>/imagenesproductos/<?=$productos[$i]['imagen']?>" alt="<?=$productos[$i]['nombre']?>" /><?php if ($Empresa['det_producto'] == 1){ ?></a><?php } ?>
+                                <div class="descripcion2" style="min-height: 46px;"><?php if ($Empresa['det_producto'] == 1){ ?><a href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>producto/<?=$productos[$i]['id']?>/<?=str_replace(".", "", str_replace("--", "-", $nombre))?>/"><?php } ?> <?=strlen($productos[$i]['nombre']) > 24 ? substr($productos[$i]['nombre'], 0, 47) : $productos[$i]['nombre'].'<br><br>'?><?php if ($Empresa['det_producto'] == 1){ ?></a><?php } ?></div>
+					                        
+                                        <?php if($_SESSION['usr'] != null || ($_SESSION['usr'] == null && $Empresa['registro'] == 1)){ ?>
+                                            <div style="text-align: center; height: 38px">
+                                                <?php if($Empresa['actDes'] == 1){?><div class="descuento"><?=$productos[$i]['descuento'] != 0 && $productos[$i]['precio'] != 'Consultar' ? '-'.$productos[$i]['descuento'].' '.$productos[$i]['descuentoe'] : ''?></div><?php } ?>
+                                                <?php if($Empresa['actPreAnt'] == 1){?><div class="precioa"><?=$productos[$i]['descuento'] != 0 && $productos[$i]['precio'] != 'Consultar' ? number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$productos[$i]['precio_ant']), 2, ',', '.').$_SESSION['moneda'] : ''?></div><?php } ?>
+                                            </div>
+                                            <?php if($Empresa['actPre'] == 1){ ?><?php if ($Empresa['det_producto'] == 1){ ?><div class="descripcion2 precio" style="text-align:center; max-width: 100%; width: 100%; color: <?=$colores['precio_color']?>; font-weight: bolder;"><?=$productos[$i]['tprecio'] != '' ? $productos[$i]['tprecio'] : number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$productos[$i]['precio']), 2, ',', '.')?> <?=$productos[$i]['precio'] > 0 ? $productos[$i]['tprecio'] != '' ? '' : $_SESSION['moneda'] : ''?><?=$productos[$i]['precio'] == 'Consultar' ? $productos[$i]['precio'] : ''?><!--<?=$productosMN[$i]['precio'] != 'Consultar' ? $_SESSION['moneda'] : ''?>--></div><?php } } ?>
+                                            <?php if ($Empresa['det_producto'] == 1){ ?><br><div class="botoncito"><a class="vermas3" href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>producto/<?=$productos[$i]['id']?>/<?=str_replace(".", "", str_replace("--", "-", $nombre))?>/"><i class="fa fa-eye"></i> Ver más</a></div><?php } ?>
+                                        <?php }else{ ?>
+                                            <?php if ($Empresa['det_producto'] == 1){ ?><br><div class="botoncito"><a class="vermas3" style="width: 83% !important;max-width: 83% !important;text-align:center" href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>producto/<?=$productos[$i]['id']?>/<?=str_replace(".", "", str_replace("--", "-", $nombre))?>/"><i class="fa fa-eye"></i> Ver más</a></div><?php } ?>
+                                        <?php } ?>
+                            
+                                        <?php if($productos[$i]['aplazame'] == 1){ ?>
+                                            <span class="precio" style="max-width: 100%; font-size: 12px; text-align: center;">Financialo con Aplazame por <?=number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$productos[$i]['caplazame1']), 2, ',', '.')?><?=$_SESSION['moneda']?> + <?=number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$productos[$i]['caplazame']), 2, ',', '.')?><?=$_SESSION['moneda']?> al mes</span>
+                                        <?php } ?>
+                                            <br></div>
+			<?php
+				}
+			?>
+		</div>
+            <?php if($Empresa['novedades'] == '1' && $Empresa['pnovlateral'] == 2){ ?>
+		<div id="panel-izquierdo">
+                        <?php //include('./bloques/menu_prods.php'); ?>
+			<?php //include('./bloques/filtros.php'); ?>
+			<!-- <span name="BtReset" class="button">Limpiar Filtros</span> -->
+                        <?php include('./temas/4/bloques/novedades_lateral.php')?>
+		<?php if($Empresa['etiqAct'] == '0'){ ?>
+                    </div>
+                <?php } ?>
+            <?php } ?>
+            <?php if($Empresa['etiqAct'] == '1' && $Empresa['pnovlateral'] == 2){ if($Empresa['novedades'] == '0'){ ?><div id="panel-izquierdo"><?php } include('./temas/5/bloques/etiquetas.php')?></div><?php } ?>
+		<input type="hidden" name="nofilters" value="nofilters" />
+	</form>
+	<div id="panel-inferior">
+		<?php include('./bloques/paginador.php'); ?>
+             <br><?php if($Empresa['compGaleria'] == 1) include('./temas/4/bloques/compartir_galeria.php')?>
+	</div>
+        <?php if($Empresa['novedades'] == '1' && $Empresa['pnovlateral'] == 3){ ?>
+		<div id="panel-superior">
+                        <?php //include('./bloques/menu_prods.php'); ?>
+			<?php //include('./bloques/filtros.php'); ?>
+			<!-- <span name="BtReset" class="button">Limpiar Filtros</span> -->
+                        <?php include('./temas/4/bloques/novedades_lateral_2.php')?>
+		</div>
+            <?php } ?>
+    <?php if($Empresa['etiqAct'] == '1' && $Empresa['pnovlateral'] == 3){ ?><div id="panel-superior"><?php include('./temas/5/bloques/etiquetas.php')?></div><?php } ?>
+	<?php /*$horientacion = 'hor'; include_once('./bloques/informacion.php'); ?>
+	<?php include_once('./bloques/novedades.php'); ?>
+	<?php include_once('./bloques/masvendidos.php');*/ ?>
+</div>
+
+                  <?php if ($Empresa['det_producto'] == 0){ ?>  
+                    <script type="text/javascript">
+                    var product_name = '';
+                    (function($) {
+                         $('body').on('click','.zoom',function(){
+                            window.parent.document.getElementById('imagen_modal').src = $(this).attr("src"); 
+                            product_name = $(this).attr("alt");                      
+                            window.parent.document.getElementById('nombre_modal').href = '<?=$draizp?>/<?=$_SESSION['lenguaje']?>contacto/'+$(this).attr("data-nombre");
+                            window.parent.document.getElementById('myModal').style.display = "block";
+                            window.parent.document.getElementById('myModal2').style.display = "block";
+                        });
+                        $('body').on('click','.nozoomf',function(){
+                            window.parent.document.getElementById('imagen_modal').src = $(this).attr("src");
+                            window.parent.document.getElementById('nombre_modal').href = '<?=$draizp?>/<?=$_SESSION['lenguaje']?>contacto/'+$(this).attr("data-nombre");
+                            window.parent.document.getElementById('myModal').style.display = "block";
+                            window.parent.document.getElementById('myModal2').style.display = "block";
+                        });
+                    })(jQuery);    
+                    </script>
+                  <?php } ?>
