@@ -81,6 +81,7 @@
 												<?php
 													foreach ($listados AS $listado)
 													{
+                                                        if(!empty($listado)){
                                                         $date = date('d/m/Y', strtotime($listado['fechaC']));
                                                         if (@$lineapi != 'odd')
                                                             $lineapi = 'odd';
@@ -95,7 +96,9 @@
 															<td valign="top" class=""  style="text-align: center;"><?=$listado['tallaC']?></td>
 															<td valign="top" class=""  style="text-align: center;"><?=$listado['cantidadC']?></td>
 														</tr>
-                                                <?php } ?>
+                                                <?php } 
+                                                    }
+                                                ?>
                                             </tbody>
                                         </table>
                                 </div>

@@ -2949,11 +2949,11 @@
                 
                     $sql = "SELECT bd_carrito.id AS idC, bd_carrito.cantidad AS cantidadC, bd_carrito.fecha AS fechaC, bd_carrito.talla AS tallaC, bd_productos.nombre AS nombreP,bd_users.nombre AS nombreU,bd_users.email AS emailU,bd_users.telefono AS telefonoU,bd_users.direccion AS direccionU FROM bd_productos,bd_users,bd_carrito WHERE bd_productos.id=$assoc[idproducto] AND bd_users.id = $assoc[idusuario] AND bd_carrito.id = $assoc[id];";
                     $query1 = mysqli_query($this->conexion, $sql);
-                    $resultados[] = mysqli_fetch_assoc($query1);
+					if (mysqli_num_rows($query1) > 0)
+                    	$resultados[] = mysqli_fetch_assoc($query1);
                 
                 }
 					//$resultados[] = $assoc;
-
 			return $resultados;
 		}
 		
