@@ -40,7 +40,7 @@ jQuery(document).ready(
             jQuery(this).css('background', '<?php echo $colortextogen; ?>');
         });
 
-		<?php if ($barStatus['valor'] == "1")://activado ?>
+		<?php if (isset($barStatus['valor']) && $barStatus['valor'] == "1")://activado ?>
 			jQuery( window ).scroll(function() {
 				if(jQuery( window ).scrollTop() > 130 && jQuery('#grupo-submenu').length > 0 && jQuery( window ).width() > 768){
 					jQuery('#grupo-submenu').addClass('fixed-bar-top');
