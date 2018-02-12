@@ -239,6 +239,16 @@ $bloques = getBloqsInfo();
         <?=$Empresa['pie']?>
     </div>
     <?php } ?>
+    <?php 
+    $resultado = footerCopyrightStatus();
+    if( $resultado['valor'] == "1" ): //Activado
+    ?>
+        <div class="copyright-bar">
+             <?php echo $resultado['texto'] ?><style>         .copyright-bar{             background-color: <?php echo $resultado['color_barra'] ?>;             color: <?php echo $resultado['color_texto'] ?>;         }         </style>
+        </div>
+    <?php
+    endif;
+    ?>
 </div>
 <link href="<?=$draizp?>/componentes/fotorama/fotorama.css" rel="stylesheet">
 <script src="<?=$draizp?>/componentes/fotorama/fotorama.js"></script>

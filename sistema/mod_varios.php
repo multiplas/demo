@@ -1544,4 +1544,23 @@ function MenuCategoriasGal()
 
         return $resultado;
     }
+
+    function footerCopyrightStatus()
+    {
+        global $dbi;
+
+        $resultado = null;
+        
+        $sql = "SELECT * FROM bd_footer_copyright WHERE id = 0;";
+                
+        $query = mysqli_query($dbi, $sql);
+        
+        if (mysqli_num_rows($query) == 1)
+        {
+            $assoc = mysqli_fetch_assoc($query);
+            $resultado = $assoc;
+        }
+        
+        return $resultado;
+    }
 ?>

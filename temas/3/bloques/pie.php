@@ -188,6 +188,16 @@ $bloques = getBloqsInfo();
                 echo '<a href="#" title="En tienda" class="tooltip"><img class="color-img" style="width:35px;height:35px;" src="'.$draizp.'/imagenes/tienda.png" alt="tienda" /></a>';
         ?>
 	</div>
+    <?php 
+    $resultado = footerCopyrightStatus();
+    if( $resultado['valor'] == "1" ): //Activado
+    ?>
+        <div class="copyright-bar">
+             <?php echo $resultado['texto'] ?><style>         .copyright-bar{             background-color: <?php echo $resultado['color_barra'] ?>;             color: <?php echo $resultado['color_texto'] ?>;         }         </style>
+        </div>
+    <?php
+    endif;
+    ?>
 </div>
 <?php } ?>
 <link href="<?=$draizp?>/componentes/fotorama/fotorama.css" rel="stylesheet">

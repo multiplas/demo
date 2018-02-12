@@ -150,6 +150,16 @@ $bloques = getBloqsInfo();
                         </div>
                     </div>
                 </div>
+                <?php 
+                $resultado = footerCopyrightStatus();
+                if( $resultado['valor'] == "1" ): //Activado
+                ?>
+                    <div class="copyright-bar">
+                        <?php echo $resultado['texto'] ?><style>         .copyright-bar{             background-color: <?php echo $resultado['color_barra'] ?>;             color: <?php echo $resultado['color_texto'] ?>;         }         </style>
+                    </div>
+                <?php
+                endif;
+                ?>
             </div>
         </div>
     </footer>
