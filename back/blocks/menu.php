@@ -179,7 +179,7 @@
                         </li>
 
 
-                       <? include "menu-personalizacion.php"; ?>
+                       <?php include "menu-personalizacion.php"; ?>
                         
                        <li<?=$menusel == 'herramientas-menu' ? ' class="active"' : ''?>>
                             <a href="herramientas-menu.php"><i class="icon-chevron-right"></i> Herramientas</a>

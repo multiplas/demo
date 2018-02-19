@@ -91,7 +91,7 @@
 					<span class="descuento"><?=$productosMN[$i]['descuento'] != 0 && $productosMN[$i]['precio'] != 'Consultar' ? '-'.$productosMN[$i]['descuento'].' '.$productosMN[$i]['descuentoe'] : ''?></span>
 					<span class="precioa"><?=$productosMN[$i]['descuento'] != 0 && $productosMN[$i]['precio'] != 'Consultar' ? number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$productosMN[$i]['precio_ant']), 2, ',', '.').$_SESSION['moneda'] : ''?></span><br>
                     <?php if($_SESSION['usr'] != null || ($_SESSION['usr'] == null && $Empresa['registro'] == 1)){ ?>
-                        <span class="precio"><?=$productosMN[$i]['precio'] != 'Consultar' ? number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$productosMN[$i]['precio']), 2, ',', '.') : 'Consultar'?><?=$productosMN[$i]['precio'] != 'Consultar' ? $_SESSION['moneda'] : ''?></span>
+                        <span class="precio"><?=$productosMN[$i]['tprecio'] != '' ? $productosMN[$i]['tprecio'] : ($productosMN[$i]['precio'] != 'Consultar' ? number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$productosMN[$i]['precio']), 2, ',', '.') : 'Consultar')?><?=$productosMN[$i]['precio'] != 'Consultar' ? $productosMN[$i]['tprecio'] != '' ? '' : $_SESSION['moneda'] : ''?></span>
                         <a class="vermas2" href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>producto/<?=$productosMN[$i]['id']?>/<?=$nombre?>/">Ver más</a>
                     <?php }else{ ?>
                         <a class="vermas2 vermas3" style="width: 83% !important;max-width: 83% !important;text-align:center" href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>producto/<?=$productosMN[$i]['id']?>/<?=$nombre?>/">Ver más</a>
@@ -144,7 +144,7 @@
 					<span class="descuento"><?=$productosMN[$i]['descuento'] != 0 && $productosMN[$i]['precio'] != 'Consultar' ? '-'.$productosMN[$i]['descuento'].' '.$productosMN[$i]['descuentoe'] : ''?></span>
 					<span class="precioa"><?=$productosMN[$i]['descuento'] != 0 && $productosMN[$i]['precio'] != 'Consultar' ? number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$productosMN[$i]['precio_ant']), 2, ',', '.').$_SESSION['moneda'] : ''?></span><br>
                     <?php if($_SESSION['usr'] != null || ($_SESSION['usr'] == null && $Empresa['registro'] == 1)){ ?>
-                        <span class="precio"><?=$productosMN[$i]['precio'] != 'Consultar' ? number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$productosMN[$i]['precio']), 2, ',', '.') : 'Consultar'?><?=$productosMN[$i]['precio'] != 'Consultar' ? $_SESSION['moneda'] : ''?></span>
+                        <span class="precio"><?=$productosMN[$i]['tprecio'] != '' ? $productosMN[$i]['tprecio'] : ($productosMN[$i]['precio'] != 'Consultar' ? number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$productosMN[$i]['precio']), 2, ',', '.') : 'Consultar')?><?=$productosMN[$i]['precio'] != 'Consultar' ? $productosMN[$i]['tprecio'] != '' ? '' : $_SESSION['moneda'] : ''?></span>
                         <a class="vermas" href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>producto/<?=$productosMN[$i]['id']?>/<?=$nombre?>/">Ver más</a>
                     <?php }else{ ?>
                         <a class="vermas" style="width: 83% !important;max-width: 83% !important;text-align:center" href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>producto/<?=$productosMN[$i]['id']?>/<?=$nombre?>/">Ver más</a>
@@ -185,7 +185,7 @@
 					<span class="descuento"><?=$productosMN[$i]['descuento'] != 0 && $productosMN[$i]['precio'] != 'Consultar' ? '-'.$productosMN[$i]['descuento'].' '.$productosMN[$i]['descuentoe'] : ''?></span>
 					<span class="precioa"><?=$productosMN[$i]['descuento'] != 0 && $productosMN[$i]['precio'] != 'Consultar' ? number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$productosMN[$i]['precio_ant']), 2, ',', '.').$_SESSION['moneda'] : ''?></span><br>
                     <?php if($_SESSION['usr'] != null || ($_SESSION['usr'] == null && $Empresa['registro'] == 1)){ ?>
-                        <span class="precio"><?=$productosMN[$i]['precio'] != 'Consultar' ? number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$productosMN[$i]['precio']), 2, ',', '.') : 'Consultar'?><?=$productosMN[$i]['precio'] != 'Consultar' ? $_SESSION['moneda'] : ''?></span>
+                        <span class="precio"><?=$productosMN[$i]['tprecio'] != '' ? $productosMN[$i]['tprecio'] : ($productosMN[$i]['precio'] != 'Consultar' ? number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$productosMN[$i]['precio']), 2, ',', '.') : 'Consultar')?><?=$productosMN[$i]['precio'] != 'Consultar' ? $productosMN[$i]['tprecio'] != '' ? '' : $_SESSION['moneda'] : ''?></span>
                         <a class="vermas" href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>producto/<?=$productosMN[$i]['id']?>/<?=$nombre?>/"><?=$aux1?></a>
                     <?php }else{ ?>
                         <a class="vermas" style="width: 83% !important;max-width: 83% !important;text-align:center" href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>producto/<?=$productosMN[$i]['id']?>/<?=$nombre?>/"><?=$aux1?></a>

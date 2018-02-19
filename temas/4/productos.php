@@ -83,7 +83,7 @@
 <div id="myModal2" class="modal tamanoG" onclick="" style="opacity: 1;  height: auto; position: absolute; left: 50%; top: 50%; position: fixed; transform: translate(-50%, -50%); -webkit-transform: translate(-50%, -50%); background-color: #C0C0C0">
     <span class="close cursor" onclick="closeModal()">&times;</span>
     <div class="mySlides" style="text-align: center">
-        <img class="timgG" id="imagen_modal" src="http://babytravel.es/imagenesproductos/5853d55d9b703_37-home_default.jpg">
+        <img class="timgG" id="imagen_modal" src="//babytravel.es/imagenesproductos/5853d55d9b703_37-home_default.jpg">
         <?php if($Empresa['mcatalogo'] == 1){?><br><a id="nombre_modal" href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>contacto/Prueba" class="button" style="min-width: 10px !important; display:none;">Solicitar más información</a><?php } ?>
         <span class="span_quantity">Cantidad:</span> <input id="quantity" class="product_quantity" type="number" min="1" max="50" value="1"/> <br>
         <a id="add_to_cart" onclick="closeModal()" href="#" class="button" style="min-width: 10px !important;">Añadir al Presupuesto</a>
@@ -322,8 +322,8 @@ $permitidas= array ("a","e","i","o","u","A","E","I","O","U","n","N","A","E","I",
                                         <?=$productos[$i]['mostraretqOfe'] == 1 ? '<span class="sale-label">¡Oferta!</span>' : ''?>
                                         <?=$productos[$i]['mostraretqOfe'] == 0 ? ($productos[$i]['descuento'] != 0 ? '<span class="sale-label">¡Oferta!</span>' : '') : '' ?>
                                         <?=$Empresa['ftamano'] == 0 ? '<br><br>' : '' ?>
-                                        <?php if ($Empresa['det_producto'] == 1){ ?><a href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>producto/<?=$productos[$i]['id']?>/<?=str_replace(".", "", str_replace("--", "-", $nombre))?>/"><?php } ?><img id="imagen_modal2" name="imagen_modal2" data-nombre="<?=preg_replace('([^A-Za-z0-9])', '_', str_replace($no_permitidas, $permitidas, $productos[$i]['nombre']))?>" <?=$Empresa['ftamano'] == 1 ? 'class="zoom"': 'class="nozoomf" style="width: 100%;"'?> src="<?=$draizp?>/imagenesproductos/<?=$productos[$i]['imagen']?>" alt="<?=$productos[$i]['nombre']?>" /><?php if ($Empresa['det_producto'] == 1){ ?></a><?php } ?>
-                                <div class="descripcion2" style="min-height: 46px;"><?php if ($Empresa['det_producto'] == 1){ ?><a href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>producto/<?=$productos[$i]['id']?>/<?=str_replace(".", "", str_replace("--", "-", $nombre))?>/"><?php } ?> <?=strlen($productos[$i]['nombre']) > 24 ? substr($productos[$i]['nombre'], 0, 47) : $productos[$i]['nombre'].'<br><br>'?><?php if ($Empresa['det_producto'] == 1){ ?></a><?php } ?></div>
+                                        <?php if ($Empresa['det_producto'] == 1 ||$Empresa['actPre'] == 1){ ?><a href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>producto/<?=$productos[$i]['id']?>/<?=str_replace(".", "", str_replace("--", "-", $nombre))?>/"><?php } ?><img id="imagen_modal2" name="imagen_modal2" data-nombre="<?=preg_replace('([^A-Za-z0-9])', '_', str_replace($no_permitidas, $permitidas, $productos[$i]['nombre']))?>" <?=$Empresa['ftamano'] == 1 ? 'class="zoom"': 'class="nozoomf" style="width: 100%;"'?> src="<?=$draizp?>/imagenesproductos/<?=$productos[$i]['imagen']?>" alt="<?=$productos[$i]['nombre']?>" /><?php if ($Empresa['det_producto'] == 1){ ?></a><?php } ?>
+                                <div class="descripcion2" style="min-height: 46px;"><?php if ($Empresa['det_producto'] == 1){ ?><a href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>producto/<?=$productos[$i]['id']?>/<?=str_replace(".", "", str_replace("--", "-", $nombre))?>/"><?php } ?> <?=strlen($productos[$i]['nombre']) > 24 ? substr($productos[$i]['nombre'], 0, 47) : $productos[$i]['nombre'].'<br><br>'?><?php if ($Empresa['det_producto'] == 1 || $Empresa['actPre'] == 1){ ?></a><?php } ?></div>
 					                        
                                         <?php if($_SESSION['usr'] != null || ($_SESSION['usr'] == null && $Empresa['registro'] == 1)){ ?>
                                             <div style="text-align: center; height: 38px">
@@ -339,7 +339,8 @@ $permitidas= array ("a","e","i","o","u","A","E","I","O","U","n","N","A","E","I",
                                         <?php if($productos[$i]['aplazame'] == 1){ ?>
                                             <span class="precio" style="max-width: 100%; font-size: 12px; text-align: center;">Financialo con Aplazame por <?=number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$productos[$i]['caplazame1']), 2, ',', '.')?><?=$_SESSION['moneda']?> + <?=number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$productos[$i]['caplazame']), 2, ',', '.')?><?=$_SESSION['moneda']?> al mes</span>
                                         <?php } ?>
-                                            <br></div>
+                                        <?php if($Empresa['actPre'] == 1){ ?><span class="precio"><?=$productosMV[$i]['tprecio'] != '' ? $productosMV[$i]['tprecio'] : ($productosMV[$i]['precio'] != 'Consultar' ? number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$productosMV[$i]['precio']), 2, ',', '.') : 'Consultar')?><?=$productosMV[$i]['precio'] != 'Consultar' ? $productosMV[$i]['tprecio'] != '' ? '' : $_SESSION['moneda'] : ''?></span><?php } ?>
+                                        <br></div>
 			<?php
 				}
 			?>
@@ -378,17 +379,17 @@ $permitidas= array ("a","e","i","o","u","A","E","I","O","U","n","N","A","E","I",
                   <?php if ($Empresa['det_producto'] == 0){ ?>  
                     <script type="text/javascript">
                     var product_name = '';
-                    (function($) {
-                         $('body').on('click','.zoom',function(){
-                            window.parent.document.getElementById('imagen_modal').src = $(this).attr("src"); 
-                            product_name = $(this).attr("alt");                      
-                            window.parent.document.getElementById('nombre_modal').href = '<?=$draizp?>/<?=$_SESSION['lenguaje']?>contacto/'+$(this).attr("data-nombre");
+                    (function(jQuery) {
+                         jQuery('body').on('click','.zoom',function(){
+                            window.parent.document.getElementById('imagen_modal').src = jQuery(this).attr("src"); 
+                            product_name = jQuery(this).attr("alt");                      
+                            window.parent.document.getElementById('nombre_modal').href = '<?=$draizp?>/<?=$_SESSION['lenguaje']?>contacto/'+jQuery(this).attr("data-nombre");
                             window.parent.document.getElementById('myModal').style.display = "block";
                             window.parent.document.getElementById('myModal2').style.display = "block";
                         });
-                        $('body').on('click','.nozoomf',function(){
-                            window.parent.document.getElementById('imagen_modal').src = $(this).attr("src");
-                            window.parent.document.getElementById('nombre_modal').href = '<?=$draizp?>/<?=$_SESSION['lenguaje']?>contacto/'+$(this).attr("data-nombre");
+                        jQuery('body').on('click','.nozoomf',function(){
+                            window.parent.document.getElementById('imagen_modal').src = jQuery(this).attr("src");
+                            window.parent.document.getElementById('nombre_modal').href = '<?=$draizp?>/<?=$_SESSION['lenguaje']?>contacto/'+jQuery(this).attr("data-nombre");
                             window.parent.document.getElementById('myModal').style.display = "block";
                             window.parent.document.getElementById('myModal2').style.display = "block";
                         });

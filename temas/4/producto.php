@@ -75,7 +75,7 @@
 <div id="myModal2" class="modal" onclick="javascript:closeModal();" style="opacity: 1; width: auto; height: auto; max-height: 80%; max-width: 85%; position: absolute; left: 50%; top: 50%; position: fixed; transform: translate(-50%, -50%); -webkit-transform: translate(-50%, -50%); background-color: #C0C0C0">
     <span class="close cursor" onclick="javascript:closeModal();">&times;</span>
     <div class="mySlides">
-        <img id="imagen_modal" src="http://babytravel.es/imagenesproductos/5853d55d9b703_37-home_default.jpg" style="height:90% !important; width: auto; max-width: 100%;">
+        <img id="imagen_modal" src="//babytravel.es/imagenesproductos/5853d55d9b703_37-home_default.jpg" style="height:90% !important; width: auto; max-width: 100%;">
     </div>
 </div>
 <div id="myModal3" class="modal" onclick="javascript:closeModal();" style="opacity: 1; width: auto; height: auto; position: absolute; left: 50%; top: 50%; position: fixed; transform: translate(-50%, -50%); -webkit-transform: translate(-50%, -50%); background-color: #C0C0C0">
@@ -170,7 +170,7 @@
     
     <?php } ?>
     
-        <div itemscope itemtype="http://schema.org/Product" id="producto">
+        <div itemscope itemtype="//schema.org/Product" id="producto">
 
 <?php
 			if ($producto == null)
@@ -720,9 +720,9 @@
                                
                                     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
                                     <link rel="stylesheet" href="/resources/demos/style.css">
-                                    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/flick/jquery-ui.min.css">
+                                    <link rel="stylesheet" href="//code.jquery.com/ui/1.10.3/themes/flick/jquery-ui.min.css">
                                     
-                                    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+                                    <script src="//code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
                                 
                                 <script>    
                                     jQuery( "#fentrada" ).datepicker({
@@ -915,7 +915,7 @@
                                 <?php if($producto['rfentrada'] == 0){ ?>
                                     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
                                     <link rel="stylesheet" href="/resources/demos/style.css">
-                                    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/flick/jquery-ui.min.css">
+                                    <link rel="stylesheet" href="//code.jquery.com/ui/1.10.3/themes/flick/jquery-ui.min.css">
                                     
                                     <script src="//code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
                                 <?php } ?>
@@ -1180,13 +1180,13 @@
                                     $nombre = str_replace("--", "-", $nombre);
                                 ?>
                                 <div class="social-sharing2" style="text-align: center;" data-permalink="<?=$Empresa['url']?>/<?=$_SESSION['lenguaje']?>producto/<?=$producto['id']?>/<?=$nombre?>">
-                                    <a target="_blank" onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" href="http://www.facebook.com/sharer.php?u=<?=$Empresa['url']?>/<?=$_SESSION['lenguaje']?>producto/<?=$producto['id']?>/<?=$nombre?>">
+                                    <a target="_blank" onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" href="//www.facebook.com/sharer.php?u=<?=$Empresa['url']?>/<?=$_SESSION['lenguaje']?>producto/<?=$producto['id']?>/<?=$nombre?>">
                                       <span class="icon icon-facebook" aria-hidden="true"></span>
                                       <span class="share-title">Compartir</span>
                                     </a>
 
                                     <!-- https://dev.twitter.com/docs/intents -->
-                                    <a target="_blank" onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" href="http://twitter.com/share?url=<?=$Empresa['url']?>/<?=$_SESSION['lenguaje']?>producto/<?=$producto['id']?>/<?=$nombre?>/&amp;text=%0d&amp;">
+                                    <a target="_blank" onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" href="//twitter.com/share?url=<?=$Empresa['url']?>/<?=$_SESSION['lenguaje']?>producto/<?=$producto['id']?>/<?=$nombre?>/&amp;text=%0d&amp;">
                                       <span class="icon icon-twitter" aria-hidden="true"></span>
                                       <span class="share-title">Tweet</span>
                                     </a>
@@ -1195,25 +1195,25 @@
                                       https://developers.pinterest.com/pin_it/
                                       Pinterest get data from the same Open Graph meta tags Facebook uses
                                     -->
-                                    <a target="_blank" onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" href="http://pinterest.com/pin/create/button/?url=<?=$Empresa['url']?>/<?=$_SESSION['lenguaje']?>producto/<?=$producto['id']?>/<?=$nombre?>/&amp;media=&amp;description=%0d">
+                                    <a target="_blank" onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" href="//pinterest.com/pin/create/button/?url=<?=$Empresa['url']?>/<?=$_SESSION['lenguaje']?>producto/<?=$producto['id']?>/<?=$nombre?>/&amp;media=&amp;description=%0d">
                                       <span class="icon icon-pinterest" aria-hidden="true"></span>
                                       <span class="share-title">Pin it</span>
                                     </a>
 
                                     <!-- https://developers.google.com/+/web/share/ -->
-                                    <a target="_blank" onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" href="http://plus.google.com/share?url=<?=$Empresa['url']?>/<?=$_SESSION['lenguaje']?>producto/<?=$producto['id']?>/<?=$nombre?>/">
+                                    <a target="_blank" onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" href="//plus.google.com/share?url=<?=$Empresa['url']?>/<?=$_SESSION['lenguaje']?>producto/<?=$producto['id']?>/<?=$nombre?>/">
                                       <!-- Cannot get Google+ share count with JS yet -->
                                       <span class="icon icon-google" aria-hidden="true"></span>
                                       <span class="share-title">+1</span>
                                     </a>
 
                                     <!-- https://developer.linkedin.com/plugins/share -->
-                                    <a target="_blank" onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" href="http://www.linkedin.com/shareArticle?mini=true&amp;url=<?=$Empresa['url']?>/<?=$_SESSION['lenguaje']?>producto/<?=$producto['id']?>/<?=$nombre?>/&amp;title=%0d">
+                                    <a target="_blank" onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" href="//www.linkedin.com/shareArticle?mini=true&amp;url=<?=$Empresa['url']?>/<?=$_SESSION['lenguaje']?>producto/<?=$producto['id']?>/<?=$nombre?>/&amp;title=%0d">
                                       <span class="icon icon-linkedin" aria-hidden="true"></span>
                                       <span class="share-title">Compartir</span>
                                     </a>
 
-                                    <!-- http://blogs.skype.com/2015/11/04/introducing-share-button-effortless-sharing-that-sparks-richer-conversations/ -->
+                                    <!-- //blogs.skype.com/2015/11/04/introducing-share-button-effortless-sharing-that-sparks-richer-conversations/ -->
                                     <a target="_blank" onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" href="https://web.skype.com/share?url=<?=$Empresa['url']?>/<?=$_SESSION['lenguaje']?>producto/<?=$producto['id']?>/<?=$nombre?>/&amp;lang=es-es">
                                       <span class="icon icon-skype" aria-hidden="true"></span>
                                       <span class="share-title">Compartir</span>

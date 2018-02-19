@@ -166,21 +166,36 @@
 										  <fieldset>
 											<legend>Editar <?=$elemento['titulo']?></legend>
 											<div class="control-group">
-                                                                                            <label class="control-label" for="fileInput">Imagen</label>
-                                                                                            <div class="controls">
-                                                                                                <input class="input-file uniform_on" id="fileInput" name="imagenpagina" type="file">
-                                                                                                <?php
-                                                                                                if ($elemento['imagen'] != null)
-                                                                                                {
-                                                                                                   ?>
-                                                                                                    <a style="color: #09F; font-size: 0.70rem;" href="../imagenes/<?=$elemento['imagen']?>" target="_blank">ver imagen actual</a>
-                                                                                                    <a style="color:red;  font-size: 0.70rem;" href="?eliminarpI=<?=$elemento['id']?>" onclick="return confirm('Desea eliminar la página \'\'#<?=$elemento['id']?> - <?=$elemento['titulo']?>\'\' de la web?');">eliminar</a>
-                                                                                                   <?php
-                                                                                                }
-                                                                                                ?>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="control-group">
+													<label class="control-label" for="fileInput">Imagen</label>
+													<div class="controls">
+															<input class="input-file uniform_on" id="fileInput" name="imagenpagina" type="file">
+															<?php
+															if ($elemento['imagen'] != null)
+															{
+																	?>
+																	<a style="color: #09F; font-size: 0.70rem;" href="../imagenes/<?=$elemento['imagen']?>" target="_blank">ver imagen actual</a>
+																	<a style="color:red;  font-size: 0.70rem;" href="?eliminarpI=<?=$elemento['id']?>" onclick="return confirm('Desea eliminar la página \'\'#<?=$elemento['id']?> - <?=$elemento['titulo']?>\'\' de la web?');">eliminar</a>
+																	<?php
+															}
+															?>
+													</div>
+												</div>
+												<div class="control-group">
+													<label class="control-label" for="filePortadaInput">ImagenPortada</label>
+													<div class="controls">
+															<input class="input-file uniform_on" id="filePotadaInput" name="imagenportada" type="file">
+															<?php
+															if ($elemento['imagenportada'] != null)
+															{
+																	?>
+																	<a style="color: #09F; font-size: 0.70rem;" href="../imagenes/<?=$elemento['imagenportada']?>" target="_blank">ver imagen actual</a>
+																	<a style="color:red;  font-size: 0.70rem;" href="?eliminarpI=<?=$elemento['id']?>" onclick="return confirm('Desea eliminar la página \'\'#<?=$elemento['id']?> - <?=$elemento['titulo']?>\'\' de la web?');">eliminar</a>
+																	<?php
+															}
+															?>
+													</div>
+												</div>
+												<div class="control-group">
 											  <label class="control-label" for="titulo">Título </label>
 											  <div class="controls">
 												<input type="text" class="span6" id="titulo" name="titulo" placeholder="Título de la página" value="<?=$elemento['titulo']?>" required>
@@ -508,21 +523,36 @@
 										  <fieldset>
 											<legend>Editar <?=$elemento['titulo']?></legend>
 											<div class="control-group">
-                                                                                            <label class="control-label" for="fileInput">Imagen</label>
-                                                                                            <div class="controls">
-                                                                                                <input class="input-file uniform_on" id="fileInput" name="imagenpagina" type="file">
-                                                                                                <?php
-                                                                                                if ($elemento['imagen'] != null)
-                                                                                                {
-                                                                                                   ?>
-                                                                                                    <a style="color: #09F; font-size: 0.70rem;" href="../imagenes/<?=$elemento['imagen']?>" target="_blank">ver imagen actual</a>
-                                                                                                    <a style="color:red;  font-size: 0.70rem;" href="?eliminarpI=<?=$elemento['id']?>" onclick="return confirm('Desea eliminar la página \'\'#<?=$elemento['id']?> - <?=$elemento['titulo']?>\'\' de la web?');">eliminar</a>
-                                                                                                   <?php
-                                                                                                }
-                                                                                                ?>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="control-group">
+											<label class="control-label" for="fileInput">Imagen</label>
+											<div class="controls">
+													<input class="input-file uniform_on" id="fileInput" name="imagenpagina" type="file">
+													<?php
+													if ($elemento['imagen'] != null && !empty($elemento['imagen']))
+													{					
+														?>
+														<a style="color: #09F; font-size: 0.70rem;" href="../imagenes/<?=$elemento['imagen']?>" target="_blank">ver imagen actual</a>
+														<a style="color:red;  font-size: 0.70rem;" href="?eliminarpI=<?=$elemento['id']?>" onclick="return confirm('Desea eliminar la página \'\'#<?=$elemento['id']?> - <?=$elemento['titulo']?>\'\' de la web?');">eliminar</a>
+														<?php													
+													}													
+													?>
+											</div>
+									</div>
+									<div class="control-group">
+											<label class="control-label" for="filePortadaInput">Imagen Portada</label>
+											<div class="controls">
+													<input class="input-file uniform_on" id="filePortadaInput" name="imagenportada" type="file">
+													<?php
+													if ($elemento['imagenportada'] != null)
+													{
+															?>
+															<a style="color: #09F; font-size: 0.70rem;" href="../imagenes/<?=$elemento['imagenportada']?>" target="_blank">ver imagen actual</a>
+															<a style="color:red;  font-size: 0.70rem;" href="?eliminarpI=<?=$elemento['id']?>" onclick="return confirm('Desea eliminar la página \'\'#<?=$elemento['id']?> - <?=$elemento['titulo']?>\'\' de la web?');">eliminar</a>
+															<?php
+													}
+													?>
+											</div>
+									</div>
+									<div class="control-group">
 											  <label class="control-label" for="url">URL </label>
 											  <div class="controls">
 												<input type="text" class="span6" id="url" name="url" placeholder="URL del enlace" value="<?=$elemento['url']?>" required>

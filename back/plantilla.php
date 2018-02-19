@@ -26,32 +26,35 @@ require_once('blocks/cabecera.php');
 
     <style>
         #modal {
-                            width:100%; /*Toma el 100% del ancho de la página*/
-                            height:100%; /*Toma el 100% del alto de la página*/
-                            position:fixed; /*Con este código hacemos que el contenedor se mantenga en la pantalla y para que tome las dimensiones del body y no de la entrada*/
-                            background-color: rgba(1, 1, 1, 0.9); /*Color de fondo, incluye opacidad del 90%*/
-                            vertical-align: middle;
-                            top:0; /*Position superior*/
-                            left:0; /*Posición lateral*/
-                            z-index:99999999; /*Evitamos que algún elemento del blog sobreponga la ventana modal*/
-                        }
-                        #contenido-interno { 
-                            margin:2% auto; /*Separación arriba y centrado*/
-                            vertical-align: middle;
-                            font-size:12px; /*Tamaño de la fuente*/
-                            height:auto; /*Ancho del contenedor*/
-                            width:auto;
-                            text-align:center; /*Alineación del texto*/
-                            color:#222; /*Color del texto*/
-                            background:rgba(255, 255, 255, 0); /*Color de fondo*/
-                        }
-                        #myImg{
-                            width: auto;
-                            height: 635px;
-                            border-radius: 25px;
-                            -webkit-border-radius: 25px;
-                            -moz-border-radius: 25px;
-                        }
+            width:100%; /*Toma el 100% del ancho de la página*/
+            height:100%; /*Toma el 100% del alto de la página*/
+            position:fixed; /*Con este código hacemos que el contenedor se mantenga en la pantalla y para que tome las dimensiones del body y no de la entrada*/
+            background-color: rgba(1, 1, 1, 0.9); /*Color de fondo, incluye opacidad del 90%*/
+            vertical-align: middle;
+            top:0; /*Position superior*/
+            left:0; /*Posición lateral*/
+            z-index:99999999; /*Evitamos que algún elemento del blog sobreponga la ventana modal*/
+        }
+        #contenido-interno { 
+            margin:2% auto; /*Separación arriba y centrado*/
+            vertical-align: middle;
+            font-size:12px; /*Tamaño de la fuente*/
+            height:auto; /*Ancho del contenedor*/
+            width:auto;
+            text-align:center; /*Alineación del texto*/
+            color:#222; /*Color del texto*/
+            background:rgba(255, 255, 255, 0); /*Color de fondo*/
+        }
+        #myImg{
+            width: auto;
+            height: 635px;
+            border-radius: 25px;
+            -webkit-border-radius: 25px;
+            -moz-border-radius: 25px;
+        }
+        .wrongField{
+            border: solid red 2px !important;
+        }
     </style>
 
     <script type="text/javascript">
@@ -63,50 +66,71 @@ require_once('blocks/cabecera.php');
                         function ocultareldiv() {
                         document.getElementById("modal").style.display = "none" ; // permite ocultar el contenedor al hacer clic en alguna parte de éste mediante display:none en el elemento #modal
                         }
+        function checkInputs(){
+            var send = true;
+            
+            jQuery("form#myform_plantilla input[type=text]").each(function(){
+                var input = jQuery(this);
+                console.log(input[0].value);
+                if(input[0].value == ''){
+                    send = false;
+                    input.addClass('wrongField');
+                }
+                else
+                    input.removeClass('wrongField');
+            });
+
+            if(send == true)
+                jQuery('#myform_plantilla').submit();
+
+            else
+                alert('Verifique los campos resaltados.');
+        }
     </script>
 
     <script>
-        $(document).ready(function() {
+        jQuery(document).ready(function() {
+            jQuery('#btn-guardar').click(checkInputs);
                             //Ocultando todas las pestañas
-                            $(".div-tabs").hide();
+                            jQuery(".div-tabs").hide();
                             //Mostrando sólo la pestaña principal
-                            $("#body-tab-p1").show();
-                            $("#p1").addClass('active');
+                            jQuery("#body-tab-p1").show();
+                            jQuery("#p1").addClass('active');
 
                             //Mostrando pestaña según selección
-                            $(".div-tab-active").on("click",function(){
-                                $(".div-tabs").hide();
-                                $(".div-tab-active").removeClass('active');
-                                $("#body-tab-"+ $(this).attr("id")).show();
-                                $("#"+ $(this).attr("id")).addClass('active');
+                            jQuery(".div-tab-active").on("click",function(){
+                                jQuery(".div-tabs").hide();
+                                jQuery(".div-tab-active").removeClass('active');
+                                jQuery("#body-tab-"+ jQuery(this).attr("id")).show();
+                                jQuery("#"+ jQuery(this).attr("id")).addClass('active');
 
                                 //Ocultar botón de enviar en la pestaña de combinaciones
-                                if($(this).attr("id") == 'p6')
-                                    $("#btn-guardar").hide();
+                                if(jQuery(this).attr("id") == 'p6')
+                                    jQuery("#btn-guardar").hide();
                                 else
-                                    $("#btn-guardar").show();
+                                    jQuery("#btn-guardar").show();
                             });
 
-                            $("#combinacion_top").on("change",function(){
+                            jQuery("#combinacion_top").on("change",function(){
 
                                 //Verificando el tipo de combinación
-                                if($("#combinacion_top").val() == 1){
-                                    $("#inicio_top").val(15);//Inicio web: Remax
-                                    $("#productos_top").val(4);//galeria de productos: Movement Design template
-                                    $("#producto_top").val(4);//Detalle de producto: Movement Design template
-                                    $("#cabecera_top").val(15);//Cabecera: Remax
-                                    $("#pie_top").val(15);//Pie: Remax
+                                if(jQuery("#combinacion_top").val() == 1){
+                                    jQuery("#inicio_top").val(15);//Inicio web: Remax
+                                    jQuery("#productos_top").val(4);//galeria de productos: Movement Design template
+                                    jQuery("#producto_top").val(4);//Detalle de producto: Movement Design template
+                                    jQuery("#cabecera_top").val(15);//Cabecera: Remax
+                                    jQuery("#pie_top").val(15);//Pie: Remax
 
-                                    $("#color_fondo_menu_top").val('#ffffff');
-                                    $("#color_letras_menu_top").val('#000000');
-                                    $("#color_pie_top").val('#ffffff');
+                                    jQuery("#color_fondo_menu_top").val('#ffffff');
+                                    jQuery("#color_letras_menu_top").val('#000000');
+                                    jQuery("#color_pie_top").val('#ffffff');
 
-                                    $("#pg_ini_img_princimal").val('');
-                                    $("#pg_ini_derecha_top").val('');
-                                    $("#pg_ini_izquierda_top").val('');
+                                    jQuery("#pg_ini_img_princimal").val('');
+                                    jQuery("#pg_ini_derecha_top").val('');
+                                    jQuery("#pg_ini_izquierda_top").val('');
 
                                     //Buscador Avanzado
-                                    $("#buscador_avanzado").val(1);
+                                    jQuery("#buscador_avanzado").val(1);
 
                                     //Mensaje_combinación
                                     var mensaje_combinacion = "<b>Haz activado la combinación 1</b><br>"+
@@ -121,24 +145,24 @@ require_once('blocks/cabecera.php');
                                         "<b>*Páginas:</b> Inicio derecha e Izquierda se vaciaron todos los campos(imagenes incluidas)<br>"+
                                         "<b>*Buscador avanzado:</b> Activado<br>";
                                 }
-                                else if($("#combinacion_top").val() == 2){
+                                else if(jQuery("#combinacion_top").val() == 2){
 
-                                    $("#inicio_top").val(4);//Inicio web: Movement design template
-                                    $("#productos_top").val(4);//galeria de productos: Movement Design template
-                                    $("#producto_top").val(4);//Detalle de producto: Movement Design template
-                                    $("#cabecera_top").val(15);//Cabecera: Remax
-                                    $("#pie_top").val(15);//Pie.Remax
+                                    jQuery("#inicio_top").val(4);//Inicio web: Movement design template
+                                    jQuery("#productos_top").val(4);//galeria de productos: Movement Design template
+                                    jQuery("#producto_top").val(4);//Detalle de producto: Movement Design template
+                                    jQuery("#cabecera_top").val(15);//Cabecera: Remax
+                                    jQuery("#pie_top").val(15);//Pie.Remax
 
-                                    $("#color_fondo_menu_top").val('FALSE');
-                                    $("#color_letras_menu_top").val('FALSE');
-                                    $("#color_pie_top").val('FALSE');
+                                    jQuery("#color_fondo_menu_top").val('FALSE');
+                                    jQuery("#color_letras_menu_top").val('FALSE');
+                                    jQuery("#color_pie_top").val('FALSE');
 
-                                    $("#pg_ini_img_princimal").val('FALSE');
-                                    $("#pg_ini_derecha_top").val('FALSE');
-                                    $("#pg_ini_izquierda_top").val('FALSE');
+                                    jQuery("#pg_ini_img_princimal").val('FALSE');
+                                    jQuery("#pg_ini_derecha_top").val('FALSE');
+                                    jQuery("#pg_ini_izquierda_top").val('FALSE');
 
                                     //Buscador Avanzado
-                                    $("#buscador_avanzado").val('FALSE');
+                                    jQuery("#buscador_avanzado").val('FALSE');
 
                                     //Mensaje_combinación
                                     var mensaje_combinacion = "<b>Haz activado la combinación 2</b><br>"+
@@ -148,24 +172,24 @@ require_once('blocks/cabecera.php');
                                         "<b>*Cabecera:</b> Remax<br>"+
                                         "<b>*Pie:</b> Remax<br>";
                                 }
-                                else if($("#combinacion_top").val() == 3){
+                                else if(jQuery("#combinacion_top").val() == 3){
 
-                                    $("#inicio_top").val(4);//Inicio web: Movement design template
-                                    $("#productos_top").val(4);//galeria de productos: Movement Design template
-                                    $("#producto_top").val(4);//Detalle de producto: Movement Design template
-                                    $("#cabecera_top").val(4);//Cabecera: Movement Design template
-                                    $("#pie_top").val(4);//Pie.Movement Design template
+                                    jQuery("#inicio_top").val(4);//Inicio web: Movement design template
+                                    jQuery("#productos_top").val(4);//galeria de productos: Movement Design template
+                                    jQuery("#producto_top").val(4);//Detalle de producto: Movement Design template
+                                    jQuery("#cabecera_top").val(4);//Cabecera: Movement Design template
+                                    jQuery("#pie_top").val(4);//Pie.Movement Design template
 
-                                    $("#color_fondo_menu_top").val('FALSE');
-                                    $("#color_letras_menu_top").val('FALSE');
-                                    $("#color_pie_top").val('FALSE');
+                                    jQuery("#color_fondo_menu_top").val('FALSE');
+                                    jQuery("#color_letras_menu_top").val('FALSE');
+                                    jQuery("#color_pie_top").val('FALSE');
 
-                                    $("#pg_ini_img_princimal").val('FALSE');
-                                    $("#pg_ini_derecha_top").val('FALSE');
-                                    $("#pg_ini_izquierda_top").val('FALSE');
+                                    jQuery("#pg_ini_img_princimal").val('FALSE');
+                                    jQuery("#pg_ini_derecha_top").val('FALSE');
+                                    jQuery("#pg_ini_izquierda_top").val('FALSE');
 
                                     //Buscador Avanzado
-                                    $("#buscador_avanzado").val('FALSE');
+                                    jQuery("#buscador_avanzado").val('FALSE');
 
                                     var mensaje_combinacion = "<b>Haz activado la combinación 3</b><br>"+
                                         "<b>*Inicio web:</b> Movement design template<br>"+
@@ -174,24 +198,24 @@ require_once('blocks/cabecera.php');
                                         "<b>*Cabecera:</b> Movement Design template<br>"+
                                         "<b>*Pie:</b> Movement Design template<br>";
                                 }
-                                else if($("#combinacion_top").val() == 4){
+                                else if(jQuery("#combinacion_top").val() == 4){
 
-                                    $("#inicio_top").val(13);
-                                    $("#productos_top").val(4);//Galería de productos: Movement design template
-                                    $("#producto_top").val(2);//Detalle de producto: Blind Design template
-                                    $("#cabecera_top").val(10);//Cabecera: Logo max
-                                    $("#pie_top").val(4);//Pie.Movement Design template
+                                    jQuery("#inicio_top").val(13);
+                                    jQuery("#productos_top").val(4);//Galería de productos: Movement design template
+                                    jQuery("#producto_top").val(2);//Detalle de producto: Blind Design template
+                                    jQuery("#cabecera_top").val(10);//Cabecera: Logo max
+                                    jQuery("#pie_top").val(4);//Pie.Movement Design template
 
-                                    $("#color_fondo_menu_top").val('FALSE');
-                                    $("#color_letras_menu_top").val('FALSE');
-                                    $("#color_pie_top").val('FALSE');
+                                    jQuery("#color_fondo_menu_top").val('FALSE');
+                                    jQuery("#color_letras_menu_top").val('FALSE');
+                                    jQuery("#color_pie_top").val('FALSE');
 
-                                    $("#pg_ini_img_princimal").val('FALSE');
-                                    $("#pg_ini_derecha_top").val('FALSE');
-                                    $("#pg_ini_izquierda_top").val('FALSE');
+                                    jQuery("#pg_ini_img_princimal").val('FALSE');
+                                    jQuery("#pg_ini_derecha_top").val('FALSE');
+                                    jQuery("#pg_ini_izquierda_top").val('FALSE');
 
                                     //Buscador Avanzado
-                                    $("#buscador_avanzado").val('FALSE');
+                                    jQuery("#buscador_avanzado").val('FALSE');
 
                                     var mensaje_combinacion = "<b>Haz activado la combinación 4</b><br>"+
                                         "<b>*Inicio web:</b> Categorias (Padre)<br>"+
@@ -201,10 +225,10 @@ require_once('blocks/cabecera.php');
                                         "<b>*Pie:</b> Movement Design template<br>";
                                 }
 
-                                $("#combinacion_top_final").val(mensaje_combinacion);
+                                jQuery("#combinacion_top_final").val(mensaje_combinacion);
                                 //Guardar cambios
-                                if (confirm('¿Estas seguro de cambiar a la combinación '+$("#combinacion_top").val()+'?\nCualquier cambio que hayas hecho en este momento en el formulario se perderá.'))
-                                    $( "#myForm_combinaciones" ).submit();
+                                if (confirm('¿Estas seguro de cambiar a la combinación '+jQuery("#combinacion_top").val()+'?\nCualquier cambio que hayas hecho en este momento en el formulario se perderá.'))
+                                    jQuery( "#myForm_combinaciones" ).submit();
                             });
                         });
     </script>
@@ -520,7 +544,7 @@ require_once('blocks/cabecera.php');
                         </div>
 
 
-                        <button id="btn-guardar" type="submit" style="margin: 0px 0px 0px 10%;" class="btn btn-success">Guardar Cambios</button>
+                        <button id="btn-guardar" type="button" style="margin: 0px 0px 0px 10%;" class="btn btn-success">Guardar Cambios</button>
                 </form>
                 </div>
             </div>

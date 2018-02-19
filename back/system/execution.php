@@ -227,7 +227,7 @@
 		$resultaop = $System->MenuModificar($_POST['idm'], $_POST['url_enlace'], $_POST['contenido2'], $_FILES['imagen'], $_POST['nombre'], $_POST['nombre2'], $_POST['nombre3'], $_POST['nombre4'], $_POST['nombre5'], $_POST['nombre6'], $_POST['nombre7'], $_POST['nombre8'], ($_POST['catep'] != 'c-padre' ? $_POST['catep'] : null), @$_POST['categoria']);
 	
 	if (@$_GET['editarp'] != null && @$_POST['idm'] != null)
-		$resultaop = $System->PaginaModificar($_POST['idm'], $_POST['titulo'], $_POST['url'], $_POST['destinoURL'], $_POST['contenido'], $_POST['titulo_en'], $_POST['contenido_en'], $_POST['titulo_al'], $_POST['contenido_al'], $_POST['titulo_fr'], $_POST['contenido_fr'], $_POST['titulo_it'], $_POST['contenido_it'], $_POST['titulo_po'], $_POST['contenido_po'], $_POST['titulo_ca'], $_POST['contenido_ca'], $_POST['titulo_ru'], $_POST['contenido_ru'], $_FILES['imagenpagina']);
+		$resultaop = $System->PaginaModificar($_POST['idm'], $_POST['titulo'], $_POST['url'], $_POST['destinoURL'], $_POST['contenido'], $_POST['titulo_en'], $_POST['contenido_en'], $_POST['titulo_al'], $_POST['contenido_al'], $_POST['titulo_fr'], $_POST['contenido_fr'], $_POST['titulo_it'], $_POST['contenido_it'], $_POST['titulo_po'], $_POST['contenido_po'], $_POST['titulo_ca'], $_POST['contenido_ca'], $_POST['titulo_ru'], $_POST['contenido_ru'], $_FILES['imagenpagina'], $_FILES['imagenportada']);
 	
         if (@$_GET['desactivarPag'] != null)
 		$resultaop = $System->DesactivarPagina($_GET['desactivarPag']);
@@ -242,7 +242,7 @@
 		$resultaop = $System->ActivarGE();
         
         if (@$_GET['editaen'] != null && @$_POST['idm'] != null)
-		$resultaop = $System->EnlaceModificar($_POST['idm'], $_POST['url'], $_POST['titulo'], $_POST['pagaso'], $_POST['contenido'], $_POST['titulo_en'], $_POST['contenido_en'], $_POST['titulo_al'], $_POST['contenido_al'], $_POST['titulo_fr'], $_POST['contenido_fr'], $_POST['titulo_it'], $_POST['contenido_it'], $_POST['titulo_po'], $_POST['contenido_po'], $_POST['titulo_ca'], $_POST['contenido_ca'], $_POST['titulo_ru'], $_POST['contenido_ru'], $_FILES['imagenpagina']);
+		$resultaop = $System->EnlaceModificar($_POST['idm'], $_POST['url'], $_POST['titulo'], $_POST['pagaso'], $_POST['contenido'], $_POST['titulo_en'], $_POST['contenido_en'], $_POST['titulo_al'], $_POST['contenido_al'], $_POST['titulo_fr'], $_POST['contenido_fr'], $_POST['titulo_it'], $_POST['contenido_it'], $_POST['titulo_po'], $_POST['contenido_po'], $_POST['titulo_ca'], $_POST['contenido_ca'], $_POST['titulo_ru'], $_POST['contenido_ru'], $_FILES['imagenpagina'], $_FILES['imagenportada']);
 	
         if (@$_GET['editart'] != null && @$_POST['idm'] != null)
 		$resultaop = $System->TiendaModificar($_POST['idm'], $_POST['nombre'], $_POST['dtienda'], $_POST['ttienda'], $_POST['etienda'], $_POST['descripcion'], $_POST['descripcion_en'], $_POST['descripcion_al'], $_POST['descripcion_fr'], $_POST['descripcion_it'], $_POST['descripcion_po'], $_POST['descripcion_ca'], $_POST['descripcion_ru'], $_FILES['imagenpagina']);

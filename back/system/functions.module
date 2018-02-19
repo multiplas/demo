@@ -3251,7 +3251,7 @@
 			$contenidor = mysqli_real_escape_string($this->conexion, $contenidor);
             $categoria = mysqli_real_escape_string($this->conexion, $categoria);
 			
-            $imgname = "";
+            $imgname = "''";
 			if ($img['error'] != 4)
 			{
 				$imgname = substr(strtolower(str_replace('--', '-', str_replace(' ', '-', str_replace($this->no_permitidas, $this->permitidas , $nimagen)))), 0, 245);
@@ -3265,7 +3265,7 @@
             else
                 $imgname = "null";
 
-			$imgportadaname = "";
+			$imgportadaname = "''";
 			if ($imgportada['error'] != 4)
 			{
 				$imgportadaname = substr(strtolower(str_replace('--', '-', str_replace(' ', '-', str_replace($this->no_permitidas, $this->permitidas , $nimagen)))), 0, 245);
@@ -3333,7 +3333,7 @@
 			return $query;
 		}
         
-        function PaginaNueva($titulo, $contenido, $titulo_en = null, $contenido_en = null, $titulo_al = null, $contenido_al = null, $titulo_fr = null, $contenido_fr = null, $titulo_it = null, $contenido_it = null, $titulo_po = null, $contenido_po = null, $titulo_ca = null, $contenido_ca = null, $titulo_ru = null, $contenido_ru = null, $img, $imgportada)
+        function PaginaNueva($titulo, $contenido, $titulo_en = null, $contenido_en = null, $titulo_al = null, $contenido_al = null, $titulo_fr = null, $contenido_fr = null, $titulo_it = null, $contenido_it = null, $titulo_po = null, $contenido_po = null, $titulo_ca = null, $contenido_ca = null, $titulo_ru = null, $contenido_ru = null, $img, $imgportada = null)
 		{
 			$titulo = mysqli_real_escape_string($this->conexion, htmlspecialchars($titulo));
 			$contenido = mysqli_real_escape_string($this->conexion, $contenido);
@@ -3352,15 +3352,15 @@
                         $titulo_ru = mysqli_real_escape_string($this->conexion, htmlspecialchars($titulo_ru));
 			$contenido_ru = mysqli_real_escape_string($this->conexion, $contenido_ru);
 			
-            $imgname = "";
+            $imgname = "''";
 			if ($img['error'] != 4)
 			{
 				$imgname = uniqid().'_'.$img['name'];
 				move_uploaded_file($img['tmp_name'], '../imagenes/'.$imgname);
 				$imgname = "'$imgname'";
 			}
-			$imgportadaname = "";
-			if ($imgportada['error'] != 4)
+			$imgportadaname = "''";
+			if (!is_null($imgportada) && $imgportada['error'] != 4)
 			{
 				$imgportadaname = uniqid().'_cover-'.$imgportada['name'];
 				move_uploaded_file($imgportada['tmp_name'], '../imagenes/'.$imgportadaname);
@@ -3374,7 +3374,7 @@
 			return $query;
 		}
                    
-    function EnlaceNuevo($url, $titulo, $pagaso, $contenido, $titulo_en = null, $contenido_en = null, $titulo_al = null, $contenido_al = null, $titulo_fr = null, $contenido_fr = null, $titulo_it = null, $contenido_it = null, $titulo_po = null, $contenido_po = null, $titulo_ca = null, $contenido_ca = null, $titulo_ru = null, $contenido_ru = null, $img, $imgportada)
+    function EnlaceNuevo($url, $titulo, $pagaso, $contenido, $titulo_en = null, $contenido_en = null, $titulo_al = null, $contenido_al = null, $titulo_fr = null, $contenido_fr = null, $titulo_it = null, $contenido_it = null, $titulo_po = null, $contenido_po = null, $titulo_ca = null, $contenido_ca = null, $titulo_ru = null, $contenido_ru = null, $img, $imgportada = null)
 		{
 			$url = str_replace('ñ','n',$url);
 			$url = str_replace('Ñ','N',$url);
@@ -3397,7 +3397,7 @@
                         $titulo_ru = mysqli_real_escape_string($this->conexion, htmlspecialchars($titulo_ru));
 			$contenido_ru = mysqli_real_escape_string($this->conexion, $contenido_ru);
 			
-            $imgname = "";
+            $imgname = "''";
 			if ($img['error'] != 4)
 			{
 				$imgname = uniqid().'_'.$img['name'];
@@ -3405,8 +3405,8 @@
 				$imgname = "'$imgname'";
 			}
 
-			$imgportadaname = "";
-			if ($imgportada['error'] != 4)
+			$imgportadaname = "''";
+			if (!is_null($imgportada) && $imgportada['error'] != 4)
 			{
 				$imgportadaname = uniqid().'_cover-'.$imgportada['name'];
 				move_uploaded_file($imgportada['tmp_name'], '../imagenes/'.$imgportadaname);
@@ -3421,7 +3421,7 @@
 		}
                 		
 		function PaginaModificar($id, $titulo, $url, $destino, $contenido, $titulo_en = null, $contenido_en = null, $titulo_al = null, $contenido_al = null, $titulo_fr = null, $contenido_fr = null,
-                         $titulo_it = null, $contenido_it = null, $titulo_po = null, $contenido_po = null, $titulo_ca = null, $contenido_ca = null, $titulo_ru = null, $contenido_ru = null, $img, $imgportada)
+                         $titulo_it = null, $contenido_it = null, $titulo_po = null, $contenido_po = null, $titulo_ca = null, $contenido_ca = null, $titulo_ru = null, $contenido_ru = null, $img, $imgportada = null)
 		{
 			$url = str_replace('ñ','n',$url);
 			$url = str_replace('Ñ','N',$url);
@@ -3445,7 +3445,7 @@
                         $url = mysqli_real_escape_string($this->conexion, $url);;
                         $destino = mysqli_real_escape_string($this->conexion, $destino);;
 			
-            $imgname = "";
+            $imgname = "''";
 			if ($img['error'] != 4)
 			{
 				$imgname = uniqid().'_'.$img['name'];
@@ -3453,8 +3453,8 @@
 				$imgname = ", imagen = '$imgname'";
 			}
 
-			$imgportadaname = "";
-			if ($img['error'] != 4)
+			$imgportadaname = "''";
+			if (!is_null($imgportada) && $imgportada['error'] != 4)
 			{
 				$imgportadaname = uniqid().'_cover-'.$imgportada['name'];
 				move_uploaded_file($imgportada['tmp_name'], '../imagenes/'.$imgportadaname);
@@ -3513,7 +3513,7 @@
                 }
                 
                 function EnlaceModificar($id, $url, $titulo, $pagaso, $contenido, $titulo_en = null, $contenido_en = null, $titulo_al = null, $contenido_al = null, $titulo_fr = null, $contenido_fr = null,
-                         $titulo_it = null, $contenido_it = null, $titulo_po = null, $contenido_po = null, $titulo_ca = null, $contenido_ca = null, $titulo_ru = null, $contenido_ru = null, $img, $imgportada)
+                         $titulo_it = null, $contenido_it = null, $titulo_po = null, $contenido_po = null, $titulo_ca = null, $contenido_ca = null, $titulo_ru = null, $contenido_ru = null, $img, $imgportada = null)
 		{
 			$url = str_replace('ñ','n',$url);
 			$url = str_replace('Ñ','N',$url);
@@ -3546,22 +3546,23 @@
 			}
 
 			$imgportadaname = "";
-			if ($img['error'] != 4)
+			if (!is_null($imgportada) && $imgportada['error'] != 4)
 			{
 				$imgportadaname = uniqid().'_cover-'.$imgportada['name'];
 				move_uploaded_file($imgportada['tmp_name'], '../imagenes/'.$imgportadaname);
-				$imgportadaname = ", imagen = '$imgportadaname'";
+				$imgportadaname = ", imagenportada = '$imgportadaname'";
 			}
 			
 			$sql = "UPDATE bd_paginas
-					SET url = '$url', nombre = '$titulo', categoria_pag = '$pagaso', contenido = '$contenido', nombre_en = '$titulo_en', contenido_en = '$contenido_en', nombre_al = '$titulo_al', contenido_al = '$contenido_al', nombre_fr = '$titulo_fr', contenido_fr = '$contenido_fr', nombre_it = '$titulo_it', contenido_it = '$contenido_it', nombre_po = '$titulo_po', contenido_po = '$contenido_po', nombre_ca = '$titulo_ca', contenido_ca = '$contenido_ca', nombre_ru = '$titulo_ru', contenido_ru = '$contenido_ru', fecha = NOW(), imagen = $imgname, imagenportada = $imgportadaname
+					SET url = '$url', nombre = '$titulo', categoria_pag = '$pagaso', contenido = '$contenido', nombre_en = '$titulo_en', contenido_en = '$contenido_en', nombre_al = '$titulo_al', contenido_al = '$contenido_al', nombre_fr = '$titulo_fr', contenido_fr = '$contenido_fr', nombre_it = '$titulo_it', contenido_it = '$contenido_it', nombre_po = '$titulo_po', contenido_po = '$contenido_po', nombre_ca = '$titulo_ca', contenido_ca = '$contenido_ca', nombre_ru = '$titulo_ru', contenido_ru = '$contenido_ru', fecha = NOW() $imgname $imgportadaname
 					WHERE id = $id;";
+
 			$query = mysqli_query($this->conexion, $sql);
 			
 			return $query;
 		}
 		
-		function NoticiaModificar($id, $titulo, $tituloS, $descripcionS, $keyS, $contenido, $tituloin, $contenidoin, $tituloa, $contenidoa, $titulof, $contenidof, $tituloit, $contenidoit, $titulop, $contenidop, $tituloc, $contenidoc, $titulor, $contenidor, $categoria, $img, $imgportada)
+		function NoticiaModificar($id, $titulo, $tituloS, $descripcionS, $keyS, $contenido, $tituloin, $contenidoin, $tituloa, $contenidoa, $titulof, $contenidof, $tituloit, $contenidoit, $titulop, $contenidop, $tituloc, $contenidoc, $titulor, $contenidor, $categoria, $img, $imgportada = null)
 		{
 			$url = str_replace('ñ','n',$url);
 			$url = str_replace('Ñ','N',$url);			
@@ -3588,7 +3589,7 @@
 			$contenidor = mysqli_real_escape_string($this->conexion, $contenidor);
             $categoria = mysqli_real_escape_string($this->conexion, $categoria);
 			
-            $imgname = "";
+            $imgname = "''";
 			if ($img['error'] != 4)
 			{
                                 $imgname = strtolower(str_replace(' ', '-', str_replace($this->no_permitidas, $this->permitidas , $nimagen)));
@@ -3599,8 +3600,8 @@
 				$imgname = ", imagen = '$imgname'";
 			}
 
-			$imgportadaname = "";
-			if ($imgportada['error'] != 4)
+			$imgportadaname = "''";
+			if (!is_null($imgportada) && $imgportada['error'] != 4  )
 			{
                                 $imgportadaname = strtolower(str_replace(' ', '-', str_replace($this->no_permitidas, $this->permitidas , $nimagen)));
                                 $imgportadaname .= "." . strtolower(end(explode(".", $imgportada['name'])));
