@@ -264,7 +264,7 @@ $_SESSION['anuncio'] = 1;
                                 </a>
                                 <p style="height: 88px;"><?=$descripcion?></p>
 
-                                <span style="font-size: 10pt; font-style: italic; line-height: 32px;"><?=date_format(date_create($entrada['fecha']), 'd-m-Y')?></span>
+                                <div style="font-size: 10pt; font-style: italic; line-height: 32px; background: #fff; margin-top:5px;"><?=date_format(date_create($entrada['fecha']), 'd-m-Y')?></div>
 
                             </div>
                     <?php

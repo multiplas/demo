@@ -233,7 +233,7 @@ if($inicio == 3){
                             </a>
                             <p><?=$descripcion?></p>
 
-                            <span style="float: left; font-size: 10px; font-style: italic; line-height: 32px;"><?=date_format(date_create($entrada['fecha']), 'd-m-Y')?></span>
+                            <div style="float: left; font-size: 10px; font-style: italic; line-height: 32px; background: #fff"><?=date_format(date_create($entrada['fecha']), 'd-m-Y')?></div>
 
                         </div>
             <?php
@@ -312,7 +312,7 @@ if($inicio == 3){
                                 </a>
                                 <p><?=$descripcion?></p>
 
-                                <span style="font-size: 10pt; font-style: italic; line-height: 32px;"><?=date_format(date_create($entrada['fecha']), 'd-m-Y')?></span>
+                                <div style="font-size: 10pt; font-style: italic; line-height: 32px; background: #fff;"><?=date_format(date_create($entrada['fecha']), 'd-m-Y')?></div>
 
                             </div>
                     <?php
