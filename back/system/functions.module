@@ -3589,30 +3589,24 @@
 			$contenidor = mysqli_real_escape_string($this->conexion, $contenidor);
             $categoria = mysqli_real_escape_string($this->conexion, $categoria);
 			
-            $imgname = "''";
+			$imgname = "";
 			if ($img['error'] != 4)
 			{
-                                $imgname = strtolower(str_replace(' ', '-', str_replace($this->no_permitidas, $this->permitidas , $nimagen)));
-                                $imgname .= "." . strtolower(end(explode(".", $img['name'])));
-                                $imgname = mysqli_real_escape_string($this->conexion, htmlspecialchars($imgname));
-				//$imgname = uniqid().'_'.$img['name'];
+				$imgname = uniqid().'_'.$img['name'];
 				move_uploaded_file($img['tmp_name'], '../imagenes/'.$imgname);
 				$imgname = ", imagen = '$imgname'";
 			}
 
-			$imgportadaname = "''";
-			if (!is_null($imgportada) && $imgportada['error'] != 4  )
+			$imgportadaname = "";
+			if (!is_null($imgportada) && $imgportada['error'] != 4)
 			{
-                                $imgportadaname = strtolower(str_replace(' ', '-', str_replace($this->no_permitidas, $this->permitidas , $nimagen)));
-                                $imgportadaname .= "." . strtolower(end(explode(".", $imgportada['name'])));
-                                $imgportadaname = "cover-" . mysqli_real_escape_string($this->conexion, htmlspecialchars($imgportadaname));
-				//$imgname = uniqid().'_'.$img['name'];
+				$imgportadaname = uniqid().'_cover-'.$imgportada['name'];
 				move_uploaded_file($imgportada['tmp_name'], '../imagenes/'.$imgportadaname);
-				$imgportadaname = ", imagen = '$imgportadaname'";
+				$imgportadaname = ", imagenportada = '$imgportadaname'";
 			}
 			
 			$sql = "UPDATE bd_paginas
-					SET nombre = '$titulo', tituloS = '$tituloS', descripcionS = '$descripcionS', `keyS` = '$keyS', idcat = $categoria, contenido = '$contenido', imagen = $imgname, imagenportada = $imgportadaname
+					SET nombre = '$titulo', tituloS = '$tituloS', descripcionS = '$descripcionS', `keyS` = '$keyS', idcat = $categoria, contenido = '$contenido' $imgname $imgportadaname
 					WHERE id = $id AND noticia = 1;";
 			$query = mysqli_query($this->conexion, $sql);
 			
