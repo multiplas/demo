@@ -187,7 +187,7 @@
 
 
 
-                         <li class="dropup <?=$menusel == 'idiomas' ? 'active' : ''?><?=$menusel == 'configuracion' ? 'active' : ''?><?=$menusel == 'metodospago' ? ' active' : ''?><?=$menusel == 'portes' ? ' active' : ''?><?=$menusel == 'portes2' ? ' active' : ''?><?=$menusel == 'portes3' ? ' active' : ''?><?=$menusel == 'portes4' ? ' active' : ''?>">
+                         <li class="dropup <?=$menusel == 'idiomas' ? 'active' : ''?><?=$menusel == 'configuracion' ? 'active' : ''?><?=$menusel == 'eliminarinfo' ? ' active' : ''?><?=$menusel == 'metodospago' ? ' active' : ''?><?=$menusel == 'portes' ? ' active' : ''?><?=$menusel == 'portes2' ? ' active' : ''?><?=$menusel == 'portes3' ? ' active' : ''?><?=$menusel == 'portes4' ? ' active' : ''?>">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Configuración <i class="icon-chevron-up"></i></a>
                             <ul class="dropdown-menu" style="width:99%;" role="menu">
                                 <li<?=$menusel == 'configuracion' ? ' class="active"' : ''?>>
@@ -218,6 +218,9 @@
                                 </li>
                                 <li<?=$menusel == 'divisas' ? ' class="active"' : ''?>>
                                     <a href="divisas.php"><i class="icon-chevron-right"></i> Divisas</a>
+                                </li>
+                                <li<?=$menusel == 'eliminarinfo' ? ' class="active"' : ''?>>
+                                    <a href="eliminar_dbinfo.php"><i class="icon-chevron-right"></i> Eliminar Información</a>
                                 </li>
                             </ul>
                         </li>

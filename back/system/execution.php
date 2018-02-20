@@ -596,7 +596,8 @@
 		$resultaop = $System->IdiomasModificar($_POST['ingles'], $_POST['aleman'], $_POST['frances'], $_POST['italiano'], $_POST['portugues'], $_POST['catalan'], $_POST['ruso']);
     if (@$_GET['configurardivisas'] != null)
 		$resultaop = $System->DivisasModificar($_POST['euro'], $_POST['libra'], $_POST['yen'], $_POST['dolar'], $_POST['fsuizo']);
-
+    if (@$_GET['eliminarinfo'] != null)
+		$resultaop = $System->EliminarInfo($_POST['accion']);
     if (@$_GET['configurarplantilla'] != null){
 		$resultaop = $System->PlantillaModificar($_POST['inicio'], $_POST['efecto'], $_POST['CFefecto'], $_POST['CLefecto'], $_POST['productos'], $_POST['producto'], $_POST['cabecera'], $_POST['pie'], $_FILES['fcabecera']);
     }
@@ -1186,7 +1187,7 @@
 			break;
         case 'idiomas.php':
 			$elemento = $System->CargarConfIdiomas();
-			break;
+            break;
         case 'divisas.php':
 			$elemento = $System->CargarConfDivisas();
 			break;
