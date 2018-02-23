@@ -162,78 +162,81 @@
 	</div>
 	<div id="botones">
         <?=$Empresa['localidad']?> | <?=$Empresa['provincia']?><br>
-        <?php echo number_format($Empresa['telefono'], 0, '', ' '). ' | <a href="mailto:'.$Empresa['email'].'" >' .$Empresa['email']. '</a>'; ?>
+        <a href="tel:+34<?=number_format($Empresa['telefono'], 0, '', ' ')?>"><?php echo number_format($Empresa['telefono'], 0, '', ' '). '</a> | <a href="mailto:'.$Empresa['email'].'" >' .$Empresa['email']. '</a>'; ?>
         <div style="text-align:right;margin-bottom:0%;">
             <?php if(count($idiomas) >= 1){ ?>
                 <form action="<?=$draizp?>/es/" method="post" style="width:17px;display:inline-block;">
                     <input type='hidden' name='idioma' value='ESP' />
-                    <input type="image" style="width:17px;" name="idioma" id="idioma" value="ESP" src="<?=$draizp?>/source/Spain-flag-48.png" />
+                    <?php if(count($idiomas) > 1): ?>
+                        <input type="image" style="width:17px;" name="idioma" id="idioma" value="ESP" src="<?=$draizp?>/source/Spain-flag-48.png" />
+                    <?php endif; ?>
                 </form> &nbsp;&nbsp;
             <?php } ?>
             <?php
-                for($i=0; $i<=count($idiomas); $i++){
-                    if($idiomas[$i][0] == 'RUS'){
-                    ?>
-                        <form action="<?=$draizp?>/ru/" method="post" style="width:17px;display:inline-block;">
-                            <input type='hidden' name='idioma' value='RUS' />
-                            <input type="image" style="width:17px;" name="idioma" id="idioma" value="RUS" src="<?=$draizp?>/source/Russia-flag-48.png" />
-                        </form>
-                    <?php
-                    }
-                    if($idiomas[$i][0] == 'CAT'){
-                    ?>
-                        <form action="<?=$draizp?>/ca/" method="post" style="width:17px;display:inline-block;">
-                            <input type='hidden' name='idioma' value='CAT' />
-                            <input type="image" style="width:17px;" name="idioma" id="idioma" value="CAT" src="<?=$draizp?>/source/Catalonia-flag-48.png" />
+                
+                    for($i=0; $i<=count($idiomas); $i++){
+                        if($idiomas[$i][0] == 'RUS'){
+                        ?>
+                            <form action="<?=$draizp?>/ru/" method="post" style="width:17px;display:inline-block;">
+                                <input type='hidden' name='idioma' value='RUS' />
+                                <input type="image" style="width:17px;" name="idioma" id="idioma" value="RUS" src="<?=$draizp?>/source/Russia-flag-48.png" />
+                            </form>
+                        <?php
+                        }
+                        if($idiomas[$i][0] == 'CAT'){
+                        ?>
+                            <form action="<?=$draizp?>/ca/" method="post" style="width:17px;display:inline-block;">
+                                <input type='hidden' name='idioma' value='CAT' />
+                                <input type="image" style="width:17px;" name="idioma" id="idioma" value="CAT" src="<?=$draizp?>/source/Catalonia-flag-48.png" />
+                            </form> &nbsp;&nbsp;
+                        <?php
+                        }
+                        if($idiomas[$i][0] == 'UK'){
+                        ?>
+                            <form action="<?=$draizp?>/en/" method="post" style="width:17px;display:inline-block;">
+                                <input type='hidden' name='idioma' value='UK' />
+                                <input type="image" style="width:17px;" name="idioma" id="idioma" value="UK" src="<?=$draizp?>/source/United-kingdom-flag-48.png" />
                         </form> &nbsp;&nbsp;
-                    <?php
+                        <?php
+                        }
+                        if($idiomas[$i][0] == 'DEU'){
+                        ?>
+                            <form action="<?=$draizp?>/de/" method="post" style="width:17px;display:inline-block;">
+                                <input type='hidden' name='idioma' value='DEU' />
+                                <input type="image" style="width:17px;" name="idioma" id="idioma" value="DEU" src="<?=$draizp?>/source/Germany-flag-48.png" /> 
+                            </form> &nbsp;&nbsp;
+                        <?php
+                        }
+                        if($idiomas[$i][0] == 'FRA'){
+                        ?>
+                            <form action="<?=$draizp?>/fr/" method="post" style="width:17px;display:inline-block;">
+                                <input type='hidden' name='idioma' value='FRA' />
+                                <input type="image" style="width:17px;" name="idioma" id="idioma" value="FRA" src="<?=$draizp?>/source/France-flag-48.png" alt="FRA" /> 
+                            </form> &nbsp;&nbsp;
+                        <?php
+                        }
+                        if($idiomas[$i][0] == 'ITA'){
+                        ?>
+                            <form action="<?=$draizp?>/it/" method="post" style="width:17px;display:inline-block;">
+                                <input type='hidden' name='idioma' value='ITA' />
+                                <input type="image" style="width:17px;" name="idioma" id="idioma" value="ITA" src="<?=$draizp?>/source/Italy-flag-48.png" alt="ITA" />
+                            </form> &nbsp;&nbsp;
+                        <?php
+                        }
+                        if($idiomas[$i][0] == 'POR'){
+                        ?>
+                            <form action="<?=$draizp?>/pr/" method="post" style="width:17px;display:inline-block;">
+                                <input type='hidden' name='idioma' value='POR' />
+                                <input type="image" style="width:17px;" name="idioma" id="idioma" value="POR" src="<?=$draizp?>/source/Portugal-flag-48.png" alt="POR" /> 
+                            </form> &nbsp;&nbsp;
+                        <?php
+                        }
                     }
-                    if($idiomas[$i][0] == 'UK'){
-                    ?>
-                        <form action="<?=$draizp?>/en/" method="post" style="width:17px;display:inline-block;">
-                            <input type='hidden' name='idioma' value='UK' />
-                            <input type="image" style="width:17px;" name="idioma" id="idioma" value="UK" src="<?=$draizp?>/source/United-kingdom-flag-48.png" />
-                    </form> &nbsp;&nbsp;
-                    <?php
-                    }
-                    if($idiomas[$i][0] == 'DEU'){
-                    ?>
-                        <form action="<?=$draizp?>/de/" method="post" style="width:17px;display:inline-block;">
-                            <input type='hidden' name='idioma' value='DEU' />
-                            <input type="image" style="width:17px;" name="idioma" id="idioma" value="DEU" src="<?=$draizp?>/source/Germany-flag-48.png" /> 
-                        </form> &nbsp;&nbsp;
-                    <?php
-                    }
-                    if($idiomas[$i][0] == 'FRA'){
-                    ?>
-                        <form action="<?=$draizp?>/fr/" method="post" style="width:17px;display:inline-block;">
-                            <input type='hidden' name='idioma' value='FRA' />
-                            <input type="image" style="width:17px;" name="idioma" id="idioma" value="FRA" src="<?=$draizp?>/source/France-flag-48.png" alt="FRA" /> 
-                        </form> &nbsp;&nbsp;
-                    <?php
-                    }
-                    if($idiomas[$i][0] == 'ITA'){
-                    ?>
-                        <form action="<?=$draizp?>/it/" method="post" style="width:17px;display:inline-block;">
-                            <input type='hidden' name='idioma' value='ITA' />
-                            <input type="image" style="width:17px;" name="idioma" id="idioma" value="ITA" src="<?=$draizp?>/source/Italy-flag-48.png" alt="ITA" />
-                        </form> &nbsp;&nbsp;
-                    <?php
-                    }
-                    if($idiomas[$i][0] == 'POR'){
-                    ?>
-                        <form action="<?=$draizp?>/pr/" method="post" style="width:17px;display:inline-block;">
-                            <input type='hidden' name='idioma' value='POR' />
-                            <input type="image" style="width:17px;" name="idioma" id="idioma" value="POR" src="<?=$draizp?>/source/Portugal-flag-48.png" alt="POR" /> 
-                        </form> &nbsp;&nbsp;
-                    <?php
-                    }
-                }
         ?>
         </div>
         <div style="text-align:right;margin-bottom:0%;">
             <?php
-            if(count($divisas) >= 1){
+            if(count($divisas) > 2){
                     if($divisas['EUR'] == 1){
                     ?>
                         <form action="<?=$draizp?>/<?php echo !empty($_SESSION['lenguaje'])?$_SESSION['lenguaje'].'/':'' ?>" method="post" style="width:17px;display:inline-block;">

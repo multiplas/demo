@@ -157,7 +157,7 @@
 	</div>
 	<div id="botones">
         <?=$Empresa['localidad']?> | <?=$Empresa['provincia']?><br>
-        <?php echo number_format($Empresa['telefono'], 0, '', ' '). ' | <a href="mailto:'.$Empresa['email'].'" >' .$Empresa['email']. '</a>'; ?>
+        <a href="tel:+34<?=number_format($Empresa['telefono'], 0, '', ' ')?>"><?php echo number_format($Empresa['telefono'], 0, '', ' '). '</a> | <a href="mailto:'.$Empresa['email'].'" >' .$Empresa['email']. '</a>'; ?>
         <div style="text-align:right;margin-bottom:0%;">
             <?php if(count($idiomas) >= 1){ ?>
                 <form action="<?=$draizp?>/es/" method="post" style="width:17px;display:inline-block;">

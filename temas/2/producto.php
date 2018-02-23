@@ -28,6 +28,35 @@
     $totalAtr = 0;
 ?>
 
+<script>
+    function openModal() {
+        document.getElementById('myModal').style.display = "block";
+        document.getElementById('myModal2').style.display = "block";
+    }
+
+    function closeModal() {
+        document.getElementById('myModal').style.display = "none";
+        document.getElementById('myModal2').style.display = "none";
+        document.getElementById('myModal3').style.display = "none";
+    }
+    function submitFormProduct(data)
+    {
+          jQuery(data).parents('form:first').attr('action', '<?=$draizp?>/acc/anadir/<?=$producto['id']?>/'+jQuery('#cantidadmuliselect').val());
+          return jQuery(data).parents('form:first').submit();
+    }
+
+    function changePricePerUnit(data)
+    {
+        var units = jQuery(data).val();
+        var price = jQuery("#totalspan").data("precio");
+        var totalPrice = (Math.round( (units * price) * 100 )/100 ).toString();
+        jQuery("#totalspan").empty();
+        
+        return jQuery("#totalspan").text(totalPrice.replace(".",","));
+        
+    }
+</script>
+
 <?php
     if($vistaprod == 2){
 ?>
@@ -44,29 +73,29 @@
 	<div style="background: #E6E7E9; border: solid 2px #EEE; display: <?=@$_GET['nombre'] == 'yes' ? 'block' : 'none'?>; left: 20%; padding: 3% 5%; position: absolute; top: 25%; width: 50%; z-index: 99999;">
 		<h2>Ha añadido el producto a la cesta</h2>
 		<p>El producto "<strong><?=@$producto['nombre']?></strong>" ha sido añadido correctamente a la cesta. Ahora puede verlo en su cesta.</p>
-		<a href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>/cesta" class="button">ver mi cesta</a>
-		<a href="#" onclick="$(this).parent().css('display', 'none');" class="button buttonGray" style="min-width: 10px !important;">Seguir comprando</a>
+		<a href="<?=$draizp?>/<?=!empty($_SESSION['lenguaje'])?$_SESSION['lenguaje'].'/':''?>cesta" class="button">ver mi cesta</a>
+		<a href="#" onclick="jQuery(this).parent().css('display', 'none');" class="button buttonGray" style="min-width: 10px !important;">Seguir comprando</a>
 	</div>
     
     <div style="background: #E6E7E9; border: solid 2px #EEE; display: <?=@$_GET['nombre'] == 'yesp' ? 'block' : 'none'?>; left: 20%; padding: 3% 5%; position: absolute; top: 25%; width: 50%; z-index: 99999;">
 		<h2>Ha añadido el producto a presupuesto</h2>
 		<p>El producto "<strong><?=@$producto['nombre']?></strong>" ha sido añadido correctamente al presupuesto. Ahora puede verlo en sus presupuestos.</p>
 		<a href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>/presupuesto" class="button">ver mi presupuesto</a>
-		<a href="#" onclick="$(this).parent().css('display', 'none');" class="button buttonGray" style="min-width: 10px !important;">Seguir comprando</a>
+		<a href="#" onclick="jQuery(this).parent().css('display', 'none');" class="button buttonGray" style="min-width: 10px !important;">Seguir comprando</a>
 	</div>
     
     <div style="background: #E6E7E9; border: solid 2px #EEE; display: <?=@$_GET['nombre'] == 'no' ? 'block' : 'none'?>; left: 20%; padding: 3% 5%; position: absolute; top: 25%; width: 50%; z-index: 99999;">
 		<h2>No se ha podido añadir el producto a la cesta</h2>
 		<p>El producto "<strong><?=@$producto['nombre']?></strong>" no ha sido añadido a la cesta por diferencias en la forma de pago con los productos de su cesta. Tramite la cesta, y luego añada este producto.</p>
 		<a href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>/cesta" class="button">ver mi cesta</a>
-		<a href="#" onclick="$(this).parent().css('display', 'none');" class="button buttonGray" style="min-width: 10px !important;">Seguir comprando</a>
+		<a href="#" onclick="jQuery(this).parent().css('display', 'none');" class="button buttonGray" style="min-width: 10px !important;">Seguir comprando</a>
 	</div>
     
     <div style="background: #E6E7E9; border: solid 2px #EEE; display: <?=@$_GET['nombre'] == 'notp' ? 'block' : 'none'?>; left: 20%; padding: 3% 5%; position: absolute; top: 5%; width: 50%; z-index: 99999;">
 		<h2>No se ha podido añadir el producto a la cesta</h2>
                 <p>El producto "<strong><?=@$producto['nombre']?></strong>" no ha sido añadido a la cesta. Actualmente no está disponible.</p>
 		<a href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>cesta" class="button">ver mi cesta</a>
-		<a href="#" onclick="$(this).parent().css('display', 'none');" class="button buttonGray" style="min-width: 10px !important;">Seguir comprando</a>
+		<a href="#" onclick="jQuery(this).parent().css('display', 'none');" class="button buttonGray" style="min-width: 10px !important;">Seguir comprando</a>
 	</div>
 
     <?php
@@ -299,8 +328,8 @@
                         
 						<div class="talla" style="text-align:center;">
                             <label style="color: #333; font-size: 1.20rem; margin-right: 15px; margin-top: 7px;<?=$producto['precio'] != 'Consultar' ? '' : ' display: none;'?>">Cantidad</label>
-							<select id="cantidadmuliselect" name="cantidadmuliselect" style="<?=$producto['precio'] != 'Consultar' ? '' : ' display: none;'?>">
-								<?php
+                            <select id="cantidadmuliselect" name="cantidadmuliselect" style="<?=$producto['precio'] != 'Consultar' ? '' : ' display: none;'?>" onchange="javascript:changePricePerUnit(this);">
+                            <?php
 									for($i = 1; $i <= 10; $i++)
 										echo '<option value="'.$i.'">'.$i.'</option>';
 								?>
@@ -319,7 +348,7 @@
                                 if(($producto['agotado'] == 1 && $producto['pagotado'] == 0) || $producto['agotado'] == 0){
                                                 if($producto['unidades'] > 0 || ($producto['unidades'] <= 0 && $producto['pagotado'] == 0)){
                                             ?>
-                                                    <span class="button" name="BtSubmit" onclick="$(this).parent().attr('action', '<?=$draizp?>/acc/anadir/<?=$producto['id']?>/'+$('#cantidadmuliselect').val());">Añadir a la cesta</span>
+                                                    <span class="button" name="BtSubmit"  onclick="javascript:submitFormProduct(this);">Añadir a la cesta</span>
                                     <?php
                                                 }else if($producto['pagotado'] == 2){
                                                ?>
@@ -337,8 +366,8 @@
                                 ?><a class="button" name="BtSubmit" href="<?=$draizp?>/contacto/<?=str_replace(' ', '-', $producto['nombre'])?>">Consultar Precio</a><?php
                             }
                         ?>
-						<!--<span class="button" name="BtSubmit" onclick="$(this).parent().attr('action', '/acc/anadir/<?=$producto['id']?>/2');">Compra 2 (Ahorra 10%)</span>
-						<span class="button" name="BtSubmit" onclick="$(this).parent().attr('action', '/acc/anadir/<?=$producto['id']?>/3');">Compra 3 (Ahorra 15%)</span>-->
+						<!--<span class="button" name="BtSubmit" onclick="jQuery(this).parent().attr('action', '/acc/anadir/<?=$producto['id']?>/2');">Compra 2 (Ahorra 10%)</span>
+						<span class="button" name="BtSubmit" onclick="jQuery(this).parent().attr('action', '/acc/anadir/<?=$producto['id']?>/3');">Compra 3 (Ahorra 15%)</span>-->
                         </div>
                     <?php }else{ ?>
                             <style>
@@ -535,15 +564,15 @@
                         <?php
                             if ($producto['precio'] != 'Consultar')
                             {
-                                ?><span class="button" name="BtSubmit" onclick="$(this).parent().attr('action', '<?=$draizp?>/acc/anadir/<?=$producto['id']?>/'+$('#cantidadmuliselect').val());">Añadir a la cesta</span><?php
+                                ?><span class="button" name="BtSubmit" onclick="javascript:submitFormProduct(this);">Añadir a la cesta</span><?php
                             }
                             else
                             {
                                 ?><a class="button" name="BtSubmit" href="<?=$draizp?>/contacto/<?=str_replace(' ', '-', $producto['nombre'])?>">Consultar Precio</a><?php
                             }
                         ?>
-						<!--<span class="button" name="BtSubmit" onclick="$(this).parent().attr('action', '/acc/anadir/<?=$producto['id']?>/2');">Compra 2 (Ahorra 10%)</span>
-						<span class="button" name="BtSubmit" onclick="$(this).parent().attr('action', '/acc/anadir/<?=$producto['id']?>/3');">Compra 3 (Ahorra 15%)</span>-->
+						<!--<span class="button" name="BtSubmit" onclick="jQuery(this).parent().attr('action', '/acc/anadir/<?=$producto['id']?>/2');">Compra 2 (Ahorra 10%)</span>
+						<span class="button" name="BtSubmit" onclick="jQuery(this).parent().attr('action', '/acc/anadir/<?=$producto['id']?>/3');">Compra 3 (Ahorra 15%)</span>-->
                      <?php }else{ ?>
                             <style>
                                 .talla{
@@ -594,8 +623,15 @@
 							obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
 						  }
 						</script>
-						<?php /*include_once('./componentes/sliderPres.php');*/ ?>
-						<iframe frameborder="0" src="<?=$draizp?>/componentes/slippry-1.3.1/demo/index.php" style="display: block; width: 100%; margin: auto;" onload="javascript:resizeIframe(this);"></iframe>
+                        <?php /*include_once('./componentes/sliderPres.php');*/ 
+                        
+                        ?>
+                        <div class="div-imagen-producto">
+                            <a id="single_image" class="groupgalery fancybox" data-fancybox-group="group" rel="group1" href="/imagenesproductos/<?=$producto['imagen']?>">
+                                <img src="/imagenesproductos/<?=$producto['imagen']?>" alt="">
+                            </a>
+                        </div>
+						<!-- <iframe frameborder="0" src="<?=$draizp?>/componentes/slippry-1.3.1/demo/index.php" style="display: block; width: 100%; margin: auto;" onload="javascript:resizeIframe(this);"></iframe> -->
 					</div>
                     <form action="<?=$draizp?>/acc/anadir/<?=$producto['id']?>" method="post" style="max-height: 550px !important;">
                         <style>
@@ -700,17 +736,17 @@
                                         
                                         if($atributo['nombre'] != $aux && $c == 0){ ?>
                                             <script>
-                                                $(document).on("change", "#<?=$atributo['nombre']?>", function(){  
-                                                    $.post("/ajax/precio.php", {id: <?=$producto['id']?>, valor: $( "#<?=$atributo['nombre']?>" ).val(), moneda1: '<?=$Empresa['moneda']?>', moneda2: '<?=$_SESSION['divisa']?>' }, function(respuesta){ 
-                                                        var tot = $('#totalspan').data('precio');
-                                                        tot = parseFloat(tot) - parseFloat($("#<?=$atributo['nombre']?>").data('precio')) + parseFloat(respuesta);
-                                                        $("#<?=$atributo['nombre']?>").attr('data-precio', respuesta);
-                                                        $('#totalspan').attr('data-precio', tot);
+                                                jQuery(document).on("change", "#<?=$atributo['nombre']?>", function(){  
+                                                    jQuery.post("/ajax/precio.php", {id: <?=$producto['id']?>, valor: jQuery( "#<?=$atributo['nombre']?>" ).val(), moneda1: '<?=$Empresa['moneda']?>', moneda2: '<?=$_SESSION['divisa']?>' }, function(respuesta){ 
+                                                        var tot = jQuery('#totalspan').data('precio');
+                                                        tot = parseFloat(tot) - parseFloat(jQuery("#<?=$atributo['nombre']?>").data('precio')) + parseFloat(respuesta);
+                                                        jQuery("#<?=$atributo['nombre']?>").attr('data-precio', respuesta);
+                                                        jQuery('#totalspan').attr('data-precio', tot);
                                                         tot = tot.toFixed(2);
                                                         tot = tot.replace(",","/");
                                                         tot = tot.replace(".",",");
                                                         tot = tot.replace("/",".");
-                                                        $('#totalspan').html(tot);
+                                                        jQuery('#totalspan').html(tot);
                                                     });
                                                 });
                                         </script>
@@ -745,17 +781,17 @@
                                             </div>
                                             <div style="display:table-cell;height:50px;vertical-align:middle;">
                                             <script>
-                                                $(document).on("change", "#<?=$atributo['nombre']?>", function(){  
-                                                    $.post("/ajax/precio.php", {id: <?=$producto['id']?>, valor: $( "#<?=$atributo['nombre']?>" ).val(), moneda1: '<?=$Empresa['moneda']?>', moneda2: '<?=$_SESSION['divisa']?>' }, function(respuesta){ 
-                                                        var tot = $('#totalspan').data('precio');
-                                                        tot = parseFloat(tot) - parseFloat($("#<?=$atributo['nombre']?>").data('precio')) + parseFloat(respuesta);
-                                                        $("#<?=$atributo['nombre']?>").attr('data-precio', respuesta);
-                                                        $('#totalspan').attr('data-precio', tot);
+                                                jQuery(document).on("change", "#<?=$atributo['nombre']?>", function(){  
+                                                    jQuery.post("/ajax/precio.php", {id: <?=$producto['id']?>, valor: jQuery( "#<?=$atributo['nombre']?>" ).val(), moneda1: '<?=$Empresa['moneda']?>', moneda2: '<?=$_SESSION['divisa']?>' }, function(respuesta){ 
+                                                        var tot = jQuery('#totalspan').data('precio');
+                                                        tot = parseFloat(tot) - parseFloat(jQuery("#<?=$atributo['nombre']?>").data('precio')) + parseFloat(respuesta);
+                                                        jQuery("#<?=$atributo['nombre']?>").attr('data-precio', respuesta);
+                                                        jQuery('#totalspan').attr('data-precio', tot);
                                                         tot = tot.toFixed(2);
                                                         tot = tot.replace(",","/");
                                                         tot = tot.replace(".",",");
                                                         tot = tot.replace("/",".");
-                                                        $('#totalspan').html(tot);
+                                                        jQuery('#totalspan').html(tot);
                                                     });
                                                 });
                                         </script>
@@ -836,8 +872,8 @@
                                 </div>
                                 <div style="display:table-cell;height:50px;vertical-align:middle;">
                                     <div class="talla" style="margin:0 !important;width:100% !important;">
-                                        <select id="cantidadmuliselect" name="cantidadmuliselect" style="<?=$producto['precio'] != 'Consultar' ? '' : ' display: none;'?>">
-                                            <?php
+                                    <select id="cantidadmuliselect" name="cantidadmuliselect" style="<?=$producto['precio'] != 'Consultar' ? '' : ' display: none;'?>" onchange="javascript:changePricePerUnit(this);">
+                                    <?php
                                                 for($i = 1; $i <= 10; $i++)
                                                     echo '<option value="'.$i.'">'.$i.'</option>';
                                             ?>
@@ -861,12 +897,12 @@
                                     <?php
                                         if ($producto['precio'] != 'Consultar')
                                         {
-                                            ?><span class="button" name="BtSubmit" onclick="$(this).parent().attr('action', '<?=$draizp?>/acc/anadir/<?=$producto['id']?>/'+$('#cantidadmuliselect').val());"><?=$auxana?></span>
+                                            ?><span class="button" name="BtSubmit" onclick="javascript:submitFormProduct(this);"><?=$auxana?></span>
                                     <?php
                                         }
                                         else
                                         {
-                                            ?><span class="button" name="BtSubmit" onclick="$(this).parent().attr('action', '<?=$draizp?>/acc/anadir/<?=$producto['id']?>/'+$('#cantidadmuliselect').val());">Consultar precio</span>
+                                            ?><span class="button" name="BtSubmit" onclick="jQuery(this).parent().attr('action', '<?=$draizp?>/acc/anadir/<?=$producto['id']?>/'+jQuery('#cantidadmuliselect').val());">Consultar precio</span>
                                     <?php
                                         }
                                     ?>   
@@ -908,8 +944,8 @@
                             
                         </div>
                         
-						<!--<span class="button" name="BtSubmit" onclick="$(this).parent().attr('action', '/acc/anadir/<?=$producto['id']?>/2');">Compra 2 (Ahorra 10%)</span>
-						<span class="button" name="BtSubmit" onclick="$(this).parent().attr('action', '/acc/anadir/<?=$producto['id']?>/3');">Compra 3 (Ahorra 15%)</span>-->
+						<!--<span class="button" name="BtSubmit" onclick="jQuery(this).parent().attr('action', '/acc/anadir/<?=$producto['id']?>/2');">Compra 2 (Ahorra 10%)</span>
+						<span class="button" name="BtSubmit" onclick="jQuery(this).parent().attr('action', '/acc/anadir/<?=$producto['id']?>/3');">Compra 3 (Ahorra 15%)</span>-->
                         </div>
                     <?php }else{ ?>
                             <style>
@@ -1012,7 +1048,7 @@
 			?>
 		</div>
 		<?php
-			if ($permitido && $_SESSION['usr']['id'] != null) echo '<br>&laquo;&nbsp;<a href="javascript: $(\'#frmopinion\').css(\'display\', \'block\');">Dar mi opinión</a>&nbsp;&raquo;';
+			if ($permitido && $_SESSION['usr']['id'] != null) echo '<br>&laquo;&nbsp;<a href="javascript: jQuery(\'#frmopinion\').css(\'display\', \'block\');">Dar mi opinión</a>&nbsp;&raquo;';
 		?>
 		<form id="frmopinion" action="<?=$draizp?>/acc/opinar" method="post" style="display: none;">
 			<br>

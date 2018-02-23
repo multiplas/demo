@@ -20,6 +20,11 @@ var abierto = false;
 jQuery(document).ready(
 	function()
 	{
+		jQuery(".fancybox").fancybox({
+			openEffect  : "fade",
+			closeEffect : "fade",
+			type : "image"
+		});
 		if (jQuery(window).width() <= 583)
                     jQuery('.producto img').css('height', '100%');
                 else if (jQuery(window).width() <= 920)

@@ -113,11 +113,11 @@ $bloques = getBloqsInfo();
                                 <div class="container">
                                     <div style="margin:auto;text-align:center">
                                         <ul>
-                                            <li style="display:inline"><a href="<?= $draizp ?>/">INICIO</a></li>
+                                            <li style="display:inline"><a href="<?= $draizp ?>/"><?=ucfirst(strtolower('INICIO'))?></a></li>
                                             <?php
                                             while ($valueFooter = mysqli_fetch_assoc($queryFooter)) {
                                                 ?>
-                                                <li style="display:inline"><a href="<?= $draizp ?>/pagina/<?= $valueFooter['Id']; ?>"><?= $valueFooter['nombre']; ?></a>
+                                                <li style="display:inline"><a href="<?= $draizp ?>/pagina/<?= $valueFooter['Id']; ?>"><?= ucfirst(strtolower($valueFooter['nombre'])); ?></a>
 
                                                     <?php
                                                 }

@@ -344,10 +344,31 @@ color: red;
     display: inline-flex;
 }
 
+.div-imagen-producto{
+    width: 100%;
+    overflow: hidden;
+    padding-top: 15px;
+}
 
+.div-imagen-producto img{
+    width: 100%;
+}
+
+.ruby-menu-demo-description img{
+    margin: 0px !important;
+}
 
 #grupo-submenu #submenu-r span, .input-group-btn i{
     color: #fff;
+}
+
+.pie00-lnk_fot li {
+    padding: 10px;
+    text-transform: capitalize;
+}
+
+.pie00-lnk_fot li a{
+    text-transform: capitalize;
 }
 
 @media (max-width: 768px){

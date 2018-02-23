@@ -161,8 +161,10 @@ $bloques = getBloqsInfo();
                                 
                                     }   
                                 ?>
-				<p><?=$auxll?> (+34) <?=number_format($Empresa['telefono'], 0, '', ' ')?></p>
-                                <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(+34) <?=number_format($Empresa['telefono2'], 0, '', ' ')?></p>
+				                <p><a href="tel:+34<?=number_format($Empresa['telefono'], 0, '', ' ')?>"><?php echo number_format($Empresa['telefono'], 0, '', ' '). '</a>' ?></p>
+                                <?php if($Empresa['telefono2']): ?>
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(+34) <?=number_format($Empresa['telefono2'], 0, '', ' ')?></p>
+                                <?php endif; ?>
                                 <?php
                                 if($Empresa['wassap'] == 1 && $Empresa['telefono3'] != ''){
                                 ?>   

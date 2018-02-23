@@ -7579,6 +7579,7 @@
             $sql = "UPDATE bd_configuracion
                         SET MM_anchoMax = '$MM_anchoMax', MM_fondo = '$MM_fondo', MM_divisiones = '$MM_divisiones', MM_colores = '$MM_colores', MM_despliegue = '$MM_despliegue', Napartados = '$Napartados'
                         WHERE id = 1;";
+			
             $query = mysqli_query($this->conexion, $sql);
             
             return $query;

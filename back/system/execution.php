@@ -623,17 +623,17 @@
     
     if (@$_GET['menspub'] != null)
         $resultaop = $System->MensajePModificar($_POST['actanu'], $_POST['enlvid'], $_POST['anchvid'], $_POST['luganu']);
-    if($_GET['cambprocess'] != null)    
+    if(isset($_GET['cambprocess']) && $_GET['cambprocess'] != null)    
         $resultaop = $System->ProcesoCompraModificar($_POST['p_compra_type']);
-    if($_GET['cambfilter'] != null)    
+    if(isset($_GET['cambfilter']) && $_GET['cambfilter'] != null)    
         $resultaop = $System->FiltroProductosModificar($_POST['p_filter']);
-    if($_GET['bloqueobarra'] != null)    
+    if(isset($_GET['bloqueobarra']) && $_GET['bloqueobarra'] != null)    
         $resultaop = $System->BloqueoBarraModificar($_POST['b_bar']);
-    if($_GET['hiddenproduct'] != null)    
+    if(isset($_GET['hiddenproduct']) && $_GET['hiddenproduct'] != null)    
         $resultaop = $System->OcultarMostrarProductos($_POST['p_hidden']);   
-    if($_GET['cambcopy'] != null)    
+    if(isset($_GET['cambcopy']) && $_GET['cambcopy'] != null)    
         $resultaop = $System->AddFooterCopyright($_POST['p_footer_copyright'], $_POST['p_footer_copyright_text'], $_POST['color_barra'], $_POST['color_texto']);        
-    if($_GET['cambbloq'] != null)    
+    if(isset($_GET['cambbloq']) && $_GET['cambbloq'] != null)    
         $resultaop = $System->AddBloqsInfo($_POST['p_bloque1'], $_POST['p_bloque1_text'], $_POST['p_bloque1_color'], $_POST['p_bloque2_text'], $_POST['p_bloque2_color'], $_POST['p_bloque1_color_texto'], $_POST['p_bloque2_color_texto']);        
     if (@$_GET['configurarblq'] != null)
                 $resultaop = $System->ConfiguracionModificarBloques($_POST['bloques'][0], $_POST['bloques'][1], $_POST['bloques'][2], $_POST['bloques'][3], $_POST['bloques'][4], $_POST['bloques'][5], $_POST['bloques'][6], $_POST['bloques'][7]);
