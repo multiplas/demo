@@ -512,7 +512,7 @@
                         </div>
                     </div>
                     
-						<?php if (@$elemento != null && $resultaop != 1 && $_GET['editaen'] != null) { ?>
+						<?php if (@$elemento != null && $resultaop != 1 && isset($_GET['editaen']) &&  $_GET['editaen'] != null) { ?>
 							<div id="edi" class="block">
 								<div class="navbar navbar-inner block-header">
 									<div class="muted pull-left">Editar un Enlace</div>
