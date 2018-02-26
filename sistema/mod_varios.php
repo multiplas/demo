@@ -1078,20 +1078,20 @@ function MenuCategoriasGal()
 		global $dbi;
 		$ids = '';
 		
-                $sql2 = "SELECT * FROM bd_menu WHERE id_padre = $idmenu";
-                $query2 = mysqli_query($dbi, $sql2);
-                if( mysqli_num_rows($query2) > 0){
-                    while($assoc = mysqli_fetch_assoc($query2)){
-                        $ids .= CategoriasMenu($assoc['id']);
-                        if(CategoriasMenu($assoc['id']) != "" && substr(CategoriasMenu($assoc['id']), strlen(CategoriasMenu($assoc['id']))-1, 1) != ","){
-                            $ids .= ",";
-                        }
-                    }
+        $sql2 = "SELECT * FROM bd_menu WHERE id_padre = $idmenu";
+        $query2 = mysqli_query($dbi, $sql2);
+        if( mysqli_num_rows($query2) > 0){
+            while($assoc = mysqli_fetch_assoc($query2)){
+                $ids .= CategoriasMenu($assoc['id']);
+                if(CategoriasMenu($assoc['id']) != "" && substr(CategoriasMenu($assoc['id']), strlen(CategoriasMenu($assoc['id']))-1, 1) != ","){
+                    $ids .= ",";
                 }
+            }
+        }
                 
 		$sql = "SELECT id 
 				FROM bd_categorias
-				WHERE idmenu=$idmenu;";
+                WHERE idmenu=$idmenu;";
         
 		$cont = 1;
 		$query = mysqli_query($dbi, $sql);
@@ -1103,6 +1103,21 @@ function MenuCategoriasGal()
                 else
                     $ids .= $assoc['id'].',';
                 $cont++;
+            }
+        }
+        else{
+            $sql3 = "SELECT id FROM bd_categorias WHERE categoria like (SELECT nombre FROM bd_menu WHERE id = $idmenu)";
+            $cont = 1;
+            $query = mysqli_query($dbi, $sql3);
+            $total = mysqli_num_rows($query);
+            if (mysqli_num_rows($query) > 0){
+                while($assoc = mysqli_fetch_assoc($query)){
+            if($cont == $total)
+                        $ids .= $assoc['id'];
+                    else
+                        $ids .= $assoc['id'].',';
+                    $cont++;
+                }
             }
         }
 		return $ids;

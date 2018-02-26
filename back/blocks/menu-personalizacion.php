@@ -58,5 +58,8 @@
                                 <li<?=$menusel == 'bloqueobarra' ? ' class="active"' : ''?>>
                                     <a href="bloqueo_barra.php"><i class="icon-chevron-right"></i> Bloquear Barra de Navegación</a>
                                 </li>
+                                <li<?=$menusel == 'imagenportada' ? ' class="active"' : ''?>>
+                                    <a href="imagen_portada.php"><i class="icon-chevron-right"></i> Imagen Portada</a>
+                                </li>
                             </ul>
                         </li>

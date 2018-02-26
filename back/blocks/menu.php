@@ -22,6 +22,9 @@
                         <li<?=$menusel == 'menus' ? ' class="active"' : ''?> <?=$menusel == 'menus_orden' ? ' class="active"' : ''?>>
                             <a href="menus.php"><i class="icon-chevron-right"></i> Menús</a>
                         </li>
+                        <li<?=$menusel == 'multimedia' ? ' class="active"' : ''?> <?=$menusel == 'multimedia' ? ' class="active"' : ''?>>
+                            <a href="multimedia.php"><i class="icon-chevron-right"></i> Multimedia</a>
+                        </li>
                         <li class="dropdown <?=$menusel == 'facturas' || $menusel == 'detalle' ? 'active' : ''?><?=$menusel == 'compras_pendientes' ? ' active' : ''?>">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Pedidos <i class="icon-chevron-down"></i><span title="Productos ocultos" style="margin-right:2px;" class="badge badge-success pull-right"><?=$contadores['compras_pendientes']?></span><span title="Productos visibles totales" class="badge badge-warning pull-right"><?=$contadores['facturas']?></span></a>
                             <ul class="dropdown-menu" style="width:99%;" role="menu">

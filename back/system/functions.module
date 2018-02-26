@@ -4731,6 +4731,50 @@
 			return $resultado;
 		}
 
+		function CreateTableImagenPortadaStatus()
+		{
+			
+			$sql = "CREATE TABLE IF NOT EXISTS `bd_home_image` (
+				`id` bigint(1) NOT NULL,
+				`valor` bigint(1) NOT NULL DEFAULT '0',
+				`nombre` text(50) DEFAULT '',
+				`contenido` text(3000) DEFAULT '',
+				`url` text(50) DEFAULT '',
+				`imagen` text(50) DEFAULT '',
+				`destino` bigint(1) NOT NULL DEFAULT '0',
+				UNIQUE KEY `id` (`id`)
+				) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
+
+			$query = mysqli_query($this->conexion, $sql);
+
+			$sqlInsertData = "INSERT INTO `bd_home_image` (`id`, `valor`, `nombre`, `contenido`, `url`, `imagen`, `destino`) VALUES
+				(0, 0, '', '' , '', '', 0 );";
+			
+			$query = mysqli_query($this->conexion, $sqlInsertData);
+				
+		}
+
+		function CargarImagenPortadaStatus(){
+			$resultado = null;
+
+			$sql = "SELECT * FROM bd_home_image WHERE id = 0;";
+			
+			$query = mysqli_query($this->conexion, $sql);
+
+			if (mysqli_num_rows($query) == 1)
+			{
+				$assoc = mysqli_fetch_assoc($query);
+				$resultado = $assoc;
+			}
+			else{
+				$this->CreateTableImagenPortadaStatus();
+				echo "La tabla no existía, ahora ha sido creada con éxito. Por favor, recargue la página para continuar.";
+			}
+
+			return $resultado;
+
+		}
+
 		function CreateTableBarraStatus()
 		{
 			
@@ -6320,6 +6364,25 @@
             $sql = "UPDATE bd_home_bloqs SET valor = '$mp1', bloque1_texto = '$mp2', p_bloque1_color = '$mp3',  bloque2_texto = '$mp4', p_bloque2_color = '$mp5', p_bloque1_color_texto = '$mp6', p_bloque2_color_texto = '$mp7'  WHERE id = 0";
 
             $query = mysqli_query($this->conexion, $sql);
+            return $query;
+            
+		}
+		
+		function AddImagenPortada($imagen = null, $nombre, $contenido, $url, $destino, $valor){
+			$imgname = "";
+			if (!is_null($imagen) && $imagen['error'] != 4)
+			{
+				$imgname = uniqid().'_'.$imagen['name'];
+				move_uploaded_file($imagen['tmp_name'], '../imagenes/'.$imgname);
+				$imgname = "$imgname";
+			}
+            
+            $mp1 = mysqli_real_escape_string($this->conexion, htmlspecialchars($mp1));
+			
+            $sql = "UPDATE bd_home_image SET valor = $valor, imagen = '$imgname', nombre = '$nombre',  contenido = '$contenido', url = '$url', destino = '$destino'  WHERE id = 0";
+
+			$query = mysqli_query($this->conexion, $sql);
+			
             return $query;
             
         }

@@ -4,7 +4,7 @@
 	ini_set('display_errors', '1');*/
 	$draiz = getcwd();
 	$draizp = '';
-    //$draizp = 'http://localhost/milpeques';//eliminar
+    //$draizp = 'http://localhost/demo';//eliminar
 	require_once($draiz.'/sistema/mod_sesiones.php');
 	require_once($draiz.'/sistema/mod_conexion.php');
 	require_once($draiz.'/sistema/mod_productos.php');
@@ -174,21 +174,23 @@
             $imgizquierda = '';
         }
         
-        $sqlInicio = "SELECT * FROM bd_paginas WHERE id = 20016";
+        $imagenPrin = '';
+        $imagenPrinDestino = '';
+        $imagenPrinTitulo = '';
+        $imagenPrinURL = '';
+        $imagenPrinContenido = '';
+
+        $sqlInicio = "SELECT * FROM bd_home_image WHERE id = 0";
         $queryInicio = mysqli_query($dbi, $sqlInicio);
         if(mysqli_num_rows($queryInicio) > 0){
             $consultaInicio = mysqli_fetch_array($queryInicio);
-            $imagenPrin = $consultaInicio['imagen'];
-            $imagenPrinDestino = $consultaInicio['destino'];
-            $imagenPrinTitulo = $consultaInicio['nombre'];
-            $imagenPrinURL = $consultaInicio['url'];
-            $imagenPrinContenido = $consultaInicio['contenido'];
-        }else{
-            $imagenPrin = '';
-            $imagenPrinDestino = '';
-            $imagenPrinTitulo = '';
-            $imagenPrinURL = '';
-            $imagenPrinContenido = '';
+            if($consultaInicio['valor'] == 1){//Si esta activado
+                $imagenPrin = $consultaInicio['imagen'];
+                $imagenPrinDestino = $consultaInicio['destino'];
+                $imagenPrinTitulo = $consultaInicio['nombre'];
+                $imagenPrinURL = $consultaInicio['url'];
+                $imagenPrinContenido = $consultaInicio['contenido'];
+            }
         }
         
         $sqlInicio = "SELECT * FROM bd_fuentes WHERE id = '1'";

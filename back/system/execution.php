@@ -631,6 +631,8 @@
         $resultaop = $System->BloqueoBarraModificar($_POST['b_bar']);
     if(isset($_GET['hiddenproduct']) && $_GET['hiddenproduct'] != null)    
         $resultaop = $System->OcultarMostrarProductos($_POST['p_hidden']);   
+    if(isset($_GET['imgportada']) && $_GET['imgportada'] != null)
+        $resultaop = $System->AddImagenPortada($_FILES['imagenHomePortada'], $_POST['nombre'],$_POST['contenido'], $_POST['url'], $_POST['destino'], $_POST['valor']);        
     if(isset($_GET['cambcopy']) && $_GET['cambcopy'] != null)    
         $resultaop = $System->AddFooterCopyright($_POST['p_footer_copyright'], $_POST['p_footer_copyright_text'], $_POST['color_barra'], $_POST['color_texto']);        
     if(isset($_GET['cambbloq']) && $_GET['cambbloq'] != null)    
@@ -1161,6 +1163,9 @@
             break;
         case 'footer_copyright_bar.php':
 			$elemento = $System->CargarFooterCopyrightBar();
+            break;
+        case 'imagen_portada.php':
+			$elemento = $System->CargarImagenPortadaStatus();
             break;
         case 'ocultar_productos.php':
 			$elemento = $System->CargarProductosMostrados();
