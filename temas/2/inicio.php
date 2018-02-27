@@ -1,4 +1,5 @@
 <?php 
+include_once './sistema/mod_varios.php';//Necesario para mostrar las categorias en bloque
 if($inicio == 3){
     echo '<div id="contenido">';
 
@@ -244,7 +245,10 @@ if($inicio == 3){
                 </div>
             
                 <?php } 
-                include('./bloques/categorias.php');
+                $resultado = categoryBloqStatus();
+                if(!is_null($resultado) && $resultado['valor'] == 1) //Esta activado
+                    include_once('./temas/2/bloques/categorias.php');           //Comento lo de abajo 
+               // include_once('./bloques/categorias.php');
                 ?>
                     </div>
         <?php
@@ -265,7 +269,10 @@ if($inicio == 3){
                     </style>
                 <?php
                 
-                include('./bloques/categorias.php');
+                $resultado = categoryBloqStatus();
+                if(!is_null($resultado) && $resultado['valor'] == 1) //Esta activado
+                    include_once('./temas/2/bloques/categorias.php');           //Comento lo de abajo 
+               // include_once('./bloques/categorias.php');
                 if($Empresa['blogin'] == 1){
                     echo '<div class="muestra"><h1>Últimas publicaciones</h1>';
                     $i=0;

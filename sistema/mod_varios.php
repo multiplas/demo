@@ -1584,7 +1584,7 @@ function MenuCategoriasGal()
 
         $resultado = null;
         
-        $sql = "SELECT * FROM bd_bloque_categorias WHERE id = 0;";
+        $sql = "SELECT * FROM bd_bloques_categorias WHERE id = 0;";
                 
         $query = mysqli_query($dbi, $sql);
         

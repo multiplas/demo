@@ -3,6 +3,8 @@
     openModal();
 </script>
  <?php
+ include_once './sistema/mod_varios.php';//Necesario para mostrar las categorias en bloque
+ 
 $_SESSION['anuncio'] = 1;
  } ?>
 <link rel="stylesheet" href="<?=$draizp?>/temas/4/css/animate.css" />
@@ -133,7 +135,10 @@ $_SESSION['anuncio'] = 1;
                         <?php
                 
                 //include_once('./temas/4/bloques/masvendidos.php'); 
-                include_once('./temas/9/bloques/categorias.php');
+                $resultado = categoryBloqStatus();
+                if(!is_null($resultado) && $resultado['valor'] == 1) //Esta activado
+                    include_once('./temas/9/bloques/categorias.php');     //Comento lo de abajo
+                //include_once('./temas/9/bloques/categorias.php');
                 
                 
                     echo '</div>'; ?>

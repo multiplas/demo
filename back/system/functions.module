@@ -4807,7 +4807,7 @@
 				$resultado = $assoc;
 			}
 			else{
-				$this->CreateTableBarraStatus();
+				$this->CreateTableBloquesCategorias();
 				echo "La tabla no existía, ahora ha sido creada con éxito. Por favor, recargue la página para continuar.";
 			}
 

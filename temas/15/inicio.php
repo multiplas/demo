@@ -3,6 +3,9 @@
     openModal();
 </script>
  <?php
+
+include_once './sistema/mod_varios.php';//Necesario para mostrar las categorias en bloque
+
 $_SESSION['anuncio'] = 1;
  } ?>
 <?php                 
@@ -305,7 +308,11 @@ $_SESSION['anuncio'] = 1;
 		
 	</div>
         
-        
+        <?php 
+         $resultado = categoryBloqStatus();
+         if(!is_null($resultado) && $resultado['valor'] == 1) //Esta activado
+             include_once('./temas/15/bloques/categorias.php');     //Comento lo de abajo
+        ?>
         
         <?php if(count($productosMV) > 0){ echo '</div></div>'; } ?>
 

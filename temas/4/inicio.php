@@ -7,6 +7,8 @@ $_SESSION['anuncio'] = 1;
  } ?>
 <link rel="stylesheet" href="/temas/4/css/animate.css" />
 <?php 
+include_once './sistema/mod_varios.php';//Necesario para mostrar las categorias en bloque
+
     if($Empresa['mvposicion'] == 1){
         echo '<div id="contenido">';
         include_once('./temas/4/bloques/masvendidos.php'); 
@@ -155,6 +157,9 @@ $_SESSION['anuncio'] = 1;
                 include_once('./temas/4/bloques/masvendidos.php'); 
                 //include_once('./bloques/categorias.php');
                 }
+                $resultado = categoryBloqStatus();
+                if(!is_null($resultado) && $resultado['valor'] == 1) //Esta activado
+                    include_once('./temas/4/bloques/categorias.php');           
                 
                 
                     echo '</div>'; ?>

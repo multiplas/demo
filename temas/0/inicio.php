@@ -262,8 +262,9 @@ if($inicio == 3){
                 
                 $resultado = categoryBloqStatus();
                 if(!is_null($resultado) && $resultado['valor'] == 1) //Esta activado
-                    include_once('./temas/13/bloques/categorias.php');           
-                    
+                    include_once('./temas/0/bloques/categorias.php');        //Comento lo de abajo 
+                    // include_once('./bloques/categorias.php');   
+
                 if($Empresa['blogin'] == 1){
                     echo '<div class="muestra"><h1>Últimas publicaciones</h1>';
                     $i=0;
