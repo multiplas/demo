@@ -4775,6 +4775,45 @@
 
 		}
 
+		function CreateTableBloquesCategorias()
+		{
+			
+			$sql = "CREATE TABLE IF NOT EXISTS `bd_bloques_categorias` (
+				`id` bigint(1) NOT NULL,
+				`valor` bigint(1) NOT NULL DEFAULT '0',
+				UNIQUE KEY `id` (`id`)
+				) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
+
+			$query = mysqli_query($this->conexion, $sql);
+
+			$sqlInsertData = "INSERT INTO `bd_bloques_categorias` (`id`, `valor`) VALUES
+				(0, 0);";
+			
+			$query = mysqli_query($this->conexion, $sqlInsertData);
+				
+		}
+
+		function CargarBloquesCategorias()
+		{
+			$resultado = null;
+			
+			$sql = "SELECT * FROM bd_bloques_categorias WHERE id = 0;";
+					
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) == 1)
+			{
+				$assoc = mysqli_fetch_assoc($query);
+				$resultado = $assoc;
+			}
+			else{
+				$this->CreateTableBarraStatus();
+				echo "La tabla no existía, ahora ha sido creada con éxito. Por favor, recargue la página para continuar.";
+			}
+
+			return $resultado;
+		}
+
 		function CreateTableBarraStatus()
 		{
 			
@@ -6313,6 +6352,16 @@
             $mp1 = mysqli_real_escape_string($this->conexion, htmlspecialchars($mp1));
             
             $sql = "UPDATE bd_procesopagoconf SET valor = '$mp1' WHERE id = 0";
+            $query = mysqli_query($this->conexion, $sql);
+            return $query;
+            
+		}
+		
+		function BloquesCategoriasModificar($mp1){
+            
+            $mp1 = mysqli_real_escape_string($this->conexion, htmlspecialchars($mp1));
+            
+            $sql = "UPDATE bd_bloques_categorias SET valor = '$mp1' WHERE id = 0";
             $query = mysqli_query($this->conexion, $sql);
             return $query;
             

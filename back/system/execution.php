@@ -627,6 +627,8 @@
         $resultaop = $System->ProcesoCompraModificar($_POST['p_compra_type']);
     if(isset($_GET['cambfilter']) && $_GET['cambfilter'] != null)    
         $resultaop = $System->FiltroProductosModificar($_POST['p_filter']);
+    if(isset($_GET['activabloqcat']) && $_GET['activabloqcat'] != null)    
+        $resultaop = $System->BloquesCategoriasModificar($_POST['p_bloque1']);
     if(isset($_GET['bloqueobarra']) && $_GET['bloqueobarra'] != null)    
         $resultaop = $System->BloqueoBarraModificar($_POST['b_bar']);
     if(isset($_GET['hiddenproduct']) && $_GET['hiddenproduct'] != null)    
@@ -1172,6 +1174,9 @@
             break;                
         case 'buscador.php':
 			$elemento = $System->CargarBuscadorStatus();
+            break;
+        case 'bloques_categoria.php':
+			$elemento = $System->CargarBloquesCategorias();
             break;
         case 'activar_filtro_productos.php':
 			$elemento = $System->CargarFilterStatus();

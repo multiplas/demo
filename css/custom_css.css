@@ -354,6 +354,12 @@ color: red;
     width: 100%;
 }
 
+.producto3 .precio {
+    white-space: nowrap;
+}
+
+/*Etiquetas menu superior*/
+
 .ruby-menu-demo-description img{
     margin: 0px !important;
 }

@@ -16,7 +16,6 @@
                 $dias = (strtotime($fecha_f)-strtotime($fecha_i))/86400;
                 $dias = $dias;
                 $dias = floor($dias);
-                
                 if ($dias > 0){
                     
                     $sql = "SELECT atributoAsociado, DiasMax FROM  bd_productos WHERE id = '".$_POST['id']."'";
@@ -100,6 +99,7 @@
 
                         }else{
                             $sql = "SELECT pa.precio AS precio, pa.precioextra AS precioextra FROM bd_producto_atributo AS pa, bd_atributo AS a WHERE pa.idproducto='".$_POST['id']."' AND pa.idatributo = a.id AND a.atributo = '".$_POST['valor']."';";
+                            
                             $query = mysqli_query($dbi, $sql);
 
                             if(mysqli_num_rows($query)>0){
@@ -114,13 +114,13 @@
                             }
 
                              if ($dev == 0){
-                                /*$sql = "SELECT precio, iva FROM bd_productos WHERE id='".$_POST['id']."';";
+                                $sql = "SELECT precio, iva FROM bd_productos WHERE id='".$_POST['id']."';";
                                 $query = mysqli_query($dbi, $sql);
                                 $assoc = mysqli_fetch_assoc($query);
-                                $dev = $assoc['precio'] * (1 + ($assoc['iva']/100));*/
-                                $dev = 'e-0';
+                                $dev = $assoc['precio'] * (1 + ($assoc['iva']/100)) * $dias;
+                                // $dev = 'e-0';
                             }
-
+                            // echo $sql;
                             mysqli_close($dbi)
                                     or die ('No se ha podido cerrar la conexión con la base de datos.');
 

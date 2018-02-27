@@ -8,6 +8,7 @@ $_SESSION['anuncio'] = 1;
 <link rel="stylesheet" href="/temas/4/css/animate.css" />
 <link rel="stylesheet" href="<?=$draizp?>/css/imagehover/imagehover.min.css">
 <?php 
+    include_once './sistema/mod_varios.php';//Necesario para mostrar las categorias en bloque
     if (count($sliders) > 0) { 
             include_once('./componentes/slider3.php'); 
         } ?>
@@ -133,8 +134,9 @@ $_SESSION['anuncio'] = 1;
                         <?php
                 
                 //include_once('./temas/4/bloques/masvendidos.php'); 
-                include_once('./temas/13/bloques/categorias.php');
-                
+                $resultado = categoryBloqStatus();
+                if(!is_null($resultado) && $resultado['valor'] == 1) //Esta activado
+                    include_once('./temas/13/bloques/categorias.php');                
                 
                     echo '</div>'; ?>
                     

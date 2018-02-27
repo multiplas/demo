@@ -572,12 +572,15 @@
                                             </div>
                                             <div style="display:table-cell;height:50px;vertical-align:middle;">
                                             <script>
+                                                var precioDia = 0;
                                                 jQuery(document).on("change", "#<?=$nombreJS?>", function(){
                                                     jQuery.post("/ajax/precio.php", {id: <?=$producto['id']?>, valor: jQuery( "#<?=$nombreJS?>" ).val(), moneda1: '<?=$Empresa['moneda']?>', moneda2: '<?=$_SESSION['divisa']?>' }, function(respuesta){ 
                                                         var temp = respuesta;
                                                         temp = temp.split("-");
                                                         if(temp['0'] == 't'){
-                                                            var tot = jQuery('#totalspan').attr('data-precio');
+                                                            if(precioDia == 0)
+                                                                precioDia = jQuery('#totalspan').attr('data-precio');
+                                                            var tot = precioDia;
                                                             var tot2 = jQuery('#totalspan').attr('data-preciobase');
                                                             var dif = parseFloat(tot) - (parseFloat(tot2) + parseFloat(jQuery("#<?=$nombreJS?>").attr('data-precio')));
                                                             var precioAnt = parseFloat(tot) - parseFloat(jQuery("#<?=$nombreJS?>").attr('data-precio'));
@@ -796,7 +799,8 @@
                                                 }
                                         }
                                     });
-                                    
+                                    jQuery(document).ready(function(){
+
                                     jQuery(document).on("change", "#fentrada", function(){
                                         var hoy = new Date();                                    
                                         var actual = jQuery( "#fentrada" ).val();
@@ -898,6 +902,7 @@
                                             document.getElementById('myModal3').style.display = "block";
                                         }
                                     });
+                                });
 
                                 </script>
                             </div>
@@ -947,7 +952,7 @@
                                                     var fechaSalida = new Date(salida[2], (salida[1]-1), salida[0], hoy.getHours(), hoy.getMinutes(), (hoy.getSeconds()+1));
 
                                                     if(fechaEntrada < fechaSalida){
-                                                        jQuery.post("/ajax/precio_esp.php", {id: <?=$producto['id']?>, valor: jQuery( "#<?=$nombreJS?>" ).val(), fentrada: jQuery( "#fentrada" ).val(), fsalida: jQuery( "#fsalida" ).val(), moneda1: '<?=$Empresa['moneda']?>', moneda2: '<?=$_SESSION['divisa']?>' }, function(respuesta){ 
+                                                        jQuery.post("/ajax/precio_esp.php", {id: <?=$producto['id']?>, valor: jQuery( "#<?=$nombreJS?>" ).val(), fentrada: jQuery( "#fentrada" ).val(), fsalida: jQuery( "#fsalida" ).val(), moneda1: '<?=$Empresa['moneda']?>', moneda2: '<?=$_SESSION['divisa']?>' }, function(respuesta){
                                                             if(respuesta != "- " && respuesta != "--"){
                                                                 var tot = jQuery('#totalspan').attr('data-precio');
                                                                 tot = parseFloat(tot) - parseFloat(jQuery('#fentrada').attr('data-precio')) + parseFloat(respuesta);

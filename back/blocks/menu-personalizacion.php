@@ -61,5 +61,8 @@
                                 <li<?=$menusel == 'imagenportada' ? ' class="active"' : ''?>>
                                     <a href="imagen_portada.php"><i class="icon-chevron-right"></i> Imagen Portada</a>
                                 </li>
+                                <li<?=$menusel == 'bloquescategoria' ? ' class="active"' : ''?>>
+                                    <a href="bloques_categoria.php"><i class="icon-chevron-right"></i> Categorias por bloques</a>
+                                </li>
                             </ul>
                         </li>

@@ -24,7 +24,8 @@
     $colordescprodini = $colores['colortextoprodsmain'];
     $colorlogotop = $colores['colorlogotop'];
     $colorlogobot = $colores['colorlogobot'];
-    $pie_letras = $colores2['pie_letras'];
+	$pie_letras = $colores2['pie_letras'];
+	$colorpie = $colores2['pie'];
      
 
     $sql="SELECT * FROM bd_empresa";
@@ -1266,7 +1267,7 @@ body span.button:hover
 
 	#pie
 	{
-		background: #E6E7E9;
+		background: <?php echo $colorpie; ?>;
 		height: auto;
 		margin: auto;
 		/*min-width: 994px;*/

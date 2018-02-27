@@ -1578,4 +1578,22 @@ function MenuCategoriasGal()
         
         return $resultado;
     }
+
+    function categoryBloqStatus(){
+        global $dbi;
+
+        $resultado = null;
+        
+        $sql = "SELECT * FROM bd_bloque_categorias WHERE id = 0;";
+                
+        $query = mysqli_query($dbi, $sql);
+        
+        if (mysqli_num_rows($query) == 1)
+        {
+            $assoc = mysqli_fetch_assoc($query);
+            $resultado = $assoc;
+        }
+        
+        return $resultado;
+    }
 ?>
