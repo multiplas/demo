@@ -276,7 +276,8 @@ require_once('blocks/cabecera.php');
                                                     <option value="11" <?=($elemento['inicio'] == 11 ? ' selected' : '')?>>Banak</option>
                                                     <option value="13" <?=($elemento['inicio'] == 13 ? ' selected' : '')?>>Categorías (Padre)</option>
                                                     <option value="15" <?=($elemento['inicio'] == 15 ? ' selected' : '')?>>Remax</option>
-                                                </select><br>
+                                                    <option value="16" <?=($elemento['inicio'] == 16 ? ' selected' : '')?>>Minimal Fixed</option>
+                                        </select><br>
                                     </div><br>
                                     <div class="control-group">
                                         <label class="control-label" for="inicio">Efecto</label>
@@ -451,6 +452,7 @@ require_once('blocks/cabecera.php');
                                                     <option value="12" <?=($elemento['cabecera'] == 12 ? ' selected' : '')?>>Mega Menú</option>
                                                     <option value="14" <?=($elemento['cabecera'] == 14 ? ' selected' : '')?>>Electro</option>
                                                     <option value="15" <?=($elemento['cabecera'] == 15 ? ' selected' : '')?>>Remax</option>
+                                                    <option value="16" <?=($elemento['cabecera'] == 16 ? ' selected' : '')?>>Minimal Fixed</option>
                                                 </select><br>
                                         </div><br>
                                         <label class="control-label" for="cabecera">Fondo en cabecera</label>
@@ -494,13 +496,14 @@ require_once('blocks/cabecera.php');
                                         <label class="control-label" for="Pie">Pie</label>
                                         <div class="controls">
                                             <select id="pie" name="pie" class="">
-                                                    <option value="0" <?=$inicial['id']?>" <?=($elemento['pie'] == 0 ? ' selected' : '')?>>Default template</option>
-                                                    <option value="1" <?=$inicial['id']?>" <?=($elemento['pie'] == 1 ? ' selected' : '')?>>Minimum template</option>
-                                                    <option value="4" <?=$inicial['id']?>" <?=($elemento['pie'] == 4 ? ' selected' : '')?>>Movement Design template</option>
-                                                    <option value="8" <?=$inicial['id']?>" <?=($elemento['pie'] == 8 ? ' selected' : '')?>>Tuc</option>
-                                                    <option value="14" <?=$inicial['id']?>" <?=($elemento['pie'] == 14 ? ' selected' : '')?>>Electro</option>
-                                                    <option value="15" <?=$inicial['id']?>" <?=($elemento['pie'] == 15 ? ' selected' : '')?>>Remax</option>
-                                                </select><br>
+                                                    <option value="0" <?=($elemento['pie'] == 0 ? ' selected' : '')?>>Default template</option>
+                                                    <option value="1" <?=($elemento['pie'] == 1 ? ' selected' : '')?>>Minimum template</option>
+                                                    <option value="4" <?=($elemento['pie'] == 4 ? ' selected' : '')?>>Movement Design template</option>
+                                                    <option value="8" <?=($elemento['pie'] == 8 ? ' selected' : '')?>>Tuc</option>
+                                                    <option value="14" <?=($elemento['pie'] == 14 ? ' selected' : '')?>>Electro</option>
+                                                    <option value="15" <?=($elemento['pie'] == 15 ? ' selected' : '')?>>Remax</option>
+                                                    <option value="16" <?=($elemento['pie'] == 16 ? ' selected' : '')?>>Minimal Fixed</option>
+                                                    </select><br>
                                         </div><br>
                                         <table style="margin-left:55px;">
                                             <tr>

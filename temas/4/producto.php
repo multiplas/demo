@@ -1261,8 +1261,8 @@
 		<?php if(strlen($producto['descripcion']) > 300){ ?>
                     <div style="font-family: '<?=$fuente2?>', sans-serif ! important; border: 1px solid rgba(150, 150, 150, 0.4); display: block; font-size: 16px; margin: 15px 0px; padding: 15px; color: #333;">
                         <h2 style="font-family: <?=$fuente1?>; font-size: 1.75em; font-weight: 500;">Más</h2><br>
-                        <?=$producto['descripcion']?>
-                    </div>
+                        <?=preg_replace("/<\/?div[^>]*\>/i", "", $producto['descripcion'])?>
+                    </div
                 <?php } ?>
                 <?php if(count($ficheros) > 0){ ?>
                     <div style="font-family: '<?=$fuente2?>', sans-serif ! important; border: 1px solid rgba(150, 150, 150, 0.4); display: block; font-size: 16px; margin: 15px 0px; padding: 15px; color: #333;">
