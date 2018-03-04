@@ -1,3 +1,10 @@
+<script>
+    $(document).ready(function(){
+        $('.single-product').click(function(){
+            console.log(this);
+        });
+    });
+</script>
 <?php 
 include_once './sistema/mod_varios.php';//Necesario para mostrar las categorias en bloque
 if($inicio == 3){
@@ -258,10 +265,43 @@ if($inicio == 3){
                             }
                         }
                     </style>
+    <div class="container">
+    <div class="row">
+    <?php
+    $ultimosProductos = ProductosConCriterio(12,'novedades');
+    foreach($ultimosProductos as $producto){
+        $urlProducto = $draizp.'/'.'producto/'.$producto['id'].'/'.$producto['nombre'].'/';
+        $urlImagen = $draizp.'/'.'imagenesproductos/'.$producto['imagen'];
+        ?>
+        <div class="col-sm-3 single-product">
+            <div class="imagen-producto">
+                <a href="<?=$urlProducto?>">
+                    <img class="img-responsive" src="<?=$urlImagen?>" alt=""/>
+                </a>
+                <div class="ver-mas-img btn btn-primary"><a href="<?=$urlProducto?>">Ver más</a></div>
+            </div>
+            <div class="product-info">
+                <div class="titulo-producto">
+                    <h4><?=$producto['nombre']?></h4>
+                </div>
+                <div class="descripcion-producto">
+                    <?=trim(strip_tags( $producto['descripcion']))?>
+                </div>
+                <div class="product-price"><?=number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$producto['precio']), 2, ',', '.')?> <?=$producto['precio'] > 0 ? $_SESSION['moneda'] : ''?><?=$producto['precio'] == 'Consultar' ? $producto['precio']: ''?></div>
+            </div>
+        </div>
+
+    <?php
+    }
+    ?>
+    </div>
+    </div>
                 <?php
                  $resultado = categoryBloqStatus();
                  if(!is_null($resultado) && $resultado['valor'] == 1) //Esta activado
                      include_once('./temas/1/bloques/categorias.php');           //Comento lo de abajo 
+
+                     
                 // include_once('./bloques/categorias.php');
                 if($Empresa['blogin'] == 1){
                     echo '<div class="muestra"><h1>Últimas publicaciones</h1>';
@@ -291,6 +331,7 @@ if($inicio == 3){
                                     $descripcion .= '...';
                             }
                     ?>
+                    
                         <div class="publicacion" style="border: #bebebe 2px solid;padding: 0px 15px;width: 45%;display: inline-block;vertical-align: top; <?=(($i % 2) == 0) ? 'margin-right:2%;' : '' ?>">
                                 <a href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>/pagina/<?=$entrada['id']?>" title="Ver &laquo;<?=$entrada['nombre']?>&raquo;">
                                     <h2><?=utf8_decode($entrada['nombre'])?></h2>
