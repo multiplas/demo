@@ -78,7 +78,8 @@
         vertical-align: middle;
         margin-top: 12px;
         max-width: 20%;
-        width: 20%;
+        margin-left: 50px;
+        width: 15%;
         display: table;
         table-layout: fixed;
         float:left;
@@ -87,6 +88,32 @@
     #cabecera #menu-right{
         float:right;
         width: 79%;
+    }
+
+    .vistazo-rapido {
+        position: absolute;
+        left: 16px;
+        top: 162px;
+        border-radius: 0px;
+        height: 38px;
+        font-size: 12px;
+    }
+
+    .vistazo-rapido, .ver-mas-img{
+        height: 38px;
+    }
+
+    .vistazo-rapido,.ver-mas-img, .ver-mas-img a{
+        background: #9d2563;
+        border: #9d2563;
+        border-radius: 2px;
+        text-decoration: none !important;
+        color: white !important;
+    }
+
+    .vistazo-rapido:hover,.ver-mas-img:hover, .ver-mas-img a:hover{
+        background: #333;
+        border: #333;
     }
 
     #grupo-submenu {
@@ -114,6 +141,14 @@
         /* list-style: none; */
     }
 
+    .contact-bar {
+        height: 60px;
+        padding-top: 17px;
+        padding-bottom: 58px;
+        background: #9d2563;
+        color: #fff;
+    }
+
     .usuario ul {
         margin: 5px 0px 0px 0px;
     }
@@ -130,6 +165,11 @@
         font-weight: 600;
         font-size: 12px;
         /* margin-right: 5px; */
+        text-transform: uppercase;
+    }
+
+    .contact-bar-text{
+        padding: 10px;
         text-transform: uppercase;
     }
 
@@ -198,6 +238,7 @@
         z-index: 70000;
         width: 100%;
         max-width: 100% !important;
+        overflow: visible !important;
     }
 
     /* product list */
@@ -227,7 +268,7 @@
         width: 100%;
         font-size: 13px;
         padding: 5px;
-        height: 62px;
+        height: 48px;
         overflow: hidden;
     }
     .single-product .imagen-producto, .single-product .product-info{
@@ -241,9 +282,57 @@
         position: absolute;
         right: 16px;
         top: 162px;
+        border-radius: 0px;
     }
 
-    
+    #myFrame{
+        width: 100%;
+        height: 100%;
+        background-color: white;
+    }
+
+    #vistazo-rapido-container{
+        display:none;
+    }
+
+    .display-iframe{
+        display: inherit !important;
+        position: fixed;
+        top: 0;
+        z-index: 80000;
+        background: #00000080;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        padding-top: 15%;
+        padding-left: 30%;
+        margin: 0;
+        padding-right: 30%;
+        padding-bottom: 10%;
+    }
+    .close-iframe {
+        height: 20px;
+        width: 100%;
+        color: white;
+        right: 0;
+        position: relative;
+        text-align: right;
+    }
+    .close-button{
+        cursor: pointer;
+    }    
+
+    .ver-mas-img a {
+        font-size: 12px;
+    }
+
+    #grupo-submenu #submenu ul li ul li ul li {
+        margin-left: 215px;
+    }
+
+    #grupo-contenido #contenido{
+        max-width: 1900px !important;
+    }
     @media (max-width:830px)
     { 
         #buscador2{
@@ -261,6 +350,18 @@
             left:5%; 
             margin-left: -0px;
         }
+
+        .nav-top {
+            height: 130px;
+        }
+                .nav-top div {
+            margin-bottom: 11px;
+        }
+        #sli img{
+            height: 100%;
+            width: auto;
+        }
+        
     }
 </style>
 
@@ -269,18 +370,35 @@ $(document).ready(function() {
     $( window ).scroll(function() {
         if($(window).scrollTop() > 50){
             $('#cabecera').addClass('fix-navbar');
-            $('#cabecera').css('max-width','100% !important');
+            $('#cabecera').css('cssText','max-width: 100% !important');
         }
         else{
             $('#cabecera').removeClass('fix-navbar');
-            $('#cabecera').css('max-width','1200px !important');
+            $('#cabecera').css('cssText','max-width: 1200px !important');
         }
+    });
+    $('#vistazo-rapido-container').on('click', function(){
+        var html = jQuery('html');
+        html.css('overflow', 'inherit');
+        $('#vistazo-rapido-container').removeClass('display-iframe');
+        $('#vistazo-rapido-container').empty();
+
+    });
+    $('.vistazo-rapido').click(function(e){
+        idProducto = $(this).attr('data-product');
+        e.preventDefault();
+        $('#vistazo-rapido-container').append('<div class="close-iframe"><div class="pull-right close-button"><i class="far fa-times-circle"></i></div></div>');
+        $('#vistazo-rapido-container').append('<iframe src="<?=$draizp?>/producto/'+idProducto+'" frameborder="0" scrolling="yes" id="myFrame"></iframe>');
+        $('#vistazo-rapido-container').addClass('display-iframe');
+        window.scrollTo(0, 0);
+        var html = jQuery('html');
+        html.css('overflow', 'hidden');
     });
 });
 </script>
 <div class="container nav-top">
     <div class="row">
-        <div class="col-sm-3 align-middle">
+        <div class="col-xs-12 col-sm-3 align-middle">
                 <span class="icono-header"><i class="far fa-envelope"></i></span>
                 <span><strong>Email:</strong></span>
                 <span><a href="mailto:<?=$Empresa['email']?>"><?=$Empresa['email']?></a></span>		
@@ -464,6 +582,7 @@ $(document).ready(function() {
         $_SESSION['logoURL'] = $_GET['logo']; ?>
 <div id="grupo-contenido">
     <div id="contenido">
+
         <div>
             
                 <a href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>/pedido"><img src="<?=$_SESSION['logoURL'] != "" ? $_SESSION['logoURL'] : $draizp.'/source/'.$logoSup?>" alt="" style="max-height: 50px;"></a>

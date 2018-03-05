@@ -1,8 +1,5 @@
 <script>
     $(document).ready(function(){
-        $('.single-product').click(function(){
-            console.log(this);
-        });
     });
 </script>
 <?php 
@@ -76,6 +73,8 @@ if($inicio == 3){
         figure.slider figure figcaption {
             font-size: 1.2rem;
         }
+
+
     }
 
 
@@ -266,7 +265,16 @@ if($inicio == 3){
                         }
                     </style>
     <div class="container">
+    <div id="vistazo-rapido-container">
+        
+    </div>
+    <?php
+    $resultado = categoryBloqStatus();
+    if(!is_null($resultado) && $resultado['valor'] == 1) //Esta activado
+        include_once('./temas/16/bloques/categorias.php');           //Comento lo de abajo 
+    ?>
     <div class="row">
+        <h3 class="col-sm-12 text-center" style="color: #9d2563">Top Ventas</h3>
     <?php
     $ultimosProductos = ProductosConCriterio(12,'novedades');
     foreach($ultimosProductos as $producto){
@@ -278,7 +286,8 @@ if($inicio == 3){
                 <a href="<?=$urlProducto?>">
                     <img class="img-responsive" src="<?=$urlImagen?>" alt=""/>
                 </a>
-                <div class="ver-mas-img btn btn-primary"><a href="<?=$urlProducto?>">Ver más</a></div>
+                <div class="ver-mas-img btn btn-primary"><a href="<?php echo str_replace(' ','-',$urlProducto)?>">Ver más</a></div>
+                <input type="button" data-product="<?=$producto['id']?>" class="vistazo-rapido btn btn-success" value="Vistazo rápido">
             </div>
             <div class="product-info">
                 <div class="titulo-producto">
@@ -296,76 +305,28 @@ if($inicio == 3){
     ?>
     </div>
     </div>
-                <?php
-                 $resultado = categoryBloqStatus();
-                 if(!is_null($resultado) && $resultado['valor'] == 1) //Esta activado
-                     include_once('./temas/1/bloques/categorias.php');           //Comento lo de abajo 
-
-                     
-                // include_once('./bloques/categorias.php');
-                if($Empresa['blogin'] == 1){
-                    echo '<div class="muestra"><h1>Últimas publicaciones</h1>';
-                    $i=0;
-                    foreach ($entradas AS $entrada){
-
-                            $texto_size = 40;
-                            $text = $entrada['contenido'];
-                            $text = strip_tags($text);
-                            $textlen = strlen($text);
-                            $pos = 0;
-                            $espacios = 0;
-                            while ($espacios < $texto_size && $pos < $textlen)
-                            {
-                                if ($text[$pos] == ' ')
-                                    $espacios++;
-                                if ($espacios < $texto_size && $pos < $textlen)
-                                    $pos++;
-                            }
-                            $pos--;
-                            $sppos = strpos($text, ' ', $pos);
-                            if ($sppos < 1) $sppos = $textlen - 1;
-                            if (strlen($text) > $sppos)
-                            {
-                                $descripcion = str_replace("\r\n", '<br>', substr($text, 0, $sppos));
-                                if (strlen($text) > $sppos)
-                                    $descripcion .= '...';
-                            }
-                    ?>
-                    
-                        <div class="publicacion" style="border: #bebebe 2px solid;padding: 0px 15px;width: 45%;display: inline-block;vertical-align: top; <?=(($i % 2) == 0) ? 'margin-right:2%;' : '' ?>">
-                                <a href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>/pagina/<?=$entrada['id']?>" title="Ver &laquo;<?=$entrada['nombre']?>&raquo;">
-                                    <h2><?=utf8_decode($entrada['nombre'])?></h2>
-                                    <?php
-                                        if ($entrada['imagenportada'] != null)
-                                        {
-                                            ?>
-                                            <span style="display: block; margin-bottom: 10px; max-height: 170px; overflow: hidden; text-align: center; width: 100%;">
-                                                <img class="zoom" src="<?=$draizp?>/imagenes/<?=$entrada['imagenportada']?>" alt="<?=$entrada['nombre']?>">
-                                            </span>
-                                            <?php
-                                        }
-                                        elseif ($entrada['imagen'] != null)
-                                        {
-                                            ?>
-                                            <span style="display: block; margin-bottom: 10px; max-height: 170px; overflow: hidden; text-align: center; width: 100%;">
-                                                <img class="zoom" src="<?=$draizp?>/imagenesproductos/<?=$entrada['imagen']?>" alt="<?=$entrada['nombre']?>">
-                                            </span>
-                                            <?php
-                                        }
-                                    ?>
-                                </a>
-                                <p><?=$descripcion?></p>
-
-                                <span style="font-size: 10pt; font-style: italic; line-height: 32px;"><?=date_format(date_create($entrada['fecha']), 'd-m-Y')?></span>
-
-                            </div>
-                    <?php
-                        $i++;
-                    } 
-                }
-                //include_once('./bloques/novedades.php');
-                //include_once('./bloques/masvendidos.php'); 
-                echo '</div>';
-            }
+    <?php
+    
+    
+    
+    // include_once('./bloques/categorias.php');
+    
+    //include_once('./bloques/novedades.php');
+    //include_once('./bloques/masvendidos.php'); 
+    echo '</div>';
 }
-        ?>
+}
+?>
+
+<div class="col-sm-12 contact-bar">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 text-center contact-bar-text">
+                síguenos en 
+            </div>
+            <div class="col-sm-6 pull-right">
+                 <?php include($draiz.'/bloques/logos_sociales.php'); ?>
+            </div>
+        </div>
+    </div>
+</div>

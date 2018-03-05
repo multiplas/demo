@@ -15,8 +15,66 @@
                 width: 100% !important;
             }
         }
+
+        @media (max-width: 600px) {
+            .categories .col-sm-3{
+                width: 100% !important;
+                flex: none !important;
+            }
+        }
+        .categories .single-category, .categories figcaption, .categories figure{
+            background: #9d2563 !important;
+        }
+        .categories .single-category{
+            background: #9d2563 !important;
+            text-align: center !important;
+            border-radius: 5px !important;
+            margin-bottom: 1.8em !important;
+            color: black !important;
+            padding: 5px 5px 10px 5px !important;
+            min-height: 365px;
+            overflow: hidden;
+            margin: 15px 9px 0px 0px !important;
+        }
+
+        .categories .col-sm-3{
+            width: 24%;
+            flex: none !important;
+        }
+
+        .categories{
+            padding-left: 20px;
+        }
+
+        .categories figcaption{
+            z-index: 5;
+            position: absolute;
+            width: 100%;
+        }
+
+        .categories figure{
+            overflow: hidden !important;
+        }
+
+        .categories h3{
+            color: #ffffff !important;
+            padding-top: 15px !important;
+            font-size: 17px !important;
+            font-weight: 400 !important;
+        }
+
+        .categories a:hover{
+            border: none !important;
+        }
+
+        .single-category img{
+            height: 300px;
+        }
+
     </style>
-	<div class="muestra">
+    
+	<div class="categories container">
+        <div class="row">
 		<?php
 			if (count($categorias) < 1) echo $aux;
 			for ($i = 0; $i < count($categorias); $i++)
@@ -30,10 +88,10 @@
                 $query = mysqli_query($dbi, $sql);
                 $imagen = mysqli_fetch_assoc($query);
                        
-		?>
-				<div class="producto" <?=(($i % 4) == 0) ? 'style="margin-left:0;margin-bottom:1.8em;"' : 'style="margin-bottom:1.8em;"'?>>
+        ?>
+				<div class="single-category col-sm-3">
                     
-					<a href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>productos/<?=$categorias[$i]['id']?>/<?=$nombre?>/">
+					<a href="<?=$draizp?>/productos/<?=$categorias[$i]['id']?>/<?=$nombre?>/">
                         <figure class="<?=$efecto?>" style="background-color:<?=$CFefecto?>;">
                         <img class="zoom" src="<?=$draizp.'/imagenesproductos/'.$categorias[$i]['imagen'] ?>" alt="<?=$categorias[$i]['nombre']?>" />
                         <figcaption style="background-color:<?=$CFefecto?>;">
@@ -43,9 +101,10 @@
                     </figure>
                         
                     </a>
-				</div>
-		<?php
+                </div>
+                <?php
 			}
-		?>
+            ?>
+        </div>
 	</div>
 </div>
