@@ -68,6 +68,13 @@ if($inicio == 3){
             padding: .6rem;
             text-align: center;
         }
+        .contact-bar .logos_sociales{
+            float: right;
+            padding-top: 5px;
+        }
+        .subscribe-text{
+            padding-top: 5px;
+        }
 
         @media screen and (max-width: 500px) { 
         figure.slider figure figcaption {
@@ -318,13 +325,35 @@ if($inicio == 3){
 }
 ?>
 
+<?php
+
+if(isset($suscrito) && $suscrito == true){
+    echo '<script>Alert();</script>';
+}
+
+?>
 <div class="col-sm-12 contact-bar">
     <div class="container">
         <div class="row">
-            <div class="col-sm-6 text-center contact-bar-text">
-                síguenos en 
+            <div class="col-sm-8 contact-bar-text">                
+                <form action="<?=$draizp?>/acc/subscribe" method="post">
+                    <div class="row">
+                        <div class="col-sm-2 subscribe-text">
+                            <span>BOLETÍN</span> 
+                        </div>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="nombre" placeholder="Nombre" required>
+                        </div>
+                        <div class="col-sm-4">
+                            <input type="email" class="form-control" name="email" placeholder="Email" required>
+                        </div>
+                        <div class="col-sm-2">
+                            <input type="submit" class="btn btn-success" value="Suscribirme">
+                        </div>
+                    </div>
+                </form>
             </div>
-            <div class="col-sm-6 pull-right">
+            <div class="col-sm-4 pull-right">
                  <?php include($draiz.'/bloques/logos_sociales.php'); ?>
             </div>
         </div>

@@ -1184,6 +1184,9 @@
         case 'activar_bloques.php':
 			$elemento = $System->CargarBloquesStatus();
             break;
+        case 'suscriptores.php':
+			$elemento = $System->ObtenerSuscriptores();
+            break;
         case 'bloqueo_barra.php':
 			$elemento = $System->CargarBarraStatus();
             break;

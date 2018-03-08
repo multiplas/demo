@@ -18,7 +18,7 @@
                     
 			?>
 				<li>
-                                    <a href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>/productos/<?=$padre['id']?>/<?=$nombre?>/" class="submenu"><?=$padre['nombre']?></a>
+                                    <a href="<?=$draizp?>/productos/<?=$padre['id']?>/<?=$nombre?>/" class="submenu"><?=$padre['nombre']?></a>
 					<?php
 						if (count($padre['categorias']) > 0 && $padre['categorias'] != null)
 						{
@@ -34,7 +34,7 @@
 									'<a href="'.$draizp.'/'.$_SESSION['lenguaje'].'/productos/'.$hijo1['id'].'/'.$nombre2.'/"'.(count($hijo1['categorias']) < 1 ? ' style="color: #eab56f;"' : '').'>'.$hijo1['nombre'].'</a>';
 					?>
 									<li class="sm1">
-										<a href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>/productos/<?=$hijo1['id']?>/<?=$nombre2?>/"><?=$hijo1['nombre']?></a>
+										<a href="<?=$draizp?>/productos/<?=$hijo1['id']?>/<?=$nombre2?>/"><?=$hijo1['nombre']?></a>
 										<?php
 											if (count($hijo1['categorias']) > 0 && $hijo1['categorias'] != null)
 											{
@@ -50,7 +50,7 @@
 														'<a href="'.$draizp.'/'.$_SESSION['lenguaje'].'/productos/'.$hijo2['id'].'/'.$nombre3.'/"'.(count($hijo2['categorias']) < 1 ? ' style="color: #FFF;"' : '').'>'.$hijo2['nombre'].'</a>';
 										?>
 													<li class="sm2">
-														<a href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>/productos/<?=$hijo2['id']?>/<?=$nombre3?>/"><?=$hijo2['nombre']?></a>
+														<a href="<?=$draizp?>/productos/<?=$hijo2['id']?>/<?=$nombre3?>/"><?=$hijo2['nombre']?></a>
 														<?php
 															if (count($hijo2['categorias']) > 0 && $hijo2['categorias'] != null)
 															{
@@ -107,12 +107,13 @@
             </script>
 			<!--<li><a href="<?=$draizp?>/ofertas">Ofertas</a></li>-->
             <?php if($Empresa['blog'] == 1){ ?>
-			     <li><a href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>/blog">Blog</a></li>
+			     <li><a href="<?=$draizp?>/blog">Blog</a></li>
             <?php } 
                 if($Empresa['galeria'] == 1){
             ?>
-                <li><a href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>/galeria">Galería</a></li>
-            <?php } ?>
+                <li><a href="<?=$draizp?>/galeria">Galería</a></li>
+			<?php } ?>
+			<li class="pull-right search-button"><i class="fas fa-search"></i></li>
 			<!--<li><a href="<?=$draizp?>/contacto">Contacto</a></li>-->
 		</ul>
 	</div>
@@ -171,7 +172,7 @@
                     $nombre = preg_replace('([^A-Za-z0-9])', '-', $nombre);	
 			?>
 				<li>
-					<a href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>/productos/<?=$padre['id']?>/<?=$nombre?>/" class="submenu"><?=$padre['nombre']?></a>
+					<a href="<?=$draizp?>/productos/<?=$padre['id']?>/<?=$nombre?>/" class="submenu"><?=$padre['nombre']?></a>
 					<?php
 						if (count($padre['categorias']) > 0 && $padre['categorias'] != null)
 						{
@@ -184,7 +185,7 @@
                                 $nombre2 = preg_replace('([^A-Za-z0-9])', '-', $nombre2);	
 					?>         
 									<li class="sm1">
-										<a href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>/productos/<?=$hijo1['id']?>/<?=$nombre2?>/"><?=$hijo1['nombre']?></a>
+										<a href="<?=$draizp?>/productos/<?=$hijo1['id']?>/<?=$nombre2?>/"><?=$hijo1['nombre']?></a>
 										<?php
 											if (count($hijo1['categorias']) > 0 && $hijo1['categorias'] != null)
 											{
@@ -197,7 +198,7 @@
                                                     $nombre3 = preg_replace('([^A-Za-z0-9])', '-', $nombre3);	
 										?>
 													<li class="sm2">
-														<a href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>/productos/<?=$hijo2['id']?>/<?=$nombre3?>/"><?=$hijo2['nombre']?></a>
+														<a href="<?=$draizp?>/productos/<?=$hijo2['id']?>/<?=$nombre3?>/"><?=$hijo2['nombre']?></a>
 														<?php
 															if (count($hijo2['categorias']) > 0 && $hijo2['categorias'] != null)
 															{
@@ -212,7 +213,7 @@
                                                                                 $nombre4 = strtolower($nombre4);
                                                                                 $nombre4 = preg_replace('([^A-Za-z0-9])', '-', $nombre4);	
 																		?>
-																				<a href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>/productos/<?=$hijo3['id']?>/<?=$nombre4?>/"><?=$hijo3['nombre']?></a>
+																				<a href="<?=$draizp?>/productos/<?=$hijo3['id']?>/<?=$nombre4?>/"><?=$hijo3['nombre']?></a>
 																		<?php
 																			}
 																		?>

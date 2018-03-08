@@ -43,6 +43,15 @@
     margin-left: 10px;
 }
 
+.publicacion{
+    overflow: hidden;
+}
+
+.publicacion p{
+    height: 78px !important;
+    overflow: hidden !important;
+}
+
 .talla select, #ordenar select{
     background: #fff;
     color: #333;

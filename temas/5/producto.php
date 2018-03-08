@@ -990,7 +990,9 @@
                             <div style="border-top: 1px solid rgba(150, 150, 150, 0.3);color: #e74e4e;">
                                 <div style="display:table-cell;vertical-align:middle;width:100%;">
                                     <?php if ($producto['precio'] != 'Consultar')://check if have price ?>
-                                    <span itemprop="price" id="preciopr" style="padding:0 !important;font-size:2em;margin-right: 15px; top: 7px;" class="precio"><small><s><?=number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$producto['precio_ant']), 2, ',', '.')?><?=$_SESSION['moneda']?></s></small></span><br>
+                                        <?php if (number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$producto['precio_ant']), 2, ',', '.') != number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$producto['precio']), 2, ',', '.'))://check if have price ?>                                    
+                                        <span itemprop="price" id="preciopr" style="padding:0 !important;font-size:2em;margin-right: 15px; top: 7px;" class="precio"><small><s><?=number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$producto['precio_ant']), 2, ',', '.')?><?=$_SESSION['moneda']?></s></small></span><br>
+                                        <?php endif; ?>
                                     <span itemprop="price" id="preciopr" style="padding:0 !important;font-size:2em;margin-right: 15px; top: 7px;" class="precio"><b><span id="totalspan" data-precio="<?=$producto['precio']?>"><?=number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$producto['precio']), 2, ',', '.')?></span><?=$producto['precio'] != 'Consultar' ? $_SESSION['moneda'] : ''?> <?=@$totalAtr > 0 ? '<small style="opacity: 0.7;">+ '. number_format($totalAtr, 2, ',', '.') .$_SESSION['moneda'] . ' '.$nombreAtr.'</small>' : ''?></b></span>  
                                     <?php endif; ?>
                                         <?php if($producto['descuento'] > 0){ ?>

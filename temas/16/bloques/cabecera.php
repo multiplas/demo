@@ -142,7 +142,7 @@
     }
 
     .contact-bar {
-        height: 60px;
+        height: 95px;
         padding-top: 17px;
         padding-bottom: 58px;
         background: #9d2563;
@@ -333,6 +333,37 @@
     #grupo-contenido #contenido{
         max-width: 1900px !important;
     }
+    #buscador form{
+        position: absolute;
+        width: 1160px;
+        z-index: 60000;
+        height: 0px;
+        overflow: hidden;
+    }
+
+    .search-button {
+        padding-right: 15px;
+        padding-left: 15px;
+        border: 1px solid #aaa;
+        margin: 0px 0px 0px 10px;
+        background: #999;
+        cursor: pointer;
+    }
+
+    .search-button:hover {
+        background: #999 !important;
+    }
+
+    .search-button i{
+        color: #fff;
+    }
+
+    #buscador form, #buscador input{
+        -webkit-transition: all 1s ease-in-out;
+        -moz-transition: all 1s ease-in-out;
+        -o-transition: all 1s ease-in-out;
+        transition: all 1s ease-in-out;
+    }
     @media (max-width:830px)
     { 
         #buscador2{
@@ -394,6 +425,12 @@ $(document).ready(function() {
         var html = jQuery('html');
         html.css('overflow', 'hidden');
     });
+    $('.search-button').mouseenter(function(){
+        $('.formulario-buscador').css('height','60px');
+    });
+    $('#busc').focusout(function(){
+        $('.formulario-buscador').css('height','0px');
+    });
 });
 </script>
 <div class="container nav-top">
@@ -437,21 +474,20 @@ $(document).ready(function() {
 <?php if($fCabecera != ''){ ?>
     <div style="background-image:url(<?=$draizp?>/source/<?=$fCabecera?>);background-repeat: no-repeat;">
 <?php } ?>
+<div id="buscador" class="container">
+    <?php
+        if($inicio != 2){
+    ?>
+        <form action="<?=$draizp?>/<?=$_POST['buscar']?>" class="formulario-buscador" method="post">
+            <input style="background: #fff;height: 100%;padding-left: 25px;width: 100%;" name="buscar" type="text" id="busc" placeholder="Buscar<?=$aux?>..." value="<?=(isset($_POST['buscar'])) ? $_POST['buscar'] : '';?>" /><span id="BtBuscar" style="background: #4b4b4b url(../source/lupa.png);background-position: center;background-repeat: no-repeat;" name="BtSubmit"></span>
+        </form>
+    <?php
+        }
+    ?>
+</div>
 <div id="cabecera">
 	<div id="logo">
         <?php if($logoSup != ''){ ?><a href="<?=$draizp?>/"><img src="<?=$draizp?>/source/<?=$logoSup?>" alt="" /></a><?php } ?>
-	</div>
-	<div id="buscador" style="display:none;">
-		<div id="titulo"><?=$Empresa['nombre']?></div>
-        <?php
-            if($inicio != 2){
-        ?>
-            <form action="<?=$draizp?>/<?=$_SESSION['lenguaje']?>/<?=$_POST['buscar']?>" method="post">
-                <input style="background: #4b4b4b" name="buscar" type="text" id="busc" placeholder="<?=$aux?>..." value="<?=(isset($_POST['buscar'])) ? $_POST['buscar'] : '';?>" /><span id="BtBuscar" style="background: #4b4b4b url(../source/lupa.png);background-position: center;background-repeat: no-repeat;" name="BtSubmit"></span>
-            </form>
-        <?php
-            }
-        ?>
 	</div>
 	<div id="menu-right">
         <!-- <?=$Empresa['localidad']?> | <?=$Empresa['provincia']?><br>

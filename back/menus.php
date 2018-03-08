@@ -91,7 +91,8 @@
                                         <div class="control-group">
                                             <label class="control-label" for="nimagen">Imagen</label>
                                             <div class="controls">
-                                                <input class="input-file uniform_on" id="nimagen" name="imagen" type="file">
+                                                <input class="input-file uniform_on" id="nimagen" name="imagen" type="file" required>
+                                                <span style="color: red; font-size: 0.70rem;">Requerido</span>
                                             </div>
                                         </div>
 										<button type="submit" class="btn btn-primary">Añadir</button>

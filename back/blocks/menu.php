@@ -178,6 +178,9 @@
                                 <li<?=$menusel == 'merchant' ? ' class="active"' : ''?>>
                                     <a href="merchant.php"><i class="icon-chevron-right"></i> Google Merchant</a>
                                 </li>
+                                <li<?=$menusel == 'suscriptores' ? ' class="active"' : ''?>>
+                                    <a href="suscriptores.php"><i class="icon-chevron-right"></i> Suscriptores</a>
+                                </li>
                             </ul>
                         </li>
 

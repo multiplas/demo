@@ -4731,6 +4731,43 @@
 			return $resultado;
 		}
 
+		function CreateTableSuscriptores()
+		{
+			
+			$sql = "CREATE TABLE IF NOT EXISTS `bd_suscriptores` (
+				`id` int NOT NULL AUTO_INCREMENT,
+				`nombre` varchar(255) NOT NULL,
+				`email` varchar(255) NOT NULL,
+				UNIQUE KEY `nombre` (`nombre`),
+				PRIMARY KEY (`id`)
+				) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
+
+			$query = mysqli_query($this->conexion, $sql);				
+		}
+
+		function ObtenerSuscriptores()
+		{
+			$resultado = array();
+			
+			$sql = "SELECT * FROM bd_suscriptores";
+					
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) >= 1)
+			{				
+				while($assoc = mysqli_fetch_assoc($query)){
+					$resultado[] = $assoc;
+					$assoc = mysqli_fetch_assoc($query);
+				}
+			}
+			else{
+				$this->CreateTableSuscriptores();
+				echo "La tabla no existía, ahora ha sido creada con éxito. Por favor, recargue la página para continuar.";
+			}
+
+			return $resultado;
+		}
+
 		function CreateTableImagenPortadaStatus()
 		{
 			

@@ -1596,4 +1596,20 @@ function MenuCategoriasGal()
         
         return $resultado;
     }
+
+    function insertarSuscriptor($nombre, $email){
+        global $dbi;
+
+        $resultado = false;
+        
+        $sql = "INSERT INTO bd_suscriptores (nombre, email) VALUES ('$nombre', '$email');";
+
+        $query = mysqli_query($dbi, $sql);
+
+        $resultado = true;        
+
+        header('Location: //' . $_SERVER['SERVER_NAME']);
+        
+        return $resultado;
+    }
 ?>
