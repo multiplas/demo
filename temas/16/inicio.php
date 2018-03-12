@@ -290,7 +290,7 @@ if($inicio == 3){
         ?>
         <div class="col-sm-3 single-product">
             <div class="imagen-producto">
-                <a href="<?=$urlProducto?>">
+                <a href="<?=str_replace(' ','-',strtolower($urlProducto))?>">
                     <img class="img-responsive" src="<?=$urlImagen?>" alt=""/>
                 </a>
                 <div class="ver-mas-img btn btn-primary"><a href="<?php echo str_replace(' ','-',$urlProducto)?>">Ver más</a></div>

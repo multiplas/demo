@@ -162,16 +162,18 @@
 
 			?>
                     <div class="producto">
-                        <?php if ($Empresa['det_producto'] == 1){ ?><a href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>producto/<?=$productos[$i]['id']?>/<?=str_replace(".", "", str_replace("--", "-", $nombre))?>/"><?php } ?><img class="zoom" id="imagen_modal2" name="imagen_modal2" data-nombre="<?=preg_replace('([^A-Za-z0-9])', '_', str_replace($no_permitidas, $permitidas, $productos[$i]['nombre']))?>" src="<?=$draizp?>/imagenesproductos/<?=$productos[$i]['imagen']?>" alt="<?=$productos[$i]['nombre']?>" /><?php if ($Empresa['det_producto'] == 1){ ?></a><?php } ?>
-                        <span class="descripcion"><?php if ($Empresa['det_producto'] == 1){ ?><a href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>producto/<?=$productos[$i]['id']?>/<?=str_replace(".", "", str_replace("--", "-", $nombre))?>/"><?php } ?><?=$productos[$i]['nombre']?><?php if ($Empresa['det_producto'] == 1){ ?></a><?php }?></span>
-                        <?php if ($Empresa['det_producto'] == 1){ ?><span class="descuento"><?=$productos[$i]['descuento'] != 0 ? '-'.$productos[$i]['descuento'].' '.$productos[$i]['descuentoe'] : ''?></span><?php } ?>
-                            <?php if ($Empresa['det_producto'] == 1){ ?><span class="precioa"><?=$productos[$i]['descuento'] != 0 ? number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$productos[$i]['precio_ant']), 2, ',', '.').$_SESSION['moneda'] : ''?></span><br><?php } ?>
-                        <?php if($_SESSION['usr'] != null || ($_SESSION['usr'] == null && $Empresa['registro'] == 1)){ ?>
-                                                   <?php if ($Empresa['det_producto'] == 1){ ?><span class="precio"><?=$productos[$i]['tprecio'] != '' ? $productos[$i]['tprecio'] : (number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$productos[$i]['precio']), 2, ',', '.'))?> <?=$productos[$i]['tprecio'] != '' ? '' : $_SESSION['moneda']?></span><?php } ?>
-                             <?php if ($Empresa['det_producto'] == 1){ ?><a class="vermas" href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>producto/<?=$productos[$i]['id']?>/<?=str_replace(".", "", str_replace("--", "-", $nombre))?>/">Ver más</a><?php } ?>
-                        <?php }else{ ?>
-                             <?php if ($Empresa['det_producto'] == 1){ ?><a class="vermas" style="width: 83% !important;max-width: 83% !important;text-align:center" href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>producto/<?=$productos[$i]['id']?>/<?=str_replace(".", "", str_replace("--", "-", $nombre))?>/">Ver más</a><?php }?>
-                        <?php } ?>
+                        <a href="<?=$draizp?>/producto/<?=$productos[$i]['id']?>/<?=str_replace(".", "", str_replace("--", "-", $nombre))?>/">
+                            <?php if ($Empresa['det_producto'] == 1){ ?><a href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>producto/<?=$productos[$i]['id']?>/<?=str_replace(".", "", str_replace("--", "-", $nombre))?>/"><?php } ?><img class="zoom" id="imagen_modal2" name="imagen_modal2" data-nombre="<?=preg_replace('([^A-Za-z0-9])', '_', str_replace($no_permitidas, $permitidas, $productos[$i]['nombre']))?>" src="<?=$draizp?>/imagenesproductos/<?=$productos[$i]['imagen']?>" alt="<?=$productos[$i]['nombre']?>" /><?php if ($Empresa['det_producto'] == 1){ ?></a><?php } ?>
+                            <span class="descripcion"><?php if ($Empresa['det_producto'] == 1){ ?><a href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>producto/<?=$productos[$i]['id']?>/<?=str_replace(".", "", str_replace("--", "-", $nombre))?>/"><?php } ?><?=$productos[$i]['nombre']?><?php if ($Empresa['det_producto'] == 1){ ?></a><?php }?></span>
+                            <?php if ($Empresa['det_producto'] == 1){ ?><span class="descuento"><?=$productos[$i]['descuento'] != 0 ? '-'.$productos[$i]['descuento'].' '.$productos[$i]['descuentoe'] : ''?></span><?php } ?>
+                                <?php if ($Empresa['det_producto'] == 1){ ?><span class="precioa"><?=$productos[$i]['descuento'] != 0 ? number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$productos[$i]['precio_ant']), 2, ',', '.').$_SESSION['moneda'] : ''?></span><br><?php } ?>
+                            <?php if($_SESSION['usr'] != null || ($_SESSION['usr'] == null && $Empresa['registro'] == 1)){ ?>
+                                                    <?php if ($Empresa['det_producto'] == 1){ ?><span class="precio"><?=$productos[$i]['tprecio'] != '' ? $productos[$i]['tprecio'] : (number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$productos[$i]['precio']), 2, ',', '.'))?> <?=$productos[$i]['tprecio'] != '' ? '' : $_SESSION['moneda']?></span><?php } ?>
+                                <?php if ($Empresa['det_producto'] == 1){ ?><a class="vermas" href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>producto/<?=$productos[$i]['id']?>/<?=str_replace(".", "", str_replace("--", "-", $nombre))?>/">Ver más</a><?php } ?>
+                            <?php }else{ ?>
+                                <?php if ($Empresa['det_producto'] == 1){ ?><a class="vermas" style="width: 83% !important;max-width: 83% !important;text-align:center" href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>producto/<?=$productos[$i]['id']?>/<?=str_replace(".", "", str_replace("--", "-", $nombre))?>/">Ver más</a><?php }?>
+                            <?php } ?>
+                        </a>
                     </div>
 			<?php
 				}

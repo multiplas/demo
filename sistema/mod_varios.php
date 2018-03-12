@@ -1612,4 +1612,14 @@ function MenuCategoriasGal()
         
         return $resultado;
     }
+
+    function getColors(){
+        global $dbi;
+                
+        $sql="SELECT * FROM bd_colores";
+        $query = mysqli_query($dbi, $sql);
+        $colores = mysqli_fetch_array($query);
+    
+        return $colores;
+    }
 ?>

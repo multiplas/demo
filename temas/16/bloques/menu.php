@@ -113,7 +113,10 @@
             ?>
                 <li><a href="<?=$draizp?>/galeria">Galería</a></li>
 			<?php } ?>
-			<li class="pull-right search-button"><i class="fas fa-search"></i></li>
+			<li class="pull-right bag-button">
+				<a href="<?=$draizp?>/cesta"><i class="fas fa-shopping-bag " style="float:left;line-height: 45px;"></i> <span> ( <?=count($cestanum)?> )</span></a>				
+			</li>
+			<li class="pull-right search-button"><i class="fas fa-search" ></i></li>
 			<!--<li><a href="<?=$draizp?>/contacto">Contacto</a></li>-->
 		</ul>
 	</div>

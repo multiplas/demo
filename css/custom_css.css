@@ -43,6 +43,8 @@
     margin-left: 10px;
 }
 
+
+
 .publicacion{
     overflow: hidden;
 }
@@ -415,6 +417,9 @@ color: red;
     }
     .input-group.no_grande{
         min-width: 20px;
+    }
+    .form-search .input-text{
+        width: 80%!important;
     }
 }
 

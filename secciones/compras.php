@@ -1,4 +1,4 @@
-<div id="contenido">
+<div id="contenido" class="container">
     <div style="background: #E6E7E9; border: solid 2px #EEE; display: <?=@$_GET['compras'] == 'rma_yes' ? 'block' : 'none'?>; left: 20%; padding: 3% 5%; position: absolute; width: 50%; z-index: 99999;">
 		<h2>Petición de Devolución procesada correctamente</h2>
 		<p>Recibirá un e-mail con la contestación a su petición en las próximas horas.</p>
@@ -14,7 +14,7 @@
 		<a href="#" onclick="$(this).parent().css('display', 'none');" class="button buttonGray" style="min-width: 10px !important;">X</a>
 	</div>
     
-	<div id="articulo">
+	<div id="articulo" class="container">
 		<a href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>cesta"><span type="submit" class="button2">Cesta</span></a>
 		<span type="submit" class="button2G">Compras</span>
 		<br /><br />

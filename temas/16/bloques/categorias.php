@@ -73,7 +73,7 @@
 
     </style>
     
-	<div class="categories container">
+	<div class="categories">
         <div class="row">
 		<?php
 			if (count($categorias) < 1) echo $aux;

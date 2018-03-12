@@ -9,7 +9,12 @@
     }
 
 ?>
-<div id="contenido">
+<style>
+	#grupo-contenido {
+		max-width: 1060px !important;
+	}
+</style>
+<div id="contenido" class="container">
 	<form action="<?=$_SERVER['REQUEST_URI']?>" method="post">
 		<div id="subcategoriaspr">
             <div class="muestra">
@@ -20,10 +25,10 @@
                         $nombre = preg_replace('([^A-Za-z0-9])', '_', $nombre);	   
                 ?>
                     <div class="producto">
-                        <a href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>/productos/<?=$subcategorias[$i]['id']?>/<?=$nombre?>"><img src="<?=$draizp?>/imagenesproductos/<?=$subcategorias[$i]['imagen'] != null ? $subcategorias[$i]['imagen'] : 'no-img-pro.png'?>" alt="<?=$subcategorias[$i]['nombre']?>" /></a>
+                        <a href="<?=$draizp?>/productos/<?=$subcategorias[$i]['id']?>/<?=$nombre?>"><img src="<?=$draizp?>/imagenesproductos/<?=$subcategorias[$i]['imagen'] != null ? $subcategorias[$i]['imagen'] : 'no-img-pro.png'?>" alt="<?=$subcategorias[$i]['nombre']?>" /></a>
                         <span class="descripcion"><?=$subcategorias[$i]['nombre']?></span>
                         <span class="precio"><br></span>
-                        <a class="vermas" href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>/productos/<?=$subcategorias[$i]['id']?>/<?=$nombre?>">entrar</a>
+                        <a class="vermas" href="<?=$draizp?>/productos/<?=$subcategorias[$i]['id']?>/<?=$nombre?>">entrar</a>
                     </div>
                 <?php
                     }
@@ -50,15 +55,15 @@
 					$classex = 'producto3';
 			?>
 					<div class="<?=$classex?> producto">
-						<a href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>/producto/<?=$productos[$i]['id']?>/<?=$nombre?>/"><img class="zoom" src="<?=$draizp?>/imagenesproductos/<?=$productos[$i]['imagen']?>" alt="<?=$productos[$i]['nombre']?>" /></a>
+						<a href="<?=$draizp?>/producto/<?=$productos[$i]['id']?>/<?=$nombre?>/"><img class="zoom" src="<?=$draizp?>/imagenesproductos/<?=$productos[$i]['imagen']?>" alt="<?=$productos[$i]['nombre']?>" /></a>
 						<span class="descripcion"><?=$productos[$i]['nombre']?></span>
 						<span class="descuento"><?=$productos[$i]['descuento'] != 0 ? '-'.$productos[$i]['descuento'].' '.$productos[$i]['descuentoe'] : ''?></span>
 						<span class="precioa"><?=$productos[$i]['descuento'] != 0 ? number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$productos[$i]['precio_ant']), 2, ',', '.').$_SESSION['moneda'] : ''?></span><br>
                         <?php if($_SESSION['usr'] != null || ($_SESSION['usr'] == null && $Empresa['registro'] == 1)){ ?>
 						  <span class="precio"><?=number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$productos[$i]['precio']), 2, ',', '.')?> <?=$productos[$i]['precio'] > 0 ? $_SESSION['moneda'] : ''?><?=$productos[$i]['precio'] == 'Consultar' ? $productos[$i]['precio'] : ''?><!--<?=$productosMN[$i]['precio'] != 'Consultar' ? $_SESSION['moneda'] : ''?>--></span>
-                            <a class="vermas" href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>/producto/<?=$productos[$i]['id']?>/<?=$nombre?>/">Ver más</a>
+                            <a class="vermas" href="<?=$draizp?>/producto/<?=$productos[$i]['id']?>/<?=$nombre?>/">Ver más</a>
                         <?php }else{ ?>
-                            <a class="vermas" style="width: 83% !important;max-width: 83% !important;text-align:center" href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>/producto/<?=$productos[$i]['id']?>/<?=$nombre?>/">Ver más</a>
+                            <a class="vermas" style="width: 83% !important;max-width: 83% !important;text-align:center" href="<?=$draizp?>/producto/<?=$productos[$i]['id']?>/<?=$nombre?>/">Ver más</a>
                         <?php } ?>
                             <?php if($productos[$i]['aplazame'] == 1){ ?>
                                 <span class="precio" style="max-width: 100%;">Financialo con Aplazame por <?=number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$productos[$i]['caplazame1']), 2, ',', '.')?><?=$_SESSION['moneda']?> + <?=number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$productos[$i]['caplazame']), 2, ',', '.')?><?=$_SESSION['moneda']?> al mes</span>

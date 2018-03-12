@@ -4,7 +4,7 @@
 	ini_set('display_errors', '1');*/
 	$draiz = getcwd();
 	$draizp = '';
-    //$draizp = 'http://localhost/demo';//eliminar
+    // $draizp = '//localhost/demo';//eliminar
 	require_once($draiz.'/sistema/mod_sesiones.php');
 	require_once($draiz.'/sistema/mod_conexion.php');
 	require_once($draiz.'/sistema/mod_productos.php');
@@ -46,7 +46,7 @@
             }
         }else{
             if(isset($_SERVER["HTTPS"]) || $_SERVER["HTTPS"] == "on"){
-                header("Location: http://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);
+                header("Location: //" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);
                 exit;
             }
         }
@@ -505,9 +505,9 @@
                                                                 GeolocalizaReg($_POST['lonr'], $_POST['latr'], $_POST['ciur'], $_POST['pair']);
                                                                 require_once($draiz.'/sistema/mod_contacto.php');
                                                                 if($Empresa["registro"] == 2){
-                                                                    $msg = ConstruirMsgRegistrado(htmlspecialchars($_POST['nombre']), 'Bienvenido!', 'http://'.$_SERVER['HTTP_HOST'].'/acc/activar/'.$uid);
+                                                                    $msg = ConstruirMsgRegistrado(htmlspecialchars($_POST['nombre']), 'Bienvenido!', '//'.$_SERVER['HTTP_HOST'].'/acc/activar/'.$uid);
                                                                 }else{
-                                                                    $msg = ConstruirMsgRegistradoParaComprar(htmlspecialchars($_POST['nombre']), 'Bienvenido!', 'http://'.$_SERVER['HTTP_HOST'].'/'.$_SESSION['lenguaje'].'cuenta');
+                                                                    $msg = ConstruirMsgRegistradoParaComprar(htmlspecialchars($_POST['nombre']), 'Bienvenido!', '//'.$_SERVER['HTTP_HOST'].'/'.$_SESSION['lenguaje'].'cuenta');
                                                                 }
                                                                 EnviarEmail(htmlspecialchars($_POST['email']), 'Bienvenido!', $msg);
                                                                 $_SESSION['datosregistro'] = array();
@@ -580,7 +580,10 @@
 					}
 					header('Location: '.$draizp.'/'.$_SESSION['lenguaje'].'packs');
 				}
-				break;
+                break;
+            case 'subscribe':
+                $suscrito = insertarSuscriptor($_POST['nombre'], $_POST['email']);
+            break;
 			case 'anadir':		// Añadir producto al carrito.
                             require_once($draiz.'/sistema/mod_cestaycompra.php');
                             $sepuedeAnadir = 'Si';
@@ -1073,9 +1076,9 @@
                                                                         require_once($draiz.'/sistema/mod_cestaycompra.php');
                                                                         //UserVal($uid);
                                                                         if($Empresa['registro'] == 2){
-                                                                            $msg = ConstruirMsgRegistrado(htmlspecialchars($_POST['nombre']), 'Bienvenido!', 'http://'.$_SERVER['HTTP_HOST'].'/acc/activar/'.$uid);
+                                                                            $msg = ConstruirMsgRegistrado(htmlspecialchars($_POST['nombre']), 'Bienvenido!', '//'.$_SERVER['HTTP_HOST'].'/acc/activar/'.$uid);
                                                                         }else{
-                                                                            $msg = ConstruirMsgRegistradoParaComprar(htmlspecialchars($_POST['nombre']), 'Bienvenido!', 'http://'.$_SERVER['HTTP_HOST'].'/'.$_SESSION['lenguaje'].'cuenta');
+                                                                            $msg = ConstruirMsgRegistradoParaComprar(htmlspecialchars($_POST['nombre']), 'Bienvenido!', '//'.$_SERVER['HTTP_HOST'].'/'.$_SESSION['lenguaje'].'cuenta');
                                                                             UserLogIn($_POST['email'], $_POST['password']);
                                                                         }
                                                                         EnviarEmail(htmlspecialchars($_POST['email']), 'Bienvenido!', $msg);
@@ -1469,7 +1472,7 @@
                                     }
                                     
                                     $ch = curl_init('https://www.sandbox.paypal.com/cgi-bin/webscr');   // Esta URL debe variar dependiendo si usamos SandBox o no. Si lo usamos, se queda así.
-                                    //$ch = curl_init('http://www.paypal.com/cgi-bin/webscr');         // Si no usamos SandBox, debemos usar esta otra linea en su lugar.
+                                    //$ch = curl_init('//www.paypal.com/cgi-bin/webscr');         // Si no usamos SandBox, debemos usar esta otra linea en su lugar.
                                     curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
                                     curl_setopt($ch, CURLOPT_POST, 1);
                                     curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
@@ -2822,8 +2825,9 @@
 		if(!isset($_GET['imprimir_fact']))	
                     include_once($draiz.'/bloques/pie.php');
         /* Truco para no tener que buscar el archivo tema por tema */
-        // print_r(get_included_files ());
-        // die;
+        print_r(get_included_files ());
+        // print_r(get_defined_vars ());
+        die;
 		?>
 	</body>
 </html>

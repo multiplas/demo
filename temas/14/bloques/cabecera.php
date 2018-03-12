@@ -26,13 +26,17 @@
             }
             .header-top-container{
                 background-color: <?=$colores2['colorposbarmainSup']?> !important;
+                color: <?=$colores2['colortextomain']?> !important;
             }
             .header-primary-container{
                 background-color: <?=$colores2['colorposbarmainSup']?> !important;
             }
             .icon_lef_head{
                 background-color: <?=$colores2['colorbotonesmain']?> !important;
-                color: <?=$colores2['colortextobotonform']?> !important;
+                color: <?=$colores2['colorenlacemain']?> !important;
+            }
+            .links > li >  a{
+                color: <?=$colores2['colortextomain']?> !important;
             }
             .links > li > a:hover {
                 background-color: <?=$colores['boton_fondo_hover']?> !important;

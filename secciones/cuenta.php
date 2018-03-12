@@ -69,7 +69,7 @@
 ?>
 
 <div id="contenido">
-	<div id="articulo">
+	<div id="articulo" class="container">
 		<form method="post" name="logout" action="<?=$draizp?>/acc/salir" style="float: right; text-align: left;">
 			<span style="font-weight: bold;text-transform: uppercase;"><?=$_SESSION['usr']['nombre']?></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			<span name="BtSubmit" class="button"><?=$auxdes?></span>

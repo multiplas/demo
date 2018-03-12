@@ -31,7 +31,7 @@ for($i=0; $i<=count($labelidioma); $i++){
 ?>
 
 <div id="contenido">
-	<div id="articulo">
+	<div id="articulo"  class="container">
 		<h2><?=$auxcont?></h2>
 		<?php
 			if ($_GET['contacto'] != 'well')

@@ -137,7 +137,7 @@ if($inicio == 3){
                     $nombre = strtolower($nombre);
                     $nombre = preg_replace('([^A-Za-z0-9])', '-', $nombre);
                 ?>
-                <div class="slide" style="text-align:center;"><a href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>/producto/<?=$productosMN[$i]['id']?>/<?=$nombre?>/"><span style="position:absolute;top:75%;right:2%;background:rgba(0, 0, 0, 0.54);color:white;padding:5px;width:92%;"><?=strtoupper($productosMN[$i]['nombre'])?></span><img src="<?=$draizp?>/imagenesproductos/<?=$productosMN[$i]['imagen']?>"></a></div>
+                <div class="slide" style="text-align:center;"><a href="<?=$draizp?>/producto/<?=$productosMN[$i]['id']?>/<?=$nombre?>/"><span style="position:absolute;top:75%;right:2%;background:rgba(0, 0, 0, 0.54);color:white;padding:5px;width:92%;"><?=strtoupper($productosMN[$i]['nombre'])?></span><img src="<?=$draizp?>/imagenesproductos/<?=$productosMN[$i]['imagen']?>"></a></div>
                 <?php
                 }
                 ?>
@@ -146,8 +146,8 @@ if($inicio == 3){
             </div>
         <script src="<?=$darizp?>/componentes/jquery.bxslider/jquery.bxslider.js"></script>
         <script>
-            $(document).ready(function(){
-              $('.slider4').bxSlider({
+            jQuery(document).ready(function(){
+              jQuery('.slider4').bxSlider({
                 slideWidth: 300,
                 minSlides: 4,
                 maxSlides: 4,

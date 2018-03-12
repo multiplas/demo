@@ -45,7 +45,7 @@ include_once 'auxiliares.php';
 </style>
 
 <div id="contenido" style="color: #333;">
-	<div id="articulo">
+	<div id="articulo" class="container">
 		<span type="submit" class="button2G"><?=$aux0?></span>
                 <?php if($_SESSION['usr'] != null){ ?><a href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>compras"><span type="submit" class="button2"><?=$aux1?></span></a> <?php } ?>
 		<br /><br />

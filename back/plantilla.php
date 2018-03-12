@@ -276,7 +276,7 @@ require_once('blocks/cabecera.php');
                                                     <option value="11" <?=($elemento['inicio'] == 11 ? ' selected' : '')?>>Banak</option>
                                                     <option value="13" <?=($elemento['inicio'] == 13 ? ' selected' : '')?>>Categorías (Padre)</option>
                                                     <option value="15" <?=($elemento['inicio'] == 15 ? ' selected' : '')?>>Remax</option>
-                                                    <option value="16" <?=($elemento['inicio'] == 16 ? ' selected' : '')?>>Minimal Fixed</option>
+                                                    <option value="16" <?=($elemento['inicio'] == 16 ? ' selected' : '')?>>Minimal Fixed (Bootstrap)</option>
                                         </select><br>
                                     </div><br>
                                     <div class="control-group">
@@ -377,6 +377,7 @@ require_once('blocks/cabecera.php');
                                                         <option value="0" <?=($elemento['gproductos'] == 0 ? ' selected' : '')?>>Default template</option>
                                                         <option value="4" <?=($elemento['gproductos'] == 4 ? ' selected' : '')?>>Movement Design template</option>
                                                         <option value="5" <?=($elemento['gproductos'] == 5 ? ' selected' : '')?>>Movement Design template - % DES</option>
+                                                        <option value="16" <?=($elemento['gproductos'] == 16 ? ' selected' : '')?>>Minimal Fixed (Bootstrap)</option>
                                                     </select><br>
                                         </div><br>
                                         <table style="margin-left:55px;">
@@ -411,6 +412,7 @@ require_once('blocks/cabecera.php');
                                                     <option value="2" <?=($elemento['productos'] == 2 ? ' selected' : '')?>>Blind Design template</option>
                                                     <option value="4" <?=($elemento['productos'] == 4 ? ' selected' : '')?>>Movement Design template</option>
                                                     <option value="5" <?=($elemento['productos'] == 5 ? ' selected' : '')?>>Movement Design template - % DES</option>
+                                                    <option value="16" <?=($elemento['productos'] == 16 ? ' selected' : '')?>>Minimal Fixed (Bootstrap) </option>
                                                 </select><br>
                                         </div><br>
                                         <table style="margin-left:55px;">
@@ -452,7 +454,7 @@ require_once('blocks/cabecera.php');
                                                     <option value="12" <?=($elemento['cabecera'] == 12 ? ' selected' : '')?>>Mega Menú</option>
                                                     <option value="14" <?=($elemento['cabecera'] == 14 ? ' selected' : '')?>>Electro</option>
                                                     <option value="15" <?=($elemento['cabecera'] == 15 ? ' selected' : '')?>>Remax</option>
-                                                    <option value="16" <?=($elemento['cabecera'] == 16 ? ' selected' : '')?>>Minimal Fixed</option>
+                                                    <option value="16" <?=($elemento['cabecera'] == 16 ? ' selected' : '')?>>Minimal Fixed (Bootstrap)</option>
                                                 </select><br>
                                         </div><br>
                                         <label class="control-label" for="cabecera">Fondo en cabecera</label>
@@ -502,7 +504,7 @@ require_once('blocks/cabecera.php');
                                                     <option value="8" <?=($elemento['pie'] == 8 ? ' selected' : '')?>>Tuc</option>
                                                     <option value="14" <?=($elemento['pie'] == 14 ? ' selected' : '')?>>Electro</option>
                                                     <option value="15" <?=($elemento['pie'] == 15 ? ' selected' : '')?>>Remax</option>
-                                                    <option value="16" <?=($elemento['pie'] == 16 ? ' selected' : '')?>>Minimal Fixed</option>
+                                                    <option value="16" <?=($elemento['pie'] == 16 ? ' selected' : '')?>>Minimal Fixed (Bootstrap)</option>
                                                     </select><br>
                                         </div><br>
                                         <table style="margin-left:55px;">

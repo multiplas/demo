@@ -1,5 +1,5 @@
 <?php if($cabecera == 16){ ?>
-<link href="http://use.fontawesome.com/releases/v5.0.7/css/all.css" rel="stylesheet">
+<link href="//use.fontawesome.com/releases/v5.0.7/css/all.css" rel="stylesheet">
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
@@ -8,6 +8,10 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<?php
+$principalColors = getColors();
+
+?>
 <style>
     body{
         background: #fff;
@@ -76,18 +80,23 @@
 
     #cabecera #logo {
         vertical-align: middle;
-        margin-top: 12px;
+        margin-top: 0px;
         max-width: 20%;
-        margin-left: 50px;
-        width: 15%;
+        margin-left: 0px;
+        width: 250px;
+        margin-bottom: 10px;
         display: table;
         table-layout: fixed;
-        float:left;
+        float: left;
     }
 
     #cabecera #menu-right{
         float:right;
         width: 79%;
+    }
+
+    #grupo-contenido #contenido {
+        padding: 0px !important;
     }
 
     .vistazo-rapido {
@@ -341,7 +350,7 @@
         overflow: hidden;
     }
 
-    .search-button {
+    .search-button, .bag-button {
         padding-right: 15px;
         padding-left: 15px;
         border: 1px solid #aaa;
@@ -350,12 +359,12 @@
         cursor: pointer;
     }
 
-    .search-button:hover {
+    .search-button:hover, .bag-button:hover {
         background: #999 !important;
     }
 
-    .search-button i{
-        color: #fff;
+    .search-button i, .bag-button i, .bag-button span{
+        color: #fff !important;
     }
 
     #buscador form, #buscador input{
@@ -363,6 +372,10 @@
         -moz-transition: all 1s ease-in-out;
         -o-transition: all 1s ease-in-out;
         transition: all 1s ease-in-out;
+    }
+
+    #grupo-contenido #contenido #novedades, #grupo-contenido #contenido #masvendidos, #grupo-contenido #contenido #bajo{
+        max-width: none !important;
     }
     @media (max-width:830px)
     { 
@@ -426,7 +439,7 @@ $(document).ready(function() {
         html.css('overflow', 'hidden');
     });
     $('.search-button').mouseenter(function(){
-        $('.formulario-buscador').css('height','60px');
+        $('.formulario-buscador').css('height','62px');
     });
     $('#busc').focusout(function(){
         $('.formulario-buscador').css('height','0px');
@@ -479,7 +492,7 @@ $(document).ready(function() {
         if($inicio != 2){
     ?>
         <form action="<?=$draizp?>/<?=$_POST['buscar']?>" class="formulario-buscador" method="post">
-            <input style="background: #fff;height: 100%;padding-left: 25px;width: 100%;" name="buscar" type="text" id="busc" placeholder="Buscar<?=$aux?>..." value="<?=(isset($_POST['buscar'])) ? $_POST['buscar'] : '';?>" /><span id="BtBuscar" style="background: #4b4b4b url(../source/lupa.png);background-position: center;background-repeat: no-repeat;" name="BtSubmit"></span>
+            <input style="background: <?=$principalColors['colordestacado']?>;color:<?=$principalColors['colorgeneralinicio']?>;height: 100%;padding-left: 25px;width: 100%;" name="buscar" type="text" id="busc" placeholder="Buscar<?=$aux?>..." value="<?=(isset($_POST['buscar'])) ? $_POST['buscar'] : '';?>" /><span id="BtBuscar" style="background: #4b4b4b url(../source/lupa.png);background-position: center;background-repeat: no-repeat;" name="BtSubmit"></span>
         </form>
     <?php
         }
@@ -616,7 +629,7 @@ $(document).ready(function() {
 <?php }else{
     if(isset($_GET['logo']))
         $_SESSION['logoURL'] = $_GET['logo']; ?>
-<div id="grupo-contenido">
+<div id="grupo-contenido" class="container">
     <div id="contenido">
 
         <div>

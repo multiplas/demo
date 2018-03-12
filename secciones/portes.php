@@ -1,5 +1,5 @@
 <div id="contenido">
-	<div id="articulo">
+	<div id="articulo" class="container">
 		<img id="textoimga" src="<?=$draizp?>/imagenesproductos/packs.png" />
                 <div id="texto">
                     <?php if($Empresa['tipoportes'] == 0){ ?>

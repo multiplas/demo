@@ -126,7 +126,7 @@
   
     
     
-	<div id="articulo">
+	<div id="articulo" class="container">
             <div class="tamano_img">
                 <div id="gallery">
                     <?=($pagina['imagen'] != '') ? '<a class="groupgalery" rel="galeria" href="'.$draizp.'/imagenes/'.$pagina['imagen'].'"><img id="textoimga" src="'.$draizp.'/imagenes/'.$pagina['imagen'].'" style="margin-bottom: 20px;" /></a>' : '';?>
