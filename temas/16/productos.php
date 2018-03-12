@@ -13,6 +13,11 @@
 	#grupo-contenido {
 		max-width: 1060px !important;
 	}
+
+	#grupo-contenido #contenido #productos .producto a.vermas{
+		height: 1.5rem;
+		text-decoration: none;
+	}
 </style>
 <div id="contenido" class="container">
 	<form action="<?=$_SERVER['REQUEST_URI']?>" method="post">

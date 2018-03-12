@@ -293,8 +293,14 @@ if($inicio == 3){
                 <a href="<?=str_replace(' ','-',strtolower($urlProducto))?>">
                     <img class="img-responsive" src="<?=$urlImagen?>" alt=""/>
                 </a>
-                <div class="ver-mas-img btn btn-primary"><a href="<?php echo str_replace(' ','-',$urlProducto)?>">Ver más</a></div>
-                <input type="button" data-product="<?=$producto['id']?>" class="vistazo-rapido btn btn-success" value="Vistazo rápido">
+                <div class="interaccion">
+                    <div class="ver-mas-img btn btn-primary estado-inicial"><a href="<?php echo str_replace(' ','-',$urlProducto)?>">Ver más</a></div>
+                    <form action="<?=$draizp?>/acc/anadir/<?=$producto['id']?>" method="post">
+                        <button type="submit" data-product="<?=$producto['id']?>" class="vistazo-rapido estado-inicial btn btn-success">
+                        <i class="fas fa-shopping-cart"></i>
+                        </button>
+                    </form>
+                </div>
             </div>
             <div class="product-info">
                 <div class="titulo-producto">

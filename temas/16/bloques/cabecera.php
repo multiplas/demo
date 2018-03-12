@@ -106,6 +106,10 @@ $principalColors = getColors();
         border-radius: 0px;
         height: 38px;
         font-size: 12px;
+        -webkit-transition: all 1s;
+        -moz-transition: all 1s;
+        transition: all 1s;  
+        opacity: 1;
     }
 
     .vistazo-rapido, .ver-mas-img{
@@ -113,11 +117,14 @@ $principalColors = getColors();
     }
 
     .vistazo-rapido,.ver-mas-img, .ver-mas-img a{
-        background: #9d2563;
-        border: #9d2563;
+        background: <?=$principalColors['colordestacado']?>;
+        border: <?=$principalColors['colordestacado']?>;
         border-radius: 2px;
         text-decoration: none !important;
         color: white !important;
+        -webkit-transition: all 1s;
+        -moz-transition: all 1s;
+        transition: all 1s;
     }
 
     .vistazo-rapido:hover,.ver-mas-img:hover, .ver-mas-img a:hover{
@@ -154,7 +161,7 @@ $principalColors = getColors();
         height: 95px;
         padding-top: 17px;
         padding-bottom: 58px;
-        background: #9d2563;
+        background: <?=$principalColors['colordestacado']?>;
         color: #fff;
     }
 
@@ -292,6 +299,9 @@ $principalColors = getColors();
         right: 16px;
         top: 162px;
         border-radius: 0px;
+        -webkit-transition: all 1s; /* Safari */
+        transition: all 1s;   
+        opacity: 1;
     }
 
     #myFrame{
@@ -377,6 +387,14 @@ $principalColors = getColors();
     #grupo-contenido #contenido #novedades, #grupo-contenido #contenido #masvendidos, #grupo-contenido #contenido #bajo{
         max-width: none !important;
     }
+
+    .estado-inicial{
+        visibility: hidden;
+        top: 135px;
+        opacity: 0;
+    }
+
+
     @media (max-width:830px)
     { 
         #buscador2{
@@ -409,6 +427,7 @@ $principalColors = getColors();
     }
 </style>
 
+
 <script>
 $(document).ready(function() {
     $( window ).scroll(function() {
@@ -421,22 +440,21 @@ $(document).ready(function() {
             $('#cabecera').css('cssText','max-width: 1200px !important');
         }
     });
-    $('#vistazo-rapido-container').on('click', function(){
-        var html = jQuery('html');
-        html.css('overflow', 'inherit');
-        $('#vistazo-rapido-container').removeClass('display-iframe');
-        $('#vistazo-rapido-container').empty();
-
+    $('.ver-mas-img')
+    .mouseenter(function(){
+        $( this ).find( 'a').css('background-color','#333');
+    })
+    .mouseleave(function(){
+        $( this ).find( 'a').css('background-color','<?=$principalColors['colordestacado']?>');
     });
-    $('.vistazo-rapido').click(function(e){
-        idProducto = $(this).attr('data-product');
-        e.preventDefault();
-        $('#vistazo-rapido-container').append('<div class="close-iframe"><div class="pull-right close-button"><i class="far fa-times-circle"></i></div></div>');
-        $('#vistazo-rapido-container').append('<iframe src="<?=$draizp?>/producto/'+idProducto+'" frameborder="0" scrolling="yes" id="myFrame"></iframe>');
-        $('#vistazo-rapido-container').addClass('display-iframe');
-        window.scrollTo(0, 0);
-        var html = jQuery('html');
-        html.css('overflow', 'hidden');
+    $('.single-product')
+    .mouseenter(function(){
+        $( this ).find( '.ver-mas-img' ).removeClass("estado-inicial");
+        $( this ).find( '.vistazo-rapido' ).removeClass("estado-inicial");
+    })
+    .mouseleave(function(){
+        $( this ).find( '.ver-mas-img' ).addClass("estado-inicial");
+        $( this ).find( '.vistazo-rapido' ).addClass("estado-inicial");
     });
     $('.search-button').mouseenter(function(){
         $('.formulario-buscador').css('height','62px');
