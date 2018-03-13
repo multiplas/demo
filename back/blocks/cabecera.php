@@ -21,7 +21,14 @@
         <script src="vendors/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 		<script type="text/javascript" src="js/jquery.PrintArea.js"></script>
         <script type="text/javascript" src="pickercolor/jquery.minicolors.min.js"></script>
-                
+
+        <!-- amCharts custom font -->
+        <link href='https://fonts.googleapis.com/css?family=Covered+By+Your+Grace' rel='stylesheet' type='text/css'>
+
+        <!-- amCharts javascript sources -->
+        <script type="text/javascript" src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+        <script type="text/javascript" src="https://cdn.amcharts.com/lib/3/pie.js"></script>
+        <script type="text/javascript" src="https://www.amcharts.com/lib/3/themes/chalk.js"></script>
 	</head>
     
     <body>

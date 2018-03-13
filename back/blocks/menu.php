@@ -199,7 +199,9 @@
                             </ul>
                         </li>
 
-
+                        <li<?=$menusel == 'estadisticas' ? ' class="active"' : ''?>>
+                            <a href="estadisticas.php"><i class="icon-chevron-right"></i> Estadísticas</a>
+                        </li>
 
                          <li class="dropup <?=$menusel == 'idiomas' ? 'active' : ''?><?=$menusel == 'configuracion' ? 'active' : ''?><?=$menusel == 'metodospago' ? ' active' : ''?><?=$menusel == 'portes' ? ' active' : ''?><?=$menusel == 'portes2' ? ' active' : ''?><?=$menusel == 'portes3' ? ' active' : ''?><?=$menusel == 'portes4' ? ' active' : ''?>">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Configuración <i class="icon-chevron-up"></i></a>
