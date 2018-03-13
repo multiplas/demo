@@ -8,6 +8,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script type="text/javascript" src="<?=$draizp?>/componentes/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
 <?php
 $principalColors = getColors();
 
@@ -92,7 +93,7 @@ $principalColors = getColors();
 
     #cabecera #menu-right{
         float:right;
-        width: 79%;
+        width: 75%;
     }
 
     #grupo-contenido #contenido {
@@ -121,10 +122,14 @@ $principalColors = getColors();
         border: <?=$principalColors['colordestacado']?>;
         border-radius: 2px;
         text-decoration: none !important;
-        color: white !important;
+        color: <?=$principalColors['colortextobotonform']?> !important;
         -webkit-transition: all 1s;
         -moz-transition: all 1s;
         transition: all 1s;
+    }
+
+    .formulario-buscador input{
+        color: <?=$principalColors['colordestacado']?>;
     }
 
     .vistazo-rapido:hover,.ver-mas-img:hover, .ver-mas-img a:hover{
@@ -415,15 +420,31 @@ $principalColors = getColors();
 
         .nav-top {
             height: 130px;
+            display: none;
         }
-                .nav-top div {
+        .nav-top div {
             margin-bottom: 11px;
         }
-        #sli img{
+        /* #sli img{
             height: 100%;
             width: auto;
+        } */
+        #grupo-submenu {
+            left: 0;
+            width: 100%;
         }
-        
+        #grupo-submenu #submenu-r ul {
+            text-align: left;
+        }
+        #cabecera{
+            width:100% !important;
+        }
+        .contact-bar {
+            height: 250px;
+        }
+        #grupo-contenido{
+            margin-top: 30px;
+        }
     }
 </style>
 
@@ -456,11 +477,19 @@ $(document).ready(function() {
         $( this ).find( '.ver-mas-img' ).addClass("estado-inicial");
         $( this ).find( '.vistazo-rapido' ).addClass("estado-inicial");
     });
-    $('.search-button').mouseenter(function(){
-        $('.formulario-buscador').css('height','62px');
-    });
-    $('#busc').focusout(function(){
-        $('.formulario-buscador').css('height','0px');
+    $(document).mouseup(function(e) 
+    {
+        var container = $(".search-button");
+        var container2 = $("#buscador");
+        // if the target of the click isn't the container nor a descendant of the container
+        if (!container.is(e.target) && container.has(e.target).length === 0) 
+        {
+            if (!container2.is(e.target) && container2.has(e.target).length === 0) 
+                $('.formulario-buscador').css('height','0px');
+        }
+        else{
+            $('.formulario-buscador').css('height','62px');
+        }
     });
 });
 </script>
@@ -510,136 +539,138 @@ $(document).ready(function() {
         if($inicio != 2){
     ?>
         <form action="<?=$draizp?>/<?=$_POST['buscar']?>" class="formulario-buscador" method="post">
-            <input style="background: <?=$principalColors['colordestacado']?>;color:<?=$principalColors['colorgeneralinicio']?>;height: 100%;padding-left: 25px;width: 100%;" name="buscar" type="text" id="busc" placeholder="Buscar<?=$aux?>..." value="<?=(isset($_POST['buscar'])) ? $_POST['buscar'] : '';?>" /><span id="BtBuscar" style="background: #4b4b4b url(../source/lupa.png);background-position: center;background-repeat: no-repeat;" name="BtSubmit"></span>
+            <input style="background: <?=$principalColors['fondosubmenuhoverresp']?>;color:<?=$principalColors['colorgeneralinicio']?>;height: 100%;padding-left: 25px;width: 100%;" name="buscar" type="text" id="busc" placeholder="Buscar<?=$aux?>..." value="<?=(isset($_POST['buscar'])) ? $_POST['buscar'] : '';?>" /><span id="BtBuscar" style="background: #4b4b4b url(../source/lupa.png);background-position: center;background-repeat: no-repeat;" name="BtSubmit"></span>
         </form>
     <?php
         }
     ?>
 </div>
-<div id="cabecera">
-	<div id="logo">
-        <?php if($logoSup != ''){ ?><a href="<?=$draizp?>/"><img src="<?=$draizp?>/source/<?=$logoSup?>" alt="" /></a><?php } ?>
-	</div>
-	<div id="menu-right">
-        <!-- <?=$Empresa['localidad']?> | <?=$Empresa['provincia']?><br>
-        <a href="tel:+34<?=number_format($Empresa['telefono'], 0, '', ' ')?>"><?php echo number_format($Empresa['telefono'], 0, '', ' '). '</a> | <a href="mailto:'.$Empresa['email'].'" >' .$Empresa['email']. '</a>'; ?> -->
-        <!-- <div style="text-align:right;margin-bottom:0%;">
-            <?php if(count($idiomas) >= 1){ ?>
-                <form action="<?=$draizp?>/es/" method="post" style="width:17px;display:inline-block;">
-                    <input type='hidden' name='idioma' value='ESP' />
-                    <input type="image" style="width:17px;" name="idioma" id="idioma" value="ESP" src="<?=$draizp?>/source/Spain-flag-48.png" />
-                </form> &nbsp;&nbsp;
-            <?php } ?>
-            <?php
-                for($i=0; $i<=count($idiomas); $i++){
-                    if($idiomas[$i][0] == 'RUS'){
-                    ?>
-                        <form action="<?=$draizp?>/ru/" method="post" style="width:17px;display:inline-block;">
-                            <input type='hidden' name='idioma' value='RUS' />
-                            <input type="image" style="width:17px;" name="idioma" id="idioma" value="RUS" src="<?=$draizp?>/source/Russia-flag-48.png" />
-                        </form>
-                    <?php
-                    }
-                    if($idiomas[$i][0] == 'CAT'){
-                    ?>
-                        <form action="<?=$draizp?>/ca/" method="post" style="width:17px;display:inline-block;">
-                            <input type='hidden' name='idioma' value='CAT' />
-                            <input type="image" style="width:17px;" name="idioma" id="idioma" value="CAT" src="<?=$draizp?>/source/Catalonia-flag-48.png" />
-                        </form> &nbsp;&nbsp;
-                    <?php
-                    }
-                    if($idiomas[$i][0] == 'UK'){
-                    ?>
-                        <form action="<?=$draizp?>/en/" method="post" style="width:17px;display:inline-block;">
-                            <input type='hidden' name='idioma' value='UK' />
-                            <input type="image" style="width:17px;" name="idioma" id="idioma" value="UK" src="<?=$draizp?>/source/United-kingdom-flag-48.png" />
+<div id="cabecera">     
+    <div class="container">
+        <div id="logo">
+            <?php if($logoSup != ''){ ?><a href="<?=$draizp?>/"><img src="<?=$draizp?>/source/<?=$logoSup?>" alt="" /></a><?php } ?>
+        </div>
+        <div id="menu-right">
+            <!-- <?=$Empresa['localidad']?> | <?=$Empresa['provincia']?><br>
+            <a href="tel:+34<?=number_format($Empresa['telefono'], 0, '', ' ')?>"><?php echo number_format($Empresa['telefono'], 0, '', ' '). '</a> | <a href="mailto:'.$Empresa['email'].'" >' .$Empresa['email']. '</a>'; ?> -->
+            <!-- <div style="text-align:right;margin-bottom:0%;">
+                <?php if(count($idiomas) >= 1){ ?>
+                    <form action="<?=$draizp?>/es/" method="post" style="width:17px;display:inline-block;">
+                        <input type='hidden' name='idioma' value='ESP' />
+                        <input type="image" style="width:17px;" name="idioma" id="idioma" value="ESP" src="<?=$draizp?>/source/Spain-flag-48.png" />
                     </form> &nbsp;&nbsp;
-                    <?php
-                    }
-                    if($idiomas[$i][0] == 'DEU'){
-                    ?>
-                        <form action="<?=$draizp?>/de/" method="post" style="width:17px;display:inline-block;">
-                            <input type='hidden' name='idioma' value='DEU' />
-                            <input type="image" style="width:17px;" name="idioma" id="idioma" value="DEU" src="<?=$draizp?>/source/Germany-flag-48.png" /> 
+                <?php } ?>
+                <?php
+                    for($i=0; $i<=count($idiomas); $i++){
+                        if($idiomas[$i][0] == 'RUS'){
+                        ?>
+                            <form action="<?=$draizp?>/ru/" method="post" style="width:17px;display:inline-block;">
+                                <input type='hidden' name='idioma' value='RUS' />
+                                <input type="image" style="width:17px;" name="idioma" id="idioma" value="RUS" src="<?=$draizp?>/source/Russia-flag-48.png" />
+                            </form>
+                        <?php
+                        }
+                        if($idiomas[$i][0] == 'CAT'){
+                        ?>
+                            <form action="<?=$draizp?>/ca/" method="post" style="width:17px;display:inline-block;">
+                                <input type='hidden' name='idioma' value='CAT' />
+                                <input type="image" style="width:17px;" name="idioma" id="idioma" value="CAT" src="<?=$draizp?>/source/Catalonia-flag-48.png" />
+                            </form> &nbsp;&nbsp;
+                        <?php
+                        }
+                        if($idiomas[$i][0] == 'UK'){
+                        ?>
+                            <form action="<?=$draizp?>/en/" method="post" style="width:17px;display:inline-block;">
+                                <input type='hidden' name='idioma' value='UK' />
+                                <input type="image" style="width:17px;" name="idioma" id="idioma" value="UK" src="<?=$draizp?>/source/United-kingdom-flag-48.png" />
                         </form> &nbsp;&nbsp;
-                    <?php
+                        <?php
+                        }
+                        if($idiomas[$i][0] == 'DEU'){
+                        ?>
+                            <form action="<?=$draizp?>/de/" method="post" style="width:17px;display:inline-block;">
+                                <input type='hidden' name='idioma' value='DEU' />
+                                <input type="image" style="width:17px;" name="idioma" id="idioma" value="DEU" src="<?=$draizp?>/source/Germany-flag-48.png" /> 
+                            </form> &nbsp;&nbsp;
+                        <?php
+                        }
+                        if($idiomas[$i][0] == 'FRA'){
+                        ?>
+                            <form action="<?=$draizp?>/fr/" method="post" style="width:17px;display:inline-block;">
+                                <input type='hidden' name='idioma' value='FRA' />
+                                <input type="image" style="width:17px;" name="idioma" id="idioma" value="FRA" src="<?=$draizp?>/source/France-flag-48.png" alt="FRA" /> 
+                            </form> &nbsp;&nbsp;
+                        <?php
+                        }
+                        if($idiomas[$i][0] == 'ITA'){
+                        ?>
+                            <form action="<?=$draizp?>/it/" method="post" style="width:17px;display:inline-block;">
+                                <input type='hidden' name='idioma' value='ITA' />
+                                <input type="image" style="width:17px;" name="idioma" id="idioma" value="ITA" src="<?=$draizp?>/source/Italy-flag-48.png" alt="ITA" />
+                            </form> &nbsp;&nbsp;
+                        <?php
+                        }
+                        if($idiomas[$i][0] == 'POR'){
+                        ?>
+                            <form action="<?=$draizp?>/pr/" method="post" style="width:17px;display:inline-block;">
+                                <input type='hidden' name='idioma' value='POR' />
+                                <input type="image" style="width:17px;" name="idioma" id="idioma" value="POR" src="<?=$draizp?>/source/Portugal-flag-48.png" alt="POR" /> 
+                            </form> &nbsp;&nbsp;
+                        <?php
+                        }
                     }
-                    if($idiomas[$i][0] == 'FRA'){
-                    ?>
-                        <form action="<?=$draizp?>/fr/" method="post" style="width:17px;display:inline-block;">
-                            <input type='hidden' name='idioma' value='FRA' />
-                            <input type="image" style="width:17px;" name="idioma" id="idioma" value="FRA" src="<?=$draizp?>/source/France-flag-48.png" alt="FRA" /> 
+            ?>
+            </div> -->
+            <!-- <div style="text-align:right;margin-bottom:0%;">
+                <?php
+                if(count($divisas) >= 1){
+                        if($divisas['EUR'] == 1){
+                        ?>
+                            <form action="<?=$draizp?>/<?=$_SESSION['lenguaje']?>/" method="post" style="width:17px;display:inline-block;">
+                                <input type='hidden' name='divisa' value='EUR' />
+                                <input type="image" style="width:17px;" name="divisa2" id="divisa2" value="EUR" src="<?=$draizp?>/source/Euro.png" />
+                            </form>
+                        <?php
+                        }
+                        if($divisas['USD'] == 1){
+                        ?>
+                            <form action="<?=$draizp?>/<?=$_SESSION['lenguaje']?>/" method="post" style="width:17px;display:inline-block;">
+                                <input type='hidden' name='divisa' value='USD' />
+                                <input type="image" style="width:17px;" name="divisa2" id="divisa2" value="USD" src="<?=$draizp?>/source/Dolar.png" />
+                            </form> &nbsp;&nbsp;
+                        <?php
+                        }
+                        if($divisas['JPY'] == 1){
+                        ?>
+                            <form action="<?=$draizp?>/<?=$_SESSION['lenguaje']?>/" method="post" style="width:17px;display:inline-block;">
+                                <input type='hidden' name='divisa' value='JPY' />
+                                <input type="image" style="width:17px;" name="divisa2" id="divisa2" value="JPY" src="<?=$draizp?>/source/Yen.png" />
                         </form> &nbsp;&nbsp;
-                    <?php
-                    }
-                    if($idiomas[$i][0] == 'ITA'){
-                    ?>
-                        <form action="<?=$draizp?>/it/" method="post" style="width:17px;display:inline-block;">
-                            <input type='hidden' name='idioma' value='ITA' />
-                            <input type="image" style="width:17px;" name="idioma" id="idioma" value="ITA" src="<?=$draizp?>/source/Italy-flag-48.png" alt="ITA" />
-                        </form> &nbsp;&nbsp;
-                    <?php
-                    }
-                    if($idiomas[$i][0] == 'POR'){
-                    ?>
-                        <form action="<?=$draizp?>/pr/" method="post" style="width:17px;display:inline-block;">
-                            <input type='hidden' name='idioma' value='POR' />
-                            <input type="image" style="width:17px;" name="idioma" id="idioma" value="POR" src="<?=$draizp?>/source/Portugal-flag-48.png" alt="POR" /> 
-                        </form> &nbsp;&nbsp;
-                    <?php
-                    }
+                        <?php
+                        }
+                        if($divisas['GBP'] == 1){
+                        ?>
+                            <form action="<?=$draizp?>/<?=$_SESSION['lenguaje']?>/" method="post" style="width:17px;display:inline-block;">
+                                <input type='hidden' name='divisa' value='GBP' />
+                                <input type="image" style="width:17px;" name="divisa2" id="divisa2" value="GBP" src="<?=$draizp?>/source/Libra.png" /> 
+                            </form> &nbsp;&nbsp;
+                        <?php
+                        }
+                        if($divisas['CHF'] == 1){
+                        ?>
+                            <form action="<?=$draizp?>/<?=$_SESSION['lenguaje']?>/" method="post" style="width:17px;display:inline-block;">
+                                <input type='hidden' name='divisa' value='CHF' />
+                                <input type="image" style="width:17px;" name="divisa2" id="divisa2" value="CHF" src="<?=$draizp?>/source/FrancoSuizo.png" /> 
+                            </form> &nbsp;&nbsp;
+                        <?php
+                        }
                 }
-        ?>
-        </div> -->
-        <!-- <div style="text-align:right;margin-bottom:0%;">
-            <?php
-            if(count($divisas) >= 1){
-                    if($divisas['EUR'] == 1){
                     ?>
-                        <form action="<?=$draizp?>/<?=$_SESSION['lenguaje']?>/" method="post" style="width:17px;display:inline-block;">
-                            <input type='hidden' name='divisa' value='EUR' />
-                            <input type="image" style="width:17px;" name="divisa2" id="divisa2" value="EUR" src="<?=$draizp?>/source/Euro.png" />
-                        </form>
-                    <?php
-                    }
-                    if($divisas['USD'] == 1){
-                    ?>
-                        <form action="<?=$draizp?>/<?=$_SESSION['lenguaje']?>/" method="post" style="width:17px;display:inline-block;">
-                            <input type='hidden' name='divisa' value='USD' />
-                            <input type="image" style="width:17px;" name="divisa2" id="divisa2" value="USD" src="<?=$draizp?>/source/Dolar.png" />
-                        </form> &nbsp;&nbsp;
-                    <?php
-                    }
-                    if($divisas['JPY'] == 1){
-                    ?>
-                        <form action="<?=$draizp?>/<?=$_SESSION['lenguaje']?>/" method="post" style="width:17px;display:inline-block;">
-                            <input type='hidden' name='divisa' value='JPY' />
-                            <input type="image" style="width:17px;" name="divisa2" id="divisa2" value="JPY" src="<?=$draizp?>/source/Yen.png" />
-                    </form> &nbsp;&nbsp;
-                    <?php
-                    }
-                    if($divisas['GBP'] == 1){
-                    ?>
-                        <form action="<?=$draizp?>/<?=$_SESSION['lenguaje']?>/" method="post" style="width:17px;display:inline-block;">
-                            <input type='hidden' name='divisa' value='GBP' />
-                            <input type="image" style="width:17px;" name="divisa2" id="divisa2" value="GBP" src="<?=$draizp?>/source/Libra.png" /> 
-                        </form> &nbsp;&nbsp;
-                    <?php
-                    }
-                    if($divisas['CHF'] == 1){
-                    ?>
-                        <form action="<?=$draizp?>/<?=$_SESSION['lenguaje']?>/" method="post" style="width:17px;display:inline-block;">
-                            <input type='hidden' name='divisa' value='CHF' />
-                            <input type="image" style="width:17px;" name="divisa2" id="divisa2" value="CHF" src="<?=$draizp?>/source/FrancoSuizo.png" /> 
-                        </form> &nbsp;&nbsp;
-                    <?php
-                    }
-            }
-                 ?>
-                
-        </div> -->
-		<?php include_once('menu.php'); ?>
-	</div>
+                    
+            </div> -->
+            <?php include_once('menu.php'); ?>
+        </div>
+    </div>
 </div>
 <?php if($fCabecera != ''){ ?>
         </div>

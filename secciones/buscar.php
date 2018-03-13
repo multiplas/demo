@@ -123,88 +123,93 @@
         }
     
     </style>
-
-<div id="contenido">
-<div id="novedades">
-    <span class="tfiltro">Búsqueda de "<b><?=$_POST['buscar'] != '' ? $_POST['buscar']: ($_GET['buscar'] != '' ? str_replace("-", " ", ($_GET['buscar'])) : $nombreBuscarEtq) ?></b>"</span>
-    <div class="muestra">
-	<!--<form action="<?=$_SERVER['REQUEST_URI']?>" method="post">
-		<div id="panel-superior">
-			<?php include('./bloques/paginador.php'); ?>
-			<?php include('./bloques/ordenador.php'); ?>
-		</div>
-		<div id="panel-izquierdo">
-			<?php include('./bloques/filtros.php'); ?>
-            <span name="BtReset" class="button">Limpiar Filtros</span>
-		</div>-->
-		     
-             <style>
-                 .descripcion{
-                        color: #444444 !important;
-                        display: block !important;
-                        font-family: "Istok Web",Arial,Helvetica,sans-serif !important;
-                        font-size: 18px !important;
-                        text-align: center !important;
-                        width: 100% !important;
-                 }
-            </style>
-  
-			<?php
-				if (count($productos) < 1) echo 'No se han hayado productos.';
-				for ($i = 0; $i < count($productos); $i++)
-				{
-                    $nombre = utf8_encode(strtr(utf8_decode($productos[$i]['nombre']), utf8_decode($tofind), $replac));
-                    $nombre = strtolower($nombre);
-                    $nombre = preg_replace('([^A-Za-z0-9])', '-', $nombre);	   
-					$classex = 'producto3';
-                    $no_permitidas= array ("á","é","í","ó","ú","Á","É","Í","Ó","Ú","ñ","À","Ã","Ì","Ò","Ù","Ã™","Ã ","Ã¨","Ã¬","Ã²","Ã¹","ç","Ç","Ã¢","ê","Ã®","Ã´","Ã»","Ã‚","ÃŠ","ÃŽ","Ã”","Ã›","ü","Ã¶","Ã–","Ã¯","Ã¤","«","Ò","Ã","Ã„","Ã‹");
-                    $permitidas= array ("a","e","i","o","u","A","E","I","O","U","n","N","A","E","I","O","U","a","e","i","o","u","c","C","a","e","i","o","u","A","E","I","O","U","u","o","O","i","a","e","U","I","A","E");
-
-			?>
-                    <div class="producto">
-                        <a href="<?=$draizp?>/producto/<?=$productos[$i]['id']?>/<?=str_replace(".", "", str_replace("--", "-", $nombre))?>/">
-                            <?php if ($Empresa['det_producto'] == 1){ ?><a href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>producto/<?=$productos[$i]['id']?>/<?=str_replace(".", "", str_replace("--", "-", $nombre))?>/"><?php } ?><img class="zoom" id="imagen_modal2" name="imagen_modal2" data-nombre="<?=preg_replace('([^A-Za-z0-9])', '_', str_replace($no_permitidas, $permitidas, $productos[$i]['nombre']))?>" src="<?=$draizp?>/imagenesproductos/<?=$productos[$i]['imagen']?>" alt="<?=$productos[$i]['nombre']?>" /><?php if ($Empresa['det_producto'] == 1){ ?></a><?php } ?>
-                            <span class="descripcion"><?php if ($Empresa['det_producto'] == 1){ ?><a href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>producto/<?=$productos[$i]['id']?>/<?=str_replace(".", "", str_replace("--", "-", $nombre))?>/"><?php } ?><?=$productos[$i]['nombre']?><?php if ($Empresa['det_producto'] == 1){ ?></a><?php }?></span>
-                            <?php if ($Empresa['det_producto'] == 1){ ?><span class="descuento"><?=$productos[$i]['descuento'] != 0 ? '-'.$productos[$i]['descuento'].' '.$productos[$i]['descuentoe'] : ''?></span><?php } ?>
-                                <?php if ($Empresa['det_producto'] == 1){ ?><span class="precioa"><?=$productos[$i]['descuento'] != 0 ? number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$productos[$i]['precio_ant']), 2, ',', '.').$_SESSION['moneda'] : ''?></span><br><?php } ?>
-                            <?php if($_SESSION['usr'] != null || ($_SESSION['usr'] == null && $Empresa['registro'] == 1)){ ?>
-                                                    <?php if ($Empresa['det_producto'] == 1){ ?><span class="precio"><?=$productos[$i]['tprecio'] != '' ? $productos[$i]['tprecio'] : (number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$productos[$i]['precio']), 2, ',', '.'))?> <?=$productos[$i]['tprecio'] != '' ? '' : $_SESSION['moneda']?></span><?php } ?>
-                                <?php if ($Empresa['det_producto'] == 1){ ?><a class="vermas" href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>producto/<?=$productos[$i]['id']?>/<?=str_replace(".", "", str_replace("--", "-", $nombre))?>/">Ver más</a><?php } ?>
-                            <?php }else{ ?>
-                                <?php if ($Empresa['det_producto'] == 1){ ?><a class="vermas" style="width: 83% !important;max-width: 83% !important;text-align:center" href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>producto/<?=$productos[$i]['id']?>/<?=str_replace(".", "", str_replace("--", "-", $nombre))?>/">Ver más</a><?php }?>
-                            <?php } ?>
-                        </a>
+<?php if($cabecera != 16): //Lo customizamos para el tema de Bootstrap ?>
+    <div id="contenido">
+        <div class="container"">
+            <div id="novedades">
+                <span class="tfiltro">Búsqueda de "<b><?=$_POST['buscar'] != '' ? $_POST['buscar']: ($_GET['buscar'] != '' ? str_replace("-", " ", ($_GET['buscar'])) : $nombreBuscarEtq) ?></b>"</span>
+                <div class="muestra">
+                <!--<form action="<?=$_SERVER['REQUEST_URI']?>" method="post">
+                    <div id="panel-superior">
+                        <?php include('./bloques/paginador.php'); ?>
+                        <?php include('./bloques/ordenador.php'); ?>
                     </div>
-			<?php
-				}
-			?>
-		
-		<!--<input type="hidden" name="nofilters" value="nofilters" />
-	</form>-->
-    </div>
-	<div id="panel-inferior">
-		<?php include('./bloques/paginador_buscar.php'); ?>
-	</div>
-	<?php //$horientacion = 'hor'; include_once('./bloques/informacion.php'); ?>
-	<?php //include_once('./bloques/novedades.php'); ?>
-	<?php //include_once('./bloques/masvendidos.php'); ?>
-</div>
-</div>
-    <?php if ($Empresa['det_producto'] == 0){ ?>  
-                    <script>
-                         jQuery('body').on('click','.zoom',function(){
-                            window.parent.document.getElementById('imagen_modal').src = jQuery(this).attr("src");
-                            product_name = jQuery(this).attr("alt");
-                            window.parent.document.getElementById('nombre_modal').href = '<?=$draizp?>/<?=$_SESSION['lenguaje']?>contacto/'+jQuery(this).attr("data-nombre");
-                            window.parent.document.getElementById('myModal').style.display = "block";
-                            window.parent.document.getElementById('myModal2').style.display = "block";
-                        });
-                        jQuery('body').on('click','.nozoomf',function(){
-                            window.parent.document.getElementById('imagen_modal').src = jQuery(this).attr("src");
-                            window.parent.document.getElementById('nombre_modal').href = '<?=$draizp?>/<?=$_SESSION['lenguaje']?>contacto/'+jQuery(this).attr("data-nombre");
-                            window.parent.document.getElementById('myModal').style.display = "block";
-                            window.parent.document.getElementById('myModal2').style.display = "block";
-                        });
+                    <div id="panel-izquierdo">
+                        <?php include('./bloques/filtros.php'); ?>
+                        <span name="BtReset" class="button">Limpiar Filtros</span>
+                    </div>-->
                         
-                    </script>
-                  <?php } ?>
+                        <style>
+                            .descripcion{
+                                    color: #444444 !important;
+                                    display: block !important;
+                                    font-family: "Istok Web",Arial,Helvetica,sans-serif !important;
+                                    font-size: 18px !important;
+                                    text-align: center !important;
+                                    width: 100% !important;
+                            }
+                        </style>
+            
+                        <?php
+                            if (count($productos) < 1) echo 'No se han hayado productos.';
+                            for ($i = 0; $i < count($productos); $i++)
+                            {
+                                $nombre = utf8_encode(strtr(utf8_decode($productos[$i]['nombre']), utf8_decode($tofind), $replac));
+                                $nombre = strtolower($nombre);
+                                $nombre = preg_replace('([^A-Za-z0-9])', '-', $nombre);	   
+                                $classex = 'producto3';
+                                $no_permitidas= array ("á","é","í","ó","ú","Á","É","Í","Ó","Ú","ñ","À","Ã","Ì","Ò","Ù","Ã™","Ã ","Ã¨","Ã¬","Ã²","Ã¹","ç","Ç","Ã¢","ê","Ã®","Ã´","Ã»","Ã‚","ÃŠ","ÃŽ","Ã”","Ã›","ü","Ã¶","Ã–","Ã¯","Ã¤","«","Ò","Ã","Ã„","Ã‹");
+                                $permitidas= array ("a","e","i","o","u","A","E","I","O","U","n","N","A","E","I","O","U","a","e","i","o","u","c","C","a","e","i","o","u","A","E","I","O","U","u","o","O","i","a","e","U","I","A","E");
+
+                        ?>
+                                <div class="producto">
+                                    <a href="<?=$draizp?>/producto/<?=$productos[$i]['id']?>/<?=str_replace(".", "", str_replace("--", "-", $nombre))?>/">
+                                        <?php if ($Empresa['det_producto'] == 1){ ?><a href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>producto/<?=$productos[$i]['id']?>/<?=str_replace(".", "", str_replace("--", "-", $nombre))?>/"><?php } ?><img class="zoom" id="imagen_modal2" name="imagen_modal2" data-nombre="<?=preg_replace('([^A-Za-z0-9])', '_', str_replace($no_permitidas, $permitidas, $productos[$i]['nombre']))?>" src="<?=$draizp?>/imagenesproductos/<?=$productos[$i]['imagen']?>" alt="<?=$productos[$i]['nombre']?>" /><?php if ($Empresa['det_producto'] == 1){ ?></a><?php } ?>
+                                        <span class="descripcion"><?php if ($Empresa['det_producto'] == 1){ ?><a href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>producto/<?=$productos[$i]['id']?>/<?=str_replace(".", "", str_replace("--", "-", $nombre))?>/"><?php } ?><?=$productos[$i]['nombre']?><?php if ($Empresa['det_producto'] == 1){ ?></a><?php }?></span>
+                                        <?php if ($Empresa['det_producto'] == 1){ ?><span class="descuento"><?=$productos[$i]['descuento'] != 0 ? '-'.$productos[$i]['descuento'].' '.$productos[$i]['descuentoe'] : ''?></span><?php } ?>
+                                            <?php if ($Empresa['det_producto'] == 1){ ?><span class="precioa"><?=$productos[$i]['descuento'] != 0 ? number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$productos[$i]['precio_ant']), 2, ',', '.').$_SESSION['moneda'] : ''?></span><br><?php } ?>
+                                        <?php if($_SESSION['usr'] != null || ($_SESSION['usr'] == null && $Empresa['registro'] == 1)){ ?>
+                                                                <?php if ($Empresa['det_producto'] == 1){ ?><span class="precio"><?=$productos[$i]['tprecio'] != '' ? $productos[$i]['tprecio'] : (number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$productos[$i]['precio']), 2, ',', '.'))?> <?=$productos[$i]['tprecio'] != '' ? '' : $_SESSION['moneda']?></span><?php } ?>
+                                            <?php if ($Empresa['det_producto'] == 1){ ?><a class="vermas" href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>producto/<?=$productos[$i]['id']?>/<?=str_replace(".", "", str_replace("--", "-", $nombre))?>/">Ver más</a><?php } ?>
+                                        <?php }else{ ?>
+                                            <?php if ($Empresa['det_producto'] == 1){ ?><a class="vermas" style="width: 83% !important;max-width: 83% !important;text-align:center" href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>producto/<?=$productos[$i]['id']?>/<?=str_replace(".", "", str_replace("--", "-", $nombre))?>/">Ver más</a><?php }?>
+                                        <?php } ?>
+                                    </a>
+                                </div>
+                        <?php
+                            }
+                        ?>
+                    
+                    <!--<input type="hidden" name="nofilters" value="nofilters" />
+                </form>-->
+                </div>
+                <div id="panel-inferior">
+                    <?php include('./bloques/paginador_buscar.php'); ?>
+                </div>
+                <?php //$horientacion = 'hor'; include_once('./bloques/informacion.php'); ?>
+                <?php //include_once('./bloques/novedades.php'); ?>
+                <?php //include_once('./bloques/masvendidos.php'); ?>
+            </div>
+        </div>
+    </div>
+    <?php if ($Empresa['det_producto'] == 0){ ?>  
+    <script>
+            jQuery('body').on('click','.zoom',function(){
+            window.parent.document.getElementById('imagen_modal').src = jQuery(this).attr("src");
+            product_name = jQuery(this).attr("alt");
+            window.parent.document.getElementById('nombre_modal').href = '<?=$draizp?>/<?=$_SESSION['lenguaje']?>contacto/'+jQuery(this).attr("data-nombre");
+            window.parent.document.getElementById('myModal').style.display = "block";
+            window.parent.document.getElementById('myModal2').style.display = "block";
+        });
+        jQuery('body').on('click','.nozoomf',function(){
+            window.parent.document.getElementById('imagen_modal').src = jQuery(this).attr("src");
+            window.parent.document.getElementById('nombre_modal').href = '<?=$draizp?>/<?=$_SESSION['lenguaje']?>contacto/'+jQuery(this).attr("data-nombre");
+            window.parent.document.getElementById('myModal').style.display = "block";
+            window.parent.document.getElementById('myModal2').style.display = "block";
+        });
+        
+    </script>
+    <?php } ?>
+<?php else: ?>
+<?php include_once($draiz.'/temas/'.$cabecera.'/bloques/buscar.php'); ?>
+<?php endif; ?>

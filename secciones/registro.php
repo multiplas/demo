@@ -78,7 +78,7 @@
     
         
     
-	<div id="articulo">
+	<div id="articulo" class="container">
 		<h2><?=$aux2?></h2>
                 <div id="LbMessagesigin" style=" color: #E81F32;">
 				<?=($_GET['registro']) == 'good' ? '<p style=" color: #006614;">Registro completado! Se ha enviado un correo de confirmación a su dirección de email.</p>' : '';?>

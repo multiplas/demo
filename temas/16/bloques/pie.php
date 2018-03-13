@@ -346,18 +346,25 @@ $bloques = getBloqsInfo();
                 left: 15px;
                 bottom: inherit;
             }
+
+            @media (max-width:500px)
+            { 
+                .copyright{
+                    position: relative;
+                }
+            }
         </style>
     </div>
     <div id="linea-roja" class="container-fluid">
         <div class="container">
             <div class="row" style="width:100%;">
-                <div class="col-sm-6">
+                <div class="col-xs-12 col-sm-6">
                     <span class="copyright">
                         © 2017 FarmaVitalista. Diseño web por
                         <a href="https://www.camaltec.es/">Grupo Camaltec</a>
                     </span>
                 </div>
-                <div class="col-sm-6">
+                <div class="col-xs-12 col-sm-6">
                     <img src="<?=$draizp?>/imagenes/payment.png" alt="">
                 </div>
             </div>

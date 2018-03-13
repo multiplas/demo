@@ -20,67 +20,77 @@
 	}
 </style>
 <div id="contenido" class="container">
-	<form action="<?=$_SERVER['REQUEST_URI']?>" method="post">
-		<div id="subcategoriaspr">
-            <div class="muestra">
-                <?php
-                    for ($i = 0; $i < count($subcategorias); $i++)
-                    {
-                        $nombre = strtolower($subcategorias[$i]['nombre']);
-                        $nombre = preg_replace('([^A-Za-z0-9])', '_', $nombre);	   
-                ?>
-                    <div class="producto">
-                        <a href="<?=$draizp?>/productos/<?=$subcategorias[$i]['id']?>/<?=$nombre?>"><img src="<?=$draizp?>/imagenesproductos/<?=$subcategorias[$i]['imagen'] != null ? $subcategorias[$i]['imagen'] : 'no-img-pro.png'?>" alt="<?=$subcategorias[$i]['nombre']?>" /></a>
-                        <span class="descripcion"><?=$subcategorias[$i]['nombre']?></span>
-                        <span class="precio"><br></span>
-                        <a class="vermas" href="<?=$draizp?>/productos/<?=$subcategorias[$i]['id']?>/<?=$nombre?>">entrar</a>
-                    </div>
-                <?php
-                    }
-                ?>
-            </div>
-		</div>
-		<div id="panel-superior">
-			<?php include('./bloques/paginador.php'); ?>
-			<?php include('./bloques/ordenador.php'); ?>
-		</div>
-		<div id="panel-izquierdo">
-                        <?php //include('./bloques/menu_prods.php'); ?>
-			<?php include('./bloques/filtros.php'); ?>
-			<span name="BtReset" class="button">Limpiar Filtros</span>
-		</div>
-		<div id="productos">
-			<?php
-				if (count($productos) < 1) echo 'No hay productos en esta categoría.';
-				for ($i = 0; $i < count($productos); $i++)
-				{
-                    $nombre = utf8_encode(strtr(utf8_decode($productos[$i]['nombre']), utf8_decode($tofind), $replac));
-                    $nombre = strtolower($nombre);
-                    $nombre = preg_replace('([^A-Za-z0-9])', '-', $nombre);	   
-					$classex = 'producto3';
-			?>
-					<div class="<?=$classex?> producto">
-						<a href="<?=$draizp?>/producto/<?=$productos[$i]['id']?>/<?=$nombre?>/"><img class="zoom" src="<?=$draizp?>/imagenesproductos/<?=$productos[$i]['imagen']?>" alt="<?=$productos[$i]['nombre']?>" /></a>
-						<span class="descripcion"><?=$productos[$i]['nombre']?></span>
-						<span class="descuento"><?=$productos[$i]['descuento'] != 0 ? '-'.$productos[$i]['descuento'].' '.$productos[$i]['descuentoe'] : ''?></span>
-						<span class="precioa"><?=$productos[$i]['descuento'] != 0 ? number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$productos[$i]['precio_ant']), 2, ',', '.').$_SESSION['moneda'] : ''?></span><br>
-                        <?php if($_SESSION['usr'] != null || ($_SESSION['usr'] == null && $Empresa['registro'] == 1)){ ?>
-						  <span class="precio"><?=number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$productos[$i]['precio']), 2, ',', '.')?> <?=$productos[$i]['precio'] > 0 ? $_SESSION['moneda'] : ''?><?=$productos[$i]['precio'] == 'Consultar' ? $productos[$i]['precio'] : ''?><!--<?=$productosMN[$i]['precio'] != 'Consultar' ? $_SESSION['moneda'] : ''?>--></span>
-                            <a class="vermas" href="<?=$draizp?>/producto/<?=$productos[$i]['id']?>/<?=$nombre?>/">Ver más</a>
-                        <?php }else{ ?>
-                            <a class="vermas" style="width: 83% !important;max-width: 83% !important;text-align:center" href="<?=$draizp?>/producto/<?=$productos[$i]['id']?>/<?=$nombre?>/">Ver más</a>
-                        <?php } ?>
-                            <?php if($productos[$i]['aplazame'] == 1){ ?>
-                                <span class="precio" style="max-width: 100%;">Financialo con Aplazame por <?=number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$productos[$i]['caplazame1']), 2, ',', '.')?><?=$_SESSION['moneda']?> + <?=number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$productos[$i]['caplazame']), 2, ',', '.')?><?=$_SESSION['moneda']?> al mes</span>
-                            <?php } ?>
+	<div class="row">
+		<form action="<?=$_SERVER['REQUEST_URI']?>" class="col-sm-12" method="post">
+			<div id="subcategoriaspr">
+				<div class="muestra">
+					<?php
+						for ($i = 0; $i < count($subcategorias); $i++)
+						{
+							$nombre = strtolower($subcategorias[$i]['nombre']);
+							$nombre = preg_replace('([^A-Za-z0-9])', '_', $nombre);	   
+					?>
+						<div class="producto">
+							<a href="<?=$draizp?>/productos/<?=$subcategorias[$i]['id']?>/<?=$nombre?>"><img src="<?=$draizp?>/imagenesproductos/<?=$subcategorias[$i]['imagen'] != null ? $subcategorias[$i]['imagen'] : 'no-img-pro.png'?>" alt="<?=$subcategorias[$i]['nombre']?>" /></a>
+							<span class="descripcion"><?=$subcategorias[$i]['nombre']?></span>
+							<span class="precio"><br></span>
+							<a class="vermas" href="<?=$draizp?>/productos/<?=$subcategorias[$i]['id']?>/<?=$nombre?>">entrar</a>
+						</div>
+					<?php
+						}
+					?>
+				</div>
+			</div>
+			<div id="panel-superior">
+				<?php include('./bloques/paginador.php'); ?>
+				<?php include('./bloques/ordenador.php'); ?>
+			</div>
+			<div id="panel-izquierdo">
+							<?php //include('./bloques/menu_prods.php'); ?>
+				<?php include('./bloques/filtros.php'); ?>
+				<span name="BtReset" class="button">Limpiar Filtros</span>
+			</div>
+			<input type="hidden" name="nofilters" value="nofilters" />
+		</form>
+	</div>
+	<div class="row">
+		<?php
+			if (count($productos) < 1) echo 'No hay productos en esta categoría.';
+			foreach($productos as $producto){
+				$urlProducto = $draizp.'/'.'producto/'.$producto['id'].'/'.$producto['nombre'].'/';
+				$urlImagen = $draizp.'/'.'imagenesproductos/'.$producto['imagen'];
+				?>
+				<div class="col-sm-3 single-product">
+					<div class="imagen-producto">
+						<a href="<?=str_replace(' ','-',strtolower($urlProducto))?>">
+							<img class="img-responsive" src="<?=$urlImagen?>" alt=""/>
+						</a>
+						<div class="interaccion">
+							<div class="ver-mas-img btn btn-primary estado-inicial"><a href="<?php echo str_replace(' ','-',$urlProducto)?>">Ver más</a></div>
+							<form action="<?=$draizp?>/acc/anadir/<?=$producto['id']?>" method="post">
+								<button type="submit" data-product="<?=$producto['id']?>" class="vistazo-rapido estado-inicial btn btn-success">
+								<i class="fas fa-shopping-cart"></i>
+								</button>
+							</form>
+						</div>
 					</div>
+					<div class="product-info">
+						<div class="titulo-producto">
+							<h4><?=$producto['nombre']?></h4>
+						</div>
+						<div class="descripcion-producto">
+							<?=trim(strip_tags( $producto['descripcion']))?>
+						</div>
+						<div class="product-price"><?=number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$producto['precio']), 2, ',', '.')?> <?=$producto['precio'] > 0 ? $_SESSION['moneda'] : ''?><?=$producto['precio'] == 'Consultar' ? $producto['precio']: ''?></div>
+					</div>
+				</div>
+		
 			<?php
-				}
+			}
 			?>
-		</div>
-		<input type="hidden" name="nofilters" value="nofilters" />
-	</form>
-	<div id="panel-inferior">
+	</div>
+		
+	<div id="panel-inferior" class="row">
 		<?php include('./bloques/paginador.php'); ?>
 	</div>
 	<?php /*$horientacion = 'hor'; include_once('./bloques/informacion.php'); ?>

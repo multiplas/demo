@@ -23,10 +23,10 @@
             }
         }
         .categories .single-category, .categories figcaption, .categories figure{
-            background: #9d2563 !important;
+            background: <?=$principalColors['colordestacado']?> !important;
         }
         .categories .single-category{
-            background: #9d2563 !important;
+            background: <?=$principalColors['colordestacado']?> !important;
             text-align: center !important;
             border-radius: 5px !important;
             margin-bottom: 1.8em !important;

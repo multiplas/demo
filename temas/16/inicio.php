@@ -281,7 +281,7 @@ if($inicio == 3){
         include_once('./temas/16/bloques/categorias.php');           //Comento lo de abajo 
     ?>
     <div class="row">
-        <h3 class="col-sm-12 text-center" style="color: #9d2563">Top Ventas</h3>
+        <h3 class="col-sm-12 text-center" style="color: <?=$principalColors['colordestacado']?> ">Top Ventas</h3>
     <?php
     $ultimosProductos = ProductosConCriterio(12,'novedades');
     foreach($ultimosProductos as $producto){

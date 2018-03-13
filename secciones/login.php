@@ -74,7 +74,7 @@
                                 <?=($_GET['cuenta']) == 'good' ? ($Empresa['registro'] == 1 ? '<p style=" color: #006614;">Registro completado!</p>' : '<p style=" color: #006614;">Registro completado! Se ha enviado un correo de confirmación a su dirección de email.</p>') : '';?>
 			</div>
     
-	<div id="articulo">
+	<div id="articulo" class="container">
 		<h2><?=$aux0?></h2>
 		<p><?=$aux1?></p><br />
 		<form method="post" name="login" action="<?=$draizp?>/acc/entrar<?=isset($_GET['logcompra']) ? '/logcompra' : ''?>">
