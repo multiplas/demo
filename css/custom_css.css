@@ -43,7 +43,9 @@
     margin-left: 10px;
 }
 
-
+#grupo-submenu #submenu-r span.submenu-op{
+    right: 100px !important;
+}
 
 .publicacion{
     overflow: hidden;
@@ -420,6 +422,10 @@ color: red;
     }
     .form-search .input-text{
         width: 80%!important;
+    }
+    #grupo-submenu #submenu-r {
+        margin-top: 0px !important;
+        padding: 10px 22px !important;
     }
 }
 

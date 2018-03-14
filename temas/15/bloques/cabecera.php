@@ -245,7 +245,7 @@
                                                     <ul id="despl">
                                                         <li><a href="<?= $draizp ?>/">INICIO</a></li>
                                                         <li><a href="<?= $draizp ?>/nosotros">NOSOTROS</a></li>
-                                                        <li><a href="<?= $draizp ?>/<?= $_SESSION['lenguaje'] ?>" class="submenu">PRODUCTOS</a> <span class="submenu-op">+˅</span>
+                                                        <li><a href="<?= $draizp ?>/productos" class="submenu">PRODUCTOS</a> <span class="submenu-op">+˅</span>
                                                             <ul class="bloque_submenu">
                                                                 <?php
                                                                     foreach ($categorias AS $padre) {
@@ -333,7 +333,7 @@
                                                     <ul style="float:left">
                                                         <li style="line-height: 70px" id="casita" class="divLogo2"><a href="<?= $draizp ?>/<?= $_SESSION['lenguaje'] ?>">INICIO</a></li>
                                                         <li style="line-height: 70px"><a href="<?= $draizp ?>/nosotros">NOSOTROS</a></li>
-                                                        <li style="line-height: 70px"><a href="<?= $draizp ?>/<?= $_SESSION['lenguaje'] ?>">PRODUCTOS</a>
+                                                        <li style="line-height: 70px"><a href="<?= $draizp ?>/productos/all">PRODUCTOS</a>
                                                             <ul class="bloque_submenu" style="-webkit-box-shadow: 0px 7px 11px 0px rgba(50, 50, 50, 0.4);-moz-box-shadow: 0px 7px 11px 0px rgba(50, 50, 50, 0.4);box-shadow: 0px 7px 11px 0px rgba(50, 50, 50, 0.4);">
                                                                 <?php
                                                                     $control = 0;

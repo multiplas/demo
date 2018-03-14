@@ -546,7 +546,10 @@
                     $filtro = 'ORDER BY orden ASC';
                 }
 		$inicial = 1;
-		$where = "disponible=1 AND soloR = 0 AND (idcat IN ($ids) OR idcat2 IN ($ids) OR idcat3 IN ($ids) OR idcat4 IN ($ids) OR idcat5 IN ($ids))";
+		if($idcat == 'all')
+			$where = "disponible=1";
+		else
+			$where = "disponible=1 AND soloR = 0 AND (idcat IN ($ids) OR idcat2 IN ($ids) OR idcat3 IN ($ids) OR idcat4 IN ($ids) OR idcat5 IN ($ids))";
 		
 		$inicial = Paginacion($pagina, $cantidad, $where.' '.$filtro);
 		
