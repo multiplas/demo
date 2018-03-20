@@ -2002,7 +2002,7 @@
 			return $resultados;
 		}
         
-        function ProductoEditarAtr($atr, $idp, $precio, $precioE, $url){
+        function ProductoEditarAtr($atr, $idp, $precio, $precioE, $url, $atrDef){
             $sql = "SELECT *
 					FROM bd_producto_atributo
                     WHERE idproducto = $idp AND idatributo = $atr;";
@@ -2011,12 +2011,12 @@
             if(mysqli_num_rows($query) == 1){
                 if(strcmp($url, 'noModif') != 0){ $cadena = "AND url = '".$url."'"; }
                 $sql = "UPDATE bd_producto_atributo
-                        SET precio = $precio, precioextra = $precioE $cadena
+                        SET precio = $precio, atrDefecto =  $atrDef, precioextra = $precioE $cadena
                         WHERE idproducto = $idp AND idatributo = $atr;";
                 $query2 = mysqli_query($this->conexion, $sql);
             }else{
                     $sql = "INSERT INTO bd_producto_atributo
-                            VALUES (null, $atr, $idp, $precio, $precioE, '$url');";
+                            VALUES (null, $atr, $idp, $precio, $precioE, '$url', $atrDef);";
                
                 $query2 = mysqli_query($this->conexion, $sql);
             }
@@ -4731,6 +4731,45 @@
 			return $resultado;
 		}
 
+		function CreateTableMarcasStatus()
+		{
+			
+			$sql = "CREATE TABLE IF NOT EXISTS `bd_marcas_status` (
+				`id` bigint(1) NOT NULL,
+				`valor` bigint(1) NOT NULL DEFAULT '0',
+				UNIQUE KEY `id` (`id`)
+				) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
+
+			$query = mysqli_query($this->conexion, $sql);
+
+			$sqlInsertData = "INSERT INTO `bd_marcas_status` (`id`, `valor`) VALUES
+				(0, 0);";
+			
+			$query = mysqli_query($this->conexion, $sqlInsertData);
+				
+		}
+
+		function CargarMarcasStatus()
+		{
+			$resultado = null;
+			
+			$sql = "SELECT * FROM bd_marcas_status WHERE id = 0;";
+					
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) == 1)
+			{
+				$assoc = mysqli_fetch_assoc($query);
+				$resultado = $assoc;
+			}
+			else{
+				$this->CreateTableMarcasStatus();
+				echo "La tabla no existía, ahora ha sido creada con éxito. Por favor, recargue la página para continuar.";
+			}
+
+			return $resultado;
+		}
+
 		function CreateTableSuscriptores()
 		{
 			
@@ -5541,6 +5580,15 @@
                         			
 			$sql = "UPDATE bd_empresa
                         SET novedades = '$activo', novmodo = '$modo', textonov = '$texto', novposicion = '$posicion' WHERE id = 1";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			return $query;
+		}
+
+		function updateMarcaStatus($value)
+		{                        			
+			$sql = "UPDATE bd_marcas_status
+                        SET valor = $value WHERE id = 0";
 			$query = mysqli_query($this->conexion, $sql);
 			
 			return $query;

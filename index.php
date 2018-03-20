@@ -481,7 +481,7 @@
                                         && $_POST['nombre'] != '' && $_POST['apellidos'] != '' && $_POST['password'] != '' && $_POST['rpassword'] != ''
                                         && $_POST['email'] != '' && $_POST['cemail'] != '' && $_POST['telefono'] != '' && $_POST['direccion'] != ''
                                         && $_POST['dni'] != '' && $_POST['cp'] != '' && $_POST['localidad'] != '' && $_POST['provincia'] != '' && $_POST['pais'] != '')
-				{
+                                    {
                                     if(strcmp($_POST['password'], $_POST['rpassword']) == 0){
                                         if(strcmp($_POST['email'], $_POST['cemail']) == 0){
                                             //Validar email

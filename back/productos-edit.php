@@ -4,10 +4,52 @@
         .chzn-container{
             min-width: 150px !important;
         }
+        /* Style the buttons that are used to open and close the accordion panel */
+        .accordion {
+            background-color: #eee;
+            color: #444;
+            cursor: pointer;
+            padding: 18px;
+            width: 100%;
+            text-align: left;
+            border: none;
+            outline: none;
+            transition: 0.4s;
+        }
+
+        /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+        .active, .accordion:hover {
+            background-color: #ccc;
+        }
+
+        /* Style the accordion panel. Note: hidden by default */
+        .panel {
+            padding: 0 18px;
+            background-color: white;
+            display: none;
+            overflow: hidden;
+        }
+
+        .collapse-button:hover {
+            background: #3a87ad;
+            color: #fff;
+            font-weight: normal;
+            text-decoration: none;
+        }
+
+        .collapse-button {
+            width: 100%;
+            text-align: left;
+            background: #eee;
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: 500;
+        }
     </style>
     <div class="span9" id="content">
 
         <script>
+        
             function cambiar(nam){
                 var cadena = document.getElementById(nam).value;
                 document.getElementById(nam).value = cadena.replace(",",".");
@@ -16,6 +58,14 @@
 
         <script>
             $(document).ready(function() {
+                var collapsed = '';
+                $('.collapse-button').click(function(){
+                    if(collapsed != ''){
+                        $('#'+collapsed).hide();
+                    }
+                    $('#'+$(this).attr('data-label')).show();
+                    collapsed = $(this).attr('data-label');
+                });
                 //Ocultando todas las pestañas
                 $(".div-tabs").hide();
                 //Mostrando sólo la pestaña principal
@@ -114,7 +164,7 @@
                             foreach ($idiomas AS $idioma)
                             {
                                 ?>
-                                <li id="pe<?=$idioma[id]?>" class="div-tab-active"><a href="#"><?=$idioma['nombre']?></a></li>
+                                <li id="pe<?=$idioma['id']?>" class="div-tab-active"><a href="#"><?=$idioma['nombre']?></a></li>
                                 <?php
                             }
                             ?>
@@ -538,14 +588,17 @@
                                         <legend>Atributos producto</legend>
                                         <div class="control-group">
 
-                                            <table>
-                                                <tr>
+                                            
                                                     <?php
                                                     $i = 0;
                                                     $cont = 0;
                                                     $check = "";
                                                     $precio = "";
                                                     $imagen = "";
+                                                    $atrDefault = 0;
+                                                    $atrNombre = '';
+                                                    $oldName = '';
+                                                    $collapse = 0;
                                                     foreach ($elemento2 AS $atr){
                                                     $i++;
                                                     foreach ($elemento22 AS $atra){
@@ -554,11 +607,31 @@
                                                             $precio = $atra['precio'];
                                                             $precioE = $atra['precioextra'];
                                                             $imagen = $atra['imagen'];
+                                                            $atrDefault = $atra['atrDefecto'];
                                                         }
+                                                    }
+                                                    if($atrNombre != $atr['nombre']){
+                                                        $collapse++;
+                                                        $atrNombre = $atr['nombre'];
+                                                        if($atrNombre != ''){
+                                                            ?>
+                                                            </tr>
+                                                            </table>
+                                                            </div>
+                                                            <?php
+                                                        }
+                                                        
+                                                    ?>
+                                                    <div class="btn btn-link collapse-button" data-label="collapseAttr<?=$collapse?>"><?=$atr['nombre']?></div>
+                                                    <div id="collapseAttr<?=$collapse?>" style="display:none">
+                                                        <table>
+                                                        <tr>
+                                                    <?php
                                                     }
                                                     if($cont <= 4){
                                                         $cont++;
                                                         ?>
+                                                        
                                                         <td style="width:10%;">
                                                             <div class="control-group">
                                                                 <label style="text-align:center;"><b><?=$atr['nombre']?>: <?=$atr['atributo']?></b></label>
@@ -576,14 +649,16 @@
                                                                         <?php
                                                                     }
                                                                     ?></div>
+                                                                <div style="text-align:center">Atributo por defecto:<input type="checkbox" name="atrDef<?=$atr['ida']?>" id="atrDefault" <?php if($atrDefault == 1) echo 'checked'; ?>></div>
                                                             </div>
 
                                                         </td>
+                                                        
                                                         <?php
                                                     }else{
                                                     $cont=1;
                                                     ?>
-                                                </tr>
+                                                
                                                 <tr>
                                                     <td>
                                                         <div class="control-group">
@@ -602,19 +677,23 @@
                                                                     <?php
                                                                 }
                                                                 ?></div>
-                                                        </div>
-
+                                                                <div style="text-align:center">Atributo por defecto: <input type="checkbox" name="atrDef<?=$atr['ida']?>" id="atrDefault" <?php if($atrDefault == 1) echo 'checked'; ?>></div>
+                                                            </div>
+                                                        
                                                     </td>
+                                                    </tr>
                                                     <?php
                                                     }
+
                                                     $check = "";
                                                     $precio = "";
                                                     $imagen = "";
                                                     $precioE = "";
+                                                    $atrDefault = 0;
                                                     }
-                                                    ?>
-                                                </tr>
-                                            </table>
+                                                    ?>                                                
+                                                </table>
+                                            </div>
                                             <label class="control-label" for="rfentrada">Requerir Fecha de Entrada</label>
                                             <div class="controls">
                                                 <label class="uniform">

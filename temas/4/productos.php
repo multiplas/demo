@@ -249,33 +249,43 @@
                     margin-left: 0px;
                 }
             </style>
+            
             <?php if($Empresa['novedades'] == '1' && $Empresa['pnovlateral'] == 1){ ?>
 		<div id="panel-superior">
                         <?php //include('./bloques/menu_prods.php'); ?>
 			<?php //include('./bloques/filtros.php'); ?>
 			<!-- <span name="BtReset" class="button">Limpiar Filtros</span> -->
                         <?php include('./temas/4/bloques/novedades_lateral_2.php')?>
-		</div>
+        </div>
+        
             <?php } ?>
             <?php if($Empresa['etiqAct'] == '1' && $Empresa['pnovlateral'] == 1){ ?><div id="panel-superior"><?php include('./temas/5/bloques/etiquetas.php')?></div><?php } ?>
             <?php if($Empresa['novedades'] == '1' && $Empresa['pnovlateral'] == 0){ ?>
-		<div id="panel-izquierdo">
+		<!-- <div id="panel-izquierdo"> -->
                         <?php //include('./bloques/menu_prods.php'); ?>
 			<?php //include('./bloques/filtros.php'); ?>
 			<!-- <span name="BtReset" class="button">Limpiar Filtros</span> -->
-                        <?php include('./temas/4/bloques/novedades_lateral.php')?>
+                        <?php //include('./temas/4/bloques/novedades_lateral.php')?>
 		<?php if($Empresa['etiqAct'] == '0'){ ?>
-                    </div>
+                    <!-- </div> -->
                 <?php } ?>
             <?php } ?>
             <?php if($Empresa['etiqAct'] == '1' && $Empresa['pnovlateral'] == 0){ if($Empresa['novedades'] == '0'){ ?><div id="panel-izquierdo"><?php } include('./temas/5/bloques/etiquetas.php')?></div><?php } ?>
+            <div id="panel-izquierdo">
+                        <?php //include('./bloques/menu_prods.php'); ?>
+			<?php include('./bloques/filtros.php'); ?>
+			<?php if(!empty($atributos)): ?>
+			<span name="BtReset" class="button">Limpiar Filtros</span>
+			<?php endif; ?>
+		</div>
             <div id="productos" <?=$Empresa['novedades'] == '1' && ($Empresa['pnovlateral'] == 0 || $Empresa['pnovlateral'] == 2) ? '' : 'style="width: auto !important;"'?>>
                    
                     <div id="panel-superior">
                     
 			<?php include('./bloques/paginador.php'); ?>
 			<?php include('./bloques/ordenador.php'); ?>
-		</div>
+        </div>
+        
                 <br><br>
                      <div style="height: auto !important; overflow: hidden; position: relative !important; top: -30px; margin-bottom: -60px; visibility: visible !important; width: 100% !important;">
                         <?php

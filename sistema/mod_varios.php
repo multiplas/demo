@@ -1622,4 +1622,41 @@ function MenuCategoriasGal()
     
         return $colores;
     }
+
+    function getBrands(){
+        global $dbi;
+
+        $resultado = array(); 
+
+        $sql="SELECT * FROM bd_categorias WHERE extension<>''";
+        $query = mysqli_query($dbi, $sql);
+        
+        if (mysqli_num_rows($query) >= 1)
+        {
+            while($assoc = mysqli_fetch_assoc($query)){
+                $resultado[] = $assoc;
+            }
+        }
+        
+        return $resultado;
+    }
+
+    function getMarcasStatus()
+    {
+        global $dbi;
+
+        $resultado = null;
+        
+        $sql = "SELECT * FROM bd_marcas_status WHERE id = 0;";
+                
+        $query = mysqli_query($dbi, $sql);
+        
+        if (mysqli_num_rows($query) == 1)
+        {
+            $assoc = mysqli_fetch_assoc($query);
+            $resultado = $assoc;
+        }
+
+        return $resultado;
+    }
 ?>

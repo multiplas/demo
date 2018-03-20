@@ -843,8 +843,8 @@ for($i=0; $i<=count($labelidioma); $i++){
 ?>
 <?php include_once('new_purchase_process/verify_purchase_process_type.php'); ?>
 <?php 
-if($purchase_process_type == 3): //Nuevo proceso de compra
-    include_once('new_purchase_process/principal_page.php');        
+if($purchase_process_type == 3 || $purchase_process_type == 4): //Nuevo proceso de compra
+    include_once('new_purchase_process/principal_page.php');  
 else: //Antiguo Proceso de compra
 ?>
 <div id="contenido">

@@ -1,4 +1,11 @@
 				<?php require_once('blocks/cabecera.php'); ?>
+                <script>
+                jQuery(document).ready(function(){
+                    jQuery('#formMarcaStatus').change(function(){
+                        jQuery('#formMarcaStatus').submit();
+                    });
+                });
+                </script>
                 <div class="span9" id="content">
                     
                     <div class="alert alert-info alert-dismissable">
@@ -82,6 +89,16 @@
 								</div>
 							</div>
 						</div>
+                    </div>
+                    <div class="row-fluid">
+                        <h4>Carrousel de marcas en la home</h4>
+                        <form id="formMarcaStatus" action="marcas.php?accion=updateMarcaStatus" method="post" class="form-horizontal" enctype="multipart/form-data">
+                            <select name="marcaStatus" id="marcaStatus">
+                                <option value="0" <?php if($marcaStatus['valor'] == 0) echo 'selected' ?>>Desactivado</option>
+                                <option value="1" <?php if($marcaStatus['valor'] == 1) echo 'selected' ?>>Activado</option>
+                            </select>
+                        </form>
+                        <hr>
                     </div>
 						<?php if (@$elemento != null && $resultaop != 1) { ?>
                      <div class="row-fluid">

@@ -722,9 +722,24 @@
                                             <div style="display:table-cell;height:50px;vertical-align:middle;">
                                                 <div style="margin:0 !important;width:100% !important;" class="talla">
                                                     <select id="<?=$atributo['nombre']?>" style="width:100%;" name="<?=$atributo['nombre']?>" <?=@$atributo['obligatorio'] == 'Si' ? 'disabled' : ''?> data-precio="0">
-                                                        <?=@$atributo['obligatorio'] == 'Si' ? '' : ($atributo['mensaje'] != '' ? '<option value="" selected>'.$atributo['mensaje'].'</option>':'<option value="" selected>Ninguno/a</option>')?>
-                                                        <option value="<?=$atributo['atributo']?>"><?=$atributo['atributo']?></option>
-                                <?php
+                                                    <?php if($atributo['obligatorio'] != 'Si'){
+                                                        if($atributo['mensaje'] != ''){
+                                                            echo '<option value=""';
+                                                            if($atributo['defecto'] == 0)
+                                                                echo ' selected>'.$atributo['mensaje'].'</option>';
+                                                            else
+                                                                echo '>'.$atributo['mensaje'].'</option>';
+                                                        }
+                                                        else{
+                                                            echo '<option value=""';
+                                                            if($atributo['defecto'] == 0)
+                                                                echo ' selected>Ninguno/a</option>';
+                                                            else
+                                                                echo ' >Ninguno/a</option>';
+                                                        }
+                                                    } 
+                                                    ?>
+                                                    <option value="<?=$atributo['atributo']?>" <?php if($atributo['defecto'] == 1) echo 'selected' ?>><?=$atributo['atributo']?></option>                                <?php
                                             $aux = $atributo['nombre'];
                                             $c = 1;
                                         }else if($atributo['nombre'] != $aux && $c == 1){
@@ -758,9 +773,24 @@
                                         </script>
                                                 <div style="margin:0 !important;width:100% !important;" class="talla">
                                                     <select id="talla-r" style="width:100%;" name="<?=$atributo['nombre']?>" <?=@$atributo['obligatorio'] == 'Si' ? '' : ''?> data-precio="0"> 
-                                                        <?=@$atributo['obligatorio'] == 'Si' ? '' : ($atributo['mensaje'] != '' ? '<option value="" selected>'.$atributo['mensaje'].'</option>':'<option value="" selected>Ninguno/a</option>')?>
-                                                        <option selected value="<?=$atributo['atributo']?>"><?=$atributo['atributo']?></option>
-                                            
+                                                    <?php if($atributo['obligatorio'] != 'Si'){
+                                                        if($atributo['mensaje'] != ''){
+                                                            echo '<option value=""';
+                                                            if($atributo['defecto'] == 0)
+                                                                echo ' selected>'.$atributo['mensaje'].'</option>';
+                                                            else
+                                                                echo '>'.$atributo['mensaje'].'</option>';
+                                                        }
+                                                        else{
+                                                            echo '<option value=""';
+                                                            if($atributo['defecto'] == 0)
+                                                                echo ' selected>Ninguno/a</option>';
+                                                            else
+                                                                echo ' >Ninguno/a</option>';
+                                                        }
+                                                    } 
+                                                    ?>
+                                                    <option value="<?=$atributo['atributo']?>" <?php if($atributo['defecto'] == 1) echo 'selected' ?>><?=$atributo['atributo']?></option>                                            
                                 <?php
                                         }else{
                                 ?>

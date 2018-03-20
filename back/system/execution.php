@@ -265,6 +265,10 @@
                 $precio = 'precio'.$_POST['disp'][$i];
                 $precioE = 'precioE'.$_POST['disp'][$i];
                 $imagen = 'imagenAtr_'.$_POST['disp'][$i];
+                if(isset($_POST['atrDef'.$_POST['disp'][$i]]))
+                    $atrDef = 1;
+                else
+                    $atrDef = 0;
                 if($_FILES[$imagen]['size'] > 0){
                     $nombre = uniqid()."_".$_FILES[$imagen]['name'];
                 }else{
@@ -272,15 +276,16 @@
                 }
                 if($_POST[$precio] == null || $_POST[$precio] == ""){
                     if($_POST[$precioE] == null || $_POST[$precioE] == "")
-                        $System->ProductoEditarAtr($_POST['disp'][$i], $_POST['idm'], 0, 0, $nombre);
+                        $System->ProductoEditarAtr($_POST['disp'][$i], $_POST['idm'], 0, 0, $nombre, $atrDef);
                     else
-                        $System->ProductoEditarAtr($_POST['disp'][$i], $_POST['idm'], 0, $_POST[$precioE], $nombre);
+                        $System->ProductoEditarAtr($_POST['disp'][$i], $_POST['idm'], 0, $_POST[$precioE], $nombre, $atrDef);
                 }else{
                     if($_POST[$precioE] == null || $_POST[$precioE] == "")
-                        $System->ProductoEditarAtr($_POST['disp'][$i], $_POST['idm'], $_POST[$precio], 0, $nombre);
+                        $System->ProductoEditarAtr($_POST['disp'][$i], $_POST['idm'], $_POST[$precio], 0, $nombre, $atrDef);
                     else
-                        $System->ProductoEditarAtr($_POST['disp'][$i], $_POST['idm'], $_POST[$precio], $_POST[$precioE], $nombre);
+                        $System->ProductoEditarAtr($_POST['disp'][$i], $_POST['idm'], $_POST[$precio], $_POST[$precioE], $nombre, $atrDef);
                 }
+                   
                 //Subir imagen.
                 $dir_subida = '../imagenesproductosAtr/';
                
@@ -521,6 +526,9 @@
                     move_uploaded_file($_FILES['imagen']['tmp_name'], $fichero_subido);
                 }
         }
+
+        if($_GET['accion'] == 'updateMarcaStatus')
+        $resultaop = $System->updateMarcaStatus($_POST['marcaStatus']);
         
         if (@$_GET['accion'] == 'subirfichPro'){
             if($_POST['producto'] > 0 && $_POST['producto'] != ""){    
@@ -915,9 +923,10 @@
                         $productos = $System->CargarProductos(1000000);
 			break;
                 case 'marcas.php':
-			$listadosalt = $System->CargarMarcas(10000);
-			$listados = $System->CargarCategoriasAmpliados2(10000, 1);
-                        $listadosm = $System->CargarMenusCat(10000);
+                $listadosalt = $System->CargarMarcas(10000);
+                $listados = $System->CargarCategoriasAmpliados2(10000, 1);
+                $listadosm = $System->CargarMenusCat(10000);
+                $marcaStatus = $System->CargarMarcasStatus();
 			if (@$_GET['editarcate'] != null)
 				$elemento = $System->CargarCategoria($_GET['editarcate']);
 			break;

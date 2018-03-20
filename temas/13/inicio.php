@@ -1,3 +1,34 @@
+<link rel="stylesheet" type="text/css" href="/temas/13/css//slick.css"/>
+<script type="text/javascript" src="/temas/13/js/slick.min.js"></script>
+<link href="//use.fontawesome.com/releases/v5.0.7/css/all.css" rel="stylesheet">
+
+<style>
+.slick-slide img{
+    height: calc(20vh - 70px);
+    width: auto;
+    margin: 0 auto; /* it centers any block level element */
+}
+
+button.slick-next, button.slick-prev {
+    position: absolute;
+    top: 40px;
+    border-radius: 20px;
+    border: none;
+    background: transparent;
+    font-size: 23px;
+    z-index: 2;
+    cursor: pointer;
+}
+
+button.slick-next{
+    right: 0;
+}
+
+button.slick-prev {
+    left: 0;
+}
+
+</style>
  <?php if($Empresa['actanu'] == 1 && $Empresa['luganu'] == 0 && $_SESSION['anuncio'] != 1){ ?>
 <script>
     openModal();
@@ -93,7 +124,6 @@ $_SESSION['anuncio'] = 1;
                     <script>
                         jQuery(document).on("scroll", function(){
                             var desplazamientoActual = jQuery(document).scrollTop();
-                            var animacion = jQuery('#textos').offset().top;
                             if(desplazamientoActual >= 200){
                                 jQuery('#entrando').attr('style', 'visibility: visible; width: 105%; margin-left: -2.5%;');
                                 jQuery('#entrando').addClass('animated bounceIn');
@@ -186,32 +216,89 @@ $_SESSION['anuncio'] = 1;
                 echo '</div></div>';
                 } 
                 echo '<div id="contenido">';
+                ?>
+                <script>
+                jQuery(document).ready(function(){
+                    jQuery('.filtering').slick({
+                        slidesToShow: 4,
+                        slidesToScroll: 1,
+                        autoplay: true,
+                        autoplaySpeed: 2000,
+                        nextArrow: '<button type="button" class="slick-next"><i class="fas fa-angle-right"></i></button>',
+                        prevArrow: '<button type="button" class="slick-prev"><i class="fas fa-angle-left"></i></button>',
+                        centerMode: true,
+                        responsive: [
+                            {
+                              breakpoint: 1200,
+                              settings: {
+                                slidesToShow: 2,
+                                slidesToScroll: 1
+                              }
+                            },
+                            {
+                              breakpoint: 600,
+                              settings: {
+                                slidesToShow: 1,
+                                slidesToScroll: 1
+                              }
+                            }]
+                      });
+                      
+                      var filtered = false;
+                      
+                    jQuery('.js-filter').on('click', function(){
+                    if (filtered === false) {
+                        jQuery('.filtering').slick('slickFilter',':even');
+                        jQuery(this).text('Unfilter Slides');
+                        filtered = true;
+                    } else {
+                        jQuery('.filtering').slick('slickUnfilter');
+                        jQuery(this).text('Filter Slides');
+                        filtered = false;
+                    }
+                    });
+                });
+
+                
+                </script>
+                <?php
+                $marcasStatus = getMarcasStatus();
+                if($marcasStatus['valor'] == 1): //activado
+                $marcas = getBrands();
+                ?>
+                <div class="filtering">
+                    <?php foreach($marcas as $marca): ?>
+                    <div><img src="../marcas/<?=$marca['id']?>.<?=$marca['extension']?>" alt=""></div>
+                    <?php endforeach; ?>
+                </div>
+                <?php
+                endif;
                 //include_once('./temas/4/bloques/novedades.php');
                 
                 echo '</div>';
           
         ?>
 
-                    <script>
-                        jQuery(document).ready(function(){
-                            t1 = jQuery("#izquierda").outerHeight();
-                            t2 = jQuery("#derecha").outerHeight();
-                            t1 = t1+30;
-                            t2 = t2+30;
-                            var ventana_ancho = jQuery(window).width();
-                            if(ventana_ancho > 940){
-                                if(t1 > t2){
-                                    jQuery("#derecha").outerHeight(t1)
-                                    jQuery("#izquierda").outerHeight(t1)
-                                }else{
-                                    jQuery("#izquierda").outerHeight(t2);
-                                    jQuery("#derecha").outerHeight(t2);
-                                }
-                            }else{
-                                jQuery("#derecha").attr('style', 'width: 50%; color: rgb(255, 255, 255); float: left; height: auto; padding-bottom: 25px; opacity: 0.8;');
-                                jQuery("#izquierda").attr('style', 'width: 50%; color: #ffffff; float:left; height: 100%; padding-bottom: 25px');
-                                jQuery('#derecha').css('background','rgba(227, 107, 107, 1) url(<?=$draizp?>/imagenes/<?=$imgderecha?>) no-repeat scroll right center');
-                                jQuery('#izquierda').css('background','rgba(0, 0, 0, 0) url(<?=$draizp?>/imagenes/<?=$imgizquierda?>) no-repeat scroll right center');
-                            }
-                        });
-                    </script>
+    <script>
+        jQuery(document).ready(function(){
+            t1 = jQuery("#izquierda").outerHeight();
+            t2 = jQuery("#derecha").outerHeight();
+            t1 = t1+30;
+            t2 = t2+30;
+            var ventana_ancho = jQuery(window).width();
+            if(ventana_ancho > 940){
+                if(t1 > t2){
+                    jQuery("#derecha").outerHeight(t1)
+                    jQuery("#izquierda").outerHeight(t1)
+                }else{
+                    jQuery("#izquierda").outerHeight(t2);
+                    jQuery("#derecha").outerHeight(t2);
+                }
+            }else{
+                jQuery("#derecha").attr('style', 'width: 50%; color: rgb(255, 255, 255); float: left; height: auto; padding-bottom: 25px; opacity: 0.8;');
+                jQuery("#izquierda").attr('style', 'width: 50%; color: #ffffff; float:left; height: 100%; padding-bottom: 25px');
+                jQuery('#derecha').css('background','rgba(227, 107, 107, 1) url(<?=$draizp?>/imagenes/<?=$imgderecha?>) no-repeat scroll right center');
+                jQuery('#izquierda').css('background','rgba(0, 0, 0, 0) url(<?=$draizp?>/imagenes/<?=$imgizquierda?>) no-repeat scroll right center');
+            }
+        });
+    </script>

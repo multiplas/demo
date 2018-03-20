@@ -47,12 +47,10 @@ else if (isset($_GET['datos_personales']) && $_SESSION['compra']['paso'] >= 1 ||
     {            
         include_once('datos_personales.php');
     }
-    else if ($_SESSION['cestases'] != null)
+    else if ($_SESSION['cestases'] != null)//Iniciar sesion
     {
-        ?>
-                        
-        <?php
-        include_once('start_session_form.php');
+        if($purchase_process_type != 4)
+            include_once('start_session_form.php');
     }
 }
 else

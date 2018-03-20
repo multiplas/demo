@@ -344,6 +344,9 @@ color: red;
     overflow: hidden;
 }
 
+#textoE{
+    text-align: center;
+}
 
 #tcesta td, #tcesta tr, #tcesta th {
     text-align: center !important;

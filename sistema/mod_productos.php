@@ -1201,7 +1201,7 @@
 		global $dbi;
 		$atributo[] = null;
 		
-		$sql = "SELECT a.atributo AS atributo, at.atributo AS nombre, at.mensaje AS mensaje, at.obligatorio AS obligatorio, at.oculto AS oculto, pa.precio AS precio, at.descripcion AS descripcion
+		$sql = "SELECT a.atributo AS atributo, at.atributo AS nombre, pa.atrDefecto AS defecto, at.mensaje AS mensaje, at.obligatorio AS obligatorio, at.oculto AS oculto, pa.precio AS precio, at.descripcion AS descripcion
 				FROM bd_productos p, bd_producto_atributo pa, bd_atributo a, bd_atributo_tipo at
 				WHERE pa.idproducto=p.id 
 				AND pa.idatributo=a.id
@@ -1214,12 +1214,13 @@
 				array_push($atributo, 
 					array(
 						'atributo' => $assoc['atributo'],
-                                                'nombre' => $assoc['nombre'],
-                                                'obligatorio' => $assoc['obligatorio'],
-                                                'precio' => $assoc['precio'],
-                                                'descripcion' => $assoc['descripcion'],
-                                                'oculto' => $assoc['oculto'],
-                                                'mensaje' => $assoc['mensaje']
+							'nombre' => $assoc['nombre'],
+							'obligatorio' => $assoc['obligatorio'],
+							'precio' => $assoc['precio'],
+							'descripcion' => $assoc['descripcion'],
+							'oculto' => $assoc['oculto'],
+							'mensaje' => $assoc['mensaje'],
+							'defecto' => $assoc['defecto']
 					)
 				);
 								

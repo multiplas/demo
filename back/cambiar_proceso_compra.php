@@ -29,6 +29,7 @@
                                                     <?php if ($elemento['id'] == "0"): ?>
                                                         <option value="0" <?=$elemento['valor'] == "0" ? 'selected' : ''?>>Normal</option>     
                                                         <option value="3" <?=$elemento['valor'] == "3" ? 'selected' : ''?>>Simplificado</option>  
+                                                        <option value="4" <?=$elemento['valor'] == "4" ? 'selected' : ''?>>Simplificado Ultra</option>                                                          
                                                     <?php endif; ?>
                                                 </select><br><br>
                                             </div>
