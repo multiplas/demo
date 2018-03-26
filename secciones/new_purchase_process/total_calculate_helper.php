@@ -1,4 +1,12 @@
 <?php
+function getMinPortePrice(){
+    global $dbi;
+    $getPortesPrices = mysqli_query($dbi, "SELECT MIN( precioP ) FROM bd_portes");//Damos por hecho que el minimo es para españa
+    if(mysqli_num_rows($getPortesPrices) > 0){//Hay portes
+        $minPorte = mysqli_fetch_assoc($getPortesPrices);
+    }  
+    return $minPorte['MIN( precioP )'];
+}
 function total_calculate_helper($draizp){
     global $Empresa;
 
@@ -6,6 +14,7 @@ function total_calculate_helper($draizp){
         $cesta = Cesta($_SESSION['usr']['id']);
     else
         $cesta = CestaSession($_SESSION['cestases']);
+
     guardarEstadoPC('pedido',$cesta);
 
     $draiz = getcwd();
@@ -133,7 +142,14 @@ function total_calculate_helper($draizp){
         <?php muestraDesglose($total, $draizp, $peso); ?>
         <div class="row">
             <div class="col-xs-12 col-sm-9"><span class="importe-title">Total</span></div>
-            <div class="col-xs-12 col-sm-3 text-right"><span class="importe-total"><?php echo $precioTotalConEnvio ?></span> <?=$currency?> </div>
+            <?php if(isset($_SESSION['usr'])): ?>       
+                <div class="col-xs-12 col-sm-3 text-right"><span class="importe-total"><?php echo $precioTotalConEnvio ?></span> <?=$currency?> </div>
+            <?php else: 
+                $precioEnvioEstimado = number_format($total + getMinPortePrice(), 2, ',', '.') ;
+                ?>   
+
+                <div class="col-xs-12 col-sm-3 text-right"><span class="importe-total"><?php echo $precioEnvioEstimado ?> </span> <?=$currency?></div>
+            <?php endif; ?>
         </div>
         <hr>
         <?php  include_once 'modulo_pago.php'; ?>
@@ -257,8 +273,10 @@ function muestraDesglose($total, $draizp, $peso){
         <div class="row">
             <div class="col-xs-12"><?php echo $baseImpText . '<span class="pull-right">'. $baseImpPrice .' ' .$_SESSION['moneda'] .'</span>' ?></div>
             <div class="col-xs-12"><?php echo ' ('.$iva.')% <span class="pull-right">'. $ivaPrice .' ' .$_SESSION['moneda'] .'</span>' ?></div>
+            <?php if(isset($_SESSION['usr'])): ?>       
             <div class="col-xs-9">Envío</div>
             <div class="col-xs-3 text-right portes-text"><?php echo number_format (calculatePortes($total, false, $peso),2 ) ?> €</div>
+            <?php endif; ?>
             <input type="hidden" id="base_helper" value="<?php echo round($total,2) ?>"/>
             <?php if(isset($_SESSION['compra']['codpromo']) && !empty($_SESSION['compra']['codpromo'])): ?>
             <div class="col-xs-12">Descuento que se realiza por el código promocional<?php echo ' <span class="pull-right">-'. number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$_SESSION['datos_cesta']['total2']), 2, ',', '.').' ' .$_SESSION['moneda'] .'</span>' ?></div>

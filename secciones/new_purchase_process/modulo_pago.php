@@ -1,12 +1,12 @@
 <form method="post" id="pago-form" name="pago" action="<?=$draizp?>/acc/onepagecheckout">
 <?php include $draiz.'/secciones/auxiliares.php'; ?>
     <div style="margin: auto; width: 100%;">
+        <?php if(isset($_SESSION['usr'])): ?>  
         <h4><?=$auxfor?></h4>
         <input type="hidden" id="importeBase" name="importeBase" value="<?=$_SESSION['datos_cesta']['totalSinEnvio']?>">
         <input type="hidden" id="importeTotal" name="importeTotal" value="<?=$_SESSION['datos_cesta']['ImporteTotal']?>"/>
         <input type="hidden" id="nuevopenvio" name="nuevopenvio" value="<?=calculatePortes($_SESSION['datos_cesta']['totalSinEnvio'])?>"/>
         <input type='hidden' id='nuevotransp' name='nuevotransp' value='0'>
-        
         <select id="pagarcon" name="pagarcon" onchange="activa()">
             <option value="" selected><?=$auxpag?> *</option>
             <?php
@@ -113,6 +113,7 @@
             }
             ?>
         </select>
+        <?php endif; ?>
             <br /><br />
             <div id="divpagarcon" style="display: none;">
             <input id="nentidad" name="nentidad" placeholder="Entidad" class="dobleF" value="" type="text" onchange="activa()">

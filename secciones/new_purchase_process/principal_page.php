@@ -18,7 +18,7 @@ else if (isset($_GET['datos_personales']) && $_SESSION['compra']['paso'] >= 1 ||
 {
     $usuario = UserLoadData($_SESSION['usr']['id']);
    
-    //include_once('breadcrumb.php'); //No necesario en onepageCheckout
+    include_once('breadcrumb.php'); //No necesario en onepageCheckout
     if(!isset($_SESSION['compra']['entrega'])){
         $_SESSION['compra']['entrega'] = array(
             'nombre' => $usuario['nombre'],
@@ -51,6 +51,8 @@ else if (isset($_GET['datos_personales']) && $_SESSION['compra']['paso'] >= 1 ||
     {
         if($purchase_process_type != 4)
             include_once('start_session_form.php');
+        else
+            include_once('datos_personales.php');
     }
 }
 else

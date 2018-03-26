@@ -36,6 +36,13 @@
             jQuery("#cp").removeAttr('pattern');
         }
     });
+    jQuery(document).on("change", "#paisEUltra", function(){
+        if(jQuery("#paisEUltra").val() == 'ESP' || jQuery("#paisEUltra").val() == 'ESX' || jQuery("#paisEUltra").val() == 'AND'){
+            jQuery("#cpEultra").attr('pattern', '[0-9A-Z]{5}');
+        }else{
+            jQuery("#cpEultra").removeAttr('pattern');
+        }
+    });
                                                                                             
 </script>        
 <form method="post" id="register_form_3" name="datosper" action="<?=$draizp?>/acc/pago" onsubmit="return activa2()" autocomplete="off">

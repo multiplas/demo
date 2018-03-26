@@ -36,8 +36,25 @@
             jQuery('.pay-form').css('display', 'inherit');
         });
 
-        jQuery( ".update-data" ).click(function() {
-            jQuery( "#datosper" ).submit();
+        jQuery( ".update-data" ).click(function() {            
+                jQuery( "#datosper" ).submit();
+        });
+
+        jQuery(" .ultra-update-data").click(function(){
+            isFormValid = true;
+            jQuery('#datosper2 :input').each(function(){
+                if(jQuery.trim(jQuery(this).val()).length == 0){
+                    console.log(this);
+                    jQuery(this).addClass("highlight");
+                    isFormValid = false;
+                }
+                else{
+                    jQuery(this).removeClass("highlight");
+                }
+            });  
+            console.log(isFormValid);
+            if(isFormValid == true)
+            jQuery( "#datosper2" ).submit();
         });
 
         jQuery('input[type=radio][name=penvio]').change(function() {//Script para cambiar el precio total
@@ -76,8 +93,87 @@
     }
 </script>
 
+<?php
+function saveCesta($datos_cesta, $usrID){
+    global $dbi;
+    for($i = 0 ; $i < count($datos_cesta); $i++){
+        if(isset($datos_cesta[$i]['id']) && !empty($datos_cesta[$i]['id'])){
+            $sql = "INSERT INTO bd_carrito(id, idusuario, idproducto, idcuotas, talla, fechas, extra, cantidad, personalizacion, pack, packid, fecha, afiliado) VALUES (null,$usrID,'".$datos_cesta[$i]['id']."','".$datos_cesta[$i]['cuota']."','".$datos_cesta[$i]['talla']."','".$datos_cesta[$i]['fechas']."','".$datos_cesta[$i]['extra']."','".$datos_cesta[$i]['cantidad']."','".$datos_cesta[$i]['personalizacion']."',0,null, NOW(),'".$datos_cesta[$i]['afiliado']."')";
+            $query = mysqli_query($dbi, $sql );
+        }
+    }
+}
+
+?>
+<?php
+if(isset($_POST['updateUser']) && !empty($_POST['updateUser'])){
+    global $dbi;
+    $email = $_POST['emailUltra'];
+    $query = mysqli_query($dbi, 'SELECT * FROM bd_users WHERE email = "'.$email.'"');
+    if(mysqli_num_rows($query) == 0){        
+        $datos_cesta = $_SESSION['datos_cesta'];
+        $nombre = $_POST['nombreEUltra'];
+        $explode_mail = explode('@', $_POST['emailUltra']);
+        $pass = $explode_mail[0].'4455';//Concateno el nombre del mail con el numero 4455
+        
+        $telefono = $_POST['telefono'];
+        $direccion = $_POST['direccionEUltra'];
+        $dni = '';
+        $cp = $_POST['cpEUltra'];
+        $localidad = $_POST['localidadEUltra'];
+        $provincia = $_POST['provinciaEUltra'];
+        $pais = $_POST['paisEUltra'];
+        UserSigIn($nombre, $pass, $email, $telefono, $direccion, $dni, $cp, $localidad, $provincia, $pais, '', '', '');//Registramos el usuario
+        $query2 = mysqli_query($dbi, 'SELECT * FROM bd_users WHERE email = "'.$email.'"');
+        $assoc = mysqli_fetch_assoc($query2);
+        $usrID = $assoc['id'];
+        saveCesta($datos_cesta, $usrID);//Necesito un helper para guardar la cesta...
+    }
+    $query2 = mysqli_query($dbi, 'SELECT * FROM bd_users WHERE email = "'.$email.'"');
+    if(mysqli_num_rows($query2) == 1){//Cuando el usuario ya se ha registrado procedo a cargarlo
+        $assoc = mysqli_fetch_assoc($query2);
+        $usrID = $assoc['id'];
+        $usuario = UserLoadData($usrID);
+        $_SESSION['usr'] = $usuario;
+        $_SESSION['compra']['entrega']['nombre'] = $usuario['nombre'];
+        $_SESSION['compra']['entrega']['dni'] = $usuario['dni'];
+        $_SESSION['compra']['entrega']['telefono'] = $usuario['telefono'];
+        $_SESSION['compra']['entrega']['email'] = $usuario['email'];
+        $_SESSION['compra']['entrega']['direccion'] = $usuario['direccion'];
+        $_SESSION['compra']['entrega']['pais'] =  Pais($usuario['pais']);
+        $_SESSION['compra']['entrega']['provincia'] = $usuario['provincia'];
+        $_SESSION['compra']['entrega']['paisid'] = $usuario['pais'];
+        $_SESSION['compra']['entrega']['provinciaid'] = $usuario['provinciaid'];
+        $_SESSION['compra']['entrega']['localidad'] = $usuario['poblacion'];
+        $_SESSION['compra']['entrega']['cp'] = $usuario['cp'];
+        $_SESSION['compra']['entrega']['nombreE'] = $usuario['nombre'];
+        $_SESSION['compra']['entrega']['direccionE'] = $usuario['direccion'];
+        $_SESSION['compra']['entrega']['paisE'] = $usuario['pais'];
+        $_SESSION['compra']['entrega']['direccionE'] = $usuario['direccion'];
+        $_SESSION['compra']['entrega']['paisE'] = Pais($usuario['pais']);
+        $_SESSION['compra']['entrega']['provinciaE'] = $usuario['provincia'];
+        $_SESSION['compra']['entrega']['paisidE'] = $usuario['pais'];
+        $_SESSION['compra']['entrega']['localidadE'] = $usuario['poblacion'];
+        $_SESSION['compra']['entrega']['cpE'] = $usuario['cpEnv'];
+        $_SESSION['compra']['entrega']['provinciaidE'] = $usuario['provinciaid'];
+    }    
+}
+
+if(isset($_POST['checksubs'])){
+    $getSub = mysqli_query($dbi, "SELECT * FROM bd_suscriptores WHERE email = '".$_SESSION['compra']['entrega']['email']."'");
+    if(mysqli_num_rows($getSub) == 0){//No estaba suscrito ya
+        $sqlSub = "INSERT INTO bd_suscriptores (nombre, email) VALUES ('".$_SESSION['compra']['entrega']['nombre']."', '".$_SESSION['compra']['entrega']['email']."');";
+        $addSub = mysqli_query($dbi, $sqlSub);
+    }  
+    $userFinded = mysqli_fetch_assoc($getSub);
+}
+
+?>
+
 <div class="container-fluid">
+    <?php   if($purchase_process_type != 4): ?>
     <form method="post" id="datosper" name="datosper" action="<?=$draizp?>/acc/pago">
+        
         <div class="col-xs-12 col-sm-offset-1 col-sm-5 datos-personales-izquierda">
             <div class="row">
                 <div class="form-group">
@@ -183,6 +279,75 @@
             </div>
         </div>   
         </form>
+        <?php else: ?>
+        <form method="post" id="datosper2" name="datosper2" action="">
+        <?php if(!isset($_SESSION['usr'])): ?>
+            <input type="hidden" name="updateUser" value="1">
+        <?php endif; ?>
+        <div class="col-xs-12 col-sm-offset-1 col-sm-5 datos-personales-izquierda">
+            <div class="row">
+                <div class="form-group">                                    
+                    <h4><?=$auxdentre?></h4>
+                    <div class="row datos-entrega">
+                        <div class="col-xs-12">
+                            <label for="email">Correo electrónico</label>
+                            <input type="text" class="form-control" id="email" name="emailUltra" class="dobleF" placeholder="Correo Electrónico *" value="<?=$_SESSION['usr']['email']?>" required/>       
+                        </div>
+                        <div class="col-xs-6">
+                            <label for="nombreE">Nombre</label>
+                            <input type="text" id="nombreE" name="nombreEUltra" placeholder="Nombre *" value="<?=$_SESSION['compra']['entrega']['nombreE']?>" required>
+                        </div>
+                        <div class="col-xs-6">
+                            <label for="telefono">Telefono</label>
+                            <input type="text" id="telefono" name="telefono" placeholder="Telefono *" value="<?=$_SESSION['usr']['telefono']?>" required>
+                        </div>
+                        <div class="col-xs-12">
+                        <label for="direccionE">Dirección</label>
+                        <input type="text" class="" id="direccionE" name="direccionEUltra" placeholder="Dirección *" value="<?=$_SESSION['compra']['entrega']['direccionE']?>" />
+                    </div>
+                    <div class="col-sm-4">
+                        <label for="paisE">País</label>
+                        <select id="paisE" name="paisEUltra" required>
+                        <option value="" selected>País</option>
+                        
+                        <?php
+                        foreach($paises as $pais)
+                        echo '<option'.($pais['nombre'] == $_SESSION['compra']['entrega']['paisE'] ? ' selected' : '').' value="'.$pais['id'].'">'.$pais['nombre'].'</option>';
+                        ?>
+                        </select> 
+                    </div>
+                    <div class="col-sm-4">
+                        <label for="provinciaE">Provincia</label>
+                        <select id="provinciaE" name="provinciaEUltra" required>
+                        <option value="" selected>Selecciona primero un país</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-4">
+                        <label for="cpE">Código Postal</label>
+                        <input type="text" id="cpE" name="cpEUltra" placeholder="C. Postal *" value="<?=$_SESSION['compra']['entrega']['cpE']?>" />
+                    </div>
+                    <div class="col-xs-12">
+                        <label for="localidadE">Localidad</label>
+                        <input type="text" id="localidadE" name="localidadEUltra" placeholder="Localidad *" value="<?=$_SESSION['compra']['entrega']['localidadE']?>" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="1" name="checksubs" id="checksubs" <?php if(isset($userFinded))echo 'checked' ?>>                    
+                        Quiero recibir noticias y ofertas exclusivas
+                    </div>
+                </div>
+                    <?php if(isset($_SESSION['usr'])): ?>
+                    <input type="hidden" id="idpro2" name="idpro2" value="<?=$_SESSION['compra']['entrega']['provinciaidE']?>" />  
+                    <?php endif; ?>
+                    </span>
+                    <h5 style="display: inline-block; color: #E81F32; font-style: italic;"><?=$auxcam?></h5>
+                </div>
+            </div>
+        </div>   
+        </form>
+        <?php endif; ?>
+
         <div class="col-xs-12 col-sm-5 datos-personales-derecha">
             <?php           
                 include_once 'total_calculate_helper.php';
@@ -208,11 +373,24 @@
         <div class="col-xs-4">
             <span id="BtSubmit" type="submit" class="btn btn-primary custom-btn" onclick="location.href='<?=$draizp?>/<?=$_SESSION['lenguaje']?>cesta';"><?=$auxvol?></span>
         </div>
+        <?php   if($purchase_process_type != 4): ?>
         <div class="col-xs-4">
             <span class="btn btn-primary custom-btn update-data">Actualizar datos</span>
         </div>
+        <?php else: ?>
+        <div class="col-xs-4">
+            <span class="btn btn-primary custom-btn ultra-update-data">Continuar ></span>
+        </div>
+        <?php endif; ?>
+        <?php if(isset($_SESSION['usr'])): ?>
         <div class="col-xs-4">
             <span class="btn btn-primary custom-btn pay-form" style="float: right; display:none;">Pagar y finalizar el pedido</span>
         </div>
+        <?php else: ?>
+        <div class="col-xs-4">
+            <span class="btn btn-primary custom-btn pay-form" style="float: right; display:none;" disabled>Pagar y finalizar el pedido</span><br>
+            <small>Es necesario actualizar los datos de envio.</small>
+        </div>
+        <?php endif; ?>
     </div>
 </div>
