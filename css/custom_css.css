@@ -294,6 +294,10 @@ color: red;
     border: 2px solid red !important;
 }
 
+.inputsuccess{
+    border: 2px solid greenyellow !important;
+}
+
 .mask6{
     position: relative !important;
     z-index: 1 !important;

@@ -186,7 +186,6 @@ function muestraDatosSuperior($imageSrc, $draizp, $nombre, $cantidad, $precioPro
 
 function calculatePortes($total, $showPortes = false, $peso){
     global $Empresa;
-
     if($Empresa['tipoportes'] == 0){
         $portes_ar = CalculaPortesP($total);
         $logoPortes = $portes_ar[1];

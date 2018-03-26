@@ -51,10 +51,26 @@
                 else{
                     jQuery(this).removeClass("highlight");
                 }
-            });  
-            console.log(isFormValid);
+            });              
             if(isFormValid == true)
             jQuery( "#datosper2" ).submit();
+        });
+        jQuery('#email2, #email').focusout(function(){
+            if(jQuery('#email').val() != jQuery('#email2').val()){
+                if(jQuery('#email').val() != '' && jQuery('#email2').val() != ''){
+                    jQuery('#email').addClass("highlight");
+                    jQuery('#email2').addClass("highlight");
+                    jQuery('#email').removeClass("inputsuccess");
+                    jQuery('#email2').removeClass("inputsuccess");
+                    jQuery('#email2').val('');
+                }
+            }
+            else{
+                jQuery('#email').removeClass("highlight");
+                jQuery('#email2').removeClass("highlight");
+                jQuery('#email').addClass("inputsuccess");
+                jQuery('#email2').addClass("inputsuccess");
+            }
         });
 
         jQuery('input[type=radio][name=penvio]').change(function() {//Script para cambiar el precio total
@@ -110,24 +126,26 @@ if(isset($_POST['updateUser']) && !empty($_POST['updateUser'])){
     global $dbi;
     $email = $_POST['emailUltra'];
     $query = mysqli_query($dbi, 'SELECT * FROM bd_users WHERE email = "'.$email.'"');
+    $datos_cesta = $_SESSION['datos_cesta'];
+    $nombre = $_POST['nombreEUltra'];
+    $explode_mail = explode('@', $_POST['emailUltra']);
+    $pass = $explode_mail[0].'4455';//Concateno el nombre del mail con el numero 4455        
+    $telefono = $_POST['telefono'];
+    $direccion = $_POST['direccionEUltra'];
+    $dni = '';
+    $cp = $_POST['cpEUltra'];
+    $localidad = $_POST['localidadEUltra'];
+    $provincia = $_POST['provinciaEUltra'];
+    $pais = $_POST['paisEUltra'];
     if(mysqli_num_rows($query) == 0){        
-        $datos_cesta = $_SESSION['datos_cesta'];
-        $nombre = $_POST['nombreEUltra'];
-        $explode_mail = explode('@', $_POST['emailUltra']);
-        $pass = $explode_mail[0].'4455';//Concateno el nombre del mail con el numero 4455
-        
-        $telefono = $_POST['telefono'];
-        $direccion = $_POST['direccionEUltra'];
-        $dni = '';
-        $cp = $_POST['cpEUltra'];
-        $localidad = $_POST['localidadEUltra'];
-        $provincia = $_POST['provinciaEUltra'];
-        $pais = $_POST['paisEUltra'];
         UserSigIn($nombre, $pass, $email, $telefono, $direccion, $dni, $cp, $localidad, $provincia, $pais, '', '', '');//Registramos el usuario
         $query2 = mysqli_query($dbi, 'SELECT * FROM bd_users WHERE email = "'.$email.'"');
         $assoc = mysqli_fetch_assoc($query2);
         $usrID = $assoc['id'];
         saveCesta($datos_cesta, $usrID);//Necesito un helper para guardar la cesta...
+    }
+    else{
+        $updateUser = mysqli_query($dbi, "UPDATE bd_users SET nombre= '$nombre', telefono= '$telefono',direccion='$direccion',cp='$cp',poblacion='$localidad',provincia='$provincia',pais='$pais' WHERE email = '$email'");
     }
     $query2 = mysqli_query($dbi, 'SELECT * FROM bd_users WHERE email = "'.$email.'"');
     if(mysqli_num_rows($query2) == 1){//Cuando el usuario ya se ha registrado procedo a cargarlo
@@ -156,6 +174,7 @@ if(isset($_POST['updateUser']) && !empty($_POST['updateUser'])){
         $_SESSION['compra']['entrega']['localidadE'] = $usuario['poblacion'];
         $_SESSION['compra']['entrega']['cpE'] = $usuario['cpEnv'];
         $_SESSION['compra']['entrega']['provinciaidE'] = $usuario['provinciaid'];
+        $_SESSION['usr']['paisEnv'] = $usuario['pais'];
     }    
 }
 
@@ -281,9 +300,7 @@ if(isset($_POST['checksubs'])){
         </form>
         <?php else: ?>
         <form method="post" id="datosper2" name="datosper2" action="">
-        <?php if(!isset($_SESSION['usr'])): ?>
             <input type="hidden" name="updateUser" value="1">
-        <?php endif; ?>
         <div class="col-xs-12 col-sm-offset-1 col-sm-5 datos-personales-izquierda">
             <div class="row">
                 <div class="form-group">                                    
@@ -293,9 +310,14 @@ if(isset($_POST['checksubs'])){
                             <label for="email">Correo electrónico</label>
                             <input type="text" class="form-control" id="email" name="emailUltra" class="dobleF" placeholder="Correo Electrónico *" value="<?=$_SESSION['usr']['email']?>" required/>       
                         </div>
+                        <div class="col-xs-12">
+                            <label for="email">Repite Correo electrónico</label>
+                            <input type="text" class="form-control" id="email2" name="emailUltra2" class="dobleF" placeholder="Correo Electrónico *" value="<?=$_SESSION['usr']['email']?>" required/>       
+                        </div>
+
                         <div class="col-xs-6">
-                            <label for="nombreE">Nombre</label>
-                            <input type="text" id="nombreE" name="nombreEUltra" placeholder="Nombre *" value="<?=$_SESSION['compra']['entrega']['nombreE']?>" required>
+                            <label for="nombreE">Nombre y Apellidos</label>
+                            <input type="text" id="nombreE" name="nombreEUltra" placeholder="Nombre y Apellidos *" value="<?=$_SESSION['compra']['entrega']['nombreE']?>" required>
                         </div>
                         <div class="col-xs-6">
                             <label for="telefono">Telefono</label>
