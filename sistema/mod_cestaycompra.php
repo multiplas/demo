@@ -105,6 +105,7 @@
 		
 		$portes[0] = 0;
                 $portes[1] = "";
+                
                 if($_SESSION['usr']['paisEnv'] == 'ESP'){
                     $sql = "SELECT TPGratis, precioP, id, extension FROM bd_portes WHERE precioP != 'NULL' AND disponible = 1 ORDER BY precioP ASC";
                     $query = mysqli_query($dbi, $sql);
