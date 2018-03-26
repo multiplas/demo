@@ -31,19 +31,29 @@ class Estadistica extends Conexion{
             $sql = "SELECT COUNT(id) AS total, $group
 				FROM bd_visitors $where $filtro_fecha
 				GROUP BY $group $orden $limit";
-        }else{
-            $sql = "SELECT COUNT(id) AS total, 'Otros' AS domain
+        }
+        else if ($tipo==3) {
+            $sql = "SELECT COUNT(id) AS total, DATE_FORMAT(create_at,'%d/%m/%Y') AS 'campo' 
+                    FROM bd_visitors $where $filtro_fecha
+                    $group";
+        }
+        else {
+            $sql = "SELECT COUNT(id) AS total
 				FROM bd_visitors $where $filtro_fecha";
         }
+
         $query = mysqli_query($this->conexion, $sql);
 
-        if (mysqli_num_rows($query) > 0)
+        if (mysqli_num_rows($query) > 0) {
             while ($assoc = mysqli_fetch_assoc($query)) {
-                if($where==''||$tipo_sql=='idarray')
+                if ($tipo==1 || $tipo==3) {
                     $resultados[] = $assoc;
-                else
+                }
+                else{
                     $resultados = $assoc;
+                }
             }
+        }
         return $resultados;
     }
 }

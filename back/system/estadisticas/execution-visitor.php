@@ -4,52 +4,52 @@ require_once "back/config_db_cms.php";
 require_once "back/config/conectar_cms.php";
 require_once('back/system/estadisticas/functions-visitor.php');
 //Obteniendo pagina visitada
-$url_visitada = basename($_SERVER['PHP_SELF']);
+
+//Obteniendo URL
+$url_visitada = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+if($url_visitada != 'demo.tiendavirtualprofesional.com/source/' && $url_visitada != 'demo.tiendavirtualprofesional.com/icono/') {
 //Llamado de la clase visitor
-$visitor = new Visitor("BD_CLIENTE");
+    $visitor = new Visitor("BD_CLIENTE");
 
-$visitor_referer = $_SERVER['HTTP_REFERER']; // la pagina desde la que viene el visitante
-$visitor_user_agent = $_SERVER['HTTP_USER_AGENT']; //el navegador que utiliza el visitante
-$visitor_remote_addr = $_SERVER['REMOTE_ADDR']; //direccion ip del visitante
+    $visitor_referer = $_SERVER['HTTP_REFERER']; // la pagina desde la que viene el visitante
+    $visitor_user_agent = $_SERVER['HTTP_USER_AGENT']; //el navegador que utiliza el visitante
+    $visitor_remote_addr = $_SERVER['REMOTE_ADDR']; //direccion ip del visitante
 
-$user_browser = getBrowser($visitor_user_agent);
-$SO = getPlatform($visitor_user_agent);
-
-
-session_start();
+    $user_browser = getBrowser($visitor_user_agent);
+    $SO = getPlatform($visitor_user_agent);
 
 
-if(!$_SESSION['country_code']) {
-    // Cogemos la IP del usuario del array que nos pasa el servidor
-    $user_ip = $_SERVER['REMOTE_ADDR'];
+    session_start();
+
+
+    if (!$_SESSION['country_code']) {
+        // Cogemos la IP del usuario del array que nos pasa el servidor
+        $user_ip = $_SERVER['REMOTE_ADDR'];
 
 // Iniciamos el handler de CURL y le pasamos la URL de la API externa
-    $ch = curl_init("http://api.hostip.info/get_json.php?ip=$user_ip");
+        $ch = curl_init("http://api.hostip.info/get_json.php?ip=$user_ip");
 
 // Con este comando le pedimos a CURL que, en vez de mostrar
 // el resultado en pantalla, nos lo devuelva como una variable
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
 // Y simplemente hacemos la petición HTTP.
-    $country_code = curl_exec($ch);
+        $country_code = curl_exec($ch);
 
 // Guardamos la variable en $_SESSION
-    $_SESSION['country_code'] = $country_code;
-}else{
-    $country_code = $_SESSION['country_code'];
-}
+        $_SESSION['country_code'] = $country_code;
+    } else {
+        $country_code = $_SESSION['country_code'];
+    }
 //transformando data en array
-$array_info_country = (array) json_decode($country_code);
+    $array_info_country = (array)json_decode($country_code);
 //Datos del país del visitante
-$country_name = $array_info_country['country_name'];
-$country_code = $array_info_country['country_code'];
-$country_city = $array_info_country['city'];
+    $country_name = $array_info_country['country_name'];
+    $country_code = $array_info_country['country_code'];
+    $country_city = $array_info_country['city'];
 //Insertando datos de visitante
-$visitante = $visitor->InsertVisitor($visitor_referer, $visitor_user_agent, $visitor_remote_addr, $SO, $user_browser, $country_name, $country_code, $country_city, $url_visitada);
-
-
-
-
+    $visitante = $visitor->InsertVisitor($visitor_referer, $visitor_user_agent, $visitor_remote_addr, $SO, $user_browser, $country_name, $country_code, $country_city, $url_visitada);
+}
 
 //Detectar naegador del visitante
 function getBrowser($user_agent){

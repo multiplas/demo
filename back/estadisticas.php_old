@@ -1,96 +1,14 @@
 <?php
 require_once('blocks/cabecera.php');
 require_once('system/estadisticas/execution-estadisticas.php');
+
 ?>
-<script type="text/javascript" src="vendors/amchartsJS/js/serial.js"></script>
-<script type="text/javascript" src="vendors/amchartsJS/js/themes/light.js"></script>
+
     <!-- amCharts javascript code -->
     <script type="text/javascript">
-        var meses = new Array ("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
-        var f=new Date();
-        //document.write(f.getDate() + " de " + meses[f.getMonth()] + " de " + f.getFullYear());
-        var fecha_graf = meses[f.getMonth()] + " de " + f.getFullYear();
-        var dia_graf = f.getDate();
 
 
 
-
-
-        //Grafica de cantidad de vistas diarias
-        <?php if($vistas_days){?>
-        AmCharts.makeChart("chartdiv_days",
-            {
-            "type": "serial",
-            "categoryField": "category",
-            "dataDateFormat": "YYYY-MM-DD",
-            "startDuration": 1,
-            "theme": "light",
-            "categoryAxis": {
-            "gridPosition": "start",
-                "parseDates": false
-        },
-            "chartCursor": {
-            "enabled": true
-        },
-            "chartScrollbar": {
-            "enabled": false
-        },
-            "trendLines": [],
-            "graphs": [
-            {
-                "fillAlphas": 1,
-                "id": "AmGraph-1",
-                "title": "graph 1",
-                "type": "column",
-                "valueField": "column-1"
-            }
-        ],
-            "guides": [],
-            "valueAxes": [
-            {
-                "id": "ValueAxis-1",
-                "title": "Cantidad de vistas"
-            }
-        ],
-            "allLabels": [],
-            "balloon": {},
-            "titles": [
-            {
-                "id": "Title-1",
-                "size": 15,
-                "text": fecha_graf
-            }
-        ],
-            "dataProvider": [
-                    <?php $i=1;
-                    $cantidad_today = 0;
-                    $count_vistas_mes = 0;
-                    foreach ($vistas_days as $visita_day){
-                        $count_vistas_mes+=$visita_day['total'];
-                        $subttacfecha = substr($visita_day['campo'],0,2);
-                        date_default_timezone_set('UTC');
-                        $hoy = getdate();
-                        if ($subttacfecha == $hoy['mday'])
-                            $cantidad_today = $visita_day['total'];
-                    ?>
-                    {
-                        "category": "Día <?=$subttacfecha?>",
-                        "column-1": <?=$visita_day['total']?>
-                        <?php if($i<$cv_days){?>
-                    },
-                <?php }else{?>
-            }
-        <?php }
-        $i++;
-        } ?>
-        ]
-            }
-        );
-        <?php }?>
-
-//Gráfico visitas por país
-        <?php if($n_visitas){
-            if($tipo_consulta=='visitas por pais'){?>
         AmCharts.makeChart("chartdiv",
             {
                 "type": "pie",
@@ -103,8 +21,7 @@ require_once('system/estadisticas/execution-estadisticas.php');
                 "balloon": {},
                 "titles": [],
                 "dataProvider": [
-                    <?php $i=1;
-                    foreach ($n_visitas as $nvisita){?>
+                    <?php foreach ($n_visitas as $nvisita){?>
                     {
                         "country": "<?php if($nvisita['country'] == '(Unknown Country?)') echo 'Sin información del país'; else echo $nvisita['country']?>",
                         "litres": <?=$nvisita['total']?>
@@ -113,18 +30,15 @@ require_once('system/estadisticas/execution-estadisticas.php');
                     <?php }else{?>
                     }
                     <?php }
-                    $i++;
                             } ?>
                 ]
             }
         );
-        <?php }
-        else if($tipo_consulta=='visitas por links'){?>
+
         //grafica de links ás visitados
         AmCharts.makeChart("chartdiv_links",
             {
                 "type": "pie",
-                "url": "google.com",
                 "balloonText": "[[title]]<br><span style='font-size:14px'><b>[[value]]</b> ([[percents]]%)</span>",
                 "titleField": "country",
                 "valueField": "litres",
@@ -134,23 +48,19 @@ require_once('system/estadisticas/execution-estadisticas.php');
                 "balloon": {},
                 "titles": [],
                 "dataProvider": [
-                    <?php $i=1;
-                    foreach ($n_visitas as $nvisita){?>
+                    <?php foreach ($n_visitas as $nvisita){?>
                     {
-                        "country": "<?=substr($nvisita['pagina_visitada'],0,20)?>",
+                        "country": "<?=$nvisita['pagina_visitada']?>",
                         "litres": <?=$nvisita['total']?>
                         <?php if($i<$cv){?>
                     },
                 <?php }else{?>
             }
         <?php }
-        $i++;
         } ?>
         ]
         }
         );
-        <?php }
-        else if($tipo_consulta=='visitas por origen'){?>
 
         //gráfica de páginas de orígen de visitantes
         AmCharts.makeChart("chartdiv_origen",
@@ -165,8 +75,7 @@ require_once('system/estadisticas/execution-estadisticas.php');
                 "balloon": {},
                 "titles": [],
                 "dataProvider": [
-                    <?php $i=1;
-                    foreach ($n_visitas as $nvisita){?>
+                    <?php foreach ($n_visitas as $nvisita){?>
                     {
                         "country": "<?php if($nvisita['domain'] == '') echo 'URL Directa'; else echo $nvisita['domain']?>",
                         "litres": <?=$nvisita['total']?>
@@ -175,13 +84,10 @@ require_once('system/estadisticas/execution-estadisticas.php');
                 <?php }else{?>
             }
         <?php }
-        $i++;
         } ?>
         ]
         }
         );
-        <?php }
-        }?>
     </script>
 
 
@@ -200,7 +106,7 @@ require_once('system/estadisticas/execution-estadisticas.php');
         <div class="alert alert-info alert-dismissable">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
             <h4>Estadísticas</h4>
-            <p>Mantente al tanto de las estadísticas de tus visitantes</p>
+            <p>Mantente al tando de las estadísticas de tus visitantes</p>
         </div>
 
         <!-- block -->
@@ -313,45 +219,20 @@ require_once('system/estadisticas/execution-estadisticas.php');
                                 ?>
                                 </tbody>
                             </table>
-                                <?php if($vistas_days){?>
-                                <fieldset>
-                                    <legend>Vistas por dia</legend>
-                                    <div class="row">
-                                        <div class="span11">
-                                            <div id="chartdiv_days" style="width: 100%; height: 600px; background-color: white;" ></div>
-                                        </div>
-                                        <div class="span1" style="text-align: center">
-                                            <br><b>Hoy</b><br>
-                                            <?=$cantidad_today?>
-                                            <br>
-                                            <?php if($cantidad_today>1){echo 'Vistas';}else{echo 'Vista';} ?>
-                                            <hr>
-                                            <br><b>Mes Actual</b><br>
-                                            <?=$count_vistas_mes?>
-                                            <br>
-                                            <?php if($count_vistas_mes>1){echo 'Vistas';}else{echo 'Vista';} ?>
-                                            <hr>
-                                        </div>
-                                    </div>
-                                </fieldset>
-                                    <?php }?>
                         </div>
-
-
-
                         <?php }
                         else if($tipo_consulta=='visitas por pais'){
                         ?>
                         <fieldset>
                             <legend>Visitas por pais</legend>
-                            <div id="chartdiv" style="width: 100%; height: 1024px; background-color: white;" ></div>
+                            <div id="chartdiv" style="width: 100%; height: 600px; background-color: white;" ></div>
                         </fieldset>
                         <?php }
                         else if($tipo_consulta=='visitas por links'){
                             ?>
                         <fieldset>
                             <legend>Links más visitados</legend>
-                            <div id="chartdiv_links" style="width: 100%; height: 1024px; background-color: white;" ></div>
+                            <div id="chartdiv_links" style="width: 100%; height: 600px; background-color: white;" ></div>
                         </fieldset>
                         <?php }
 
@@ -359,7 +240,7 @@ require_once('system/estadisticas/execution-estadisticas.php');
                             ?>
                         <fieldset>
                             <legend>Orígen de visitas</legend>
-                            <div id="chartdiv_origen" style="width: 100%; height: 850px; background-color: white;" ></div>
+                            <div id="chartdiv_origen" style="width: 100%; height: 1024px; background-color: white;" ></div>
                         </fieldset>
                         <?php }?>
 
