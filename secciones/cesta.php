@@ -149,7 +149,7 @@ include_once 'auxiliares.php';
 									</td>
 									<td>
 										<?=number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],($micesta['precio']-$totalAtrDesgl)), 2, ',', '.')?> <?=$_SESSION['moneda']?>
-										<?=($micesta['descuento'] > 0 ? '<span>-'.$micesta['descuento'].'%</span>' : ($micesta['descuentoe'] > 0 ? '<span>-'.$micesta['descuentoe'].' &euro;</span>' : ''))?>
+										<?=($micesta['descuento'] > 0 ? '<span>-'.$micesta['descuento'].'</span>' : ($micesta['descuentoe'] > 0 ? '<span>-'.$micesta['descuentoe'].' &euro;</span>' : ''))?>
 										<?=($micesta['precio'] < $micesta['precio_ant'] ? '<span style="text-decoration: line-through;">'.number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],round($micesta['precio_ant'],2)), 2, ',', '.').' &euro;</span>' : '')?>
 									</td>
                                     <td><?=$micesta['personalizacion'] != null ? number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$micesta['personalizacion']), 2, ',', '.').$_SESSION['moneda'] : 'N/A'?></td>
