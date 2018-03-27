@@ -83,27 +83,7 @@ function total_calculate_helper($draizp){
                 }
             }
 
-            //codigo promocional
-            if(isset($_SESSION['compra']['codpromo']) && !empty($_SESSION['compra']['codpromo'])){
-                $pcode = CodigoPromocional(strtolower(@$_SESSION['compra']['codpromo']), $total);
-                $pcode = CodigoPromocional(strtolower(@$_SESSION['compra']['codpromo']), $total);
-                                                            //$total2 = 0;
-                if ($pcode != null)
-                {
-                    if ($pcode['tipo'] == $_SESSION["moneda"]){
-                        $total2 = $total - $pcode['descuento'];
-                        $total2 = $total - $total2;
-                        $total = $total - $pcode['descuento'];
-                    }else{
-                        $total2 = $total - ($total * ($pcode['descuento'] / 100));
-                        $total2 = $total - $total2;
-                        $total = $total - ($total * ($pcode['descuento'] / 100)); 
-                    }
-                ?>                   
-                <?php
-                }
-                $_SESSION['datos_cesta']['total2'] = $total2;
-            }
+            
 
             //Imagen del producto
             $imageSrc = $urlImagen.'/imagenesproductos/'.$micesta['imagen'];
@@ -131,6 +111,28 @@ function total_calculate_helper($draizp){
         }
 
         $total = round(floatval ($total),2);
+
+        //codigo promocional
+        if(isset($_SESSION['compra']['codpromo']) && !empty($_SESSION['compra']['codpromo'])){
+            $pcode = CodigoPromocional(strtolower(@$_SESSION['compra']['codpromo']), $total);
+            $pcode = CodigoPromocional(strtolower(@$_SESSION['compra']['codpromo']), $total);
+                                                        //$total2 = 0;
+            if ($pcode != null)
+            {
+                if ($pcode['tipo'] == $_SESSION["moneda"]){
+                    $total2 = $total - $pcode['descuento'];
+                    $total2 = $total - $total2;
+                    $total = $total - $pcode['descuento'];
+                }else{
+                    $total2 = $total - ($total * ($pcode['descuento'] / 100));
+                    $total2 = $total - $total2;
+                    $total = $total - ($total * ($pcode['descuento'] / 100)); 
+                }
+            ?>                   
+            <?php
+            }
+            $_SESSION['datos_cesta']['total2'] = $total2;
+        }
         $portes = calculatePortes($total, false, $peso);
         $precioTotalConEnvio = number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],($total + $portes)), 2, ',', '.');
         
