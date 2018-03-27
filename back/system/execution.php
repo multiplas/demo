@@ -264,6 +264,7 @@
                 $num = $i + 1;
                 $precio = 'precio'.$_POST['disp'][$i];
                 $precioE = 'precioE'.$_POST['disp'][$i];
+                $precioEP = 'precioEP'.$_POST['disp'][$i];
                 $imagen = 'imagenAtr_'.$_POST['disp'][$i];
                 if(isset($_POST['atrDef'.$_POST['disp'][$i]]))
                     $atrDef = 1;
@@ -275,15 +276,31 @@
                     $nombre = $datosI[$_POST['disp'][$i]];
                 }
                 if($_POST[$precio] == null || $_POST[$precio] == ""){
-                    if($_POST[$precioE] == null || $_POST[$precioE] == "")
-                        $System->ProductoEditarAtr($_POST['disp'][$i], $_POST['idm'], 0, 0, $nombre, $atrDef);
-                    else
-                        $System->ProductoEditarAtr($_POST['disp'][$i], $_POST['idm'], 0, $_POST[$precioE], $nombre, $atrDef);
+                    if($_POST[$precioE] == null || $_POST[$precioE] == ""){
+                        if($_POST[$precioEP] == null || $_POST[$precioEP] == "")
+                            $System->ProductoEditarAtr($_POST['disp'][$i], $_POST['idm'], 0, 0, $nombre, $atrDef, 0);
+                        else
+                            $System->ProductoEditarAtr($_POST['disp'][$i], $_POST['idm'], 0, 0, $nombre, $atrDef, $precioEP);
+                    }                        
+                    else{
+                        if($_POST[$precioEP] == null || $_POST[$precioEP] == "")
+                        $System->ProductoEditarAtr($_POST['disp'][$i], $_POST['idm'], 0, $_POST[$precioE], $nombre, $atrDef, 0);
+                        else
+                        $System->ProductoEditarAtr($_POST['disp'][$i], $_POST['idm'], 0, $_POST[$precioE], $nombre, $atrDef, $precioEP);
+                    }
                 }else{
-                    if($_POST[$precioE] == null || $_POST[$precioE] == "")
-                        $System->ProductoEditarAtr($_POST['disp'][$i], $_POST['idm'], $_POST[$precio], 0, $nombre, $atrDef);
-                    else
-                        $System->ProductoEditarAtr($_POST['disp'][$i], $_POST['idm'], $_POST[$precio], $_POST[$precioE], $nombre, $atrDef);
+                    if($_POST[$precioE] == null || $_POST[$precioE] == ""){
+                        if($_POST[$precioEP] == null || $_POST[$precioEP] == "")
+                            $System->ProductoEditarAtr($_POST['disp'][$i], $_POST['idm'], $_POST[$precio], 0, $nombre, $atrDef, 0);
+                        else
+                            $System->ProductoEditarAtr($_POST['disp'][$i], $_POST['idm'], $_POST[$precio], 0, $nombre, $atrDef, $precioEP);
+                    }
+                    else{
+                        if($_POST[$precioEP] == null || $_POST[$precioEP] == "")
+                            $System->ProductoEditarAtr($_POST['disp'][$i], $_POST['idm'], $_POST[$precio], $_POST[$precioE], $nombre, $atrDef, 0);
+                        else
+                            $System->ProductoEditarAtr($_POST['disp'][$i], $_POST['idm'], $_POST[$precio], $_POST[$precioE], $nombre, $atrDef, $precioEP);
+                    }                
                 }
                    
                 //Subir imagen.
