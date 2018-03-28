@@ -5595,16 +5595,16 @@
 			return $query;
 		}
                 
-                function MarcaNueva($nombre, $padre = null, $menu, $ext = '')
+                function MarcaNueva($nombre, $padre = null, $menu, $ext = '', $tituloSeo = '', $descripcionSeo = '', $metaKeys = '', $textoMarca = '')
 		{
 			$nombre = mysqli_real_escape_string($this->conexion, htmlspecialchars($nombre));
             $menu = mysqli_real_escape_string($this->conexion, htmlspecialchars($menu));
-			if (@$padre == null || @$padre == '') $padre = 'null';
+			if (@$padre == null || @$padre == '') 
+				$padre = 'null';
 			$padre = mysqli_real_escape_string($this->conexion, htmlspecialchars($padre));
 			
 			$sql = "INSERT INTO bd_categorias
-					VALUES (null, '$nombre', '', $padre, '', 0, $menu, 1, '$ext');";
-                        
+					VALUES (null, '$nombre', '', $padre, '', 0, $menu, 1, '$ext', '$tituloSeo', '$descripcionSeo', '$metaKeys', '$textoMarca');";
 			$query = mysqli_query($this->conexion, $sql);
 			
 			return mysqli_insert_id($this->conexion);
@@ -5751,7 +5751,7 @@
 			return $query;
 		}
 		
-		function ModificarCategoria($id, $nombre, $padre, $menu, $ext = '')
+		function ModificarCategoria($id, $nombre, $padre, $menu, $ext = '', $tituloSeo = null, $descripcionSeo = null, $metaKeys = null, $textoMarca = null)
 		{
 			$id = mysqli_real_escape_string($this->conexion, htmlspecialchars($id));
 			$nombre = mysqli_real_escape_string($this->conexion, htmlspecialchars($nombre));
@@ -5760,8 +5760,9 @@
 			$padre = mysqli_real_escape_string($this->conexion, htmlspecialchars($padre));
 			
 			$sql = "UPDATE bd_categorias
-					SET categoria = '$nombre', idpadre = $padre, idmenu = $menu, extension = '$ext'
+					SET categoria = '$nombre', idpadre = $padre, idmenu = $menu, extension = '$ext', tituloSeo = '$tituloSeo', descripcionSeo = '$descripcionSeo', metaKeys = '$metaKeys', textoMarca = '$textoMarca'
                     WHERE id = $id;";
+					
 			$query = mysqli_query($this->conexion, $sql);
 			
 			return $query;

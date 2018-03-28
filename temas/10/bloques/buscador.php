@@ -8,9 +8,9 @@
     }
 ?>
 <div class="buscarForm" id="buscarForm">
-    <form action="<?= $draizp ?>/es/" method="post" name="formGlobalSearch" id="formGlobalSearch">
+    <form action="<?= $draizp ?>" method="post" name="formGlobalSearch" id="formGlobalSearch">
         <div class="input-group suggest">
-            <input style="width: 85%;border:none;margin-top:5.5%" class="searchKeyword" id="searchKeywordId" name="searchKeywordName" value="" placeholder="Buscar..." type="text" autofocus>
+            <input style="width: 85%;border:none;margin-top:5.5%" class="searchKeyword" id="searchKeywordId" name="buscar" value="" placeholder="Buscar..." type="text" autofocus>
             <span class="input-group-btn" style="display:inline;float:right;color:#333" onclick="javascript:document.getElementById('formGlobalSearch').submit();"><i class="fa fa-search fa-lg"></i></span>
         </div>
     </form>

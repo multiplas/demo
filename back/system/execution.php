@@ -537,7 +537,7 @@
         if (@$_GET['accion'] == 'subirmarca'){
                 $dir_subida = '../marcas/';
                 $extension = explode('.', $_FILES['imagen']['name']);
-		$resultaop = $System->MarcaNueva($_POST['categoria'], $_POST['categoria_padre'], $_POST['categoria_menu'], $extension[1]);
+		        $resultaop = $System->MarcaNueva($_POST['categoria'], $_POST['categoria_padre'], $_POST['categoria_menu'], $extension[1], $_POST['tituloSeo'], $_POST['descripcionSeo'],$_POST['metaKeys'],$_POST['textoMarca']);
                 if($_FILES['imagen']['size'] > 0){
                     $fichero_subido = $dir_subida . $resultaop . "." . $extension[1];
                     move_uploaded_file($_FILES['imagen']['tmp_name'], $fichero_subido);
@@ -575,7 +575,9 @@
 	if (@$_GET['editarcate'] != null && @$_POST['idm'] != null){
                 $dir_subida = '../marcas/';
                 $extension = explode('.', $_FILES['imagen']['name']);
-		$resultaop = $System->ModificarCategoria($_POST['idm'], $_POST['categoria'], $_POST['categoria_padre'], $_POST['categoria_menu'], $extension[1]);
+                if(empty($extension[0]))
+                    $extension = array($_POST['old_extension']); 
+		$resultaop = $System->ModificarCategoria($_POST['idm'], $_POST['categoria'], $_POST['categoria_padre'], $_POST['categoria_menu'], $extension[1], $_POST['tituloSeo'], $_POST['descripcionSeo'],$_POST['metaKeys'],$_POST['textoMarca'] );
                 if($_FILES['imagen']['size'] > 0){
                     $fichero_subido = $dir_subida . $_POST['idm'] . "." . $extension[1];
                     move_uploaded_file($_FILES['imagen']['tmp_name'], $fichero_subido);

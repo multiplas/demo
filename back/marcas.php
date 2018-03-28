@@ -77,10 +77,42 @@
                                           </div>
                                         </div>
                                         <div class="control-group">
+                                                <label class="control-label" for="categoria">Titulo Seo </label>
+                                                <div class="controls">
+                                                    <input type="text" class="span6" id="tituloSeo" name="tituloSeo" placeholder="Titulo SEO" value="<?=$elemento['tituloSeo']?>">
+                                                </div>
+                                            </div>
+                                            <div class="control-group">
+                                                <label class="control-label" for="categoria">Descripcion SEO </label>
+                                                <div class="controls">
+                                                    <input type="text" class="span6" id="descripcionSeo" name="descripcionSeo" placeholder="Nombre de la marca" value="<?=$elemento['descripcionSeo']?>">
+                                                </div>
+                                            </div>
+                                            <div class="control-group">
+                                                <label class="control-label" for="categoria">Meta Keys </label>
+                                                <div class="controls">
+                                                    <input type="text" class="span6" id="metaKeys" name="metaKeys" placeholder="Nombre de la marca" value="<?=$elemento['metaKeys']?>">
+                                                </div>
+                                            </div>
+                                            <div class="control-group">
+                                                <label class="control-label" for="categoria">Texto Marca </label>
+                                                <div class="controls">
+                                                    <textarea class="span6" id="textoMarca" name="textoMarca" placeholder="Descripcion"><?=$elemento['textoMarca']?></textarea>
+                                                </div>
+                                            </div>
+                                        <div class="control-group">
                                             <label class="control-label" for="nimagen">Imagen</label>
                                             <div class="controls">
                                                 <input class="input-file uniform_on" id="nimagen" name="imagen" type="file">
                                             </div>
+                                             <?php
+                                                if (!empty($elemento['extension']) && $elemento['extension'] != null)
+                                                {
+                                                    ?>
+                                                    <a style="color: #09F; font-size: 0.70rem;" href="../marcas/<?=$elemento['id']?>.<?=$elemento['extension']?>" target="_blank">ver imagen actual</a>
+                                                    <?php
+                                                }
+                                                ?>
                                         </div>
 										<button type="submit" class="btn btn-primary">Subir</button>
 										<button type="button" onclick="location.href = 'marcas.php';" class="btn">Cancelar</button>
@@ -102,72 +134,108 @@
                     </div>
 						<?php if (@$elemento != null && $resultaop != 1) { ?>
                      <div class="row-fluid">
-							<div id="edi" class="block">
-								<div class="navbar navbar-inner block-header">
-									<div class="muted pull-left">Editar una Marca</div>
-								</div>
-								<div style="padding-bottom:150px;" class="block-content collapse in">
-									<div class="span12">
-										<form action="marcas.php?editarcate=<?=$elemento['id']?>" method="post" class="form-horizontal" enctype="multipart/form-data">
-										  <fieldset>
-											<legend>Editar <?=$elemento['categoria']?></legend>
+                        <div id="edi" class="block">
+                            <div class="navbar navbar-inner block-header">
+                                <div class="muted pull-left">Editar una Marca</div>
+                            </div>
+                            <div style="padding-bottom:150px;" class="block-content collapse in">
+                                <div class="span12">
+                                    <form action="marcas.php?editarcate=<?=$elemento['id']?>" method="post" class="form-horizontal" enctype="multipart/form-data">
+                                        <fieldset>
+                                            <legend>Editar
+                                                <?=$elemento['categoria']?>
+                                            </legend>
                                             <div class="control-group">
-                                              <label class="control-label" for="categoria">MArca </label>
-                                              <div class="controls">
-                                                <input type="text" class="span6" id="categoria" name="categoria" placeholder="Nombre de la marca" value="<?=$elemento['categoria']?>" required>
-                                                <span style="color: red; font-size: 0.70rem;">Requerido</span>
-                                              </div>
+                                                <label class="control-label" for="categoria">Marca </label>
+                                                <div class="controls">
+                                                    <input type="text" class="span6" id="categoria" name="categoria" placeholder="Nombre de la marca" value="<?=$elemento['categoria']?>" required>
+                                                    <span style="color: red; font-size: 0.70rem;">Requerido</span>
+                                                </div>
                                             </div>
                                             <div class="control-group">
-                                              <label class="control-label" for="categoria_padre">Marca 1</label>
-                                              <div class="controls">
-                                                <select id="ncategoria_padre" name="categoria_padre" class="chzn-select span4">
-                                                    <option value="">Marca Padre</option>
-                                                    <?php
-                                                        foreach ($listadosalt AS $listado)
-                                                        {
-                                                            ?>
-                                                                <option value="<?=$listado['id']?>"<?=$elemento['idpadre'] == $listado['id'] ? ' selected' : ''?>><?=$listado['categoria']?></option>
-                                                            <?php
-                                                        }
-                                                    ?>
-                                                </select>
-                                                <span style="color: green; font-size: 0.70rem;">Opcional</span><br>
-                                                <span style="color: #09F; font-size: 0.70rem;">Marca a la que va a pertenecer esta subcatedoría. No seleccionar para ser marca padre.</span>
-                                              </div>
+                                                <label class="control-label" for="categoria_padre">Marca 1</label>
+                                                <div class="controls">
+                                                    <select id="ncategoria_padre" name="categoria_padre" class="chzn-select span4">
+                                                                        <option value="">Marca Padre</option>
+                                                                        <?php
+                                                                            foreach ($listadosalt AS $listado)
+                                                                            {
+                                                                                ?>
+                                                                                    <option value="<?=$listado['id']?>"<?=$elemento['idpadre'] == $listado['id'] ? ' selected' : ''?>><?=$listado['categoria']?></option>
+                                                                                <?php
+                                                                            }
+                                                                        ?>
+                                                                    </select>
+                                                    <span style="color: green; font-size: 0.70rem;">Opcional</span><br>
+                                                    <span style="color: #09F; font-size: 0.70rem;">Marca a la que va a pertenecer esta subcatedoría. No seleccionar para ser marca padre.</span>
+                                                </div>
                                             </div>
-                                              <div class="control-group">
-                                                  <label class="control-label" for="ncategoria_padre">Marca menú</label>
-                                                  <div class="controls">
+                                            <div class="control-group">
+                                                <label class="control-label" for="ncategoria_padre">Marca menú</label>
+                                                <div class="controls">
                                                     <select id="categoria_menu" name="categoria_menu" class="chzn-select span4" required>
-                                                        <?php
-                                                            foreach ($listadosm AS $listado)
-                                                            {
-                                                                ?>
-                                                                    <option value="<?=$listado['id']?>"<?=$elemento['idmenu'] == $listado['id'] ? ' selected' : ''?>><?=$listado['nombre']?></option>
-                                                                <?php
-                                                            }
-                                                        ?>
-                                                    </select>
+                                                                            <?php
+                                                                                foreach ($listadosm AS $listado)
+                                                                                {
+                                                                                    ?>
+                                                                                        <option value="<?=$listado['id']?>"<?=$elemento['idmenu'] == $listado['id'] ? ' selected' : ''?>><?=$listado['nombre']?></option>
+                                                                                    <?php
+                                                                                }
+                                                                            ?>
+                                                                        </select>
                                                     <span style="color: red; font-size: 0.70rem;">Requerido</span><br>
                                                     <span style="color: #09F; font-size: 0.70rem;">Menú a la que va a pertenecer esta categoria.</span>
-                                                  </div>
-                                              </div>
-                                        <div class="control-group">
-                                            <label class="control-label" for="nimagen">Imagen</label>
-                                            <div class="controls">
-                                                <input class="input-file uniform_on" id="nimagen" name="imagen" type="file">
+                                                </div>
                                             </div>
-                                        </div>
-											<input type="hidden" class="span6" name="idm" value="<?=$elemento['id']?>">
-											<button type="submit" class="btn btn-primary">Modificar</button>
-											<button type="button" onclick="location.href = 'marcas.php';" class="btn">Cancelar</button>
-										  </fieldset>
-										</form>
-									</div>
-								</div>
-							</div>
+                                            <div class="control-group">
+                                                <label class="control-label" for="categoria">Titulo Seo </label>
+                                                <div class="controls">
+                                                    <input type="text" class="span6" id="tituloSeo" name="tituloSeo" placeholder="Titulo SEO" value="<?=$elemento['tituloSeo']?>">
+                                                </div>
+                                            </div>
+                                            <div class="control-group">
+                                                <label class="control-label" for="categoria">Descripcion SEO </label>
+                                                <div class="controls">
+                                                    <input type="text" class="span6" id="descripcionSeo" name="descripcionSeo" placeholder="Nombre de la marca" value="<?=$elemento['descripcionSeo']?>">
+                                                </div>
+                                            </div>
+                                            <div class="control-group">
+                                                <label class="control-label" for="categoria">Meta Keys </label>
+                                                <div class="controls">
+                                                    <input type="text" class="span6" id="metaKeys" name="metaKeys" placeholder="Nombre de la marca" value="<?=$elemento['metaKeys']?>">
+                                                </div>
+                                            </div>
+                                            <div class="control-group">
+                                                <label class="control-label" for="categoria">Texto Marca </label>
+                                                <div class="controls">
+                                                    <textarea class="span6" id="textoMarca" name="textoMarca" placeholder="Descripcion"><?=$elemento['textoMarca']?></textarea>
+                                                </div>
+                                            </div>
+
+                                            <div class="control-group">
+                                                <label class="control-label" for="nimagen">Imagen</label>
+                                                <div class="controls">
+                                                    <input class="input-file uniform_on" id="nimagen" name="imagen" type="file">
+                                                    <?php
+                                                        if (!empty($elemento['extension']) && $elemento['extension'] != null)
+                                                        {
+                                                            ?>
+                                                            <a style="color: #09F; font-size: 0.70rem;" href="../marcas/<?=$elemento['id']?>.<?=$elemento['extension']?>" target="_blank">ver imagen actual</a>
+                                                        <?php
+                                                    }
+                                                    ?>
+                                                </div>
+                                            </div>
+                                            <input type="hidden" class="span6" name="old_extension" value="<?=$elemento['extension']?>">
+                                            <input type="hidden" class="span6" name="idm" value="<?=$elemento['id']?>">
+                                            <button type="submit" class="btn btn-primary">Modificar</button>
+                                            <button type="button" onclick="location.href = 'marcas.php';" class="btn">Cancelar</button>
+                                        </fieldset>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
+                    </div>
 						<?php } ?>
                         <!-- block -->
                     
