@@ -53,6 +53,13 @@
                                           </div>
                                         </div>   
                                         <div class="control-group">
+                                          <label class="control-label" for="nnombre">Target Url</label>
+                                          <div class="controls">
+                                            <input type="text" class="span6" id="url_target" name="url_target" placeholder="Url">
+                                            <span style="color: green; font-size: 0.70rem;">Opcional</span>
+                                          </div>
+                                        </div>  
+                                        <div class="control-group">
                                           <label class="control-label" for="multiSelect2">Menú Padre</label>
                                           <div class="controls">
 											<select id="multiSelect2" name="catep" class="chzn-select span4">
@@ -91,7 +98,7 @@
                                         <div class="control-group">
                                             <label class="control-label" for="nimagen">Imagen</label>
                                             <div class="controls">
-                                                <input class="input-file uniform_on" id="nimagen" name="imagen" type="file" required>
+                                                <input class="input-file uniform_on" id="nimagen" name="imagen" type="file">
                                                 <span style="color: red; font-size: 0.70rem;">Requerido</span>
                                             </div>
                                         </div>
@@ -161,6 +168,13 @@
                                             <span style="color: green; font-size: 0.70rem;">Opcional</span>
                                           </div>
                                         </div> 
+                                        <div class="control-group">
+                                          <label class="control-label" for="nnombre">Target Url</label>
+                                          <div class="controls">
+                                            <input type="text" class="span6" id="url_target" name="url_target" placeholder="Url" value="<?=$elemento['url_target']?>">
+                                            <span style="color: green; font-size: 0.70rem;">Opcional</span>
+                                          </div>
+                                        </div>  
 											<div class="control-group">
 											  <label class="control-label" for="multiSelect">Categoría Padre</label>
 											  <div class="controls">

@@ -168,8 +168,9 @@
 	if (@$_GET['accion'] == 'subirproductospack' && @$_GET['productospack'] != null && @$_GET['productospack'] != '')
 		$resultaop2 = $System->NuevoPacksProductos($_GET['productospack'], $_POST['producto1'], $_POST['producto2'], $_POST['producto3'], $_POST['producto4']);
 	
-        if (@$_GET['accion'] == 'subirco')
-		$resultaop = $System->MenuNuevo($_POST['nombre'], $_POST['url_enlace'], $_POST['contenido'], $_FILES['imagen'], $_POST['nombre2'], $_POST['nombre3'], $_POST['nombre4'], $_POST['nombre5'], $_POST['nombre6'], $_POST['nombre7'], $_POST['nombre8'], ($_POST['catep'] != 'c-padre' ? $_POST['catep'] : null), @$_POST['categoria']);
+        if (@$_GET['accion'] == 'subirco'){
+		        $resultaop = $System->MenuNuevo($_POST['nombre'], $_POST['url_enlace'], $_POST['contenido'], $_FILES['imagen'], $_POST['nombre2'], $_POST['nombre3'], $_POST['nombre4'], $_POST['nombre5'], $_POST['nombre6'], $_POST['nombre7'], $_POST['nombre8'], ($_POST['catep'] != 'c-padre' ? $_POST['catep'] : null), @$_POST['categoria'], $_POST['url_target']);
+        }
 	
         if (@$_GET['accion'] == 'ordenarMenu'){
             $listados = $System->CargarMenus(10000);
@@ -206,7 +207,26 @@
 	if (@$_GET['editarcatat'] != null && @$_POST['idm'] != null)
 		$resultaop = $System->ModificarCategoriaAtributo($_POST['idm'], $_POST['atributo'], $_POST['mensaje'], @$_POST['obligatorio'], @$_POST['obligatorio2'], @$_POST['desglosado'], @$_POST['oculto'], $_POST['contenido2']);
 	
-	if (@$_GET['estadofact'] != null && @$_GET['estadof'] != null)
+    if($_GET['accion'] == 'addMarcasFile' && $_POST['idm'] != null){
+        $dir_subida = '../ficheros/';
+        $fecha_subida = date("Y-m-d-H-i-s");
+        $fecha_format = str_replace('-','',$fecha_subida);
+        $nombre_fichero = $fecha_format.'_'.$_FILES['fichero_usuario']['name'];
+        $fichero_subido = $dir_subida . basename($nombre_fichero);
+        if(move_uploaded_file($_FILES['fichero_usuario']['tmp_name'], $fichero_subido))
+		    $resultaop = $System->AddFileToMarca($_POST['idm'], $nombre_fichero);
+    }
+
+    if($_GET['accion'] == 'deleteMarcasFile' && $_POST['idm'] != null){
+        $nombre_fichero = $_POST['delete-file-name'];
+        $id_fichero = $_POST['delete-file-id'];
+        $dir_subida = '../ficheros/';
+        $fichero_eliminado = $dir_subida . basename($nombre_fichero);
+        unlink($fichero_eliminado);
+        $resultaop = $System->DeleteFileToMarca($id_fichero);
+    }
+	
+    if (@$_GET['estadofact'] != null && @$_GET['estadof'] != null)
 		$resultaop = $System->FacturaEstado($_GET['estadofact'], $_GET['estadof']);
         
         if (@$_GET['estadopres'] != null && @$_GET['estadop'] != null)
@@ -224,7 +244,7 @@
 		$resultaop = $System->DistribuidorEstado($_GET['estadodist']);
 	
 	if (@$_GET['editarm'] != null && @$_POST['idm'] != null)
-		$resultaop = $System->MenuModificar($_POST['idm'], $_POST['url_enlace'], $_POST['contenido2'], $_FILES['imagen'], $_POST['nombre'], $_POST['nombre2'], $_POST['nombre3'], $_POST['nombre4'], $_POST['nombre5'], $_POST['nombre6'], $_POST['nombre7'], $_POST['nombre8'], ($_POST['catep'] != 'c-padre' ? $_POST['catep'] : null), @$_POST['categoria']);
+		$resultaop = $System->MenuModificar($_POST['idm'], $_POST['url_enlace'], $_POST['contenido2'], $_FILES['imagen'], $_POST['nombre'], $_POST['nombre2'], $_POST['nombre3'], $_POST['nombre4'], $_POST['nombre5'], $_POST['nombre6'], $_POST['nombre7'], $_POST['nombre8'], ($_POST['catep'] != 'c-padre' ? $_POST['catep'] : null), @$_POST['categoria'], $_POST['url_target']);
 	
 	if (@$_GET['editarp'] != null && @$_POST['idm'] != null)
 		$resultaop = $System->PaginaModificar($_POST['idm'], $_POST['titulo'], $_POST['url'], $_POST['destinoURL'], $_POST['contenido'], $_POST['titulo_en'], $_POST['contenido_en'], $_POST['titulo_al'], $_POST['contenido_al'], $_POST['titulo_fr'], $_POST['contenido_fr'], $_POST['titulo_it'], $_POST['contenido_it'], $_POST['titulo_po'], $_POST['contenido_po'], $_POST['titulo_ca'], $_POST['contenido_ca'], $_POST['titulo_ru'], $_POST['contenido_ru'], $_FILES['imagenpagina'], $_FILES['imagenportada']);
@@ -535,13 +555,13 @@
 		$resultaop = $System->NovedadesOpciones($_POST['novedades'], $_POST['novmodo'], $_POST['posicion'], $_POST['textonov']);
         
         if (@$_GET['accion'] == 'subirmarca'){
-                $dir_subida = '../marcas/';
-                $extension = explode('.', $_FILES['imagen']['name']);
-		        $resultaop = $System->MarcaNueva($_POST['categoria'], $_POST['categoria_padre'], $_POST['categoria_menu'], $extension[1], $_POST['tituloSeo'], $_POST['descripcionSeo'],$_POST['metaKeys'],$_POST['textoMarca']);
-                if($_FILES['imagen']['size'] > 0){
-                    $fichero_subido = $dir_subida . $resultaop . "." . $extension[1];
-                    move_uploaded_file($_FILES['imagen']['tmp_name'], $fichero_subido);
-                }
+            $dir_subida = '../marcas/';
+            $extension = explode('.', $_FILES['imagen']['name']);
+            $resultaop = $System->MarcaNueva($_POST['categoria'], $_POST['categoria_padre'], $_POST['categoria_menu'], $extension[1], $_POST['tituloSeo'], $_POST['descripcionSeo'],$_POST['metaKeys'],$_POST['textoMarca']);
+            if($_FILES['imagen']['size'] > 0){
+                $fichero_subido = $dir_subida . $resultaop . "." . $extension[1];
+                move_uploaded_file($_FILES['imagen']['tmp_name'], $fichero_subido);
+            }
         }
 
         if($_GET['accion'] == 'updateMarcaStatus')
@@ -575,8 +595,10 @@
 	if (@$_GET['editarcate'] != null && @$_POST['idm'] != null){
                 $dir_subida = '../marcas/';
                 $extension = explode('.', $_FILES['imagen']['name']);
-                if(empty($extension[0]))
-                    $extension = array($_POST['old_extension']); 
+                if(!isset($extension[1]) || empty($extension[1])){
+                    $extension = array();
+                    $extension[1] = $_POST['old_extension'];
+                }             
 		$resultaop = $System->ModificarCategoria($_POST['idm'], $_POST['categoria'], $_POST['categoria_padre'], $_POST['categoria_menu'], $extension[1], $_POST['tituloSeo'], $_POST['descripcionSeo'],$_POST['metaKeys'],$_POST['textoMarca'] );
                 if($_FILES['imagen']['size'] > 0){
                     $fichero_subido = $dir_subida . $_POST['idm'] . "." . $extension[1];
@@ -946,8 +968,10 @@
                 $listados = $System->CargarCategoriasAmpliados2(10000, 1);
                 $listadosm = $System->CargarMenusCat(10000);
                 $marcaStatus = $System->CargarMarcasStatus();
-			if (@$_GET['editarcate'] != null)
-				$elemento = $System->CargarCategoria($_GET['editarcate']);
+			    if (@$_GET['editarcate'] != null){
+				    $elemento = $System->CargarCategoria($_GET['editarcate']);
+                    $marcaFiles = $System->CargarMarcasFiles($_GET['editarcate']);
+                }
 			break;
                 case 'categorias_blog.php':
 			$listadosalt = $System->CargarCategoriasBlog(10000);

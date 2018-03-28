@@ -7,6 +7,15 @@
         include_once('./componentes/slider2.php');
     }
 
+	$ficherosRelacionados = array();
+	$sql2 = "SELECT * FROM bd_marca_fichero WHERE id_marca = $_GET[productos]";
+	$query = mysqli_query($dbi, $sql);
+	if(mysqli_num_rows($query) > 0){
+		if (mysqli_num_rows($query) > 0)
+			while ($assoc = mysqli_fetch_assoc($query))
+				$ficherosRelacionados[] = $assoc;
+	}
+
 	function get_product_url($draizp, $language, $product_id, $name){
 		//Right Way to Generate Product URL
 		$product_url = $draizp;
@@ -18,6 +27,8 @@
 			$product_url .= '/'.$name.'/';
 		return $product_url;
 	}
+
+
 
 ?>
 <div id="contenido">

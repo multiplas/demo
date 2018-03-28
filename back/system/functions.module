@@ -903,7 +903,7 @@
 			return $id;
 		}
 		
-		function MenuNuevo($nombre, $url = '', $descripcion, $imagen, $nombrein, $nombrea, $nombref, $nombreit, $nombrep, $nombrec, $nombrer, $padre = null, $categoria = null)
+		function MenuNuevo($nombre, $url = '', $descripcion, $imagen, $nombrein, $nombrea, $nombref, $nombreit, $nombrep, $nombrec, $nombrer, $padre = null, $categoria = null, $url_target = null)
 		{
 			$siguiente = 1;
 			$nombre = mysqli_real_escape_string($this->conexion, htmlspecialchars($nombre));
@@ -930,13 +930,16 @@
 				$categoria = 1;
             else
                 $categoria = 0;
-            
-            $imgname = "null";
-			if ($imagen['error'] != 4)
-			{
-				$imgname = uniqid().'_'.$imagen['name'];
-				move_uploaded_file($imagen['tmp_name'], '../imagenesproductos/'.$imgname);
-				$imgname = "'$imgname'";
+            if(is_null($imagen))
+				$imgname = '';
+			else{
+				$imgname = "''";
+				if ($imagen['error'] != 4)
+				{
+					$imgname = uniqid().'_'.$imagen['name'];
+					move_uploaded_file($imagen['tmp_name'], '../imagenesproductos/'.$imgname);
+					$imgname = "'$imgname'";
+				}
 			}
 			
 			$sql = "SELECT MAX(orden) AS siguiente
@@ -952,8 +955,7 @@
 			}
 			
 			$sql = "INSERT INTO bd_menu
-					VALUES (null, '$nombre', $siguiente, $padre, $categoria, $imgname, '$descripcion', '$url');";
-                        
+					VALUES (null, '$nombre', $siguiente, $padre, $categoria, $imgname, '$descripcion', '$url', 'url_target');";
 			$query = mysqli_query($this->conexion, $sql);
 			
             $sql = "SELECT MAX(id) AS id FROM bd_menu";
@@ -1005,7 +1007,7 @@
 			return $query;
 		}
 		
-		function MenuModificar($id, $url = '', $descripcion, $imagen, $nombre, $nombrein, $nombrea, $nombref, $nombreit, $nombrep, $nombrec, $nombrer, $padre = null, $categoria = null)
+		function MenuModificar($id, $url = '', $descripcion, $imagen, $nombre, $nombrein, $nombrea, $nombref, $nombreit, $nombrep, $nombrec, $nombrer, $padre = null, $categoria = null, $url_target = null)
 		{
 			$id = mysqli_real_escape_string($this->conexion, htmlspecialchars($id));
 			$nombre = mysqli_real_escape_string($this->conexion, htmlspecialchars($nombre));
@@ -1039,7 +1041,7 @@
 
 			
 			$sql = "UPDATE bd_menu
-					SET nombre = '$nombre', id_padre = $padre, categoria = $categoria, descripcion = '$descripcion' $imgname, url = '$url'
+					SET nombre = '$nombre', id_padre = $padre, categoria = $categoria, descripcion = '$descripcion' $imgname, url = '$url', url_target = '$url_target'
 					WHERE id = $id;";
 			$query = mysqli_query($this->conexion, $sql);
             
@@ -4771,6 +4773,23 @@
 			return $resultado;
 		}
 
+		function CargarMarcasFiles($idMarca){
+			$resultado = array();
+			
+			$sql = "SELECT * FROM bd_marca_fichero WHERE id_marca = $idMarca";
+					
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) > 0)
+			{				
+				while($assoc = mysqli_fetch_assoc($query)){
+					$resultado[] = $assoc;
+				}
+			}
+
+			return $resultado;
+		}
+
 		function CreateTableSuscriptores()
 		{
 			
@@ -5748,6 +5767,28 @@
 			     mysqli_query($this->conexion, $sql);
             }
             
+			return $query;
+		}
+
+		function DeleteFileToMarca($id){
+			$id = mysqli_real_escape_string($this->conexion, htmlspecialchars($id));
+			
+			$sql = "DELETE FROM bd_marca_fichero
+					WHERE id = $id;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			return $query;
+		}
+
+		function AddFileToMarca($idMarca, $nombreFichero)
+		{
+			$idMarca = mysqli_real_escape_string($this->conexion, htmlspecialchars($idMarca));
+            $nombreFichero = mysqli_real_escape_string($this->conexion, htmlspecialchars($nombreFichero));
+
+			$sql = "INSERT INTO bd_marca_fichero VALUES (null, $idMarca, '$nombreFichero')";
+					
+			$query = mysqli_query($this->conexion, $sql);
+			
 			return $query;
 		}
 		

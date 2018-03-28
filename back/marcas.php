@@ -4,8 +4,50 @@
                     jQuery('#formMarcaStatus').change(function(){
                         jQuery('#formMarcaStatus').submit();
                     });
+                    jQuery('.add-file').click(function(){
+                        jQuery('#addMarcasFile').css('display', 'inherit');
+                    });
+                    jQuery('#fichero_usuario').change(function(){
+                        jQuery('#addMarcasFile').submit();
+                    });
+                    jQuery('.delete-file').click(function(){
+                        jQuery('#delete-file-id').val($(this).attr("data-file"));
+                        jQuery('#delete-file-name').val($(this).attr("data-file-name"));
+                        jQuery('#deleteMarcasFile').submit();
+                    });
                 });
                 </script>
+                <style>
+                .fichero-list{
+                    width: 50%;
+                    padding-left: 70px;
+                    line-height: 40px;
+                    margin-bottom: 2px;
+                    background: whitesmoke;
+                    margin-left: 50px;
+                }
+                .delete-file{
+                    float: right;
+                    padding-right: 30px;
+                    font-weight: bolder;
+                    color: red;
+                    cursor: pointer;
+                }
+                .delete-title {
+                    margin-top: 50px;
+                    margin-bottom: 30px;
+                }
+                .add-file {
+                    background-color: #0088cc;
+                    background-image: none;
+                    border: none;
+                    border-radius: 2px;
+                    margin-left: 50px;
+                }
+                #addMarcasFile{
+                    display: none;
+                }
+                </style>
                 <div class="span9" id="content">
                     
                     <div class="alert alert-info alert-dismissable">
@@ -231,6 +273,31 @@
                                             <button type="submit" class="btn btn-primary">Modificar</button>
                                             <button type="button" onclick="location.href = 'marcas.php';" class="btn">Cancelar</button>
                                         </fieldset>
+                                    </form>
+                                    <h4 class="delete-title">Ficheros adjuntos a <?=$elemento['categoria']?></h4>
+                                    <?php
+                                    if(isset($marcaFiles) && !empty($marcaFiles)){
+                                        foreach($marcaFiles as $file){
+                                            ?>
+                                            <div class="fichero-list">
+                                                <a class="link-file" href="../ficheros/<?=$file['fichero']?>" target="_blank" ><?=$file['fichero']?></a><span class="delete-file" title="Eliminar archivo" data-file-name="<?=$file['fichero']?>" data-file="<?=$file['id']?>">X</span>
+                                            </div>
+                                            <?php
+                                        }
+                                    }
+                                     ?>
+                                    <form enctype="multipart/form-data" id="addMarcasFile" class="form-horizontal"  action="marcas.php?accion=addMarcasFile" method="POST">
+                                        <div class="control-group">
+                                            <label class="control-label" for="fichero_usuario">Añadir Fichero</label>
+                                            <input class="input-file uniform_on" id="fichero_usuario" name="fichero_usuario" type="file" />
+                                        </div>
+                                        <input type="hidden" class="span6" name="idm" value="<?=$elemento['id']?>">
+                                    </form>
+                                    <button type="button" class="btn btn-primary add-file" title="Añadir archivo">+</button>
+                                    <form enctype="multipart/form-data" id="deleteMarcasFile" class="form-horizontal"  action="marcas.php?accion=deleteMarcasFile" method="POST">
+                                        <input type="hidden" id="delete-file-name" name="delete-file-name" value=""/>
+                                        <input type="hidden" id="delete-file-id" name="delete-file-id" value=""/>
+                                        <input type="hidden" class="span6" name="idm" value="<?=$elemento['id']?>">
                                     </form>
                                 </div>
                             </div>
