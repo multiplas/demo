@@ -2,6 +2,7 @@
 require_once('blocks/cabecera.php');
 require_once('system/estadisticas/execution-estadisticas.php');
 ?>
+<script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js" integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ" crossorigin="anonymous"></script>
 <script type="text/javascript" src="vendors/amchartsJS/js/serial.js"></script>
 <script type="text/javascript" src="vendors/amchartsJS/js/themes/light.js"></script>
     <!-- amCharts javascript code -->
@@ -210,38 +211,30 @@ require_once('system/estadisticas/execution-estadisticas.php');
             </div>
             <div class="block-content collapse in">
                 <div class="span12">
-                    <div class="row">
+
                         <div class="span3" title="Listado de visitas">
-                            <a href="?">
-                                <div class="alert alert-info button" style=" height: auto; background: white !important;">
-                                    <img src="images/img_estadisticas/icono_listado.png" style="width:90%; height: 150px">
-                                </div>
+                            <a class="btn btn-large btn-danger" href="?">
+                                <i class="far fa-address-card pull-left" style="font-size: 70px"></i>&nbsp; <span style="line-height: 30px !important;">Listado de Visitas</span>
                             </a>
                         </div>
                         <div class="span3" title="Gráfica de visitas por pais">
-                            <a href="?tipo_consulta=visitas por pais">
-                                <div class="alert alert-info button" style=" height: auto;">
-                                    <img src="images/img_estadisticas/icono_grafica_por_pais.jpg" style="width:100%; height: 150px">
-                                </div>
+                            <a class="btn btn-large btn-success" href="?tipo_consulta=visitas por pais">
+                                <i class="fas fa-globe pull-left" style="font-size: 70px"></i>&nbsp; <span style="line-height: 30px !important;">visitas por pais</span>
                             </a>
                         </div>
-                        <div class="span3" title="Gráfica de links mas visitados">
-                            <a href="?tipo_consulta=visitas por links">
-                                <div class="alert alert-info button" style=" height: auto;">
-                                    <img src="images/img_estadisticas/icono_links_mas_visitados.jpg" style="width:100%; height: 150px">
-                                </div>
+                        <div class="span3" title="Gráfica de links">
+                            <a class="btn btn-large btn-info" href="?tipo_consulta=visitas por links">
+                                <i class="fas fa-link pull-left" style="font-size: 70px"></i>&nbsp; <span style="line-height: 30px !important;">Links visitados</span>
                             </a>
                         </div>
                         <div class="span3" title="Gráfica de páginas de origen de visitantes">
-                            <a href="?tipo_consulta=visitas por origen">
-                                <div class="alert alert-info button" style=" height: auto;">
-                                    <img src="images/img_estadisticas/icono_referidos.jpg" style="width:100%; height: 150px">
-                                </div>
+                            <a class="btn btn-large btn-warning" href="?tipo_consulta=visitas por origen">
+                                <i class="fas fa-map-marker-alt pull-left" style="font-size: 70px"></i>&nbsp; <span style="line-height: 30px !important;">Orígen de Visitas</span>
                             </a>
                         </div>
-                    </div><br><br>
+
                     <!--Formulario de filtro por fechas-->
-                    <form method="GET" action="?">
+                    <form method="GET" action="?"><br><br><br><br><br><br><br><br><br>
                     <input class="form-control" id="startdate" name="desde" type="text" placeholder="d-M-y" title="format : d-M-y" value="<?=$desde?>"/>
                     <span class="input-group-addon">hasta</span>
                     <input class="form-control" id="enddate" name="hasta" type="text" placeholder="d-M-y" title="format : d-M-y" value="<?=$hasta?>"/>
@@ -273,6 +266,28 @@ require_once('system/estadisticas/execution-estadisticas.php');
                             if($tipo_consulta==''){
                             ?>
                         <div class="table-responsive">
+                            <?php if($vistas_days){?>
+                                <fieldset>
+                                    <legend>Vistas por dia</legend>
+                                    <div class="row">
+                                        <div class="span11">
+                                            <div id="chartdiv_days" style="width: 100%; height: 600px; background-color: white;" ></div>
+                                        </div>
+                                        <div class="span1" style="text-align: center">
+                                            <br><b>Hoy</b><br>
+                                            <?=$cantidad_today?>
+                                            <br>
+                                            <?php if($cantidad_today>1){echo 'Vistas';}else{echo 'Vista';} ?>
+                                            <hr>
+                                            <br><b>Mes Actual</b><br>
+                                            <?=$count_vistas_mes?>
+                                            <br>
+                                            <?php if($count_vistas_mes>1){echo 'Vistas';}else{echo 'Vista';} ?>
+                                            <hr>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            <?php }?>
                             <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered dataTable table-condensed" id="example">
                                 <thead>
                                 <tr role="row">
@@ -313,28 +328,6 @@ require_once('system/estadisticas/execution-estadisticas.php');
                                 ?>
                                 </tbody>
                             </table>
-                                <?php if($vistas_days){?>
-                                <fieldset>
-                                    <legend>Vistas por dia</legend>
-                                    <div class="row">
-                                        <div class="span11">
-                                            <div id="chartdiv_days" style="width: 100%; height: 600px; background-color: white;" ></div>
-                                        </div>
-                                        <div class="span1" style="text-align: center">
-                                            <br><b>Hoy</b><br>
-                                            <?=$cantidad_today?>
-                                            <br>
-                                            <?php if($cantidad_today>1){echo 'Vistas';}else{echo 'Vista';} ?>
-                                            <hr>
-                                            <br><b>Mes Actual</b><br>
-                                            <?=$count_vistas_mes?>
-                                            <br>
-                                            <?php if($count_vistas_mes>1){echo 'Vistas';}else{echo 'Vista';} ?>
-                                            <hr>
-                                        </div>
-                                    </div>
-                                </fieldset>
-                                    <?php }?>
                         </div>
 
 

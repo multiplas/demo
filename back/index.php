@@ -1,4 +1,98 @@
-﻿                <?php require_once('blocks/cabecera.php'); ?>
+﻿<?php require_once('blocks/cabecera.php');
+require_once('system/estadisticas/execution-estadisticas.php');
+?>
+    <script type="text/javascript" src="vendors/amchartsJS/js/serial.js"></script>
+    <script type="text/javascript" src="vendors/amchartsJS/js/themes/light.js"></script>
+
+
+    <!-- amCharts javascript code -->
+    <script type="text/javascript">
+        var meses = new Array ("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+        var f=new Date();
+        //document.write(f.getDate() + " de " + meses[f.getMonth()] + " de " + f.getFullYear());
+        var fecha_graf = meses[f.getMonth()] + " de " + f.getFullYear();
+        var dia_graf = f.getDate();
+
+
+
+
+
+        //Grafica de cantidad de vistas diarias
+        <?php if($vistas_days){?>
+        AmCharts.makeChart("chartdiv_days",
+            {
+                "type": "serial",
+                "categoryField": "category",
+                "dataDateFormat": "YYYY-MM-DD",
+                "startDuration": 1,
+                "theme": "light",
+                "categoryAxis": {
+                    "gridPosition": "start",
+                    "parseDates": false
+                },
+                "chartCursor": {
+                    "enabled": true
+                },
+                "chartScrollbar": {
+                    "enabled": false
+                },
+                "trendLines": [],
+                "graphs": [
+                    {
+                        "fillAlphas": 1,
+                        "id": "AmGraph-1",
+                        "title": "graph 1",
+                        "type": "column",
+                        "valueField": "column-1"
+                    }
+                ],
+                "guides": [],
+                "valueAxes": [
+                    {
+                        "id": "ValueAxis-1",
+                        "title": "Cantidad de vistas"
+                    }
+                ],
+                "allLabels": [],
+                "balloon": {},
+                "titles": [
+                    {
+                        "id": "Title-1",
+                        "size": 15,
+                        "text": 'Cantidad de Visitas'
+                    }
+                ],
+                "dataProvider": [
+                    <?php $i=1;
+                    $cantidad_today = 0;
+                    $count_vistas_mes = 0;
+                    foreach ($vistas_days as $visita_day){
+                    $count_vistas_mes+=$visita_day['total'];
+                    $subttacfecha = substr($visita_day['campo'],0,2);
+                    date_default_timezone_set('UTC');
+                    $hoy = getdate();
+                    if ($subttacfecha == $hoy['mday'])
+                        $cantidad_today = $visita_day['total'];
+                    ?>
+                    {
+                        "category": "Día <?=$subttacfecha?>",
+                        "column-1": <?=$visita_day['total']?>
+                        <?php if($i<$cv_days){?>
+                    },
+                <?php }else{?>
+            }
+        <?php }
+        $i++;
+        } ?>
+        ]
+        }
+        );
+        <?php }?>
+
+</script>
+
+
+
 				<div class="span9" id="content">
                     <!--<div class="row-fluid">
                         <div class="alert alert-success">
@@ -45,6 +139,68 @@
                         </div>
                         <!-- /block 
                     </div>-->
+
+
+
+
+                <!--estadisticas-->
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <!-- block -->
+                            <div class="block">
+                                <div class="navbar navbar-inner block-header">
+                                    <div class="muted pull-left">Estadísticas</div>
+                                    <div class="pull-right">
+
+                                    </div>
+                                </div>
+                                <div class="block-content collapse in">
+                                    <?php if($vistas_days){?>
+                                        <fieldset>
+                                            <legend>Últimos 30 días</legend>
+                                            <div class="row">
+                                                <div class="span11">
+                                                    <div id="chartdiv_days" style="width: 100%; height: 600px; background-color: white;" ></div>
+                                                </div>
+                                                <div class="span1" style="text-align: center">
+                                                    <br><b>Hoy</b><br>
+                                                    <?=$cantidad_today?>
+                                                    <br>
+                                                    <?php if($cantidad_today>1){echo 'Vistas';}else{echo 'Vista';} ?>
+                                                    <hr>
+                                                    <br><b>Mes Actual</b><br>
+                                                    <?=$count_vistas_mes?>
+                                                    <br>
+                                                    <?php if($count_vistas_mes>1){echo 'Vistas';}else{echo 'Vista';} ?>
+                                                    <hr>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    <?php } else { ?>
+                                        <p style="text-align:center;">No hay visitas!</p>
+                                    <?php } ?>
+                                </div>
+                            </div>
+                            <!-- /block -->
+                        </div>
+                    </div>
+                    <!--end estadisticas-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                     <div class="row-fluid">
                         <div class="span6">
                             <!-- block -->
