@@ -4521,7 +4521,7 @@
 			$resultado = null;
 			$id = mysqli_real_escape_string($this->conexion, htmlspecialchars($id));
 			
-			$sql = "SELECT id, nombre, url, id_padre, categoria, descripcion, imagen
+			$sql = "SELECT id, nombre, url, id_padre, categoria, descripcion, imagen, url_target
 					FROM bd_menu
 					WHERE id = $id;";
 			$query = mysqli_query($this->conexion, $sql);
