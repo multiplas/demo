@@ -214,7 +214,7 @@
         $nombre_fichero = $fecha_format.'_'.$_FILES['fichero_usuario']['name'];
         $fichero_subido = $dir_subida . basename($nombre_fichero);
         if(move_uploaded_file($_FILES['fichero_usuario']['tmp_name'], $fichero_subido))
-		    $resultaop = $System->AddFileToMarca($_POST['idm'], $nombre_fichero);
+		    $resultaop = $System->AddFileToMarca($_POST['idm'], $nombre_fichero, $_POST['rol']);
     }
 
     if($_GET['accion'] == 'deleteMarcasFile' && $_POST['idm'] != null){
@@ -677,7 +677,7 @@
     if(isset($_GET['cambfilter']) && $_GET['cambfilter'] != null)    
         $resultaop = $System->FiltroProductosModificar($_POST['p_filter']);
     if(isset($_GET['activabloqcat']) && $_GET['activabloqcat'] != null)    
-        $resultaop = $System->BloquesCategoriasModificar($_POST['p_bloque1']);
+        $resultaop = $System->BloquesCategoriasModificar($_POST['p_bloque1'], $_POST['p_bloque2']);
     if(isset($_GET['bloqueobarra']) && $_GET['bloqueobarra'] != null)    
         $resultaop = $System->BloqueoBarraModificar($_POST['b_bar']);
     if(isset($_GET['hiddenproduct']) && $_GET['hiddenproduct'] != null)    
@@ -969,6 +969,7 @@
                 $listadosm = $System->CargarMenusCat(10000);
                 $marcaStatus = $System->CargarMarcasStatus();
 			    if (@$_GET['editarcate'] != null){
+                    $roles = $System->CargarRoles();
 				    $elemento = $System->CargarCategoria($_GET['editarcate']);
                     $marcaFiles = $System->CargarMarcasFiles($_GET['editarcate']);
                 }
@@ -1229,6 +1230,7 @@
             break;
         case 'bloques_categoria.php':
 			$elemento = $System->CargarBloquesCategorias();
+            $menus = $System->GetAllMenus();
             break;
         case 'activar_filtro_productos.php':
 			$elemento = $System->CargarFilterStatus();

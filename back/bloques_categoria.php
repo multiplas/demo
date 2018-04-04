@@ -38,9 +38,7 @@
         jQuery('.caracteres_actuales2').text(3000 - len);
         }
     }
-    </script>
-    
-    
+    </script>    
         <div class="row-fluid">
         <div id="edi" class="block">
             <div class="navbar navbar-inner block-header">
@@ -52,17 +50,28 @@
                         <fieldset>
                             <div>
                                 <legend>Activar Bloques</legend>
-                                    <div class="control-group">
-                                        <label class="control-label" for="actanu">Activo</label>
-                                        <div class="controls">
-                                            <select id="p_bloque1" name="p_bloque1"  class="span6">
-                                                <?php if ($elemento['id'] == "0"): ?>
-                                                    <option value="0" <?=$elemento['valor'] == "0" ? 'selected' : ''?>>Desactivado</option>     
-                                                    <option value="1" <?=$elemento['valor'] == "1" ? 'selected' : ''?>>Activado</option>  
-                                                <?php endif; ?>
-                                            </select><br><br>
-                                        </div>
-                                    </div>                              
+                                <div class="control-group">
+                                    <label class="control-label" for="actanu">Activo</label>
+                                    <div class="controls">
+                                        <select id="p_bloque1" name="p_bloque1"  class="span6">
+                                            <?php if ($elemento['id'] == "0"): ?>
+                                                <option value="0" <?=$elemento['valor'] == "0" ? 'selected' : ''?>>Desactivado</option>     
+                                                <option value="1" <?=$elemento['valor'] == "1" ? 'selected' : ''?>>Activado</option>  
+                                            <?php endif; ?>
+                                        </select><br><br>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label" for="actanu">Menú ID Padre a Mostrar</label>
+                                    <div class="controls">
+                                        <select id="p_bloque2" name="p_bloque2"  class="span6">
+                                                <option value="0" <?=0 == $elemento['id_padre'] ? 'selected' : ''?>>Todos</option>     
+                                            <?php foreach($menus as $menu): ?>
+                                                <option value="<?=$menu['id']?>" <?=$menu['id'] == $elemento['id_padre'] ? 'selected' : ''?>><?=$menu['nombre']?></option>     
+                                            <?php endforeach; ?>
+                                        </select><br><br>
+                                    </div>
+                                </div>                             
                                 <button type="submit" style="margin: 0px 0px 0px 10%;" class="btn btn-success">Guardar Cambios</button>
                             </div>
                         </fieldset>

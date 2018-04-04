@@ -139,7 +139,11 @@
 
 	
 	$categorias = Categorias();
-        $categorias2 = CategoriasNP();
+
+    $sql="SELECT * FROM  bd_bloques_categorias WHERE id=0";
+    $query = mysqli_query($dbi, $sql);
+    $opcionesCategoria = mysqli_fetch_array($query);
+    $categorias2 = CategoriasMenuPadre($opcionesCategoria['id_padre']);
 	if($Empresa['mvmodo'] == 0)
             $productosMV = ProductosConCriterio(4, 'ventas');
         else

@@ -19,12 +19,16 @@
                 </script>
                 <style>
                 .fichero-list{
-                    width: 50%;
-                    padding-left: 70px;
+                    width: 60%;
+                    padding-left: 25px;
                     line-height: 40px;
                     margin-bottom: 2px;
                     background: whitesmoke;
                     margin-left: 50px;
+                }
+                span.rol {
+                    padding-right: 20px;
+                    font-size: 13px;
                 }
                 .delete-file{
                     float: right;
@@ -279,19 +283,29 @@
                                     if(isset($marcaFiles) && !empty($marcaFiles)){
                                         foreach($marcaFiles as $file){
                                             ?>
-                                            <div class="fichero-list">
-                                                <a class="link-file" href="../ficheros/<?=$file['fichero']?>" target="_blank" ><?=$file['fichero']?></a><span class="delete-file" title="Eliminar archivo" data-file-name="<?=$file['fichero']?>" data-file="<?=$file['id']?>">X</span>
+                                            <div class="fichero-list">                                            
+                                               <span class="rol">Rol: <?=$System->GetUserByRol($file['rol'])?></span><a class="link-file" href="../ficheros/<?=$file['fichero']?>" target="_blank" ><?=$file['fichero']?></a><span class="delete-file" title="Eliminar archivo" data-file-name="<?=$file['fichero']?>" data-file="<?=$file['id']?>">X</span>
                                             </div>
                                             <?php
                                         }
                                     }
                                      ?>
                                     <form enctype="multipart/form-data" id="addMarcasFile" class="form-horizontal"  action="marcas.php?accion=addMarcasFile" method="POST">
-                                        <div class="control-group">
-                                            <label class="control-label" for="fichero_usuario">Añadir Fichero</label>
-                                            <input class="input-file uniform_on" id="fichero_usuario" name="fichero_usuario" type="file" />
-                                        </div>
-                                        <input type="hidden" class="span6" name="idm" value="<?=$elemento['id']?>">
+                                        <fieldset>
+                                            <label class="control-label" for="rol">Rol de Usuario </label>
+                                            <div class="control-group">
+                                                <select name="rol" id="rol">
+                                                    <?php foreach($roles as $rol){ ?>
+                                                    <option value="<?=$rol['id']?>"><?=$rol['rol']?></option>
+                                                    <?php } ?>
+                                                </select>
+                                            </div>
+                                            <div class="control-group">
+                                                <label class="control-label" for="fichero_usuario">Añadir Fichero</label>
+                                                <input class="input-file uniform_on" id="fichero_usuario" name="fichero_usuario" type="file" />
+                                            </div>
+                                            <input type="hidden" class="span6" name="idm" value="<?=$elemento['id']?>">
+                                        </fieldset>
                                     </form>
                                     <button type="button" class="btn btn-primary add-file" title="Añadir archivo">+</button>
                                     <form enctype="multipart/form-data" id="deleteMarcasFile" class="form-horizontal"  action="marcas.php?accion=deleteMarcasFile" method="POST">

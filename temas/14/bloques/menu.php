@@ -34,7 +34,9 @@
         }
     }
     
-    <?php if($fCabecera != ''){ ?>
+    <?php 
+    $nombreGaleria = GetGaleryName();
+    if($fCabecera != ''){ ?>
         div.ruby-menu-demo-header-bg {
             background: url(<?=$draizp?>/source/<?=$fCabecera?>);
             background-repeat: no-repeat;;
@@ -290,6 +292,7 @@
           
           <!-- Galería -->
           <?php
+            
             $control = 0;
             
             foreach ($categoriasGalerias AS $padre)
@@ -380,7 +383,7 @@
             <?php 
                 if($Empresa['galeria'] == 1){
             ?>
-                    <li <?=$bar == 'G' ? 'class="ruby-active-menu-item"':''?>><a href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>galeria">Galería</a></li>
+                    <li <?=$bar == 'G' ? 'class="ruby-active-menu-item"':''?>><a href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>galeria"><?=$nombreGaleria?></a></li>
             <?php } ?>                                                                                                                                      
                                                                                                                                                 
           

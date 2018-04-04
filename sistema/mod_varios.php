@@ -395,6 +395,57 @@
 		
 		return $categorias;
 	}
+
+    function GetGaleryName(){
+        global $dbi;
+        $sql = "SELECT * FROM bd_categoria_galeria WHERE id = 1";
+
+        $query = mysqli_query($dbi, $sql);
+        $assoc = mysqli_fetch_assoc($query);
+        return $assoc['nombre'];
+    }
+
+    function CategoriasMenuPadre($idmenupadre){
+        global $dbi;
+        $categorias[] = null;
+        $conditions = '';
+        if($idmenupadre != 0)
+            $conditions = "WHERE id_padre = $idmenupadre";
+        
+
+        $sql = "SELECT id, nombre, imagen, url, descripcion 
+				FROM bd_menu 
+				$conditions ORDER BY orden, nombre ASC;";
+        $query = mysqli_query($dbi, $sql);
+
+        if (mysqli_num_rows($query) > 0)
+		{
+			while($assoc = mysqli_fetch_assoc($query)){
+                $sql = "SELECT * FROM bd_categoria_idioma WHERE idcategoria = $assoc[id] AND idioma = '$_SESSION[idioma]'";
+                //echo $sql;
+                $query1 = mysqli_query($dbi, $sql);
+                $assoc1 = mysqli_fetch_array($query1);
+                $categoria_idioma = array('nombre' => $assoc1['nombre']);
+                
+                array_push($categorias, 
+                        array(
+                            "id" => $assoc['id'],
+                            "nombre" => $assoc['nombre'],
+                            "categorias" => Categorias($assoc['id']),
+                            "imagen" => $assoc['imagen'],
+                            "url" => $assoc['url'],
+                            "descripcion" => $assoc['descripcion']
+                        )
+                    );
+            }
+			unset($categorias[0]);
+			$categorias = array_values($categorias);
+		}
+		else
+			$categorias = null;
+		
+		return $categorias;
+    }
         
         
         function CategoriasNP($idpadre = null)

@@ -4877,6 +4877,7 @@
 			$sql = "CREATE TABLE IF NOT EXISTS `bd_bloques_categorias` (
 				`id` bigint(1) NOT NULL,
 				`valor` bigint(1) NOT NULL DEFAULT '0',
+				`id_padre` int(3) NOT NULL DEFAULT '1',
 				UNIQUE KEY `id` (`id`)
 				) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
 
@@ -5780,12 +5781,12 @@
 			return $query;
 		}
 
-		function AddFileToMarca($idMarca, $nombreFichero)
+		function AddFileToMarca($idMarca, $nombreFichero, $rol)
 		{
 			$idMarca = mysqli_real_escape_string($this->conexion, htmlspecialchars($idMarca));
             $nombreFichero = mysqli_real_escape_string($this->conexion, htmlspecialchars($nombreFichero));
 
-			$sql = "INSERT INTO bd_marca_fichero VALUES (null, $idMarca, '$nombreFichero')";
+			$sql = "INSERT INTO bd_marca_fichero VALUES (null, $idMarca, '$nombreFichero', $rol)";
 					
 			$query = mysqli_query($this->conexion, $sql);
 			
@@ -5807,6 +5808,16 @@
 			$query = mysqli_query($this->conexion, $sql);
 			
 			return $query;
+		}
+
+		function GetUserByRol($idRol)
+		{
+			$sql = "SELECT * FROM bd_rol WHERE id = $idRol";
+					
+			$query = mysqli_query($this->conexion, $sql);
+			$assoc = mysqli_fetch_assoc($query);
+
+			return $assoc['rol'];
 		}
         
         function ModificarCategoriaBlog($id, $nombre, $nombrein, $nombrea, $nombref, $nombreit, $nombrep, $nombrec, $nombrer)
@@ -6485,11 +6496,11 @@
             
 		}
 		
-		function BloquesCategoriasModificar($mp1){
+		function BloquesCategoriasModificar($mp1, $mp2){
             
             $mp1 = mysqli_real_escape_string($this->conexion, htmlspecialchars($mp1));
             
-            $sql = "UPDATE bd_bloques_categorias SET valor = '$mp1' WHERE id = 0";
+            $sql = "UPDATE bd_bloques_categorias SET valor = '$mp1', id_padre = '$mp2' WHERE id = 0";
             $query = mysqli_query($this->conexion, $sql);
             return $query;
             
@@ -6731,6 +6742,16 @@
 				while ($assoc = mysqli_fetch_assoc($query))
 					$resultados[] = $assoc;
 
+			return $resultados;
+		}
+
+		function GetAllMenus(){
+			$resultados = array();
+			$sql = "SELECT * FROM bd_menu";
+			$query = mysqli_query($this->conexion, $sql);
+			if (mysqli_num_rows($query) > 0)
+				while ($assoc = mysqli_fetch_assoc($query))
+					$resultados[] = $assoc;
 			return $resultados;
 		}
                 

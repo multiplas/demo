@@ -145,20 +145,22 @@
 		<?php
 		if(isset($attachedFiles) && !empty($attachedFiles)){
 			foreach($attachedFiles as $file){
-				$tipoFichero = explode('.',$file['fichero']);
-				$tipoFichero = $tipoFichero[count($tipoFichero)-1];
-				if($tipoFichero == 'pdf')
-					$fichero_imagen = 'pdf.png';
-				elseif($tipoFichero == 'doc')
-					$fichero_imagen = 'doc.jpg';
-				?>
-				<div class="fichero-list inline">
-					<span>
-						<img src="../marcas/<?=$fichero_imagen?>" alt="">
-					</span> 
-					<a class="link-file" href="../ficheros/<?=$file['fichero']?>" target="_blank" ><?php echo (strlen($file['fichero']) > 30)? substr($file['fichero'],0,30).'...' : $file['fichero']?></a>
-				</div>
-				<?php
+				if($file['rol'] == $_SESSION['usr']['rol'] || $file['rol'] == 3)://Visible para todos los clientes
+					$tipoFichero = explode('.',$file['fichero']);
+					$tipoFichero = $tipoFichero[count($tipoFichero)-1];
+					if($tipoFichero == 'pdf')
+						$fichero_imagen = 'pdf.png';
+					elseif($tipoFichero == 'doc')
+						$fichero_imagen = 'doc.jpg';
+					?>
+					<div class="fichero-list inline">
+						<span>
+							<img src="../marcas/<?=$fichero_imagen?>" alt="">
+						</span> 
+						<a class="link-file" href="../ficheros/<?=$file['fichero']?>" target="_blank" ><?php echo (strlen($file['fichero']) > 30)? substr($file['fichero'],0,30).'...' : $file['fichero']?></a>
+					</div>
+					<?php
+				endif;
 			}
 		}
 		?>
