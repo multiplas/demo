@@ -1901,6 +1901,22 @@
         // ************************************************************
         
 	}
+    else if(isset($_GET['marca'])){
+        $resultado = null;
+        $brand_name = str_replace('-',' ',$_GET['marca']);
+		$sql="SELECT * FROM bd_categorias WHERE categoria LIKE '$brand_name'";
+		$query = mysqli_query($dbi, $sql);
+        
+        if (mysqli_num_rows($query) == 1)
+        {
+            $resultado = mysqli_fetch_assoc($query);
+        }
+        $etiquetaDes = '<meta name="description" content="'.$resultado['descripcionSeo'].'"/>';
+        $etiquetaTit = '<meta name="title" content="'.$resultado['tituloSeo'].'"/>';
+        $titul = '<title>'.$resultado['tituloSeo'].' - '.$Empresa['nombre'].'</title>';
+        $etiquetaCan = '<link rel="canonical" href="'.$Empresa['url'].''.$url.'" />';
+        //echo '<meta name="keywords" content="'.$resultado['metaKeys'].'"/>';
+    }
 	else if (isset($_POST['buscar']))
 	{ // Elementos de buscar en página.
         //echo "<script>alert('".$_POST['buscar']."');</script>";
@@ -2559,10 +2575,11 @@
 		?>
 		<div id="Messages"></div>
 		<?php if ($barpath != '') include_once('./temas/'.$cabecera.'/bloques/barraposicion.php'); ?>
-		<div id="grupo-contenido"<?php /*if ($Empresa['imagen'] != '') { ?> style="background-image: url(/back/logo/<?=$Empresa['imagen']?>); background-position: top left; background-repeat: no-repeat; background-size: cover;"<?php }*/ ?>>
+		<div id="grupo-contenido">
             
 			<?php // Contenidos según sección.
             if(isset($_GET['lng'])){
+               
                 if (isset($_GET['pack']))
 					include_once($draiz.'/secciones/pack.php');
 				else if (isset($_GET['allpacks']))
@@ -2584,7 +2601,7 @@
 					include_once($draiz.'/secciones/ofertas.php');
 				else if (isset($_GET['buscar']))
 					include_once($draiz.'/secciones/buscar.php');
-                                else if (isset($_GET['buscarEtq']))
+                else if (isset($_GET['buscarEtq']))
 					include_once($draiz.'/secciones/buscar.php');
 				else if (isset($_GET['producto']) && $_GET['producto'] !="")
 					include_once($draiz.'/secciones/producto.php');
@@ -2687,7 +2704,9 @@
 					include_once($draiz.'/secciones/pack.php');
 				else if (isset($_GET['allpacks']))
 					include_once($draiz.'/secciones/allpacks.php');
-				else if (isset($_GET['productos']))
+				else if (isset($_GET['marca']))
+					include_once($draiz.'/secciones/marca.php');
+                else if (isset($_GET['productos']))
 					include_once($draiz.'/secciones/productos.php');
 				else if (isset($_GET['ofertas']))
 					include_once($draiz.'/secciones/ofertas.php');

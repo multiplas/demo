@@ -8,7 +8,7 @@
     else
         $nombreEmpresa = $Empresa['nombre'];
     
-    if (isset($_GET['productos'])){
+    if (isset($_GET['productos']) || isset($_GET['marca'])){
 
         echo $etiquetaDes."\n";
         echo $etiquetaTit."\n";

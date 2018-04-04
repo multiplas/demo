@@ -28,8 +28,19 @@
 		return $product_url;
 	}
 
-
-
+	function check_is_brand($products_id){
+		$product_cat_info = array();
+		$sql="SELECT * FROM bd_categorias WHERE id = $products_id";
+		echo $sql;
+		$query = mysqli_query($dbi, $sql);
+		if (mysqli_num_rows($query) > 0)
+			while ($assoc = mysqli_fetch_assoc($query))
+				$product_cat_info[] = $assoc;
+		print_r($product_cat_info);
+		die;
+	}
+// print_r($_GET);
+// check_is_brand($_GET['productos']);
 ?>
 <div id="contenido">
 	<form action="<?=$_SERVER['REQUEST_URI']?>" method="post">

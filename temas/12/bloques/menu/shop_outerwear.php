@@ -9,7 +9,7 @@
                         $nombre = preg_replace('([,.])', '', $nombre);
                         $nombre = str_replace('--', '-', $nombre);
                         if($control < $Napartados){ ?>
-                            <li class="ruby-menu-mega-shop<?=$padre['id'] == $bar ? ' ruby-active-menu-item':''?>"><a  <?=$padre['url'] != '' ? 'target="_blank"' : ''?> href="<?=$padre['url'] == '' ? $draizp.'/'.$_SESSION['lenguaje'].'productos/'.$padre['id'].'/'.$nombre.'/' : $padre['url']?>"><?=$padre['nombre']?></a>
+                            <li class="ruby-menu-mega-shop<?=$padre['id'] == $bar ? ' ruby-active-menu-item':''?>"><a  <?=$padre['url_target'] != '' ? 'target="'.$padre['url_target'].'"' : ''?> href="<?=$padre['url'] == '' ? $draizp.'/'.$_SESSION['lenguaje'].'productos/'.$padre['id'].'/'.$nombre.'/' : $padre['url']?>"><?=$padre['nombre']?></a>
                                 <?php if ($padre['id'] == $bar) $barpath = '<a href="'.$draizp.'/'.$_SESSION['lenguaje'].'productos/'.$padre['id'].'/'.$nombre.'/"'.(count($padre['categorias']) < 1 ? '' : '').'>'.$padre['nombre'].'</a>';  
                                 if (count($padre['categorias']) > 0 && $padre['categorias'] != null){ ?> 
                                   <div>

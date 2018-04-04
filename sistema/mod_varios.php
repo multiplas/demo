@@ -333,7 +333,7 @@
 
         if($menufinal['menu'] == 1){
             
-            $sql = "SELECT id, nombre, imagen, url, descripcion
+            $sql = "SELECT id, nombre, imagen, url, descripcion, url_target
 				FROM bd_menu 
 				WHERE id_padre $idpadre ORDER BY orden, nombre ASC;";
             
@@ -364,7 +364,8 @@
                             "categorias" => Categorias($assoc['id']),
                             "imagen" => $assoc['imagen'],
                             "url" => $assoc['url'],
-                            "descripcion" => $assoc['descripcion']
+                            "descripcion" => $assoc['descripcion'],
+                            "url_target" => $assoc['url_target']
                         )
                     );
                 
