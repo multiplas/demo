@@ -1,8 +1,11 @@
+<link rel="stylesheet" type="text/css" href="/temas/13/css//slick.css"/>
+<script type="text/javascript" src="/temas/13/js/slick.min.js"></script>
+<link href="//use.fontawesome.com/releases/v5.0.7/css/all.css" rel="stylesheet">
+
 <?php 
 include_once './sistema/mod_varios.php';//Necesario para mostrar las categorias en bloque
 if($inicio == 3){
     echo '<div id="contenido">';
-
     $ip = $_SERVER['REMOTE_ADDR']; // the IP address to query
     $query = @unserialize(file_get_contents('http://ip-api.com/php/'.$ip));
     if($query && $query['status'] == 'success') {
@@ -13,6 +16,90 @@ if($inicio == 3){
 
     include_once('./bloques/novedades.php');
     include_once('./bloques/masvendidos.php');
+?><script>
+jQuery(document).ready(function(){
+    jQuery('.filtering').slick({
+        slidesToShow: 4,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 2000,
+        nextArrow: '<button type="button" class="slick-next"><i class="fas fa-angle-right"></i></button>',
+        prevArrow: '<button type="button" class="slick-prev"><i class="fas fa-angle-left"></i></button>',
+        centerMode: true,
+        responsive: [
+            {
+              breakpoint: 1200,
+              settings: {
+                slidesToShow: 2,
+                slidesToScroll: 1
+              }
+            },
+            {
+              breakpoint: 600,
+              settings: {
+                slidesToShow: 1,
+                slidesToScroll: 1
+              }
+            }]
+      });
+      
+      var filtered = false;
+      
+    jQuery('.js-filter').on('click', function(){
+    if (filtered === false) {
+        jQuery('.filtering').slick('slickFilter',':even');
+        jQuery(this).text('Unfilter Slides');
+        filtered = true;
+    } else {
+        jQuery('.filtering').slick('slickUnfilter');
+        jQuery(this).text('Filter Slides');
+        filtered = false;
+    }
+    });
+});
+
+
+</script>
+<?php
+$marcasStatus = getMarcasStatus();
+if($marcasStatus['valor'] == 1): //activado
+$marcas = getBrands();
+?>
+<div class="filtering">
+    <?php foreach($marcas as $marca): ?>
+    <div><img src="../marcas/<?=$marca['id']?>.<?=$marca['extension']?>" alt=""></div>
+    <?php endforeach; ?>
+</div>
+<?php
+endif;
+?>
+<style>
+.slick-slide img{
+height: calc(20vh - 70px);
+width: auto;
+margin: 0 auto; /* it centers any block level element */
+}
+
+button.slick-next, button.slick-prev {
+position: absolute;
+top: 40px;
+border-radius: 20px;
+border: none;
+background: transparent;
+font-size: 23px;
+z-index: 2;
+cursor: pointer;
+}
+
+button.slick-next{
+right: 0;
+}
+
+button.slick-prev {
+left: 0;
+}
+
+</style><?php
     echo '</div>';
 }else{
     if (count($sliders) > 0) { 
@@ -99,6 +186,8 @@ if($inicio == 3){
 
     <?php }?>
     -->
+    
+    
     <?php 
         if($inicio == 2){
     ?>
@@ -110,6 +199,7 @@ if($inicio == 3){
     <?php 
         }
     ?>
+    
         <!--<div id="productos">
             <a href="<?=$draizp?>/productos/115" class="superpr">
                 <img src="<?=$draizp?>/source/ejemplo_banner1.jpg" src="">
@@ -325,6 +415,8 @@ if($inicio == 3){
                 }
                 //include_once('./bloques/novedades.php');
                 //include_once('./bloques/masvendidos.php'); 
+                
+                
                 echo '</div>';
             }
 }

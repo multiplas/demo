@@ -29,6 +29,7 @@ jQuery(document).ready(function(){
 
         //Creando textareas con ckeditor v4.8.0_full
         CKEDITOR.replace('textoMarca');
+        CKEDITOR.replace('textoMarca2');
 
         //Ocultando todas las pestañas
         $(".div-tabs").hide();
@@ -336,7 +337,7 @@ span.rol {
                             <div class="control-group">
                                 <label class="control-label" for="textoMarca">Contenido</label>
                                 <div class="controls">
-                                    <textarea id="textoMarca" name="textoMarca" class="input-xlarge" style="width: 810px; height: 200px"><?=$elemento['textoMarca']?></textarea>
+                                    <textarea id="textoMarca2" name="textoMarca" class="input-xlarge" style="width: 810px; height: 200px"></textarea>
                                 </div>
                             </div>
 
