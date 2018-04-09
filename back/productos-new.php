@@ -540,8 +540,11 @@
                                                         <div style="text-align: center"><input style="width: 50%;text-align: center;" type="text" name="precio<?=$atr['ida']?>" placeholder="Precio" value="" />
                                                             <label style="text-align:center;margin-top:5px;">Precio Extra</label>
                                                             <div style="text-align: center"><input style="width: 50%;text-align: center;" type="text" name="precioE<?=$atr['ida']?>" placeholder="Precio Extra" value="" />
-                                                                <input class="input-file uniform_on" id="imagenAtr<?=$atr['ida']?>" name="imagenAtr<?=$atr['ida']?>" type="file">
+                                                            <label style="text-align:center;margin-top:5px;">Precio Extra (%)</label>
+                                                            <div><input style="width: 50%;text-align: center;margin-left: 22%;" type="text" name="precioEP<?=$atr['ida']?>" placeholder="Precio Extra (%)" value="<?=$precioEP?>" /></div>
+                                                            <div style="text-align: center"><input class="input-file uniform_on" id="imagenAtr_<?=$atr['ida']?>" name="imagenAtr_<?=$atr['ida']?>" type="file">
                                                             </div>
+                                                            <div style="text-align:center">Atributo por defecto:<input type="checkbox" name="atrDef<?=$atr['ida']?>" id="atrDefault" <?php if($atrDefault == 1) echo 'checked'; ?>></div>
                                                         </div>
 
                                                 </td>
@@ -555,14 +558,17 @@
                                                 <div class="control-group">
                                                     <label style="text-align:center;"><b><?=$atr['nombre']?>: <?=$atr['atributo']?></b></label>
                                                     <div style="text-align:center;"><input type="checkbox" name="disp[]" id="atr<?=$atr['ida']?>" value="<?=$atr['ida']?>"></div>
-                                                    <label style="text-align:center;margin-top:5px;">Precio</label>
-                                                    <input  style="width: 50%;text-align: center;margin-left: 22%;" type="text" name="precio<?=$atr['ida']?>" placeholder="Precio" value="" />
-                                                    <label style="text-align:center;margin-top:5px;">Precio Extra</label>
-                                                    <div style="text-align: center"><input style="width: 50%;text-align: center;" type="text" name="precioE<?=$atr['ida']?>" placeholder="Precio Extra" value="" />
-                                                        <div style="text-align: center"><input class="input-file uniform_on" id="imagenAtr<?=$atr['ida']?>" name="imagenAtr<?=$atr['ida']?>" type="file">
+                                                        <label style="text-align:center;margin-top:5px;">Precio</label>
+                                                        <input  style="width: 50%;text-align: center;margin-left: 22%;" type="text" name="precio<?=$atr['ida']?>" placeholder="Precio" value="" />
+                                                        <label style="text-align:center;margin-top:5px;">Precio Extra</label>
+                                                        <div style="text-align: center"><input style="width: 50%;text-align: center;" type="text" name="precioE<?=$atr['ida']?>" placeholder="Precio Extra" value="" />
+                                                        <label style="text-align:center;margin-top:5px;">Precio Extra (%)</label>
+                                                        <div><input style="width: 50%;text-align: center;margin-left: 22%;" type="text" name="precioEP<?=$atr['ida']?>" placeholder="Precio Extra (%)" value="<?=$precioEP?>" /></div>
+                                                        <div style="text-align: center"><input class="input-file uniform_on" id="imagenAtr_<?=$atr['ida']?>" name="imagenAtr_<?=$atr['ida']?>" type="file">
                                                         </div>
+                                                        <div style="text-align:center">Atributo por defecto:<input type="checkbox" name="atrDef<?=$atr['ida']?>" id="atrDefault" <?php if($atrDefault == 1) echo 'checked'; ?>></div>
                                                     </div>
-
+                                                </div>
                                             </td>
                                             <?php
                                             }

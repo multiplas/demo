@@ -2120,7 +2120,6 @@
                 $sql = "UPDATE bd_producto_atributo
                         SET precio = $precio, atrDefecto =  $atrDef, precioextraporcentaje =  $precioEP, precioextra = $precioE $cadena
                         WHERE idproducto = $idp AND idatributo = $atr;";
-				echo $sql;
                 $query2 = mysqli_query($this->conexion, $sql);
             }else{
                     $sql = "INSERT INTO bd_producto_atributo
@@ -2286,7 +2285,7 @@
 			}
 			
 			$sql = "INSERT INTO bd_productos
-					VALUES (null, '$nombre', '$nombrein', '$descripcion', '$descripcionin', $imgname, $unidades, $stock, $precio, '$tprecio', '$comprecio', 0, '$descuento', '$descuentoe', $cat, $cat1, $cat2, $cat3, $cat4, $marca, 0, $peso, '$referencia', $iva, $disponible, 0, 0, '$metatitulo', '$metadescripcion', 0, $tipo, $paypalm, $domicim, $fDirecta, $aplazame, $caplazame, $caplazame1, $nfentrada, $nfsalida, $NCatAtriF, 0, '$mostraretq', '$mostraretqAgo', '$mostraretqOfe', '$maxDias', '$disponibilidad', '$plazoEnt', $orden, '$pagotado', '$agotado',$precio_t_i);";
+					VALUES (null, '$nombre', '$nombrein', '$descripcion', '$descripcionin', $imgname, $unidades, $stock, $precio, '$tprecio', '$comprecio', 0, '$descuento', '$descuentoe', $marca, $cat, $cat1, $cat2, $cat3, $cat4,  0, $peso, '$referencia', $iva, $disponible, 0, 0, '$metatitulo', '$metadescripcion', 0, $tipo, $paypalm, $domicim, $fDirecta, $aplazame, $caplazame, $caplazame1, $nfentrada, $nfsalida, $NCatAtriF, 0, '$mostraretq', '$mostraretqAgo', '$mostraretqOfe', '$maxDias', '$disponibilidad', '$plazoEnt', $orden, '$pagotado', '$agotado',$precio_t_i);";
                                            
 			$query = mysqli_query($this->conexion, $sql);
                          
@@ -2638,6 +2637,15 @@
 			}
 			
 			return $resultados;
+		}
+
+		function GetProductID($nombre){
+			$assoc = null;
+			$sql = "SELECT id FROM bd_productos WHERE nombre = '$nombre'";
+			$query = mysqli_query($this->conexion, $sql);
+			if (mysqli_num_rows($query) == 1)
+				$assoc = mysqli_fetch_assoc($query);
+			return $assoc['id'];
 		}
 
 		function getTransportista($id){

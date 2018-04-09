@@ -28,28 +28,65 @@
 	if (@$_GET['accion'] == 'subirpack')
 		$resultaop = $System->PackNuevo($_POST['nombre'], $_POST['contenido'], $_FILES['imagen'], $_POST['precio'], $_POST['iva'], $_POST['descuento']);
 	
-	if (@$_GET['accion'] == 'subirpr'){
+    if (@$_GET['accion'] == 'subirpr'){
+        //Primero debe crearse el producto
+        if($_POST['precio_t_i']== '')
+            $precio_t_i=0;
+        $resultaop = $System->ProductoNuevo(@$_POST['ndisponible'], $_POST['nombre'], $_POST['contenido'], $_POST['nombrein'], $_POST['contenidoin'], $_POST['nombrea'], $_POST['contenidoa'], $_POST['nombref'], $_POST['contenidof'], $_POST['nombreit'], $_POST['contenidoit'], $_POST['nombrep'], $_POST['contenidop'], $_POST['nombreca'], $_POST['contenidoca'], $_POST['nombreru'], $_POST['contenidoru'], $_FILES['imagen'], $_POST['metatitulo'], $_POST['metadescripcion'], $_POST['unidades'], $_POST['stock'], $_POST['precio'], $_POST['tprecio'], $_POST['comprecio'], $_POST['iva'], $_POST['descuento'], $_POST['descuentoe'], $_POST['peso'], $_POST['referencia'], $_POST['orden'], $_POST['disponibilidad'], $_POST['plazoEnt'], $_POST['categoria'], $_POST['marca'], $_POST['paypalm'], $_POST['domicim'], $_POST['fDirecta'], $_POST['aplazame'], $_POST['caplazame'], $_POST['caplazame1'], $_POST['pagotado'], $_POST['agotado'], $_POST['tipo'], $_POST['NCatAtriF'], $_POST['nfentrada'], $_POST['nfsalida'], $_POST['mostraretq'], $_POST['mostraretqAgo'], $_POST['mostraretqOfe'], $_POST['maximoDias'], $precio_t_i);
+        //Obtenemos el id del producto para establecer las relaciones con los atributos
+        $productID = $System->GetProductID($_POST['nombre']);
+        $atrDef = 0; //por defecto 0
+        $precioEP = 0; //por Defecto 0 
         for($i=0;$i<count($_POST['disp']); $i++) 
         { 
             $num = $i + 1;
             $precio = 'precio'.$_POST['disp'][$i];
-            $imagen = 'imagenAtr'.$_POST['disp'][$i];
-                if($_FILES[$imagen]['size'] > 0){
-                    $nombre = uniqid()."_".$_FILES[$imagen]['name'];
-                }else{
-                    $nombre = '';
-                }
-            if($_POST[$precio] == null || $_POST[$precio] == "")
-                $System->ProductoNuevoAtr($_POST['disp'][$i],0,$nombre);
+            $precioE = 'precioE'.$_POST['disp'][$i];
+            $precioEP = 'precioEP'.$_POST['disp'][$i];
+            $imagen = 'imagenAtr_'.$_POST['disp'][$i];
+            if(isset($_POST['atrDef'.$_POST['disp'][$i]]))
+                $atrDef = 1;
             else
-                $System->ProductoNuevoAtr($_POST['disp'][$i],$_POST[$precio],$nombre);
-            
+                $atrDef = 0;
+            if($_FILES[$imagen]['size'] > 0){
+                $nombre = uniqid()."_".$_FILES[$imagen]['name'];
+            }else{
+                $nombre = $datosI[$_POST['disp'][$i]];
+            }
+            if($_POST[$precio] == null || $_POST[$precio] == ""){
+                if($_POST[$precioE] == null || $_POST[$precioE] == ""){
+                    if($_POST[$precioEP] == null || $_POST[$precioEP] == "")
+                        $System->ProductoEditarAtr($_POST['disp'][$i], $productID, 0, 0, $nombre, $atrDef, 0);
+                    else
+                        $System->ProductoEditarAtr($_POST['disp'][$i], $productID, 0, 0, $nombre, $atrDef, $_POST[$precioEP]);
+                }                        
+                else{
+                    if($_POST[$precioEP] == null || $_POST[$precioEP] == "")
+                    $System->ProductoEditarAtr($_POST['disp'][$i], $productID, 0, $_POST[$precioE], $nombre, $atrDef, 0);
+                    else
+                    $System->ProductoEditarAtr($_POST['disp'][$i], $productID, 0, $_POST[$precioE], $nombre, $atrDef, $_POST[$precioEP]);
+                }
+            }else{
+                if($_POST[$precioE] == null || $_POST[$precioE] == ""){
+                    if($_POST[$precioEP] == null || $_POST[$precioEP] == "")
+                        $System->ProductoEditarAtr($_POST['disp'][$i], $productID, $_POST[$precio], 0, $nombre, $atrDef, 0);
+                    else
+                        $System->ProductoEditarAtr($_POST['disp'][$i], $productID, $_POST[$precio], 0, $nombre, $atrDef, $_POST[$precioEP]);
+                }
+                else{
+                    if($_POST[$precioEP] == null || $_POST[$precioEP] == "")
+                        $System->ProductoEditarAtr($_POST['disp'][$i], $productID, $_POST[$precio], $_POST[$precioE], $nombre, $atrDef, 0);
+                    else
+                        $System->ProductoEditarAtr($_POST['disp'][$i], $productID, $_POST[$precio], $_POST[$precioE], $nombre, $atrDef, $_POST[$precioEP]);
+                }                
+            }
+               
             //Subir imagen.
             $dir_subida = '../imagenesproductosAtr/';
-               
+           
             if($_FILES[$imagen]['size'] > 0){
-                    $fichero_subido = $dir_subida . $nombre;
-                    move_uploaded_file($_FILES[$imagen]['tmp_name'], $fichero_subido);
+                $fichero_subido = $dir_subida . $nombre;
+                move_uploaded_file($_FILES[$imagen]['tmp_name'], $fichero_subido);
             }
         }
         for($i=0;$i<count($_POST['dispEtiq']); $i++) 
@@ -65,9 +102,7 @@
             else
                 $System->ProductoNuevoCuota($_POST['cuotas'][$i],$_POST[$precio]);
         }
-        if($_POST['precio_t_i']== '')
-            $precio_t_i=0;
-		$resultaop = $System->ProductoNuevo(@$_POST['ndisponible'], $_POST['nombre'], $_POST['contenido'], $_POST['nombrein'], $_POST['contenidoin'], $_POST['nombrea'], $_POST['contenidoa'], $_POST['nombref'], $_POST['contenidof'], $_POST['nombreit'], $_POST['contenidoit'], $_POST['nombrep'], $_POST['contenidop'], $_POST['nombreca'], $_POST['contenidoca'], $_POST['nombreru'], $_POST['contenidoru'], $_FILES['imagen'], $_POST['metatitulo'], $_POST['metadescripcion'], $_POST['unidades'], $_POST['stock'], $_POST['precio'], $_POST['tprecio'], $_POST['comprecio'], $_POST['iva'], $_POST['descuento'], $_POST['descuentoe'], $_POST['peso'], $_POST['referencia'], $_POST['orden'], $_POST['disponibilidad'], $_POST['plazoEnt'], $_POST['categoria'], $_POST['marca'], $_POST['paypalm'], $_POST['domicim'], $_POST['fDirecta'], $_POST['aplazame'], $_POST['caplazame'], $_POST['caplazame1'], $_POST['pagotado'], $_POST['agotado'], $_POST['tipo'], $_POST['NCatAtriF'], $_POST['nfentrada'], $_POST['nfsalida'], $_POST['mostraretq'], $_POST['mostraretqAgo'], $_POST['mostraretqOfe'], $_POST['maximoDias'], $precio_t_i);
+        
     }
 	
 	if (@$_GET['accion'] == 'subirprre')
