@@ -1940,7 +1940,6 @@
                         $buscar_url = str_replace(" ", "-", (rtrim($_POST['buscar'])));     
                         
                         $url = "buscar/".$buscar_url."/";
-				
 			$productos = ProductosBuscados(12, $_POST['buscar'], $pagina, $filtro);
 			$atributos = Atributos();
 		}

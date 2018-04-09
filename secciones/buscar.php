@@ -125,7 +125,7 @@
     </style>
 <?php if($cabecera != 16): //Lo customizamos para el tema de Bootstrap ?>
     <div id="contenido">
-        <div class="container"">
+        <div class="container">
             <div id="novedades">
                 <span class="tfiltro">Búsqueda de "<b><?=$_POST['buscar'] != '' ? $_POST['buscar']: ($_GET['buscar'] != '' ? str_replace("-", " ", ($_GET['buscar'])) : $nombreBuscarEtq) ?></b>"</span>
                 <div class="muestra">

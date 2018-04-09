@@ -62,7 +62,18 @@ function getLogoCabeceraStatus(){
         color: darkslategray;
         font-weight: bold;
     }
-    
+
+    .cabecera-logo{
+        width: 100%; 
+        background-size: cover;
+        background-position-y: -109px;
+        background-repeat:  no-repeat;
+    }
+    @media only screen and (max-width: 901px) {
+        .cabecera-logo{
+            background-position-y: 0px;
+        }
+    }
     @media (max-width:830px)
     { 
         #buscador2{
@@ -86,6 +97,7 @@ function getLogoCabeceraStatus(){
 <div id="top">
 	<div>
 		<span><?=$Empresa['msgtop']?></span>
+        <?php include_once('buscador.php');?>
 		<div>
                     <?php if($Empresa['mcatalogo'] == 0){ ?>
                     <span style="float:left">Bienvenid@ <?=$_SESSION['usr']['nombre']?>&nbsp;</span>
@@ -164,7 +176,7 @@ function getLogoCabeceraStatus(){
 $logoStatus = getLogoCabeceraStatus();
 if($logoStatus['valor'] == 1):
 ?>
-<div class="cabecera-logo" style="width: 100%; background-image: url(<?=$draizp?>/source/<?=$logoSup?>); background-size: cover;background-position-y: -109px;background-repeat:  no-repeat;">
+<div class="cabecera-logo" style="background-image: url(<?=$draizp?>/source/<?=$logoSup?>);">
 <?php endif; ?>
 <div id="cabecera">
     <?php

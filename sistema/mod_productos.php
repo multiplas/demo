@@ -675,10 +675,11 @@
 		else{//Si no encuentra buscando en las 3 tablas, que al menos encuentre el producto
 			$where = "disponible=1 AND soloR = 0 AND (p.nombre LIKE '%$busqueda%' OR referencia LIKE '%$busqueda%')";
 			$sql = "SELECT p.id, p.nombre, descripcion, imagenprincipal, tprecio, (precio * ((iva + 100) / 100) - (precio * ((iva +100) /100 ) * (descuento / 100))) AS preciot, descuento, descuentoe, (precio * (iva + 100) / 100) AS precio_ant 
-				FROM bd_productos p, bd_etiquetas e
+				FROM bd_productos p
 				WHERE $where 
                                 GROUP BY p.id $filtro
                                 LIMIT $inicial, $cantidad";
+
 			$query = mysqli_query($dbi, $sql);
 			if (mysqli_num_rows($query) > 0)
 			{
