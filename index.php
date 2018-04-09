@@ -2345,7 +2345,8 @@
 		<style type="text/css">
             .goog-te-banner-frame.skiptranslate{display:none!important;}
             body{top:0px!important;}
-		</style>
+        </style>
+        <link href="//use.fontawesome.com/releases/v5.0.7/css/all.css" rel="stylesheet">
 		<link rel="stylesheet" type="text/css" href="<?=$draizp?>/css/fuentes.php" />
 		<link rel="stylesheet" type="text/css" href="<?=$draizp?>/css/main.php" />
 		<link rel="stylesheet" type="text/css" href="<?=$draizp?>/css/formularios.php" />

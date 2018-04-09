@@ -1711,4 +1711,31 @@ function MenuCategoriasGal()
 
         return $resultado;
     }
+
+    function getCartImages(){
+        global $dbi;
+        $resultado = array();
+        $sql = "SELECT * FROM bd_imagenes_carrito WHERE id NOT LIKE '1'";
+        $query = mysqli_query($dbi, $sql);
+        if (mysqli_num_rows($query) > 0)			
+            while ($assoc = mysqli_fetch_assoc($query))
+                $resultado[] = $assoc;	
+
+        return $resultado;
+    }
+
+    function loadImagesStatus(){
+        global $dbi;
+        $resultado = '';
+
+        $sql = "SELECT * FROM bd_imagenes_carrito WHERE id = '1'";
+        $query = mysqli_query($dbi, $sql);
+        if (mysqli_num_rows($query) == 1)
+        {
+            $assoc = mysqli_fetch_assoc($query);
+            $resultado = $assoc;
+        }
+
+        return $resultado;
+    }
 ?>

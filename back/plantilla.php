@@ -455,6 +455,7 @@ require_once('blocks/cabecera.php');
                                                     <option value="14" <?=($elemento['cabecera'] == 14 ? ' selected' : '')?>>Electro</option>
                                                     <option value="15" <?=($elemento['cabecera'] == 15 ? ' selected' : '')?>>Remax</option>
                                                     <option value="16" <?=($elemento['cabecera'] == 16 ? ' selected' : '')?>>Minimal Fixed (Bootstrap)</option>
+                                                    <option value="17" <?=($elemento['cabecera'] == 17 ? ' selected' : '')?>>Minimal Fixed Con Icono de Fondo (Bootstrap)</option>
                                                 </select><br>
                                         </div><br>
                                         <label class="control-label" for="cabecera">Fondo en cabecera</label>

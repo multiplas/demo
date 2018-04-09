@@ -31,6 +31,9 @@
                                 <li<?=$menusel == 'procesodecompra' ? ' class="active"' : ''?>>
                                     <a href="cambiar_proceso_compra.php"><i class="icon-chevron-right"></i> Proceso de Compra</a>
                                 </li>
+                                <li<?=$menusel == 'imgscart' ? ' class="active"' : ''?>>
+                                    <a href="imagenes_carrito.php"><i class="icon-chevron-right"></i> Imagenes Carrito</a>
+                                </li>
                                 <li<?=$menusel == 'ocultarproductos' ? ' class="active"' : ''?>>
                                     <a href="ocultar_productos.php"><i class="icon-chevron-right"></i> Mostrar/Ocultar Productos</a>
                                 </li>
@@ -63,6 +66,9 @@
                                 </li>
                                 <li<?=$menusel == 'bloquescategoria' ? ' class="active"' : ''?>>
                                     <a href="bloques_categoria.php"><i class="icon-chevron-right"></i> Categorias por bloques</a>
+                                </li>
+                                <li<?=$menusel == 'logofullwidth' ? ' class="active"' : ''?>>
+                                    <a href="logo_tamano_completo.php"><i class="icon-chevron-right"></i> Logo Tamaño completo (Cabecera)</a>
                                 </li>
                             </ul>
                         </li>

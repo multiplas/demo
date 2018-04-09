@@ -97,6 +97,11 @@
 							<?php }else{ ?>
 								<a class="vermas" style="width: 83% !important;max-width: 83% !important;text-align:center" href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>/producto/<?=$productos[$i]['id']?>/<?=$nombre?>/">Ver más</a>
 							<?php } ?>
+							<form action="<?=$draizp?>/acc/anadir/<?=$productos[$i]['id']?>" method="post">
+								<button type="submit" data-product="<?=$productos[$i]['id']?>" class="vistazo-rapido estado-inicial btn btn-success">
+								<i class="fas fa-shopping-cart"></i>
+								</button>
+							</form>
 								<?php if($productos[$i]['aplazame'] == 1){ ?>
 									<span class="precio" style="max-width: 100%;">Financialo con Aplazame por <?=number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$productos[$i]['caplazame1']), 2, ',', '.')?><?=$_SESSION['moneda']?> + <?=number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$productos[$i]['caplazame']), 2, ',', '.')?><?=$_SESSION['moneda']?> al mes</span>
 								<?php } ?>

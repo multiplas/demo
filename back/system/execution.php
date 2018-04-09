@@ -225,6 +225,31 @@
         unlink($fichero_eliminado);
         $resultaop = $System->DeleteFileToMarca($id_fichero);
     }
+
+    if($_GET['accion'] == 'deleteImagesFile'){
+        $nombre_fichero = $_POST['delete-file-name'];
+        $id_fichero = $_POST['delete-file-id'];
+        $dir_subida = '../ficheros/';
+        $fichero_eliminado = $dir_subida . basename($nombre_fichero);
+        unlink($fichero_eliminado);
+        $resultaop = $System->DeleteCartImage($id_fichero);
+    }
+
+    
+
+    if($_GET['accion'] == 'addCartImage'){
+        $dir_subida = '../ficheros/';
+        $fecha_subida = date("Y-m-d-H-i-s");
+        $fecha_format = str_replace('-','',$fecha_subida);
+        $nombre_fichero = $fecha_format.'_'.$_FILES['fichero_usuario']['name'];
+        $fichero_subido = $dir_subida . basename($nombre_fichero);
+        if(move_uploaded_file($_FILES['fichero_usuario']['tmp_name'], $fichero_subido))
+		    $resultaop = $System->AddImageToCart($_FILES['fichero_usuario']['name'], $nombre_fichero);
+    }
+
+    if($_GET['accion'] == 'updateImagesStatus'){
+        $resultaop = $System->UpdateImagenesCartStatus($_POST['imageStatus']);
+    }
 	
     if (@$_GET['estadofact'] != null && @$_GET['estadof'] != null)
 		$resultaop = $System->FacturaEstado($_GET['estadofact'], $_GET['estadof']);
@@ -676,6 +701,8 @@
         $resultaop = $System->ProcesoCompraModificar($_POST['p_compra_type']);
     if(isset($_GET['cambfilter']) && $_GET['cambfilter'] != null)    
         $resultaop = $System->FiltroProductosModificar($_POST['p_filter']);
+    if(isset($_GET['camblogo']) && $_GET['camblogo'] != null)    
+        $resultaop = $System->LogoCabeceraModificar($_POST['p_filter']);        
     if(isset($_GET['activabloqcat']) && $_GET['activabloqcat'] != null)    
         $resultaop = $System->BloquesCategoriasModificar($_POST['p_bloque1'], $_POST['p_bloque2']);
     if(isset($_GET['bloqueobarra']) && $_GET['bloqueobarra'] != null)    
@@ -973,6 +1000,13 @@
 				    $elemento = $System->CargarCategoria($_GET['editarcate']);
                     $marcaFiles = $System->CargarMarcasFiles($_GET['editarcate']);
                 }
+			break;
+            case 'imagenes_carrito.php':
+                $imagenesCarritoStatus = $System->CargarImagenesCarritoStatus();
+                $imagenesCarrito = $System->CargarImagenesCarrito();
+			break;
+            case 'logo_tamano_completo.php':
+                $elemento = $System->CargarLogoCabeceraStatus();
 			break;
                 case 'categorias_blog.php':
 			$listadosalt = $System->CargarCategoriasBlog(10000);

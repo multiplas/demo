@@ -1183,6 +1183,111 @@
 
 			return $resultados;
 		}
+
+		function CreateTableImagenesCarrito()
+		{			
+			$sql = "CREATE TABLE IF NOT EXISTS bd_imagenes_carrito (
+				id INT NOT NULL AUTO_INCREMENT, 
+				nombre VARCHAR (300) NOT NULL, 
+				valor VARCHAR(600), 
+				PRIMARY KEY (id))";	
+
+			$query = mysqli_query($this->conexion, $sql);
+
+			$sqlInsertData = "INSERT INTO `bd_imagenes_carrito` (`id`, `nombre`, `valor`) VALUES (1, 'status', '0' );";
+			
+			$query = mysqli_query($this->conexion, $sqlInsertData);				
+		}
+
+		function CargarImagenesCarrito(){
+			$resultado = array();
+			$sql = "SELECT * FROM bd_imagenes_carrito WHERE id NOT LIKE '1'";
+			$query = mysqli_query($this->conexion, $sql);
+			if (mysqli_num_rows($query) > 0)			
+				while ($assoc = mysqli_fetch_assoc($query))
+					$resultado[] = $assoc;	
+
+			return $resultado;
+		}
+
+		function UpdateImagenesCartStatus($status){
+			$sql = "UPDATE bd_imagenes_carrito
+                        SET valor = '$status' WHERE id = '1'";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			return $query;		
+		}
+
+		function AddImageToCart($nombre, $valor){
+			$nombre = mysqli_real_escape_string($this->conexion, htmlspecialchars($nombre));
+            $valor = mysqli_real_escape_string($this->conexion, htmlspecialchars($valor));
+
+			$sql = "INSERT INTO bd_imagenes_carrito VALUES (null, '$nombre', '$valor')";
+					
+			$query = mysqli_query($this->conexion, $sql);
+			
+			return $query;
+		
+		}
+
+		function CargarImagenesCarritoStatus(){
+			$resultado = '';
+
+			$sql = "SELECT * FROM bd_imagenes_carrito WHERE id = '1'";
+			$query = mysqli_query($this->conexion, $sql);
+			if (mysqli_num_rows($query) == 1)
+			{
+				$assoc = mysqli_fetch_assoc($query);
+				$resultado = $assoc;
+			}
+			else{
+				$this->CreateTableImagenesCarrito();
+				echo "La tabla no existía, ahora ha sido creada con éxito. Por favor, recargue la página para continuar.";
+			}
+			return $resultado;
+		}
+
+		function CreateTableLogoCabecera()
+		{			
+			$sql = "CREATE TABLE IF NOT EXISTS `bd_logo_cabecera` (
+				`id` bigint(1) NOT NULL,
+				`valor` bigint(1) NOT NULL DEFAULT '0',
+				UNIQUE KEY `id` (`id`)
+				) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
+			$query = mysqli_query($this->conexion, $sql);
+
+			$sqlInsertData = "INSERT INTO `bd_marcas_status` (`id`, `valor`) VALUES
+				(0, 0);";
+			
+			$query = mysqli_query($this->conexion, $sqlInsertData);
+		}
+
+		function CargarLogoCabeceraStatus(){
+			$resultado = '';
+
+			$sql = "SELECT * FROM bd_logo_cabecera WHERE id = 0";
+			$query = mysqli_query($this->conexion, $sql);
+			if (mysqli_num_rows($query) == 1)
+			{
+				$assoc = mysqli_fetch_assoc($query);
+				$resultado = $assoc;
+			}
+			else{
+				$this->CreateTableLogoCabecera();
+				echo "La tabla no existía, ahora ha sido creada con éxito. Por favor, recargue la página para continuar.";
+			}
+			return $resultado;
+		}
+
+		function LogoCabeceraModificar($mp1){
+            
+            $mp1 = mysqli_real_escape_string($this->conexion, htmlspecialchars($mp1));
+            
+            $sql = "UPDATE bd_logo_cabecera SET valor = '$mp1' WHERE id = 0";
+            $query = mysqli_query($this->conexion, $sql);
+            return $query;
+            
+        }
         
         function CargarIdiomasM($id)
 		{
@@ -5781,6 +5886,16 @@
 			return $query;
 		}
 
+		function DeleteCartImage($id){
+			$id = mysqli_real_escape_string($this->conexion, htmlspecialchars($id));
+			
+			$sql = "DELETE FROM bd_imagenes_carrito
+					WHERE id = $id;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			return $query;
+		}
+
 		function AddFileToMarca($idMarca, $nombreFichero, $rol)
 		{
 			$idMarca = mysqli_real_escape_string($this->conexion, htmlspecialchars($idMarca));
@@ -6515,6 +6630,8 @@
             return $query;
             
         }
+
+		
 
 		function BloqueoBarraModificar($mp1){
 			$mp1 = mysqli_real_escape_string($this->conexion, htmlspecialchars($mp1));

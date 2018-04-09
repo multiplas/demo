@@ -1,4 +1,20 @@
 <?php if($cabecera == 0){ ?>
+
+<?php
+function getLogoCabeceraStatus(){
+    global $dbi;
+    $resultado = '';
+
+    $sql = "SELECT * FROM bd_logo_cabecera WHERE id = 0";
+    $query = mysqli_query($dbi, $sql);
+    if (mysqli_num_rows($query) == 1)
+    {
+        $assoc = mysqli_fetch_assoc($query);
+        $resultado = $assoc;
+    }
+    return $resultado;
+}
+ ?>
 <style>
 
     #buscador2{
@@ -144,10 +160,20 @@
 <?php if($fCabecera != ''){ ?>
     <div style="background-image:url(<?=$draizp?>/source/<?=$fCabecera?>);background-repeat: no-repeat;">
 <?php } ?>
+<?php
+$logoStatus = getLogoCabeceraStatus();
+if($logoStatus['valor'] == 1):
+?>
+<div class="cabecera-logo" style="width: 100%; background-image: url(<?=$draizp?>/source/<?=$logoSup?>); background-size: cover;background-position-y: -109px;background-repeat:  no-repeat;">
+<?php endif; ?>
 <div id="cabecera">
+    <?php
+        if($logoStatus['valor'] != 1):
+    ?>
 	<div id="logo">
                 <?php if($logoSup != ''){ ?><a href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>"><img src="<?=$draizp?>/source/<?=$logoSup?>" alt="" /></a><?php } ?>
-	</div>
+    </div>
+    <?php endif; ?>
 	<div id="buscador" style="display:none;">
 		<div id="titulo"><?=$Empresa['nombre']?></div>
         <?php
@@ -284,6 +310,11 @@
 		<?php include($draiz.'/bloques/logos_sociales.php'); ?>
 	</div>
 </div>
+<?php 
+if($logoStatus['valor'] == 1):
+?>
+</div>
+<?php endif; ?>
     <?php if($fCabecera != ''){ ?>
     </div>
 <?php } ?>

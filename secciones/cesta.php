@@ -42,6 +42,22 @@ include_once 'auxiliares.php';
     z-index: 10;
     
 }
+
+.cash-img {
+    float: right;
+    height: 40px;
+    overflow: hidden;
+    margin-bottom: 10px;
+    margin-right: 5px;
+    width: 40px;
+    text-align: center;
+}
+
+.cash-img img {
+    float: none !important;
+    height: 100% !important;
+    width: auto !important;
+}
 </style>
 
 <div id="contenido" style="color: #333;">
@@ -368,5 +384,18 @@ include_once 'auxiliares.php';
 			<span type="submit" class="button" onclick="location.href='/<?=$_SESSION['lenguaje']?>cesta';"><?=$aux4?></span>
 			<span type="submit" class="button" onclick="location.href='/<?=$_SESSION['lenguaje']?>';"><?=$aux5?></span>
 		</form>
+        <?php 
+        $cashImgsStatus = loadImagesStatus();
+        $cashImgs = getCartImages();
+        if(!empty($cashImgs) && $cashImgsStatus['valor'] == '1'):
+            ?>
+            <div class="imagenes">
+                <?php foreach($cashImgs as $img): ?>
+                <div class="cash-img">
+                    <img src="../ficheros/<?=$img['valor']?>" alt=""/>
+                </div>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
 	</div>
 </div>

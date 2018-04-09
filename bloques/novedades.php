@@ -143,7 +143,12 @@
 					<span class="descripcion"><?=$productosMN[$i]['nombre']?></span>
 					<span class="descuento"><?=$productosMN[$i]['descuento'] != 0 && $productosMN[$i]['precio'] != 'Consultar' ? '-'.$productosMN[$i]['descuento'].' '.$productosMN[$i]['descuentoe'] : ''?></span>
 					<span class="precioa"><?=$productosMN[$i]['descuento'] != 0 && $productosMN[$i]['precio'] != 'Consultar' ? number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$productosMN[$i]['precio_ant']), 2, ',', '.').$_SESSION['moneda'] : ''?></span><br>
-                    <?php if($_SESSION['usr'] != null || ($_SESSION['usr'] == null && $Empresa['registro'] == 1)){ ?>
+                    
+                        <form action="<?=$draizp?>/acc/anadir/<?=$productosMN[$i]['id']?>" method="post">
+                            <button type="submit" data-product="<?=$productosMN[$i]['id']?>" class="vistazo-rapido estado-inicial btn btn-success">
+                            <i class="fas fa-shopping-cart"></i>
+                            </button>
+                        </form><?php if($_SESSION['usr'] != null || ($_SESSION['usr'] == null && $Empresa['registro'] == 1)){ ?>
                         <span class="precio"><?=$productosMN[$i]['tprecio'] != '' ? $productosMN[$i]['tprecio'] : ($productosMN[$i]['precio'] != 'Consultar' ? number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$productosMN[$i]['precio']), 2, ',', '.') : 'Consultar')?><?=$productosMN[$i]['precio'] != 'Consultar' ? $productosMN[$i]['tprecio'] != '' ? '' : $_SESSION['moneda'] : ''?></span>
                         <a class="vermas" href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>producto/<?=$productosMN[$i]['id']?>/<?=$nombre?>/">Ver más</a>
                     <?php }else{ ?>

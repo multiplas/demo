@@ -953,7 +953,7 @@ body span.button:hover
 			#grupo-contenido #contenido #articulo img
 			{
 				float: right;
-				height: auto !important;
+				height: auto;
 				vertical-align: top;
 				width: 230px;
 			}
