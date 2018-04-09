@@ -1,4 +1,11 @@
 				<?php require_once('blocks/cabecera.php'); ?>
+                <script>
+                    $(document).ready(function() {
+                        //Creando textareas con ckeditor v4.8.0_full
+                        CKEDITOR.replace('contenido');
+                        CKEDITOR.replace('ncontenido');
+                    });
+                </script>
 
  <?php if(isset($resultadosfeed)) { 
                 $file = fopen("feed/blog.xml", "w");
@@ -421,7 +428,7 @@
                                             </div>
                                             <div class="control-group">
                                               
-                                                <textarea id="ncontenido" name="contenido" class="input-xlarge textarea" style="width: 810px; height: 200px"></textarea>
+                                                <textarea id="ncontenido" name="contenido" class="input-xlarge" style="width: 810px; height: 200px"></textarea>
                                               
                                             </div>
                                             <button type="submit" class="btn btn-primary">Publicar</button>
@@ -447,7 +454,7 @@
                                                       <label class="control-label" for="ncontenido">Contenido</label>
                                                     </div>
                                                      <div class="control-group">
-                                                        <textarea id="ncontenido" name="contenido2" class="input-xlarge textarea" style="width: 810px; height: 200px"></textarea>
+                                                        <textarea id="ncontenido" name="contenido2" class="input-xlarge" style="width: 810px; height: 200px"></textarea>
                                                       </div>
                                                     <button type="submit" class="btn btn-primary">Publicar</button>
                                                     <button type="button" onclick="location.href = 'noticias.php';" class="btn">Cancelar</button>
@@ -472,7 +479,7 @@
                                                       <label class="control-label" for="ncontenido">Contenido</label>
                                                     </div>
                                                      <div class="control-group">
-                                                        <textarea id="ncontenido" name="contenido3" class="input-xlarge textarea" style="width: 810px; height: 200px"></textarea>
+                                                        <textarea id="ncontenido" name="contenido3" class="input-xlarge" style="width: 810px; height: 200px"></textarea>
                                                       </div>
                                                     <button type="submit" class="btn btn-primary">Publicar</button>
                                                     <button type="button" onclick="location.href = 'noticias.php';" class="btn">Cancelar</button>
@@ -497,7 +504,7 @@
                                                       <label class="control-label" for="ncontenido">Contenido</label>
                                                     </div>
                                                      <div class="control-group">
-                                                        <textarea id="ncontenido" name="contenido4" class="input-xlarge textarea" style="width: 810px; height: 200px"></textarea>
+                                                        <textarea id="ncontenido" name="contenido4" class="input-xlarge" style="width: 810px; height: 200px"></textarea>
                                                       </div>
                                                     <button type="submit" class="btn btn-primary">Publicar</button>
                                                     <button type="button" onclick="location.href = 'noticias.php';" class="btn">Cancelar</button>
@@ -522,7 +529,7 @@
                                                       <label class="control-label" for="ncontenido">Contenido</label>
                                                     </div>
                                                      <div class="control-group">
-                                                        <textarea id="ncontenido" name="contenido5" class="input-xlarge textarea" style="width: 810px; height: 200px"></textarea>
+                                                        <textarea id="ncontenido" name="contenido5" class="input-xlarge" style="width: 810px; height: 200px"></textarea>
                                                       </div>
                                                     <button type="submit" class="btn btn-primary">Publicar</button>
                                                     <button type="button" onclick="location.href = 'noticias.php';" class="btn">Cancelar</button>
@@ -547,7 +554,7 @@
                                                       <label class="control-label" for="ncontenido">Contenido</label>
                                                     </div>
                                                      <div class="control-group">
-                                                        <textarea id="ncontenido" name="contenido6" class="input-xlarge textarea" style="width: 810px; height: 200px"></textarea>
+                                                        <textarea id="ncontenido" name="contenido6" class="input-xlarge" style="width: 810px; height: 200px"></textarea>
                                                       </div>                                                    
                                                     <button type="submit" class="btn btn-primary">Publicar</button>
                                                     <button type="button" onclick="location.href = 'noticias.php';" class="btn">Cancelar</button>
@@ -572,7 +579,7 @@
                                                       <label class="control-label" for="ncontenido">Contenido</label>
                                                     </div>
                                                      <div class="control-group">
-                                                        <textarea id="ncontenido" name="contenido7" class="input-xlarge textarea" style="width: 810px; height: 200px"></textarea>
+                                                        <textarea id="ncontenido" name="contenido7" class="input-xlarge" style="width: 810px; height: 200px"></textarea>
                                                       </div>
                                                     
                                                     <button type="submit" class="btn btn-primary">Publicar</button>
@@ -598,7 +605,7 @@
                                                       <label class="control-label" for="ncontenido">Contenido</label>
                                                     </div>
                                                      <div class="control-group">
-                                                        <textarea id="ncontenido" name="contenido8" class="input-xlarge textarea" style="width: 810px; height: 200px"></textarea>
+                                                        <textarea id="ncontenido" name="contenido8" class="input-xlarge" style="width: 810px; height: 200px"></textarea>
                                                       </div>
                                                     <button type="submit" class="btn btn-primary">Publicar</button>
                                                     <button type="button" onclick="location.href = 'noticias.php';" class="btn">Cancelar</button>
@@ -712,7 +719,7 @@
 											  <label class="control-label" for="contenido">Contenido</label>
                                                                                         </div>
                                                                                         <div class="control-group">
-												<textarea id="contenido" name="contenido" class="input-xlarge textarea" style="width: 810px; height: 200px"><?=$elemento['contenido']?></textarea>
+												<textarea id="contenido" name="contenido" class="input-xlarge" style="width: 810px; height: 200px"><?=$elemento['contenido']?></textarea>
 											  </div>
 											
 											<input type="hidden" class="span6" name="idm" value="<?=$elemento['id']?>">
@@ -746,7 +753,7 @@
                                                               <label class="control-label" for="ncontenido">Contenido</label>
                                                             </div>
                                                                <div class="control-group">
-                                                                <textarea id="ncontenido" name="contenido<?=$idioma['id']?>" class="input-xlarge textarea" style="width: 810px; height: 200px"><?=$idiomam['descripcion']?></textarea>
+                                                                <textarea id="ncontenido" name="contenido<?=$idioma['id']?>" class="input-xlarge" style="width: 810px; height: 200px"><?=$idiomam['descripcion']?></textarea>
                                                               </div>
                                                             
                                                           </fieldset>
@@ -770,7 +777,7 @@
                                                               <label class="control-label" for="ncontenido">Contenido</label>
                                                             </div>
                                                             <div class="control-group">
-                                                                <textarea id="ncontenido" name="contenido<?=$idioma['id']?>" class="input-xlarge textarea" style="width: 810px; height: 200px"></textarea>
+                                                                <textarea id="ncontenido" name="contenido<?=$idioma['id']?>" class="input-xlarge" style="width: 810px; height: 200px"></textarea>
                                                               </div>
                                                             
                                                           </fieldset>

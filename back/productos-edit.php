@@ -58,6 +58,11 @@
 
         <script>
             $(document).ready(function() {
+
+                //Creando textareas con ckeditor v4.8.0_full
+                CKEDITOR.replace('contenido');
+                CKEDITOR.replace('ncontenido');
+
                 var collapsed = '';
                 $('.collapse-button').click(function(){
                     if(collapsed != ''){
@@ -184,7 +189,7 @@
                                         <div class="control-group">
                                             <label class="control-label" for="contenido">Contenido</label>
                                             <div class="controls">
-                                                <textarea id="contenido" name="contenido" class="input-xlarge textarea" style="width: 810px; height: 200px"><?=$elemento['descripcion']?></textarea>
+                                                <textarea id="contenido" name="contenido" class="input-xlarge" style="width: 810px; height: 200px"><?=$elemento['descripcion']?></textarea>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -899,7 +904,7 @@
                                                     <div class="control-group">
                                                         <label class="control-label" for="ncontenido">Contenido</label>
                                                         <div class="controls">
-                                                            <textarea id="ncontenido" name="contenido<?=$idioma['id']?>" class="input-xlarge textarea" style="width: 810px; height: 200px"><?=$idiomam['descripcion']?></textarea>
+                                                            <textarea id="ncontenido" name="contenido<?=$idioma['id']?>" class="input-xlarge" style="width: 810px; height: 200px"><?=$idiomam['descripcion']?></textarea>
                                                         </div>
                                                     </div>
                                                 </fieldset>
@@ -922,7 +927,7 @@
                                                 <div class="control-group">
                                                     <label class="control-label" for="ncontenido">Contenido</label>
                                                     <div class="controls">
-                                                        <textarea id="ncontenido" name="contenido<?=$idioma['id']?>" class="input-xlarge textarea" style="width: 810px; height: 200px"></textarea>
+                                                        <textarea id="ncontenido" name="contenido<?=$idioma['id']?>" class="input-xlarge" style="width: 810px; height: 200px"></textarea>
                                                     </div>
                                                 </div>
                                             </fieldset>

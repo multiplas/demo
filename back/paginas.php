@@ -1,4 +1,26 @@
 				<?php require_once('blocks/cabecera.php'); ?>
+                <script>
+                    $(document).ready(function() {
+                        //Creando textareas con ckeditor v4.8.0_full
+                        CKEDITOR.replace('ncontenido');
+                        CKEDITOR.replace('ncontenido_po_en');
+                        CKEDITOR.replace('ncontenido_po_it');
+                        CKEDITOR.replace('ncontenido_po_ru');
+                        CKEDITOR.replace('ncontenido_al');
+                        CKEDITOR.replace('ncontenido_po');
+                        CKEDITOR.replace('ncontenido_ca');
+                        CKEDITOR.replace('ncontenido_fr');
+
+                        CKEDITOR.replace('contenido');
+                        CKEDITOR.replace('contenido_po_en');
+                        CKEDITOR.replace('contenido_po_it');
+                        CKEDITOR.replace('contenido_po_ru');
+                        CKEDITOR.replace('contenido_al');
+                        CKEDITOR.replace('contenido_po');
+                        CKEDITOR.replace('contenido_ca');
+                        CKEDITOR.replace('contenido_fr');
+                    });
+                </script>
                 <div class="span9" id="content">
 					<?php if ($resultaop) { ?>
 						<div class="row-fluid">
@@ -36,7 +58,7 @@
                                         <div class="control-group">
                                           <label class="control-label" for="ncontenido">Contenido</label>
                                           <div class="controls">
-                                            <textarea id="ncontenido" name="contenido" class="input-xlarge textarea" style="width: 810px; height: 200px"></textarea>
+                                            <textarea id="ncontenido" name="contenido" class="input-xlarge" style="width: 810px; height: 200px"></textarea>
                                           </div>
                                         </div>
                                         

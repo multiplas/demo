@@ -17,6 +17,10 @@
 
     <script>
         $(document).ready(function() {
+
+            //Creando textareas con ckeditor v4.8.0_full
+            CKEDITOR.replace('ncontenido');
+
             //Ocultando todas las pestañas
             $(".div-tabs").hide();
             //Mostrando sólo la pestaña principal
@@ -141,7 +145,7 @@
                                 <div class="control-group">
                                     <label class="control-label" for="ncontenido">Contenido</label>
                                     <div class="controls">
-                                        <textarea id="ncontenido" name="contenido" class="input-xlarge textarea" style="width: 810px; height: 200px"></textarea>
+                                        <textarea id="ncontenido" name="contenido" class="input-xlarge" style="width: 810px; height: 200px"></textarea>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -757,7 +761,7 @@
                                         <div class="control-group">
                                             <label class="control-label" for="ncontenido">Contenido</label>
                                             <div class="controls">
-                                                <textarea id="ncontenido" name="contenidoin" class="input-xlarge textarea" style="width: 810px; height: 200px"></textarea>
+                                                <textarea id="ncontenido" name="contenidoin" class="input-xlarge" style="width: 810px; height: 200px"></textarea>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -780,7 +784,7 @@
                                         <div class="control-group">
                                             <label class="control-label" for="ncontenido">Contenido</label>
                                             <div class="controls">
-                                                <textarea id="ncontenido" name="contenidoa" class="input-xlarge textarea" style="width: 810px; height: 200px"></textarea>
+                                                <textarea id="ncontenido" name="contenidoa" class="input-xlarge" style="width: 810px; height: 200px"></textarea>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -803,7 +807,7 @@
                                         <div class="control-group">
                                             <label class="control-label" for="ncontenido">Contenido</label>
                                             <div class="controls">
-                                                <textarea id="ncontenido" name="contenidof" class="input-xlarge textarea" style="width: 810px; height: 200px"></textarea>
+                                                <textarea id="ncontenido" name="contenidof" class="input-xlarge" style="width: 810px; height: 200px"></textarea>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -826,7 +830,7 @@
                                         <div class="control-group">
                                             <label class="control-label" for="ncontenido">Contenido</label>
                                             <div class="controls">
-                                                <textarea id="ncontenido" name="contenidoit" class="input-xlarge textarea" style="width: 810px; height: 200px"></textarea>
+                                                <textarea id="ncontenido" name="contenidoit" class="input-xlarge" style="width: 810px; height: 200px"></textarea>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -849,7 +853,7 @@
                                         <div class="control-group">
                                             <label class="control-label" for="ncontenido">Contenido</label>
                                             <div class="controls">
-                                                <textarea id="ncontenido" name="contenidop" class="input-xlarge textarea" style="width: 810px; height: 200px"></textarea>
+                                                <textarea id="ncontenido" name="contenidop" class="input-xlarge" style="width: 810px; height: 200px"></textarea>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -872,7 +876,7 @@
                                         <div class="control-group">
                                             <label class="control-label" for="ncontenido">Contenido</label>
                                             <div class="controls">
-                                                <textarea id="ncontenido" name="contenidoca" class="input-xlarge textarea" style="width: 810px; height: 200px"></textarea>
+                                                <textarea id="ncontenido" name="contenidoca" class="input-xlarge" style="width: 810px; height: 200px"></textarea>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -895,7 +899,7 @@
                                         <div class="control-group">
                                             <label class="control-label" for="ncontenido">Contenido</label>
                                             <div class="controls">
-                                                <textarea id="ncontenido" name="contenidoru" class="input-xlarge textarea" style="width: 810px; height: 200px"></textarea>
+                                                <textarea id="ncontenido" name="contenidoru" class="input-xlarge" style="width: 810px; height: 200px"></textarea>
                                             </div>
                                         </div>
                                     </fieldset>

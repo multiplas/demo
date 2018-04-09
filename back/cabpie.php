@@ -1,4 +1,12 @@
 				<?php require_once('blocks/cabecera.php'); ?>
+                <script>
+                    $(document).ready(function() {
+                        //Creando textareas con ckeditor v4.8.0_full
+                        CKEDITOR.replace('cabecera');
+                        CKEDITOR.replace('pieS');
+                        CKEDITOR.replace('pie');
+                    });
+                </script>
                 <div class="span9" id="content">
 					<?php if ($resultaop) { ?>
 						<div class="row-fluid">

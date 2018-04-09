@@ -30,6 +30,9 @@
         <script type="text/javascript" src="https://www.amcharts.com/lib/3/amcharts.js"></script>
         <script type="text/javascript" src="https://cdn.amcharts.com/lib/3/pie.js"></script>
         <script type="text/javascript" src="https://www.amcharts.com/lib/3/themes/chalk.js"></script>
+
+        <!-- ckeditor 4.8.0 -->
+        <script src="vendors/ckeditor4.8.0_full/ckeditor.js"></script>
 	</head>
     
     <body>
