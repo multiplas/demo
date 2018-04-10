@@ -57,7 +57,11 @@
 		<?php
 			if (count($productos) < 1) echo 'No hay productos en esta categoría.';
 			foreach($productos as $producto){
-				$urlProducto = $draizp.'/'.'producto/'.$producto['id'].'/'.$producto['nombre'].'/';
+				$productoNombreUrl = str_replace(' ','-',strtolower($producto['nombre']));
+				$productoNombreUrl = utf8_encode($productoNombreUrl);
+				$productoNombreUrl = strtolower($productoNombreUrl);
+				$productoNombreUrl = preg_replace('([^A-Za-z0-9])', '-', $productoNombreUrl);
+				$urlProducto = $draizp.'/'.'producto/'.$producto['id'].'/'.$productoNombreUrl.'/';
 				$urlImagen = $draizp.'/'.'imagenesproductos/'.$producto['imagen'];
 				?>
 				<div class="col-sm-3 single-product">

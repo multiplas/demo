@@ -283,14 +283,18 @@ if($inicio == 3){
     <div class="row">
         <h3 class="col-sm-12 text-center" style="color: <?=$principalColors['colordestacado']?> ">Top Ventas</h3>
     <?php
-    $ultimosProductos = ProductosConCriterio(12,'novedades');
+    $ultimosProductos = ProductosConCriterio(12,'ventas');
     foreach($ultimosProductos as $producto){
-        $urlProducto = $draizp.'/'.'producto/'.$producto['id'].'/'.$producto['nombre'].'/';
+        $productoNombreUrl = str_replace(' ','-',strtolower($producto['nombre']));
+        $productoNombreUrl = utf8_encode($productoNombreUrl);
+        $productoNombreUrl = strtolower($productoNombreUrl);
+        $productoNombreUrl = preg_replace('([^A-Za-z0-9])', '-', $productoNombreUrl);	  
+        $urlProducto = $draizp.'/'.'producto/'.$producto['id'].'/'.$productoNombreUrl.'/';
         $urlImagen = $draizp.'/'.'imagenesproductos/'.$producto['imagen'];
         ?>
         <div class="col-sm-3 single-product">
             <div class="imagen-producto">
-                <a href="<?=str_replace(' ','-',strtolower($urlProducto))?>">
+                <a href="<?=$urlProducto?>">
                     <img class="img-responsive" src="<?=$urlImagen?>" alt=""/>
                 </a>
                 <div class="interaccion">

@@ -11,14 +11,19 @@
                     $nombre = strtolower($nombre);
                     $nombre = preg_replace('([^A-Za-z0-9])', '-', $nombre);	   
                     
-                    if ($padre['id'] == $bar) $barpath = '<a href="'.$draizp.'/'.$_SESSION['lenguaje'].'/productos/'.$padre['id'].'/'.$nombre.'/"'.(count($padre['categorias']) < 1 ? ' style="color: #eab56f;"' : '').'>'.$padre['nombre'].'</a>';  
+					if ($padre['id'] == $bar) 
+						$barpath = '<a href="'.$draizp.'/'.$_SESSION['lenguaje'].'/productos/'.$padre['id'].'/'.$nombre.'/"'.(count($padre['categorias']) < 1 ? ' style="color: #eab56f;"' : '').'>'.$padre['nombre'].'</a>';  
                     
                     if($control < 10){
                         $control++;
                     
 			?>
 				<li>
-                                    <a href="<?=$draizp?>/productos/<?=$padre['id']?>/<?=$nombre?>/" class="submenu"><?=$padre['nombre']?></a>
+					<?php if(empty($padre['url'])): ?>
+						<a href="<?=$draizp?>/productos/<?=$padre['id']?>/<?=$nombre?>/" class="submenu"><?=$padre['nombre']?></a>
+					<?php else: ?>
+					<a href="<?=$draizp?><?=$padre['url']?>" class="submenu"><?=$padre['nombre']?></a>
+					<?php endif; ?>
 					<?php
 						if (count($padre['categorias']) > 0 && $padre['categorias'] != null)
 						{
