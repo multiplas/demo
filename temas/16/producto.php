@@ -231,9 +231,9 @@
                     <script type="text/javascript" src="/scripts/jquery.lightbox-0.5-mod.js"></script>
                     <link rel="stylesheet" type="text/css" href="/css/jquery.lightbox-0.5.css" media="screen" />
                     <script type="text/javascript">
-                            jQuery(function() {
-                                jQuery('#foto a').lightBox();
-                            });    	   	
+                            // jQuery(function() {
+                            //     jQuery('#foto a').lightBox();
+                            // });    	   	
                     </script>
 
 
@@ -1417,36 +1417,47 @@
 
         <div id="productos" class="container">
 		<h3><?=$auxrel?></h3>
-		<div class="muestra">
-			<?php
+		<div class="row">
+            <?php
+                $i = 0;
 				if (count($productosRE) < 1) echo 'No hay elementos relacionados a este producto.';
-				for ($i = 0; $i < count($productosRE); $i++)
-				{
-                    $nombre = utf8_encode(strtr(utf8_decode($productosRE[$i]['nombre']), utf8_decode($tofind), $replac));
-                    $nombre = strtolower($nombre);
-                    $nombre = preg_replace('([^A-Za-z0-9])', '-', $nombre);	   
-			?>
-					<div class="producto">
-                                            <?=$Empresa['etiqpro'] == 1 ? ($productosRE[$i]['mostraretq'] == 1 ? (($productosRE[$i]['tipo_prod'] == 0 ? '<span class="venta-label">Venta</span>' : ($productosRE[$i]['tipo_prod'] == 3 ? '<span class="alquiler-label">Alquiler</span>' : ''))) : '') : '' ?>	
-						<a href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>producto/<?=$productosRE[$i]['id']?>/<?=$nombre?>/"><img src="<?=$draizp?>/imagenesproductos/<?=$productosRE[$i]['imagen']?>" alt="<?=$productosRE[$i]['nombre']?>" /></a>
-                                                <span class="descripcion"><?=$productosRE[$i]['nombre']?></span><br>
-						<?php if($Empresa['actDes'] == 1){?><span class="descuento"><?=$productosRE[$i]['descuento'] != 0 && $productosRE[$i]['precio'] != 'Consultar' ? '-'.$productosRE[$i]['descuento'].' '.$productosRE[$i]['descuentoe'] : ''?></span><?php } ?>
-						<?php if($Empresa['actPreAnt'] == 1){?><span class="precioa"><?=$productosRE[$i]['descuento'] != 0 && $productosRE[$i]['precio'] != 'Consultar' ? number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$productosRE[$i]['precio_ant']), 2, ',', '.').$_SESSION['moneda'] : ''?></span><?php } ?><br>
-                        <?php //if($_SESSION['usr'] != null || ($_SESSION['usr'] == null && $Empresa['registro'] == 1))
-                        if($_SESSION['usr'] != null || ($_SESSION['usr'] == null)){ ?>
-                                                <?php if($Empresa['actPre'] == 1){ ?><span class="precio" id="precio_r<?=$i?>"><?=$productosRE[$i]['tprecio'] == '' ? number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$productosRE[$i]['precio']), 2, ',', '.') : $productosRE[$i]['tprecio']?><?=$productosRE[$i]['precio'] != 'Consultar' ? ($productosRE[$i]['tprecio'] == '' ? $_SESSION['moneda'] : '') : ''?></span><?php } ?>
-                        <?php } ?>
-						<a class="vermas" href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>producto/<?=$productosRE[$i]['id']?>/<?=$nombre?>/"><?=$auxver?></a>
-                                                <br>
-                                                <form name="formulario_cesta" id="formulario_cesta" action="<?=$draizp?>/acc/anadir/<?=$productosRE[$i]['id']?>" method="post" style="max-height: 100% !important;">
-                                                    <input type="hidden" name="cantidad" value="1">
-                                                    <!--Deberíamos comprobar si tiene atributos obligatorios.--><input type="hidden" name="Fianza" value="Fianza">
-                                                    <input type="submit" class="btanadir" value="Añadir">
-                                                </form>
-					</div>
-			<?php
-				}
-                                echo "<input type='hidden' id='total_r' value=".$i.">";
+				foreach($productosRE as $producto){
+                    $i++;
+                    $productoNombreUrl = str_replace(' ','-',strtolower($producto['nombre']));
+                    $productoNombreUrl = utf8_encode($productoNombreUrl);
+                    $productoNombreUrl = strtolower($productoNombreUrl);
+                    $productoNombreUrl = preg_replace('([^A-Za-z0-9])', '-', $productoNombreUrl);
+                    $urlProducto = $draizp.'/'.'producto/'.$producto['id'].'/'.$productoNombreUrl.'/';
+                    $urlImagen = $draizp.'/'.'imagenesproductos/'.$producto['imagen'];
+                    ?>
+                    <div class="col-sm-3 single-product">
+                        <div class="imagen-producto text-center">
+                            <a href="<?=str_replace(' ','-',strtolower($urlProducto))?>">
+                                <img class="img-responsive" src="<?=$urlImagen?>" alt=""/>
+                            </a>
+                            <div class="interaccion">
+                                <div class="ver-mas-img btn btn-primary"><a href="<?php echo str_replace(' ','-',$urlProducto)?>">Ver más</a></div>
+                                <form action="<?=$draizp?>/acc/anadir/<?=$producto['id']?>" method="post">
+                                    <button type="submit" data-product="<?=$producto['id']?>" class="vistazo-rapido btn btn-success">
+                                    <i class="fas fa-shopping-cart"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <div class="titulo-producto">
+                                <h4><?=$producto['nombre']?></h4>
+                            </div>
+                            <div class="descripcion-producto">
+                                <?=trim(strip_tags( $producto['descripcion']))?>
+                            </div>
+                            <div class="product-price"><?=number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$producto['precio']), 2, ',', '.')?> <?=$producto['precio'] > 0 ? $_SESSION['moneda'] : ''?><?=$producto['precio'] == 'Consultar' ? $producto['precio']: ''?></div>
+                        </div>
+                    </div>
+            
+                <?php
+                }
+                echo "<input type='hidden' id='total_r' value=".$i.">";
 			?>
                 </div>
 	   </div>

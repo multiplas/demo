@@ -46,9 +46,11 @@
 				<?php include('./bloques/ordenador.php'); ?>
 			</div>
 			<div id="panel-izquierdo">
-							<?php //include('./bloques/menu_prods.php'); ?>
-				<?php include('./bloques/filtros.php'); ?>
-				<span name="BtReset" class="button">Limpiar Filtros</span>
+				<?php //include('./bloques/menu_prods.php'); ?>
+				<?php include('./bloques/filtros.php'); 
+				if (count($atributos) > 0):	?>
+					<span name="BtReset" class="button">Limpiar Filtros</span>
+				<?php endif; ?>
 			</div>
 			<input type="hidden" name="nofilters" value="nofilters" />
 		</form>
@@ -65,7 +67,7 @@
 				$urlImagen = $draizp.'/'.'imagenesproductos/'.$producto['imagen'];
 				?>
 				<div class="col-sm-3 single-product">
-					<div class="imagen-producto">
+					<div class="imagen-producto text-center">
 						<a href="<?=str_replace(' ','-',strtolower($urlProducto))?>">
 							<img class="img-responsive" src="<?=$urlImagen?>" alt=""/>
 						</a>

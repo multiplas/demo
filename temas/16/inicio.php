@@ -293,7 +293,7 @@ if($inicio == 3){
         $urlImagen = $draizp.'/'.'imagenesproductos/'.$producto['imagen'];
         ?>
         <div class="col-sm-3 single-product">
-            <div class="imagen-producto">
+            <div class="imagen-producto text-center">
                 <a href="<?=$urlProducto?>">
                     <img class="img-responsive" src="<?=$urlImagen?>" alt=""/>
                 </a>

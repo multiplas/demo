@@ -7579,7 +7579,11 @@
                         $csv_sep.$csv_env."Descripción del producto".$csv_env.
                         $csv_sep.$csv_env."Características del producto / Otros atributos".$csv_env.
                         $csv_sep.$csv_env."URL del producto".$csv_env.
-                        $csv_sep.$csv_env."URL de la imagen".$csv_env;
+						$csv_sep.$csv_env."URL de la imagen".$csv_env.
+						$csv_sep.$csv_env."id-del-producto".$csv_env.
+						$csv_sep.$csv_env."sku-vendedor".$csv_env.
+						$csv_sep.$csv_env."precio".$csv_env.
+						$csv_sep.$csv_env."estado".$csv_env;
                 
                 if($tasaReembolso > -1){
                     $csv.= $csv_sep.$csv_env."Reembolso".$csv_env;
@@ -7667,7 +7671,11 @@
                         $csv_sep.$csv_env.str_replace("\r", " ", str_replace("\n", " ", trim($row['descripcion']))).$csv_env.
                         $csv_sep.$csv_env.$atributos.$csv_env.
                         $csv_sep.$csv_env.$dominio.'/producto/'.$row['id'].'/'.$nombrePurl.$csv_env.
-                        $csv_sep.$csv_env.$dominio.'/imagenesproductos/'.$row['imagenprincipal'].$csv_env;  
+						$csv_sep.$csv_env.$dominio.'/imagenesproductos/'.$row['imagenprincipal'].$csv_env.
+						$csv_sep.$csv_env.$row['id'].$csv_env.
+						$csv_sep.$csv_env.$row['referencia'].$csv_env.
+						$csv_sep.$csv_env.$precio.$csv_env.
+						$csv_sep.$csv_env.$row['disponible'].$csv_env;  
                 
                 if($tasaReembolso > -1){
                     $csv.= $csv_sep.$csv_env.number_format($tasaReembolso, 2, '.', ",").$csv_env;

@@ -436,7 +436,7 @@ color: red;
     }
     #grupo-submenu #submenu-r {
         margin-top: 0px !important;
-        padding: 10px 22px !important;
+        /* padding: 10px 22px !important; */
     }
 }
 
