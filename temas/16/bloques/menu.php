@@ -180,7 +180,11 @@
                     $nombre = preg_replace('([^A-Za-z0-9])', '-', $nombre);	
 			?>
 				<li>
-					<a href="<?=$draizp?>/productos/<?=$padre['id']?>/<?=$nombre?>/" class="submenu"><?=$padre['nombre']?></a>
+				<?php if(empty($padre['url'])): ?>
+						<a href="<?=$draizp?>/productos/<?=$padre['id']?>/<?=$nombre?>/" class="submenu"><?=$padre['nombre']?></a>
+					<?php else: ?>
+					<a href="<?=$draizp?><?=$padre['url']?>" class="submenu"><?=$padre['nombre']?></a>
+					<?php endif; ?>
 					<?php
 						if (count($padre['categorias']) > 0 && $padre['categorias'] != null)
 						{
