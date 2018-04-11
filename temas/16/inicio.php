@@ -337,8 +337,19 @@ if($inicio == 3){
 
 <?php
 
-if(isset($suscrito) && $suscrito == true){
-    echo '<script>Alert();</script>';
+if(session_id() == '') {
+    session_start();
+}
+
+if(isset($_SESSION['suscrito']) && $_SESSION['suscrito'] == 1){
+    ?>
+    <div class="col-sm-12">
+        <div class="alert alert-success" role="alert">
+            Te has suscrito. Se te informará con nuevos productos y ofertas.
+        </div>
+    </div>
+    <?php
+     $_SESSION['suscrito'] = 0;
 }
 
 ?>
