@@ -91,8 +91,7 @@ require_once('system/pedidos/execution-pedidos.php');
                                                                     </select>
                                                                     <input type="hidden" name="estadofact" value="<?=$listado['id']?>">
                                                                 </form>
-																<!--&#124;
-																<a href="?eliminarfact=<?=$listado['id']?>" onclick="return confirm('Desea eliminar la factura \'\'#<?=$listado['numero']?> con fecha de <?=date_format(date_create($listado['fecha']), 'd/m/Y H:i:s')?>\'\' de la web?');">eliminar</a>-->
+																<a href="?eliminarfact=<?=$listado['id']?>" onclick="return confirm('Desea todos los datos del pedido \'\'#<?=$listado['numero']?> con fecha de <?=date_format(date_create($listado['fecha']), 'd/m/Y H:i:s')?>\'\' de la web?');"><span style="color:red; font-size: 20px;"><i class="fa fa-trash" style="padding-top: 10px;"></i></span></a>
                                                             </td>
 														</tr>
 														<?php

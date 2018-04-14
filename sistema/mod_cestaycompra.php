@@ -2851,7 +2851,7 @@ function Presupuesto($usuario)
 
 		$p = new paypal_class;             // initiate an instance of the class
 		$p->paypal_url = 'https://www.paypal.com/cgi-bin/webscr';     // paypal url
-                //$p->paypal_url = 'https://www.sandbox.paypal.com/cgi-bin/webscr'; //paypal pruebas
+                // $p->paypal_url = 'https://www.sandbox.paypal.com/cgi-bin/webscr'; //paypal pruebas
 
 		$this_script = '//'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];
 		$urlNotificacion = '//'.$_SERVER['HTTP_HOST'].'/index.php?sys_action=pagook3&amp;uid='.$_SESSION['usr']['id'].'&amp;ses='.$_SESSION['usr']['sesion'].'&amp;secreto='.$secreto.'&amp;fpago=paypal';

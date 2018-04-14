@@ -7856,8 +7856,35 @@
 			return $b;
                         
         }
+
+		function EliminarPedido($idfactura){
+			$idfactura = mysqli_real_escape_string($this->conexion, htmlspecialchars($idfactura));
+
+			$sqlcompraid = "SELECT id FROM bd_compra WHERE secreto = (SELECT sesion FROM bd_facturas WHERE id = $idfactura)";	
+			$compraid = mysqli_query($this->conexion, $sqlcompraid);
+			$assoc = mysqli_fetch_assoc($compraid);
+			$id = $assoc['id'];
+			
+			$deleteFactura = "DELETE FROM bd_facturas WHERE id = $idfactura";
+			$deletedFactura = mysqli_query($this->conexion, $deleteFactura);
+
+			$sql = "DELETE FROM bd_compra WHERE id = $id";
+			$query = mysqli_query($this->conexion, $sql);
+
+			$deleteProductos = "DELETE FROM bd_compra_productos WHERE idcompra = $id";
+			$deletedProductos = mysqli_query($this->conexion, $deleteProductos);
+			
+			$deleteDireccionCompra = "DELETE FROM bd_compra_direccion WHERE idcompra = $id";
+			$deletedDireccionCompra = mysqli_query($this->conexion, $deleteDireccionCompra);			
+
+			$deleteAddressSend = "DELETE FROM bd_compra_direccion_envio WHERE idcompra = $id";
+			$deletedAddressSend = mysqli_query($this->conexion, $deleteAddressSend);
+
+			return $query;
+		}
         
-        function EnviarEmail($para, $asunto, $mensaje){
+        function EnviarEmail($para, $asunto, $mensaje, $retornoExtendido = null ){
+		
                         $sql = "SELECT *
 					FROM bd_empresa
 					WHERE id = 1;";
@@ -7882,7 +7909,7 @@
                             $mail->IsHTML(true);
                             $mail->CharSet = "UTF-8";
                             $mail->msgHTML($mensaje);
-
+							
                             if (!$mail->send())
                                     return false;
                             else
@@ -7892,11 +7919,11 @@
                             require_once('../scripts/class.smtp.php');
 
                             $mail = new PHPMailer();
+							try {
                             $mail->isSMTP();
                             $mail->SMTPAuth = true;
                             $mail->Timeout=30;
                             $mail->CharSet = "UTF-8";
-
                             if ($Empresa['segSmtp'] == 0)
                                 $seg = 'tls';
                             else
@@ -7917,18 +7944,27 @@
                             $mail->MsgHTML("$mensaje.");
 
                             $exito = $mail->send();
+							} catch (phpmailerException $e) {
+								return 'entro'; //Pretty error messages from PHPMailer
+							} catch (Exception $e) {
+								return 'entro'; //Boring error messages from anything else!
+							}
 
                             $intentos=1; 
                              while ((!$exito) && ($intentos < 2)) {
-                                    $exito = $mail->send();
-                                    $intentos=$intentos+1;    
+								$exito = $mail->send();
+								$intentos=$intentos+1;    
                            }
                            if(!$exito)
                             {
-                                return false;
+								if(!is_null($retornoExtendido))
+                                	return '<div class="alert alert-danger" role="alert">Mailer Error: ' . $mail->ErrorInfo . '</div>';
+								return false;
                             }
                             else
                             {
+								if(!is_null($retornoExtendido))
+                                	return '<div class="alert alert-success" role="alert">Los ajustes de envío de email son correctos. Se ha enviado un email de prueba a ' . $para . '</div>';
                                 return true;
                             }
                         }

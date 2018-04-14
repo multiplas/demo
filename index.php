@@ -1555,10 +1555,11 @@
 				}
 				break;
                         case 'return2':
-                       
+                print_r($_GET);
+                
 				if (isset($_GET['uid']) && isset($_GET['ses']) && isset($_GET['secreto']) && isset($_GET['fpago']))
 				{
-                                    
+                                   
                         require_once($draiz.'/sistema/mod_cestaycompra.php');   
                         require_once($draiz.'/sistema/mod_contacto.php');
                         $_SESSION['factura'] = RealizarCompra($_GET['uid'], $_GET['secreto'], $_GET['fpago']);
@@ -1569,11 +1570,12 @@
                         }else{
                             $pagoF = 'Paypal';
                         }
-                        if($pagoF != 'Paypal'){
+                        // if($pagoF != 'Paypal'){
+                            
                             $campos['asunto'] = 'Pago mediante '.$pagoF.' para compra en '.$Empresa['nombre'];
                             $campos['mensaje'] = ConstruirMsgCompra($_SESSION['usr']['nombre'], $campos['asunto'], ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$_SESSION['factura']['total']), $_GET['secreto'], $pagoF);
                             $a = EnviarEmail($_SESSION['usr']['email'], $campos['asunto'], $campos['mensaje']);
-
+                            
                             $campos['asunto'] = 'Nueva venta realizada mediante '.$pagoF;
                             if ($_GET['fpago'] == 'tpv'){
                                 $pago = 'tpv';
@@ -1586,11 +1588,11 @@
                                 $campos['mensaje'] = ConstruirMsgPaypalVenta($_SESSION['usr']['nombre'], $campos['asunto'], $_SESSION['factura']['total'], $_GET['secreto']);
                             }
                             $a = EnviarEmail($Empresa['email'], $campos['asunto'], $campos['mensaje']);
-                        }else{
+                        // }else{
                             //Borrar cesta si ha llegado hasta aquí, se presupone pago ok.
                             $sqlB = "DELETE FROM bd_carrito WHERE idusuario='".$_GET['uid']."'";
                             $queryB = mysqli_query($dbi, $sqlB);
-                        }
+                        // }
                         
                         
                         if($_SESSION['compra']['afiliadopaypal'] != ''){  
@@ -1611,7 +1613,7 @@
                         }else{
                             header('Location: '.$draizp.'/'.$_SESSION['lenguaje'].'finalizado2'.$factura);
                         }
-                    }
+                    }      
                 break;
 				
 			default:			// Caso por defecto!

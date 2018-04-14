@@ -1,4 +1,9 @@
 				<?php require_once('blocks/cabecera.php'); ?>
+        <style>
+        #emailDestinoDiv{
+          display: none;
+        }
+        </style>
                 <div class="span9" id="content">
                     <div id="info" style="display:none;" class="alert alert-info alert-dismissable">
                         <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -18,7 +23,57 @@
 					<?php } ?>
                     
                     <script>
-                        
+                        $(document).ready(function(){
+                          $('.probarEnvioEmail').on('click', function(){
+                            if($('#emailDestino').val() != ''){
+                              $('#emailDestino').css('border', '1px solid #ccc');
+                              $.ajax({
+                                method: "POST",
+                                url: "probarSMTP.php",
+                                data: { envmail: $('#envmail').val(), segSmtp: $('#segSmtp').val(), mailSmtp: $('#mailSmtp').val(), passSmtp: $('#passSmtp').val(), puertoSmtp: $('#puertoSmtp').val(), puertoSmtp: $('#puertoSmtp').val(), hostSmtp: $('#hostSmtp').val(), emailDestino: $('#emailDestino').val() },
+                                success: function( html ) {
+                                  $( ".resultadoPrueba" ).html( html );
+                                },
+                                error: function( jqXHR, textStatus, errorThrown ) {
+                                  if (jqXHR.status === 0) {
+
+                                    alert('Not connect: Verify Network.');
+
+                                  } else if (jqXHR.status == 404) {
+
+                                    alert('Requested page not found [404]');
+
+                                  } else if (jqXHR.status == 500) {
+
+                                    alert('Internal Server Error [500].');
+
+                                  } else if (textStatus === 'parsererror') {
+
+                                    alert('Requested JSON parse failed.');
+
+                                  } else if (textStatus === 'timeout') {
+
+                                    alert('Time out error.');
+
+                                  } else if (textStatus === 'abort') {
+
+                                    alert('Ajax request aborted.');
+
+                                  } else {
+
+                                    alert('Uncaught Error: ' + jqXHR.responseText);
+
+                                  }
+                                }
+                              }); 
+                            }
+                            else{
+                              $('#emailDestinoDiv').css('display', 'inherit');
+                              $('#emailDestino').css('border', 'solid red 1px');
+                              $(window).scrollTop($('#emailDestino').offset().top);
+                            }
+                          });
+                        });
                         <?php
                             if(isset($num)){
                                 //echo"alert('".$num."');";
@@ -939,9 +994,17 @@
                                                 <span style="color: #09F; font-size: 0.70rem;">Sólo necesario en caso de elegir Envío Email por smtp</span>
                                             </div>
                                           </div>
-                                        
+                                          <div id="emailDestinoDiv" class="control-group">
+                                            <label class="control-label" for="emailDestino">Email Destino</label>
+                                            <div class="controls">
+                                                <input type="text" class="span6" id="emailDestino" name="emailDestino" placeholder="Email para prueba de envío por smtp" value="" ><br>
+                                                <span style="color: #09F; font-size: 0.70rem;">Recuerde guardar los cambios ANTES de ejecutar la prueba</span>
+                                            </div>
+                                          </div>
                                         <input type="hidden" class="span6" name="num" value="<?=$n?>">
                                         <button type="submit" style="margin: 0px 0px 0px 10%;" class="btn btn-success">Guardar Cambios</button>
+                                        <input type="button" class="btn btn-primary probarEnvioEmail" value="Probar Ajustes"/>
+                                        <div class="resultadoPrueba"></div>
                                         <!--
 										<div class="control-group">
                                             <h5 style="margin: 3% 0px 0px 0px; padding: 0px 10%;">Personalización de la Web</h5>

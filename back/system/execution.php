@@ -287,7 +287,10 @@
     }
 	
     if (@$_GET['estadofact'] != null && @$_GET['estadof'] != null)
-		$resultaop = $System->FacturaEstado($_GET['estadofact'], $_GET['estadof']);
+        $resultaop = $System->FacturaEstado($_GET['estadofact'], $_GET['estadof']);
+        
+    if (isset($_GET['eliminarfact']) && @$_GET['eliminarfact'] != null)
+		$resultaop = $System->EliminarPedido($_GET['eliminarfact']);
         
         if (@$_GET['estadopres'] != null && @$_GET['estadop'] != null)
 		$resultaop = $System->PresupuestoEstado($_GET['estadopres'], $_GET['estadop']);

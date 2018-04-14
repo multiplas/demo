@@ -29,6 +29,9 @@ switch ($urlact) {
                             //Subiendo archivo al servidor
                             $nombre_tmp = $_FILES["url"]["tmp_name"][$clave];
                             $nombre = basename($nnombre);
+                            if (!file_exists($directorio_multimedia)) {
+                                mkdir($directorio_multimedia, 0777, true);
+                            }
                             move_uploaded_file($nombre_tmp, $directorio_multimedia.$nombre);
                         }
                     }

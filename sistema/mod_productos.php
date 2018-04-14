@@ -879,14 +879,14 @@
             global $dbi;
             $productos[] = null;
             
-            $sql = "SELECT id_producto FROM bd_mas_vendidos ORDER BY id DESC LIMIT $cantidad;";
+            $sql = "SELECT id_producto FROM bd_mas_vendidos WHERE id_producto NOT LIKE 0 ORDER BY id DESC LIMIT $cantidad;";
             $query = mysqli_query($dbi, $sql);
-            
+           
             while($assoc = mysqli_fetch_array($query)){
                 $sql4 = "SELECT id, nombre, descripcion, imagenprincipal, tprecio, tipo, mostraretq, mostraretqAgo, mostraretqOfe, (precio * ((iva + 100) / 100) - (precio * ((iva + 100) / 100) * (descuento / 100))) AS preciot, descuento, descuentoe, (precio * (iva + 100) / 100) AS precio_ant 
 				FROM bd_productos 
 				WHERE disponible=1 AND soloR = 0 AND id = $assoc[id_producto]";
-                
+				
 		$query4 = mysqli_query($dbi, $sql4);
 		if (mysqli_num_rows($query4) > 0)
 		{
@@ -951,7 +951,7 @@
             }
             unset($productos[0]);
             $productos = array_values($productos);
-                
+                // print_r($productos);
             return $productos;
         }
         
