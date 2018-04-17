@@ -1315,7 +1315,7 @@
 					'descripcion' => $assoc1['descripcion']
                 );
         
-		$sql = "SELECT id, comprecio, nombre, descripcion, pagotado, agotado, unidades, tipo, mostraretq, mostraretqAgo, mostraretqOfe, imagenprincipal, personalizable, referencia AS referencia, disponibilidad, plazoEnt, aplazame, caplazame, caplazame1, fDirecta, rfentrada, rfsalida,
+		$sql = "SELECT id, comprecio, nombre, descripcion, pagotado, agotado, unidades, tipo, mostraretq, mostraretqAgo, precio_transporte_ind, mostraretqOfe, imagenprincipal, personalizable, referencia AS referencia, disponibilidad, plazoEnt, aplazame, caplazame, caplazame1, fDirecta, rfentrada, rfsalida,
 				(precio * ((iva + 100) / 100) - (precio * ((iva + 100) / 100) * (descuento / 100))) AS preciot, descuento, descuentoe, (precio * (iva + 100) / 100) AS precio_ant 
 				FROM bd_productos 
 				WHERE disponible=1 AND id=$id;";
@@ -1340,6 +1340,7 @@
 					'tallas' => TallasProducto($id),
 					'colores' => ColoresProducto($id),
 					'referencia' => $assoc['referencia'],
+					'precio_transporte_ind' => $assoc['precio_transporte_ind'],
 					'precio_ant' => ($assoc['precio_ant'] <= 0 ? 'Consultar' : floatval($assoc['precio_ant'])),
                                         'aplazame' => $assoc['aplazame'],
                                         'caplazame' => $assoc['caplazame'],

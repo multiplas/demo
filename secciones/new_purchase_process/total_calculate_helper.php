@@ -188,7 +188,16 @@ function muestraDatosSuperior($imageSrc, $draizp, $nombre, $cantidad, $precioPro
 
 function calculatePortes($total, $showPortes = false, $peso){
     global $Empresa;
-    if($Empresa['tipoportes'] == 0){
+    
+    $pedido = Cesta($_SESSION['usr']['id']);
+    $producto_single = Producto($pedido[0]['id']);   //Si el producto tiene envio especial individual
+                                
+    if(count($pedido) == 1 && !is_null($producto_single['precio_transporte_ind']) && $producto_single['precio_transporte_ind'] != 0 ){
+        $portes = $producto_single['precio_transporte_ind'];
+        $portes = number_format($portes, 2, ',', '.');
+        $portes = str_replace(',', '.', $portes);
+    }
+    else if($Empresa['tipoportes'] == 0){
         $portes_ar = CalculaPortesP($total);
         $logoPortes = $portes_ar[1];
         $portes = $portes_ar[0];

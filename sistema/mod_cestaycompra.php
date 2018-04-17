@@ -2421,18 +2421,27 @@ function Presupuesto($usuario)
 		$precio = $precio - $abono;
                 $promo = CodigoPromocional(strtolower($_SESSION['compra']['codpromo']), $precio);
 		if($estado != 'tienda'){
-                    if($Empresa['tipoportes'] == 0){
-                        $portes += CalculaPortesPS($precio); 
-                    }else if($Empresa['tipoportes'] == 1){
-                        $portes += CalculaPortesKmS($precio); 
-                    }else if($Empresa['tipoportes'] == 2){
-                        $portes += CalculaPortesProvS($precio); 
-                    }else if($Empresa['tipoportes'] == 3){
-                        $portes += CalculaPortesProvSP($precio, $peso); 
+                    $producto_single = Producto($pedido[0]['id']);   //Si el producto tiene envio especial individual
+     
+                    if(count($pedido) == 1 && !is_null($producto_single['precio_transporte_ind']) && $producto_single['precio_transporte_ind'] != 0 ){
+                        $portes = $producto_single['precio_transporte_ind'];
+                        $portes = number_format($portes, 2, ',', '.');
+                        $portes = str_replace(',', '.', $portes);                                  
+                    }
+                    else{
+                        if($Empresa['tipoportes'] == 0){
+                            $portes += CalculaPortesPS($precio); 
+                        }else if($Empresa['tipoportes'] == 1){
+                            $portes += CalculaPortesKmS($precio); 
+                        }else if($Empresa['tipoportes'] == 2){
+                            $portes += CalculaPortesProvS($precio); 
+                        }else if($Empresa['tipoportes'] == 3){
+                            $portes += CalculaPortesProvSP($precio, $peso); 
+                        }
+                        $portes += $penvio;                
                     }
                 }
                 
-                $portes += $penvio;                
                 
                 if ($promo != null)
                 {
@@ -2461,7 +2470,7 @@ function Presupuesto($usuario)
                         $precio += $Empresa['ifpaypal'];
                     }
                 }
-        
+
 		$sql = "INSERT INTO bd_compra 
 				VALUES(null, $uid, '$precio', '$portes', '$abono', NOW(), '$secreto', '$estado', '$transp', '$cambio', '$divOr', '$divDe', $idcuota, '$afiliado');";
                 

@@ -5,6 +5,8 @@
 	$filtro = LoadFilterStatus();
 	$atributos= array();
 	if($filtro['valor'] == 1){//Filtro activado
+		if(!isset($_POST['checks']) || count($_POST['checks']) == 0)
+			unset($_SESSION['checks']);
 		foreach($productos as $producto)
 			$atributos = addProductAttributes($producto['id'], $atributos);
 
@@ -17,6 +19,7 @@
 			
 				foreach ($atributos AS $atributo)
 				{
+					
 					$salto = false;
 					if ($miCategoria != $atributo['categoria'])
 					{
@@ -41,6 +44,7 @@
 					}
 					
 					$chk = '';
+					
 					if (isset($_SESSION['checks'][$atributo['categoria']]))
 						if (is_array($_SESSION['checks'][$atributo['categoria']]))
 							foreach ($_SESSION['checks'][$atributo['categoria']] AS $seleccionado)

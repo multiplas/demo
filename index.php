@@ -251,7 +251,7 @@
     $logoSup=$logo['logosup'];
     $logoMenu=$logo['logomenu'];
 
-	if (isset($_SESSION['checks']))
+	if (isset($_SESSION['checks']) && $_POST['checks'])
 	{ // Filtros de poductos y busqueda.
 		foreach ($_SESSION['checks'] AS $checks)
 			foreach ($checks AS $check)
@@ -2850,9 +2850,9 @@
 		if(!isset($_GET['imprimir_fact']))	
                     include_once($draiz.'/bloques/pie.php');
         /* Truco para no tener que buscar el archivo tema por tema */
-        // print_r(get_included_files ());
+        print_r(get_included_files ());
         // print_r(get_defined_vars ());
-        // die;
+        die;
 		?>
 	</body>
 </html>

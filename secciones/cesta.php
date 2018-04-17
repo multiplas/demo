@@ -178,7 +178,14 @@ include_once 'auxiliares.php';
                                 $i++;
 							}
 							
-							if($Empresa['tipoportes'] == 0){
+							$producto_single = Producto($cesta[0]['id']);   //Si el producto tiene envio especial individual
+                                
+                            if(count($cesta) == 1 && !is_null($producto_single['precio_transporte_ind']) && $producto_single['precio_transporte_ind'] != 0 ){
+                                $portes = $producto_single['precio_transporte_ind'];
+                                $portes = number_format($portes, 2, ',', '.');
+                                $portes = str_replace(',', '.', $portes);
+                            }
+                            else if($Empresa['tipoportes'] == 0){
                                 $portes_ar = CalculaPortesP($total);
                                 $logoPortes = $portes_ar[1];
                                 $portes = $portes_ar[0];

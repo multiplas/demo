@@ -931,38 +931,46 @@ else: //Antiguo Proceso de compra
 										<?php
 											}
 											
-											if($Empresa['tipoportes'] == 0){
-                                                                                            $portes = number_format(CalculaPortesPS($total), 2, ',', '.');
-                                                                                            $portes = str_replace(',', '.', $portes);
-                                                                                        }else if($Empresa['tipoportes'] == 1){
-                                                                                            $portes_ar = CalculaPortesKmS($total);
-                                                                                            //$logoPortes = $portes_ar[1];
-                                                                                            $portes = $portes_ar[0];
-                                                                                            $portes = str_replace(',', '.', $portes);
-                                                                                            if($portes_ar[0] < 0){
-                                                                                                echo '<META HTTP-EQUIV=Refresh CONTENT="0; URL='.$draizp.'/'.$_SESSION['lenguaje'].'/cesta">';
-                                                                                                exit;
-                                                                                            }
-                                                                                        }else if($Empresa['tipoportes'] == 2){
-                                                                                            $portes = CalculaPortesProvS($total);
-                                                                                            if($portes >= 0){
-                                                                                                $portes = number_format($portes, 2, ',', '.');
-                                                                                                $portes = str_replace(',', '.', $portes);
-                                                                                            }else{
-                                                                                                $portes = -4;
-                                                                                            }
-                                                                                        }else if($Empresa['tipoportes'] == 3){
-                                                                                            $portes = CalculaPortesProvSP($total, $peso);
-                                                                                            if($portes >= 0){
-                                                                                                $portes = number_format($portes, 2, ',', '.');
-                                                                                                $portes = str_replace(',', '.', $portes);
-                                                                                            }else{
-                                                                                                $portes = -4;
-                                                                                            }
-                                                                                        }
-                                                                                        
-                                                                                        $abono = Abono(@$_SESSION['usr']['id']);
-                                                                                        $total = $total - $abono;
+                                           
+											$producto_single = Producto($pedido[0]['id']);   //Si el producto tiene envio especial individual
+                                
+                                            if(count($pedido) == 1 && !is_null($producto_single['precio_transporte_ind']) && $producto_single['precio_transporte_ind'] != 0 ){
+                                                $portes = $producto_single['precio_transporte_ind'];
+                                                $portes = number_format($portes, 2, ',', '.');
+                                                $portes = str_replace(',', '.', $portes);
+                                            }
+                                            else if($Empresa['tipoportes'] == 0){
+                                                $portes = number_format(CalculaPortesPS($total), 2, ',', '.');
+                                                $portes = str_replace(',', '.', $portes);
+                                            }else if($Empresa['tipoportes'] == 1){
+                                                $portes_ar = CalculaPortesKmS($total);
+                                                //$logoPortes = $portes_ar[1];
+                                                $portes = $portes_ar[0];
+                                                $portes = str_replace(',', '.', $portes);
+                                                if($portes_ar[0] < 0){
+                                                    echo '<META HTTP-EQUIV=Refresh CONTENT="0; URL='.$draizp.'/'.$_SESSION['lenguaje'].'/cesta">';
+                                                    exit;
+                                                }
+                                            }else if($Empresa['tipoportes'] == 2){
+                                                $portes = CalculaPortesProvS($total);
+                                                if($portes >= 0){
+                                                    $portes = number_format($portes, 2, ',', '.');
+                                                    $portes = str_replace(',', '.', $portes);
+                                                }else{
+                                                    $portes = -4;
+                                                }
+                                            }else if($Empresa['tipoportes'] == 3){
+                                                $portes = CalculaPortesProvSP($total, $peso);
+                                                if($portes >= 0){
+                                                    $portes = number_format($portes, 2, ',', '.');
+                                                    $portes = str_replace(',', '.', $portes);
+                                                }else{
+                                                    $portes = -4;
+                                                }
+                                            }
+                                            
+                                            $abono = Abono(@$_SESSION['usr']['id']);
+                                            $total = $total - $abono;
 											
 											if ($abono > 0)
 											{
@@ -1137,7 +1145,17 @@ else: //Antiguo Proceso de compra
                             $idPT = 0;
                             
                             foreach ($portes_extras AS $nporte){
-                                if($nporte['Gratis'] > $total || !isset($nporte['Gratis'])){
+                                $producto_single = Producto($pedido[0]['id']);   //Si el producto tiene envio especial individual
+                                
+                                if(count($pedido) == 1 && !is_null($producto_single['precio_transporte_ind']) && $producto_single['precio_transporte_ind'] != 0 ){
+                                    $portes = $producto_single['precio_transporte_ind'];
+                                    $portes = number_format($portes, 2, ',', '.');
+                                    $portes = str_replace(',', '.', $portes);
+                                    ?>
+                                    <input type="radio" id="penvio" name="penvio" checked value="<?=$portes?>"> <?=$nporte['transportista']?> (+<?=number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$portes), 2, ',', '.')?><?=$_SESSION['moneda']?>)
+                                <?php 
+                                }
+                                else if($nporte['Gratis'] > $total || !isset($nporte['Gratis'])){
                             ?>
                                 <input onclick="cambTransp(<?=$nporte['id']?>)" type="radio" id="penvio" name="penvio" <?php if($cont == 0){ echo "checked"; $cont++; $idPT=$nporte['id']; } ?> value="<?=$nporte['precio']-$portes?>"> <?=$nporte['transportista']?> (+<?=number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$nporte['precio']), 2, ',', '.')?><?=$_SESSION['moneda']?>)
                             <?php 
@@ -1684,37 +1702,43 @@ else: //Antiguo Proceso de compra
 										<td><?=number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],(($micesta['precio'] + $micesta['personalizacion']) * $micesta['cantidad'])), 2, ',', '.')?> <?=$_SESSION['moneda']?></td>
 									</tr>
 							<?php
-								}
-								
-								if($Empresa['tipoportes'] == 0){
-                                                                    $portes = CalculaPortesP($total);
-                                                                    $portes = str_replace(',', '.', $portes[0]);                                                                    
-                                                                }else if($Empresa['tipoportes'] == 1){
-                                                                    $portes_ar = CalculaPortesKm($total);
-                                                                    $logoPortes = $portes_ar[1];
-                                                                    $portes = $portes_ar[0];
-                                                                    $portes = str_replace(',', '.', $portes);
-                                                                    if($portes_ar[0]<0){
-                                                                        echo '<META HTTP-EQUIV=Refresh CONTENT="0; URL='.$draizp.'/'.$_SESSION['lenguaje'].'/cesta">';
-                                                                        exit;
-                                                                     }
-                                                                }else if($Empresa['tipoportes'] == 2){
-                                                                    $portes = CalculaPortesProv($total);
-                                                                    if($portes >= 0){
-                                                                        $portes = number_format($portes, 2, ',', '.');
-                                                                        $portes = str_replace(',', '.', $portes);
-                                                                    }else{
-                                                                        $portes = -4;
-                                                                    }
-                                                                }else if($Empresa['tipoportes'] == 3){
-                                                                    $portes = CalculaPortesProvP($total, $peso);
-                                                                    if($portes >= 0){
-                                                                        $portes = number_format($portes, 2, ',', '.');
-                                                                        $portes = str_replace(',', '.', $portes);
-                                                                    }else{
-                                                                        $portes = -4;
-                                                                    }
-                                                                }
+                                }
+                                $producto_single = Producto($pedido[0]['id']);   //Si el producto tiene envio especial individual
+                                
+								if(count($pedido) == 1 && !is_null($producto_single['precio_transporte_ind']) && $producto_single['precio_transporte_ind'] != 0 ){
+                                    $portes = $producto_single['precio_transporte_ind'];
+                                    $portes = number_format($portes, 2, ',', '.');
+                                    $portes = str_replace(',', '.', $portes);
+                                }
+								else if($Empresa['tipoportes'] == 0){
+                                    $portes = CalculaPortesP($total);                                    
+                                    $portes = str_replace(',', '.', $portes[0]);                                                                    
+                                }else if($Empresa['tipoportes'] == 1){
+                                    $portes_ar = CalculaPortesKm($total);
+                                    $logoPortes = $portes_ar[1];
+                                    $portes = $portes_ar[0];
+                                    $portes = str_replace(',', '.', $portes);
+                                    if($portes_ar[0]<0){
+                                        echo '<META HTTP-EQUIV=Refresh CONTENT="0; URL='.$draizp.'/'.$_SESSION['lenguaje'].'/cesta">';
+                                        exit;
+                                        }
+                                }else if($Empresa['tipoportes'] == 2){
+                                    $portes = CalculaPortesProv($total);
+                                    if($portes >= 0){
+                                        $portes = number_format($portes, 2, ',', '.');
+                                        $portes = str_replace(',', '.', $portes);
+                                    }else{
+                                        $portes = -4;
+                                    }
+                                }else if($Empresa['tipoportes'] == 3){
+                                    $portes = CalculaPortesProvP($total, $peso);
+                                    if($portes >= 0){
+                                        $portes = number_format($portes, 2, ',', '.');
+                                        $portes = str_replace(',', '.', $portes);
+                                    }else{
+                                        $portes = -4;
+                                    }
+                                }
 								
                                                                 $abono = Abono(@$_SESSION['usr']['id']);
 								$total = $total - $abono;

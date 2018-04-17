@@ -24,7 +24,15 @@ if($Empresa['tipoportes'] == 0 || $Empresa['tipoportes'] == 2 || $Empresa['tipop
     $precioPorte = 0;
     foreach ($portes_extras AS $nporte){            
         if($nporte['Gratis'] > $total || !isset($nporte['Gratis'])){
-            $precioPorte = number_format($nporte['precio'], 2, ',', '.');
+            $producto_single = Producto($cesta[0]['id']);   //Si el producto tiene envio especial individual
+                                
+            if(count($cesta) == 1 && !is_null($producto_single['precio_transporte_ind']) && $producto_single['precio_transporte_ind'] != 0 ){
+                $portes = $producto_single['precio_transporte_ind'];
+                $portes = number_format($portes, 2, ',', '.');
+                $precioPorte = str_replace(',', '.', $portes);
+            }
+            else
+                $precioPorte = number_format($nporte['precio'], 2, ',', '.');
             $precioValue = $nporte['precio']-$portes;
             if($cont == 0)
                 $output .= "<input type='hidden' id='nuevotransp2' name='nuevotransp' value='".$nporte['id']."'>";

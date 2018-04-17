@@ -15,4 +15,5 @@
 	
 	if (isset($_POST['checks']))
 		$_SESSION['checks'] = $_POST['checks'];
+	
 ?>
