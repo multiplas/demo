@@ -683,6 +683,10 @@
                             $gratisI = 'NULL';
                         else
                             $gratisI = $_POST['gratisI'];
+						 if ($gratisA == '')
+                            $gratisA = 'NULL';
+                        else
+                            $gratisA = $_POST['gratisA'];
 
                         if ($precioE == '')
                             $precioE = 'NULL';
@@ -708,9 +712,12 @@
                             $precioI = 'NULL';
                         else
                             $precioI = $_POST['precioI'];
+						if ($precioA == '')
+                            $precioA = 'NULL';
+                        else
+                            $precioA = $_POST['precioA'];
 			
 			$sql = "UPDATE bd_portes SET transportista='$nombre',TPGratis=$gratisE,precioP=$precioE,TBGratis=$gratisB,precioB=$precioB,TCGratis=$gratisC,precioC=$precioC,TCMGratis=$gratisCM,precioCM=$precioCM,TEGratis=$gratisEU,precioE=$precioEU,TIGratis=$gratisI,precioI=$precioI,TAGratis=$gratisA,precioA=$precioA,disponible=1,extension='$extension' WHERE id = $id";
-
 			$query = mysqli_query($this->conexion, $sql);
 
 			return mysqli_insert_id($this->conexion);
