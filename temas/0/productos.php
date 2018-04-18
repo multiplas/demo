@@ -31,7 +31,7 @@
 	function check_is_brand($products_id){
 		$product_cat_info = array();
 		$sql="SELECT * FROM bd_categorias WHERE id = $products_id";
-		echo $sql;
+		// echo $sql;
 		$query = mysqli_query($dbi, $sql);
 		if (mysqli_num_rows($query) > 0)
 			while ($assoc = mysqli_fetch_assoc($query))

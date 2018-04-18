@@ -176,7 +176,24 @@
                             WHERE Code='".$_SESSION['usr']['paisEnv']."' ORDER BY LocalName, Code ASC;";
                     $query = mysqli_query($dbi, $sql);
                     $assoc = mysqli_fetch_array($query);
-                    if($assoc['Continent'] == 'Europe'){
+                    if($assoc['LocalName'] == 'Andorra'){
+                        $sql = "SELECT TAGratis, precioA, id, extension FROM bd_portes WHERE precioA != 'NULL' AND disponible = 1 ORDER BY precioA ASC";
+                        $query = mysqli_query($dbi, $sql);
+                        $assoc = mysqli_fetch_array($query);
+                        if($precio < $assoc['TAGratis'] || $assoc['TAGratis'] == NULL){
+                            $portes[0] = $assoc['precioA'];
+                            if($assoc['extension'] != "")
+                                $portes[1] = $assoc['id'].".".$assoc['extension'];
+                            else
+                                $portes[1] = "";
+                        }else{
+                            if($assoc['extension'] != "")
+                                $portes[1] = $assoc['id'].".".$assoc['extension'];
+                            else
+                                $portes[1] = "";
+                        }
+                    }
+                    else if($assoc['Continent'] == 'Europe'){
                         $sql = "SELECT TEGratis, precioE, id, extension FROM bd_portes WHERE precioE != 'NULL' AND disponible = 1 ORDER BY precioE ASC";
                     $query = mysqli_query($dbi, $sql);
                     $assoc = mysqli_fetch_array($query);
@@ -192,7 +209,8 @@
                         else
                             $portes[1] = "";
                     }
-                    }else{
+                    }
+                    else{
                         $sql = "SELECT TIGratis, precioI, id, extension FROM bd_portes WHERE precioI != 'NULL' AND disponible = 1 ORDER BY precioI ASC";
                     $query = mysqli_query($dbi, $sql);
                     $assoc = mysqli_fetch_array($query);
@@ -389,7 +407,24 @@
                     WHERE Code='".$_SESSION['compra']['entrega']['paisidE']."' ORDER BY LocalName, Code ASC;";
             $query = mysqli_query($dbi, $sql);
             $assoc = mysqli_fetch_array($query);
-            if($assoc['Continent'] == 'Europe'){
+            if($assoc['LocalName'] == 'Andorra'){
+                $sql = "SELECT TAGratis, precioA, id, extension FROM bd_portes WHERE precioA != 'NULL' AND disponible = 1 ORDER BY precioA ASC";
+                $query = mysqli_query($dbi, $sql);
+                $assoc = mysqli_fetch_array($query);
+                if($precio < $assoc['TAGratis'] || $assoc['TAGratis'] == NULL){
+                    $portes[0] = $assoc['precioA'];
+                    if($assoc['extension'] != "")
+                        $portes[1] = $assoc['id'].".".$assoc['extension'];
+                    else
+                        $portes[1] = "";
+                }else{
+                    if($assoc['extension'] != "")
+                        $portes[1] = $assoc['id'].".".$assoc['extension'];
+                    else
+                        $portes[1] = "";
+                }
+            }
+            else if($assoc['Continent'] == 'Europe'){
                 $sql = "SELECT TEGratis, precioE FROM bd_portes WHERE precioE != 'NULL' AND disponible = 1 ORDER BY precioE ASC";
             $query = mysqli_query($dbi, $sql);
             $assoc = mysqli_fetch_array($query);
@@ -558,7 +593,11 @@
                             WHERE Code='".$_SESSION['compra']['entrega']['paisidE']."' ORDER BY LocalName, Code ASC;";
                     $query = mysqli_query($dbi, $sql);
                     $assoc = mysqli_fetch_array($query);
-                    if($assoc['Continent'] == 'Europe'){
+                    if($assoc['LocalName'] == 'Andorra'){
+                        $sql = "SELECT TAGratis AS Gratis, precioA AS precio, transportista, id, extension FROM bd_portes WHERE precioA != 'NULL' AND disponible = 1 ORDER BY precioA ASC";
+                    $portes = mysqli_query($dbi, $sql);                        
+                    }
+                    else if($assoc['Continent'] == 'Europe'){
                         $sql = "SELECT TEGratis AS Gratis, precioE AS precio, transportista, id, extension FROM bd_portes WHERE precioE != 'NULL' AND disponible = 1 ORDER BY precioE ASC";
                     $portes = mysqli_query($dbi, $sql);
                     }else{

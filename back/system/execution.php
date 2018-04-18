@@ -145,14 +145,23 @@
 		$resultaop2 = $System->NuevoPromocional($_POST['promo'], $_POST['codigo'], $_POST['descuento'], $_POST['tipo'], $_POST['inicio'], $_POST['fin'], $_POST['min'], $_POST['max'], $_POST['cantidad']);
 	
 	if (@$_GET['accion'] == 'subirprt'){
-                $dir_subida = '../logos/';
-                $extension = explode('.', $_FILES['logo']['name']);
-		$resultaop2 = $System->NuevoPorte($_POST[nombre], $_POST['gratisE'], $_POST['precioE'], $_POST['gratisC'], $_POST['precioC'], $_POST['gratisB'], $_POST['precioB'], $_POST['gratisCM'], $_POST['precioCM'], $_POST['gratisEU'], $_POST['precioEU'], $_POST['gratisI'], $_POST['precioI'], $extension[1]);
-                if($_FILES['logo']['size'] > 0){
-                    $fichero_subido = $dir_subida . $resultaop2 . "." . $extension[1];
-                    move_uploaded_file($_FILES['logo']['tmp_name'], $fichero_subido);
-                }
+        $dir_subida = '../logos/';
+        $extension = explode('.', $_FILES['logo']['name']);
+		$resultaop2 = $System->NuevoPorte($_POST[nombre], $_POST['gratisE'], $_POST['precioE'], $_POST['gratisC'], $_POST['precioC'], $_POST['gratisB'], $_POST['precioB'], $_POST['gratisCM'], $_POST['precioCM'], $_POST['gratisEU'], $_POST['precioEU'], $_POST['gratisI'], $_POST['precioI'],$_POST['gratisA'], $_POST['precioA'], $extension[1]);
+        if($_FILES['logo']['size'] > 0){
+            $fichero_subido = $dir_subida . $resultaop2 . "." . $extension[1];
+            move_uploaded_file($_FILES['logo']['tmp_name'], $fichero_subido);
         }
+    }
+    if (@$_GET['accion'] == 'editprt'){
+        $dir_subida = '../logos/';
+        $extension = explode('.', $_FILES['logo']['name']);
+		$resultaop2 = $System->EditarPorte($_POST['id'],$_POST['nombre'], $_POST['gratisE'], $_POST['precioE'], $_POST['gratisC'], $_POST['precioC'], $_POST['gratisB'], $_POST['precioB'], $_POST['gratisCM'], $_POST['precioCM'], $_POST['gratisEU'], $_POST['precioEU'], $_POST['gratisI'], $_POST['precioI'],$_POST['gratisA'], $_POST['precioA'], $extension[1]);
+        if($_FILES['logo']['size'] > 0){
+            $fichero_subido = $dir_subida . $resultaop2 . "." . $extension[1];
+            move_uploaded_file($_FILES['logo']['tmp_name'], $fichero_subido);
+        }
+    }
         
         if (@$_GET['accion'] == 'subirprt2'){
                 $dir_subida = '../logoskm/';
@@ -1172,7 +1181,10 @@
 			break;
 		case 'portes.php':
 			$listados2 = $System->CargarPortes(100);
-			$listadosalt = $System->CargarPaises();
+            $listadosalt = $System->CargarPaises();
+            if(isset($_GET['porteID'])){
+                $porteInfo = $System->GetPorteInfo($_GET['porteID']);
+            }
 			break;
 		case 'portes2.php':
 			$listados2 = $System->CargarPortesKm(100);

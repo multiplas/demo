@@ -21,7 +21,7 @@
             }
         //$sql="SELECT * FROM bd_slider WHERE idcat = $_GET[productos] ORDER BY orden, id ASC";
         $query = mysqli_query($dbi, $sql);
-        echo $sql;
+        // echo $sql;
                        
         while($slider = mysqli_fetch_array($query)){
             

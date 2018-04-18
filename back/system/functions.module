@@ -652,8 +652,8 @@
 			
 			return $query;
 		}
-		
-		function NuevoPorte($nombre, $gratisE,$precioE,$gratisC,$precioC,$gratisB,$precioB,$gratisCM,$precioCM,$gratisEU,$precioEU,$gratisI,$precioI, $extension)
+
+		function EditarPorte($id, $nombre, $gratisE,$precioE,$gratisC,$precioC,$gratisB,$precioB,$gratisCM,$precioCM,$gratisEU,$precioEU,$gratisI,$precioI,$gratisA,$precioA, $extension)
 		{
 			$region = mysqli_real_escape_string($this->conexion, htmlspecialchars($region));
 			$precio = mysqli_real_escape_string($this->conexion, htmlspecialchars($precio));
@@ -709,7 +709,77 @@
                         else
                             $precioI = $_POST['precioI'];
 			
-			$sql = "INSERT INTO bd_portes VALUES (null, '$_POST[nombre]',$gratisE,$precioE,$gratisB,$precioB,$gratisC,$precioC,$gratisCM,$precioCM,$gratisEU,$precioEU,$gratisI,$precioI,1,'$extension')";
+			$sql = "UPDATE bd_portes SET transportista='$nombre',TPGratis=$gratisE,precioP=$precioE,TBGratis=$gratisB,precioB=$precioB,TCGratis=$gratisC,precioC=$precioC,TCMGratis=$gratisCM,precioCM=$precioCM,TEGratis=$gratisEU,precioE=$precioEU,TIGratis=$gratisI,precioI=$precioI,TAGratis=$gratisA,precioA=$precioA,disponible=1,extension='$extension' WHERE id = $id";
+
+			$query = mysqli_query($this->conexion, $sql);
+
+			return mysqli_insert_id($this->conexion);
+		}
+		
+		function NuevoPorte($nombre, $gratisE,$precioE,$gratisC,$precioC,$gratisB,$precioB,$gratisCM,$precioCM,$gratisEU,$precioEU,$gratisI,$precioI,$gratisA,$precioA, $extension)
+		{
+			$region = mysqli_real_escape_string($this->conexion, htmlspecialchars($region));
+			$precio = mysqli_real_escape_string($this->conexion, htmlspecialchars($precio));
+			$max = mysqli_real_escape_string($this->conexion, htmlspecialchars($max));
+                        
+                        if ($gratisE == '')
+                            $gratisE = 'NULL';
+                        else
+                            $gratisE = $_POST['gratisE'];
+                        if ($gratisC == '')
+                            $gratisC = 'NULL';
+                        else
+                            $gratisC = $_POST['gratisC'];
+                        if ($gratisB == '')
+                            $gratisB = 'NULL';
+                        else
+                            $gratisB = $_POST['gratisB'];
+                        if ($gratisCM == '')
+                            $gratisCM = 'NULL';
+                        else
+                            $gratisCM = $_POST['gratisCM'];
+                        if ($gratisEU == '')
+                            $gratisEU = 'NULL';
+                        else
+                            $gratisEU = $_POST['gratisEU'];
+                        if ($gratisI == '')
+                            $gratisI = 'NULL';
+                        else
+                            $gratisI = $_POST['gratisI'];
+						if ($gratisA == '')
+                            $gratisA = 'NULL';
+                        else
+                            $gratisA = $_POST['gratisA'];
+                        if ($precioE == '')
+                            $precioE = 'NULL';
+                        else
+                            $precioE = $_POST['precioE'];
+                        if ($precioC == '')
+                            $precioC = 'NULL';
+                        else
+                            $precioC = $_POST['precioC'];
+                        if ($precioB == '')
+                            $precioB = 'NULL';
+                        else
+                            $precioB = $_POST['precioB'];
+                        if ($precioCM == '')
+                            $precioCM = 'NULL';
+                        else
+                            $precioCM = $_POST['precioCM'];
+                        if ($precioEU == '')
+                            $precioEU = 'NULL';
+                        else
+                            $precioEU = $_POST['precioEU'];
+                        if ($precioI == '')
+                            $precioI = 'NULL';
+                        else
+                            $precioI = $_POST['precioI'];
+						 if ($precioA == '')
+                            $precioA = 'NULL';
+                        else
+                            $precioA = $_POST['precioA'];
+			
+			$sql = "INSERT INTO bd_portes VALUES (null, '$_POST[nombre]',$gratisE,$precioE,$gratisB,$precioB,$gratisC,$precioC,$gratisCM,$precioCM,$gratisEU,$precioEU,$gratisI,$precioI,$gratisA,$precioA,1,'$extension')";
 			$query = mysqli_query($this->conexion, $sql);
 
 			return mysqli_insert_id($this->conexion);
@@ -4845,6 +4915,16 @@
 			}
 
 			return $resultado;
+		}
+
+		function GetPorteInfo($id){
+			$sql = "SELECT * FROM bd_portes WHERE id = $id;";
+			$query = mysqli_query($this->conexion, $sql);
+			if (mysqli_num_rows($query) == 1)
+			{
+				$assoc = mysqli_fetch_assoc($query);
+			}
+			return $assoc;
 		}
 
 		function CreateTableMarcasStatus()

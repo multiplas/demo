@@ -289,8 +289,11 @@
 			case 'pra':
 				$filtro .= " ORDER BY preciot ASC";
 				break;
-			case 'prd':
+            case 'prd':
 				$filtro .= " ORDER BY preciot DESC";
+				break;
+            case 'def':
+				$filtro .= "";
 				break;
 				
 			default:
@@ -2850,9 +2853,9 @@
 		if(!isset($_GET['imprimir_fact']))	
                     include_once($draiz.'/bloques/pie.php');
         /* Truco para no tener que buscar el archivo tema por tema */
-        print_r(get_included_files ());
+        // print_r(get_included_files ());
         // print_r(get_defined_vars ());
-        die;
+        // die;
 		?>
 	</body>
 </html>

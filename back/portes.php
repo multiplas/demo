@@ -9,6 +9,56 @@
 							</div>
 						</div>
 					<?php } ?>
+                    <?php if(isset($porteInfo)): ?>
+                    <div class="row-fluid">						
+                        <div class="navbar navbar-inner block-header">
+                            <div class="muted pull-left">Editar un Porte</div>
+                        </div>
+                        <div class="block-content collapse in">
+                            <div class="span12">
+                                <form action="portes.php?accion=editprt" method="post" class="form-horizontal" enctype="multipart/form-data">
+                                    <fieldset>
+                                    <input type="hidden" name="id" value="<?=$porteInfo['id']?>" />
+                                    <label>Nombre</label> <input type="text" name="nombre" id="nombre" required placeholder="Nombre"  style="width:35%;" value="<?=$porteInfo['transportista']?>"/>
+                                    <br /><br />
+                                    <label>Gratis España desde € </label> <input type="text" name="gratisE" id="gratisE" placeholder="Gratis España desde"  style="width:35%;" value="<?=$porteInfo['TPGratis']?>"/>
+                                    <br /><br />
+                                        <label>Precio España € </label> <input type="text" name="precioE" id="precioE" placeholder="Precio España"  style="width:35%;" value="<?=$porteInfo['precioP']?>"/>
+                                    <br /><br />
+                                    <label>Gratis Islas Canarias desde € </label> <input type="text" name="gratisC" id="gratisC" placeholder="Gratis Canarias desde"  style="width:35%;" value="<?=$porteInfo['TCGratis']?>"/>
+                                    <br /><br />
+                                    <label>Precio Islas Canarias € </label> <input type="text" name="precioC" id="precioC" placeholder="Precio Canarias"  style="width:35%;" value="<?=$porteInfo['precioC']?>"/>
+                                    <br /><br />
+                                    <label>Gratis Islas Baleares desde € </label> <input type="text" name="gratisB" id="gratisB" placeholder="Gratis Baleares desde"  style="width:35%;" value="<?=$porteInfo['TBGratis']?>" />
+                                    <br /><br />
+                                        <label>Precio Islas Baleares € </label> <input type="text" name="precioB" id="precioB" placeholder="Precio Baleares"  style="width:35%;" value="<?=$porteInfo['precioB']?>"/>
+                                    <br /><br />
+                                    <label>Gratis Ceuta-Melilla desde € </label> <input type="text" name="gratisCM" id="gratisCM" placeholder="Gratis Ceuta-Melilla desde"  style="width:35%;" value="<?=$porteInfo['TCMGratis']?>"/>
+                                    <br /><br />
+                                        <label>Precio Ceuta-Melilla € </label> <input type="text" name="precioCM" id="precioCM" placeholder="Precio Ceuta-Melilla"  style="width:35%;" value="<?=$porteInfo['precioCM']?>"/>
+                                    <br /><br />
+                                    <label>Gratis Europa desde € </label> <input type="text" name="gratisEU" id="gratisEU" placeholder="Gratis Europa desde"  style="width:35%;" value="<?=$porteInfo['TEGratis']?>"/>
+                                    <br /><br />
+                                        <label>Precio Europa € </label> <input type="text" name="precioEU" id="precioEU" placeholder="Precio Europa"  style="width:35%;" value="<?=$porteInfo['precioE']?>"/>
+                                    <br /><br />
+                                    <label>Gratis Internacional desde € </label> <input type="text" name="gratisI" id="gratisI" placeholder="Gratis Internacional desde"  style="width:35%;" value="<?=$porteInfo['TIGratis']?>"/>
+                                    <br /><br />
+                                        <label>Precio Internacional € </label> <input type="text" name="precioI" id="precioI" placeholder="Precio Internacional"  style="width:35%;" value="<?=$porteInfo['precioI']?>"/>
+                                    <br /><br />
+                                    <label>Gratis Andorra desde € </label> <input type="text" name="gratisA" id="gratisA" placeholder="Gratis Andorra desde"  style="width:35%;" value="<?=$porteInfo['TAGratis']?>"/>
+                                    <br /><br />
+                                        <label>Precio Andorra € </label> <input type="text" name="precioA" id="precioA" placeholder="Precio Andorra"  style="width:35%;" value="<?=$porteInfo['precioA']?>"/>
+                                    <br /><br />
+                                    <label>Logo</label> <input type="file" name="logo" id="logo" placeholder="Logo"  style="width:35%;" value="<?=$porteInfo['extension']?>"/>
+                                    <br /><br />
+                                    <button type="submit" class="btn btn-primary">Editar</button>
+                                    <button type="button" onclick="location.href = 'portes.php';" class="btn">Cancelar</button>
+                                    </fieldset>
+                                </form>
+                            </div>							
+						</div>
+                    </div>
+                    <?php else: ?>
                      <div class="row-fluid">
 						<div id="add2" class="block" style="height: 0px; visibility: hidden;">
                             <div class="navbar navbar-inner block-header">
@@ -45,6 +95,10 @@
                                         <label>Gratis Internacional desde € </label> <input type="text" name="gratisI" id="gratisI" value="" placeholder="Gratis Internacional desde"  style="width:35%;" />
                                         <br /><br />
                                          <label>Precio Internacional € </label> <input type="text" name="precioI" id="precioI" value="" placeholder="Precio Internacional"  style="width:35%;" />
+                                        <br /><br />
+                                        <label>Gratis Andorra desde € </label> <input type="text" name="gratisA" id="gratisA" value="" placeholder="Gratis Andorra desde"  style="width:35%;" />
+                                        <br /><br />
+                                         <label>Precio Andorra € </label> <input type="text" name="precioA" id="precioA" value="" placeholder="Precio Andorra"  style="width:35%;" />
                                         <br /><br />
                                         <label>Logo</label> <input type="file" name="logo" id="logo" value="" placeholder="Logo"  style="width:35%;" />
                                         <br /><br />
@@ -142,6 +196,8 @@
                                                                                                             <th>Precio Eur</th>
                                                                                                             <th>Gratis Int</th>
                                                                                                             <th>Precio Int</th>
+                                                                                                            <th>Gratis And</th>
+                                                                                                            <th>Precio And</th>
                                                                                                         </tr>
 												</tr>
 											</thead>
@@ -153,87 +209,105 @@
 														<tr>
 															<td style="text-align: center;"><img src="../logos/<?=$listado["id"]?>.<?=$listado["extension"]?>" style="width:20px; height: 10px;" /></td>
 															<td><?=strtoupper(utf8_encode($listado["transportista"]))?></td>
-                                                                                                                        <?php
-                                                                                                                        if($listado["TPGratis"] != NULL)
-                                                                                                                            echo '<td class="center">'.strtoupper(utf8_encode($listado["TPGratis"])).' €</td>';
-                                                                                                                        else
-                                                                                                                            echo '<td class="center"> - </td>';
-                                                                                                                        
-                                                                                                                        if($listado["precioP"] != NULL)
-                                                                                                                            echo '<td class="center">'.strtoupper(utf8_encode($listado["precioP"])).' €</td>';
-                                                                                                                        else
-                                                                                                                            echo '<td class="center"> - </td>';
+                                                            <?php
+                                                            if($listado["TPGratis"] != NULL)
+                                                                echo '<td class="center">'.strtoupper(utf8_encode($listado["TPGratis"])).' €</td>';
+                                                            else
+                                                                echo '<td class="center"> - </td>';
+                                                            
+                                                            if($listado["precioP"] != NULL)
+                                                                echo '<td class="center">'.strtoupper(utf8_encode($listado["precioP"])).' €</td>';
+                                                            else
+                                                                echo '<td class="center"> - </td>';
 
 
-                                                                                                                        if($listado["TCGratis"] != NULL)
-                                                                                                                            echo '<td class="center">'.strtoupper(utf8_encode($listado["TCGratis"])).' €</td>';
-                                                                                                                        else
-                                                                                                                            echo '<td class="center"> - </td>';
+                                                            if($listado["TCGratis"] != NULL)
+                                                                echo '<td class="center">'.strtoupper(utf8_encode($listado["TCGratis"])).' €</td>';
+                                                            else
+                                                                echo '<td class="center"> - </td>';
 
 
-                                                                                                                        if($listado["precioC"] != NULL)
-                                                                                                                            echo '<td class="center">'.strtoupper(utf8_encode($listado["precioC"])).' €</td>';
-                                                                                                                        else
-                                                                                                                            echo '<td class="center"> - </td>';
-                                                                                                                        
-                                                                                                                        
-                                                                                                                        if($listado["TBGratis"] != NULL)
-                                                                                                                            echo '<td class="center">'.strtoupper(utf8_encode($listado["TBGratis"])).' €</td>';
-                                                                                                                        else
-                                                                                                                            echo '<td class="center"> - </td>';
+                                                            if($listado["precioC"] != NULL)
+                                                                echo '<td class="center">'.strtoupper(utf8_encode($listado["precioC"])).' €</td>';
+                                                            else
+                                                                echo '<td class="center"> - </td>';
+                                                            
+                                                            
+                                                            if($listado["TBGratis"] != NULL)
+                                                                echo '<td class="center">'.strtoupper(utf8_encode($listado["TBGratis"])).' €</td>';
+                                                            else
+                                                                echo '<td class="center"> - </td>';
 
 
-                                                                                                                        if($listado["precioB"] != NULL)
-                                                                                                                            echo '<td class="center">'.strtoupper(utf8_encode($listado["precioB"])).' €</td>';
-                                                                                                                        else
-                                                                                                                            echo '<td class="center"> - </td>';
-                                                                                                                        
-                                                                                                                        
-                                                                                                                        if($listado["TCMGratis"] != NULL)
-                                                                                                                            echo '<td class="center">'.strtoupper(utf8_encode($listado["TCMGratis"])).' €</td>';
-                                                                                                                        else
-                                                                                                                            echo '<td class="center"> - </td>';
+                                                            if($listado["precioB"] != NULL)
+                                                                echo '<td class="center">'.strtoupper(utf8_encode($listado["precioB"])).' €</td>';
+                                                            else
+                                                                echo '<td class="center"> - </td>';
+                                                            
+                                                            
+                                                            if($listado["TCMGratis"] != NULL)
+                                                                echo '<td class="center">'.strtoupper(utf8_encode($listado["TCMGratis"])).' €</td>';
+                                                            else
+                                                                echo '<td class="center"> - </td>';
 
 
-                                                                                                                        if($listado["precioCM"] != NULL)
-                                                                                                                            echo '<td class="center">'.strtoupper(utf8_encode($listado["precioCM"])).' €</td>';
-                                                                                                                        else
-                                                                                                                            echo '<td class="center"> - </td>';
+                                                            if($listado["precioCM"] != NULL)
+                                                                echo '<td class="center">'.strtoupper(utf8_encode($listado["precioCM"])).' €</td>';
+                                                            else
+                                                                echo '<td class="center"> - </td>';
 
 
-                                                                                                                        if($listado["TEGratis"] != NULL)
-                                                                                                                            echo '<td class="center">'.strtoupper(utf8_encode($listado["TEGratis"])).' €</td>';
-                                                                                                                        else
-                                                                                                                            echo '<td class="center"> - </td>';
+                                                            if($listado["TEGratis"] != NULL)
+                                                                echo '<td class="center">'.strtoupper(utf8_encode($listado["TEGratis"])).' €</td>';
+                                                            else
+                                                                echo '<td class="center"> - </td>';
 
 
-                                                                                                                        if($listado["precioE"] != NULL)
-                                                                                                                            echo '<td class="center">'.strtoupper(utf8_encode($listado["precioE"])).' €</td>';
-                                                                                                                        else
-                                                                                                                            echo '<td class="center"> - </td>';
+                                                            if($listado["precioE"] != NULL)
+                                                                echo '<td class="center">'.strtoupper(utf8_encode($listado["precioE"])).' €</td>';
+                                                            else
+                                                                echo '<td class="center"> - </td>';
 
 
-                                                                                                                        if($listado["TIGratis"] != NULL)
-                                                                                                                            echo '<td class="center">'.strtoupper(utf8_encode($listado["TIGratis"])).' €</td>';
-                                                                                                                        else
-                                                                                                                            echo '<td class="center"> - </td>';
+                                                            if($listado["TIGratis"] != NULL)
+                                                                echo '<td class="center">'.strtoupper(utf8_encode($listado["TIGratis"])).' €</td>';
+                                                            else
+                                                                echo '<td class="center"> - </td>';
 
 
-                                                                                                                        if($listado["precioI"] != NULL)
-                                                                                                                            echo '<td class="center">'.strtoupper(utf8_encode($listado["precioI"])).' €</td>';
-                                                                                                                        else
-                                                                                                                            echo '<td class="center"> - </td>';
-                                                                                                                        
-                                                                                                                        echo "<td class='center'>";
-                                                                                                                        
-                                                                                                                        if($listado['id'] != 0){
-                                                                                                                        ?>
+                                                            if($listado["precioI"] != NULL)
+                                                                echo '<td class="center">'.strtoupper(utf8_encode($listado["precioI"])).' €</td>';
+                                                            else
+                                                                echo '<td class="center"> - </td>';
 
-                                                                                                                            <a class="open-Modal" href="#" data-name="<?=$listado['Name']?>" data-id="<?=$listado['id']?>" data-toggle="modal" data-target="#myModal" /><i style="color: red;" class="fa fa-trash-o fa-lg"></i></a>
-                                                                                                                                <?php 
-                                                                                                                        }
-                                                                                                                            echo "</td>";
-                                                                                                                        ?>
+                                                            if($listado["TAGratis"] != NULL)
+                                                                echo '<td class="center">'.strtoupper(utf8_encode($listado["TAGratis"])).' €</td>';
+                                                            else
+                                                                echo '<td class="center"> - </td>';
+
+
+                                                            if($listado["precioA"] != NULL)
+                                                                echo '<td class="center">'.strtoupper(utf8_encode($listado["precioA"])).' €</td>';
+                                                            else
+                                                                echo '<td class="center"> - </td>';
+                                                            
+                                                            echo "<td class='center'>";
+                                                            
+                                                            if($listado['id'] != 0){
+                                                            ?>
+                                                                <a class="open-Modal" href="#" data-name="<?=$listado['Name']?>" data-id="<?=$listado['id']?>" data-toggle="modal" data-target="#myModal" /><i style="color: red;" class="fa fa-trash-o fa-lg"></i></a>
+                                                                    <?php 
+                                                            }
+                                                                echo "</td>";
+                                                            echo "<td class='center'>";
+                                                            
+                                                                if($listado['id'] != 0){
+                                                                ?>
+                                                                    <a href="#" onclick="location.href = 'portes.php?porteID=<?=$listado['id']?>';" /><i style="color: green;" class="fa fa-edit fa-lg"></i></a>
+                                                                        <?php 
+                                                                }
+                                                            echo "</td>";
+                                                            ?>
 															 
 														</tr>
 														<?php
@@ -249,5 +323,6 @@
                         </div>
                         <!-- /block -->
                     </div>
+                    <?php endif; ?>
                 </div>
 				<?php require_once('blocks/pie.php'); ?>
