@@ -133,6 +133,8 @@ if(isset($_POST['updateUser']) && !empty($_POST['updateUser'])){
     $telefono = $_POST['telefono'];
     $direccion = $_POST['direccionEUltra'];
     $dni = '';
+    if(isset($_POST['dni']) && !empty($_POST['dni']))
+        $dni = $_POST['dni'];
     $cp = $_POST['cpEUltra'];
     $localidad = $_POST['localidadEUltra'];
     $provincia = $_POST['provinciaEUltra'];
@@ -145,13 +147,16 @@ if(isset($_POST['updateUser']) && !empty($_POST['updateUser'])){
         saveCesta($datos_cesta, $usrID);//Necesito un helper para guardar la cesta...
     }
     else{
-        $updateUser = mysqli_query($dbi, "UPDATE bd_users SET nombre= '$nombre', telefono= '$telefono',direccion='$direccion',cp='$cp',poblacion='$localidad',provincia='$provincia',pais='$pais' WHERE email = '$email'");
+        $updateUser = mysqli_query($dbi, "UPDATE bd_users SET nombre= '$nombre', telefono= '$telefono',direccion='$direccion',cp='$cp',poblacion='$localidad',provincia='$provincia',pais='$pais',dni='$dni' WHERE email = '$email'");
     }
     $query2 = mysqli_query($dbi, 'SELECT * FROM bd_users WHERE email = "'.$email.'"');
     if(mysqli_num_rows($query2) == 1){//Cuando el usuario ya se ha registrado procedo a cargarlo
         $assoc = mysqli_fetch_assoc($query2);
         $usrID = $assoc['id'];
         $usuario = UserLoadData($usrID);
+        $factura = 0;//por defecto 0, es decir sin check
+        if(isset($_POST['quierofactura']))
+            $factura = $_POST['quierofactura'];
         $_SESSION['usr'] = $usuario;
         $_SESSION['compra']['entrega']['nombre'] = $usuario['nombre'];
         $_SESSION['compra']['entrega']['dni'] = $usuario['dni'];
@@ -174,6 +179,7 @@ if(isset($_POST['updateUser']) && !empty($_POST['updateUser'])){
         $_SESSION['compra']['entrega']['localidadE'] = $usuario['poblacion'];
         $_SESSION['compra']['entrega']['cpE'] = $usuario['cpEnv'];
         $_SESSION['compra']['entrega']['provinciaidE'] = $usuario['provinciaid'];
+        $_SESSION['compra']['entrega']['factura'] = $factura;
         $_SESSION['usr']['paisEnv'] = $usuario['pais'];
     }    
 }
@@ -190,7 +196,7 @@ if(isset($_POST['checksubs'])){
 ?>
 
 <div class="container-fluid">
-    <?php   if($purchase_process_type != 4): ?>
+    <?php   if($purchase_process_type != 4 && $purchase_process_type != 5): ?>
     <form method="post" id="datosper" name="datosper" action="<?=$draizp?>/acc/pago">
         
         <div class="col-xs-12 col-sm-offset-1 col-sm-5 datos-personales-izquierda">
@@ -352,6 +358,18 @@ if(isset($_POST['checksubs'])){
                         <label for="localidadE">Localidad</label>
                         <input type="text" id="localidadE" name="localidadEUltra" placeholder="Localidad *" value="<?=$_SESSION['compra']['entrega']['localidadE']?>" />
                     </div>
+                <?php if($purchase_process_type == 5){ //Lo guardo como valor DNI ?>
+                    <div class="col-xs-12">
+                        <label for="dni">CIF</label>
+                        <input type="text" id="dni" name="dni" placeholder="CIF *" value="<?=$_SESSION['compra']['entrega']['dni']?>" />
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="1" name="quierofactura" id="quierofactura" <?php if(isset($_SESSION['compra']['entrega']['factura']) && $_SESSION['compra']['entrega']['factura'] == 1)echo 'checked' ?>>                    
+                            Quiero factura
+                        </div>
+                    </div>
+                <?php } ?>
                 </div>
                 <div class="form-group">
                     <div class="form-check">
@@ -395,7 +413,7 @@ if(isset($_POST['checksubs'])){
         <div class="col-xs-4">
             <span id="BtSubmit" type="submit" class="btn btn-primary custom-btn" onclick="location.href='<?=$draizp?>/<?=$_SESSION['lenguaje']?>cesta';"><?=$auxvol?></span>
         </div>
-        <?php   if($purchase_process_type != 4): ?>
+        <?php   if($purchase_process_type != 4  && $purchase_process_type != 5): ?>
         <div class="col-xs-4">
             <span class="btn btn-primary custom-btn update-data">Actualizar datos</span>
         </div>

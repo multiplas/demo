@@ -15,7 +15,7 @@ ul{
 	list-style: none;
 }
 </style>
-<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="//code.jquery.com/jquery-latest.js"></script>
 <script>
 //evento de cambio de �conos del arbol de categor�as
 	$(document).ready(function(){

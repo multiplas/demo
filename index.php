@@ -1099,28 +1099,35 @@
                                                                                 CestaSessionACestaUsuario($_SESSION['usr']['id'], $_SESSION['cestases']);
                                                                         }
                                                                         $_SESSION['compra']['paso'] = 2;
-                                                                        $_SESSION['compra']['entrega'] = array(
-                                                                                        'nombre' => $_POST['nombre'],
-                                                                                        'dni' => $_POST['dni'],
-                                                                                        'telefono' => $_POST['telefono'],
-                                                                                        'email' => $_POST['email'],
-                                                                                        'direccion' => $_POST['direccion'],
-                                                                                        'pais' => Pais($_POST['pais']),
-                                                                                        'provincia' => Provincia($_POST['provincia']),
-                                                                                        'paisid' => $_POST['pais'],
-                                                                                        'provinciaid' => $_POST['provincia'],
-                                                                                        'localidad' => $_POST['localidad'],
-                                                                                        'cp' => $_POST['cp'],
-                                                                                        'provinciaid' => $_POST['provincia'],
-                                                                                        'nombreE' => $_POST['nombre'],
-                                                                                        'direccionE' => $_POST['direccion'],
-                                                                                        'paisE' => Pais($_POST['pais']),
-                                                                                        'provinciaE' => Provincia($_POST['provincia']),
-                                                                                        'paisidE' => $_POST['pais'],
-                                                                                        'localidadE' => $_POST['localidad'],
-                                                                                        'cpE' => $_POST['cp'],
-                                                                                        'provinciaidE' => $_POST['provincia']
-                                                                                );
+                                                                        $factura = 0;//por defecto 0, es decir sin check
+                                                                        if(isset($_POST['quierofactura']))
+                                                                            $factura = $_POST['quierofactura'];
+                                                                        else{
+                                                                            $_SESSION['compra']['entrega'] = array(
+                                                                                'nombre' => $_POST['nombre'],
+                                                                                'dni' => $_POST['dni'],
+                                                                                'telefono' => $_POST['telefono'],
+                                                                                'email' => $_POST['email'],
+                                                                                'direccion' => $_POST['direccion'],
+                                                                                'pais' => Pais($_POST['pais']),
+                                                                                'provincia' => Provincia($_POST['provincia']),
+                                                                                'paisid' => $_POST['pais'],
+                                                                                'provinciaid' => $_POST['provincia'],
+                                                                                'localidad' => $_POST['localidad'],
+                                                                                'cp' => $_POST['cp'],
+                                                                                'provinciaid' => $_POST['provincia'],
+                                                                                'nombreE' => $_POST['nombre'],
+                                                                                'direccionE' => $_POST['direccion'],
+                                                                                'paisE' => Pais($_POST['pais']),
+                                                                                'provinciaE' => Provincia($_POST['provincia']),
+                                                                                'paisidE' => $_POST['pais'],
+                                                                                'localidadE' => $_POST['localidad'],
+                                                                                'cpE' => $_POST['cp'],
+                                                                                'provinciaidE' => $_POST['provincia'],
+                                                                                'factura' => $factura
+                                                                            );
+
+                                                                        }
                                                                 }
                                                             }else{
                                                                 header('Location: '.$draizp.'/'.$_SESSION['lenguaje'].'datos_personales/dni');
@@ -1478,8 +1485,8 @@
                                         $req .= "&$key=$value";
                                     }
                                     
-                                    $ch = curl_init('https://www.sandbox.paypal.com/cgi-bin/webscr');   // Esta URL debe variar dependiendo si usamos SandBox o no. Si lo usamos, se queda así.
-                                    //$ch = curl_init('//www.paypal.com/cgi-bin/webscr');         // Si no usamos SandBox, debemos usar esta otra linea en su lugar.
+                                    // $ch = curl_init('https://www.sandbox.paypal.com/cgi-bin/webscr');   // Esta URL debe variar dependiendo si usamos SandBox o no. Si lo usamos, se queda así.
+                                    $ch = curl_init('//www.paypal.com/cgi-bin/webscr');         // Si no usamos SandBox, debemos usar esta otra linea en su lugar.
                                     curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
                                     curl_setopt($ch, CURLOPT_POST, 1);
                                     curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
@@ -1515,14 +1522,15 @@
                                                     
                                                     $campos['mensaje'] = ConstruirMsgCompraPaypal($_GET['uid'], $user['nombre'], $campos['asunto'], ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$_SESSION['factura']['total']), $_GET['secreto'], $pagoF);
                                                     $a = EnviarEmail($user['email'], $campos['asunto'], $campos['mensaje']);
-
+                                                    
                                                     $campos['asunto'] = 'Nueva venta realizada mediante '.$pagoF;
                                     
                                                     $pago = 'paypal';
                                                     $campos['mensaje'] = ConstruirMsgPaypalVenta($user['nombre'], $campos['asunto'], $_SESSION['factura']['total'], $_GET['secreto']);
                                     
                                                     $a = EnviarEmail($Empresa['email'], $campos['asunto'], $campos['mensaje']);
-                                    
+                                                    if(isset($_SESSION['compra']['entrega']['factura']) && $_SESSION['compra']['entrega']['factura'] == 1)
+                                                        EnviarEmail($Empresa['email'],'Necesaria factura', 'El cliente ha solicitado que se le envíe una factura.');
                                     
                                    /*if($_SESSION['compra']['afiliadopaypal'] != ''){  
                                         $sqlpais = "SELECT email FROM bd_distribuidores WHERE nombre = '".$_SESSION['compra']['afiliadopaypal']."'";
@@ -1591,6 +1599,8 @@
                                 $campos['mensaje'] = ConstruirMsgPaypalVenta($_SESSION['usr']['nombre'], $campos['asunto'], $_SESSION['factura']['total'], $_GET['secreto']);
                             }
                             $a = EnviarEmail($Empresa['email'], $campos['asunto'], $campos['mensaje']);
+                            if(isset($_SESSION['compra']['entrega']['factura']) && $_SESSION['compra']['entrega']['factura'] == 1)
+                                EnviarEmail($Empresa['email'],'Necesaria factura', 'El cliente ha solicitado que se le envíe una factura.');
                         // }else{
                             //Borrar cesta si ha llegado hasta aquí, se presupone pago ok.
                             $sqlB = "DELETE FROM bd_carrito WHERE idusuario='".$_GET['uid']."'";

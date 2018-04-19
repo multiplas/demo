@@ -40,7 +40,7 @@ else if (isset($_GET['datos_personales']) && $_SESSION['compra']['paso'] >= 1 ||
             'paisidE' => $usuario['paisEnv'],
             'localidadE' => $usuario['poblacionEnv'],
             'cpE' => $usuario['cpEnv'],
-            'provinciaidE' => $usuario['provinciaidEnv']
+            'provinciaidE' => $usuario['provinciaidEnv'],
         );
     }
     if ($_SESSION['usr'] != null)
@@ -49,7 +49,7 @@ else if (isset($_GET['datos_personales']) && $_SESSION['compra']['paso'] >= 1 ||
     }
     else if ($_SESSION['cestases'] != null)//Iniciar sesion
     {
-        if($purchase_process_type != 4)
+        if($purchase_process_type != 4 && $purchase_process_type != 5)
             include_once('start_session_form.php');
         else
             include_once('datos_personales.php');

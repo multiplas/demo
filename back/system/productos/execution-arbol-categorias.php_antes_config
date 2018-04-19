@@ -13,9 +13,9 @@ ul{
 	list-style: none;
 }
 </style>
-<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="//code.jquery.com/jquery-latest.js"></script>
 <script>
-//evento de cambio de íconos del arbol de categorías
+//evento de cambio de ï¿½conos del arbol de categorï¿½as
 	$(document).ready(function(){
 		$(".btn-folder").on("click",function(e){
 			e.preventDefault();
@@ -32,7 +32,7 @@ ul{
 			$(this).next("ul").slideToggle();
 		});
 
-//selección de checkbox del arbol de categorias
+//selecciï¿½n de checkbox del arbol de categorias
 /*		$(function () {
  			$(".autoCheckbox").on("click",function () {
   			var expr="li input[type=checkbox]",$this=$(event.target);
@@ -77,7 +77,7 @@ ul{
  
 		var cantidadMaxima=5;
  
-		// Comprobamos si supera la cantidad máxima indicada
+		// Comprobamos si supera la cantidad mï¿½xima indicada
 		if(contador>cantidadMaxima)
 		{
 			//alert("Has seleccionado mas checkbox que los indicados");
@@ -86,7 +86,7 @@ ul{
 			$('#msj_tope_categoria').hide(9000);
 			$('.msj_tope_categoria').hide("linear");
  
-			// Desmarcamos el último elemento
+			// Desmarcamos el ï¿½ltimo elemento
 			$(elemento).prop('checked', false);
 			contador--;
 		}
