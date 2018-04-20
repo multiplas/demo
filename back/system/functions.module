@@ -7614,6 +7614,38 @@
 			
 			return $query;
 		}
+
+		function CrearCSVUsuarios(){
+			$sql = "SELECT * FROM bd_users";
+
+			//Ejecutamos la query con MySQLi
+			$result = $con->query($sql);
+
+			//declaramos array para volcar los resultados
+			$csv_array = array();
+
+			//recorremos los resulados y los volcamos en un array
+			if($result){
+				while($row = $result->fetch()){
+						$csv_array[] = $row;
+				}
+			}
+			//cabeceras para descarga
+			header('Content-Type: application/octet-stream');
+			header("Content-Transfer-Encoding: Binary"); 
+			header("Content-disposition: attachment; filename=\"my_csv_file.csv\""); 
+
+			//preparar el wrapper de salida
+			$outputBuffer = fopen("php://output", 'w');
+
+			//volcamos el contenido del array en formato csv
+			foreach($column_array as $val) {
+				fputcsv($outputBuffer, $val);
+			}
+			//cerramos el wrapper
+			fclose($outputBuffer);
+			exit;
+		}
                 
         function CrearCSVProductos(){
             

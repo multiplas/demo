@@ -396,6 +396,9 @@ require_once('system/herramientas/execution-confirmar-tabla2.php');
                                    <div class="table-toolbar">
                                       <div class="btn-group">
                                          <a href="#subirco" onclick="javascript: $('#add').css('height', 'auto'); $('#add').css('visibility', 'visible');"><button class="btn btn-success">Usuario Nuevo <i class="icon-plus icon-white"></i></button></a>
+                                        <form action="usuarios.php?accion=csvUsers" method="post" class="form-horizontal">
+                                            <input type="submit" class="btn btn-success" value="Crear CSV de Usuarios">
+                                        </form>
                                       </div>
                                    </div>
   									<div id="example_wrapper" class="dataTables_wrapper form-inline" role="grid">

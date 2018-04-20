@@ -564,6 +564,9 @@
 	if (@$_GET['accion'] == 'subirus'){
 		$resultaop = $System->UsuarioNuevo($_POST['nombre'], $_POST['nif'], $_POST['telefono'], $_POST['email'], $_POST['calle'], $_POST['provincia'], $_POST['poblacion'], $_POST['cp'], $_POST['password'], $_POST['rol']);
 }
+        if (@$_GET['accion'] == 'csvUsers'){
+            $resultaop = $System->CrearCSVUsuarios();
+        }
         if (@$_GET['accion'] == 'subirdis')
 		$resultaop = $System->DistribuidorNuevo($_POST['nombre'], $_POST['apellidos'], $_POST['rs'], $_POST['nif'], $_POST['telefono'], $_POST['email'], $_POST['calle'], $_POST['provincia'], $_POST['poblacion'], $_POST['cp'], $_POST['password'], $_POST['paypal']);
 	

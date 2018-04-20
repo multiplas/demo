@@ -2566,16 +2566,35 @@ function Presupuesto($usuario)
 			
 			if ($dir != null)
 			{
-				$sql = "INSERT INTO bd_compra_direccion
-						VALUES($compraid, '$dir[0]', '$dir[1]', '$dir[2]', '$dir[3]', '$dir[4]', '$dir[5]', '$dir[6]');";
-				$query = mysqli_query($dbi, $sql);
+                $sql = "SELECT idcompra FROM bd_compra_direccion WHERE idcompra = $compraid";
+                $query = mysqli_query($dbi, $sql);
+                if (mysqli_num_rows($query) == 1)//Funcionalidad para verificar que no exista ya esa direccion, y si existe reemplazarla
+                {
+                    $sqlUpdate = "UPDATE bd_compra_direccion SET nombre='$dir[0]',dni='$dir[1]',direccion='$dir[2]',pais='$dir[3]',provincia='$dir[4]',localidad='$dir[5]',cp='$dir[6]' WHERE idcompra = $compraid ";
+                    $query = mysqli_query($dbi, $sqlUpdate);
+                }
+                else{
+                    $sql = "INSERT INTO bd_compra_direccion
+                            VALUES($compraid, '$dir[0]', '$dir[1]', '$dir[2]', '$dir[3]', '$dir[4]', '$dir[5]', '$dir[6]');";
+                    $query = mysqli_query($dbi, $sql);
+
+                }
 			}
                         
                         if ($dirE != null)
 			{
-				$sql = "INSERT INTO bd_compra_direccion_envio
-						VALUES($compraid, '$dirE[0]', '$dirE[1]', '$dirE[2]', '$dirE[3]', '$dirE[4]', '$dirE[5]', '$dirE[6]');";
-				$query = mysqli_query($dbi, $sql);
+                $sql = "SELECT idcompra FROM bd_compra_direccion_envio WHERE idcompra = $compraid";
+                $query = mysqli_query($dbi, $sql);
+                if (mysqli_num_rows($query) == 1)//Funcionalidad para verificar que no exista ya esa direccion, y si existe reemplazarla
+                {
+                    $sqlUpdate = "UPDATE bd_compra_direccion_envio SET nombre='$dirE[0]',direccion='$dirE[1]',pais='$dirE[2]',provincia='$dirE[3]',localidad='$dirE[4]',cp='$dirE[5]',telefono='$dirE[6]' WHERE idcompra= $compraid";
+                    $query = mysqli_query($dbi, $sqlUpdate);
+                }
+                else{
+                    $sql = "INSERT INTO bd_compra_direccion_envio
+                            VALUES($compraid, '$dirE[0]', '$dirE[1]', '$dirE[2]', '$dirE[3]', '$dirE[4]', '$dirE[5]', '$dirE[6]');";
+                    $query = mysqli_query($dbi, $sql);
+                }
 			}
                         
                         if($_SESSION['domiciliacion'] != null){
@@ -2898,8 +2917,8 @@ function Presupuesto($usuario)
 		require_once('./componentes/paypal/paypal.class.php');
 
 		$p = new paypal_class;             // initiate an instance of the class
-		$p->paypal_url = 'https://www.paypal.com/cgi-bin/webscr';     // paypal url
-                // $p->paypal_url = 'https://www.sandbox.paypal.com/cgi-bin/webscr'; //paypal pruebas
+		// $p->paypal_url = 'https://www.paypal.com/cgi-bin/webscr';     // paypal url
+                $p->paypal_url = 'https://www.sandbox.paypal.com/cgi-bin/webscr'; //paypal pruebas
 
 		$this_script = '//'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];
 		$urlNotificacion = '//'.$_SERVER['HTTP_HOST'].'/index.php?sys_action=pagook3&amp;uid='.$_SESSION['usr']['id'].'&amp;ses='.$_SESSION['usr']['sesion'].'&amp;secreto='.$secreto.'&amp;fpago=paypal';
