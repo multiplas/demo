@@ -8004,6 +8004,7 @@
         
         function EnviarEmail($para, $asunto, $mensaje, $retornoExtendido = null ){
 		
+			
                         $sql = "SELECT *
 					FROM bd_empresa
 					WHERE id = 1;";
@@ -8060,32 +8061,32 @@
 
                             $mail->Subject = "$asunto";
                             $mail->AltBody = $mensaje;
-                            $mail->MsgHTML("$mensaje.");
-
+							$mail->MsgHTML("$mensaje.");
+							
                             $exito = $mail->send();
+							$intentos=1; 
+							 while ((!$exito) && ($intentos < 2)) {
+								$exito = $mail->send();
+								$intentos=$intentos+1;    
+						   }
+						   if(!$exito)
+							{
+								if(!is_null($retornoExtendido))
+									return '<div class="alert alert-danger" role="alert">Mailer Error: ' . $mail->ErrorInfo . '</div>';
+								return false;
+							}
+							else
+							{
+								if(!is_null($retornoExtendido))
+									return '<div class="alert alert-success" role="alert">Los ajustes de envío de email son correctos. Se ha enviado un email de prueba a ' . $para . '</div>';
+								return true;
+							}
 							} catch (phpmailerException $e) {
 								return 'entro'; //Pretty error messages from PHPMailer
 							} catch (Exception $e) {
 								return 'entro'; //Boring error messages from anything else!
 							}
 
-                            $intentos=1; 
-                             while ((!$exito) && ($intentos < 2)) {
-								$exito = $mail->send();
-								$intentos=$intentos+1;    
-                           }
-                           if(!$exito)
-                            {
-								if(!is_null($retornoExtendido))
-                                	return '<div class="alert alert-danger" role="alert">Mailer Error: ' . $mail->ErrorInfo . '</div>';
-								return false;
-                            }
-                            else
-                            {
-								if(!is_null($retornoExtendido))
-                                	return '<div class="alert alert-success" role="alert">Los ajustes de envío de email son correctos. Se ha enviado un email de prueba a ' . $para . '</div>';
-                                return true;
-                            }
                         }
         }
         
