@@ -444,7 +444,7 @@
                             if (strlen($text) > $sppos)
                                 $descripcion .= '...';
                         }*/
-                        $descripcion = substr(html_entity_decode($text), 0, 300);
+                        $descripcion = substr(html_entity_decode(strip_tags($text)), 0, 300);
                         if(strlen($producto['descripcion']) > 300)
                             $descripcion .= "...";
                         ?>

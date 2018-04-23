@@ -1,6 +1,6 @@
 <div id="ordenar">
 	Ordenar por:&nbsp;
-	<select name="OrdenarPor">
+	<select id="OrdenarPor" name="OrdenarPor">
 		<option value="def"<?=@($_SESSION['OrdenarPor'] == 'def') ? ' selected' : ($_SESSION['OrdenarPor'] == '' ? ($Empresa['ordenacion'] == 'def' ? 'selected' : '') : '')?>>Relevancia</option>
 		<option value="rel"<?=@($_SESSION['OrdenarPor'] == 'rel') ? ' selected' : ($_SESSION['OrdenarPor'] == '' ? ($Empresa['ordenacion'] == 'rel' ? 'selected' : '') : '')?>>Más visitados</option>
 		<option value="fea"<?=@($_SESSION['OrdenarPor'] == 'fea') ? ' selected' : ($_SESSION['OrdenarPor'] == '' ? ($Empresa['ordenacion'] == 'fea' ? 'selected' : '') : '')?>>Fecha (Nuevos primero)</option>

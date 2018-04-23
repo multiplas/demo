@@ -41,9 +41,34 @@
 	}
 // print_r($_GET);
 // check_is_brand($_GET['productos']);
+
 ?>
+<style>
+.vistazo-rapido {
+    background: #ebc1d2;
+    border: #ebc1d2;
+    padding: 8px;
+    color: #ffffff;
+    cursor: pointer;
+}
+</style>
+
+<script>
+jQuery(document).ready(function(){
+	jQuery("#OrdenarPor").on('change', function() {
+		jQuery("#changeFilter").submit();
+	});
+});
+</script>
+
 <div id="contenido">
-	<form action="<?=$_SERVER['REQUEST_URI']?>" method="post">
+<form id="changeFilter" action="<?=$_SERVER['REQUEST_URI']?>" method="post">
+	<div id="panel-superior">
+		<?php include('./bloques/paginador.php'); ?>
+		<?php include('./bloques/ordenador.php'); ?>
+	</div>
+	<input type="hidden" name="nofilters" value="nofilters" />
+</form>
 		<div id="subcategoriaspr">
             <div class="muestra">
                 <?php
@@ -63,10 +88,7 @@
                 ?>
             </div>
 		</div>
-		<div id="panel-superior">
-			<?php include('./bloques/paginador.php'); ?>
-			<?php include('./bloques/ordenador.php'); ?>
-		</div>
+		
 		<div id="panel-izquierdo">
                         <?php //include('./bloques/menu_prods.php'); ?>
 			<?php include('./bloques/filtros.php'); ?>
@@ -111,8 +133,8 @@
 				}
 			?>
 		</div>
-		<input type="hidden" name="nofilters" value="nofilters" />
-	</form>
+		
+	
 	<div id="panel-inferior">
 		<?php include('./bloques/paginador.php'); ?>
 	</div>
