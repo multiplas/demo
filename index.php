@@ -1530,7 +1530,7 @@
                                     
                                                     $a = EnviarEmail($Empresa['email'], $campos['asunto'], $campos['mensaje']);
                                                     if(isset($_SESSION['compra']['entrega']['factura']) && $_SESSION['compra']['entrega']['factura'] == 1)
-                                                        EnviarEmail($Empresa['email'],'Necesaria factura', 'El cliente ha solicitado que se le envíe una factura.');
+                                                        $a = EnviarEmail($Empresa['email'],'Necesaria factura', 'El cliente ha solicitado que se le envíe una factura.');
                                     
                                    /*if($_SESSION['compra']['afiliadopaypal'] != ''){  
                                         $sqlpais = "SELECT email FROM bd_distribuidores WHERE nombre = '".$_SESSION['compra']['afiliadopaypal']."'";
@@ -1566,68 +1566,67 @@
 				}
 				break;
                         case 'return2':
-                print_r($_GET);
+                
                 
 				if (isset($_GET['uid']) && isset($_GET['ses']) && isset($_GET['secreto']) && isset($_GET['fpago']))
 				{
                                    
-                        require_once($draiz.'/sistema/mod_cestaycompra.php');   
-                        require_once($draiz.'/sistema/mod_contacto.php');
-                        $_SESSION['factura'] = RealizarCompra($_GET['uid'], $_GET['secreto'], $_GET['fpago']);
-                        if($_GET['fpago'] == 'tpv'){
-                            $pagoF = 'TPV Virtual';
-                        }else if($_GET['fpago'] == 'aplazame'){
-                            $pagoF = 'Aplazame';
+                    require_once($draiz.'/sistema/mod_cestaycompra.php');   
+                    require_once($draiz.'/sistema/mod_contacto.php');
+                    $_SESSION['factura'] = RealizarCompra($_GET['uid'], $_GET['secreto'], $_GET['fpago']);
+                    if($_GET['fpago'] == 'tpv'){
+                        $pagoF = 'TPV Virtual';
+                    }else if($_GET['fpago'] == 'aplazame'){
+                        $pagoF = 'Aplazame';
+                    }else{
+                        $pagoF = 'Paypal';
+                    }
+                        
+                        $campos['asunto'] = 'Pago mediante '.$pagoF.' para compra en '.$Empresa['nombre'];
+                        $campos['mensaje'] = ConstruirMsgCompra($_SESSION['usr']['nombre'], $campos['asunto'], ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$_SESSION['factura']['total']), $_GET['secreto'], $pagoF);
+                        $a = EnviarEmail($_SESSION['usr']['email'], $campos['asunto'], $campos['mensaje']);
+                        
+                        $campos['asunto'] = 'Nueva venta realizada mediante '.$pagoF;
+                        if ($_GET['fpago'] == 'tpv'){
+                            $pago = 'tpv';
+                            $campos['mensaje'] = ConstruirMsgTPVVenta($_SESSION['usr']['nombre'], $campos['asunto'], $_SESSION['factura']['total'], $_GET['secreto']);
+                        }else if ($_GET['fpago'] == 'aplazame'){
+                            $pago = 'aplazame';
+                            $campos['mensaje'] = ConstruirMsgAplazame($_SESSION['usr']['nombre'], $campos['asunto'], $_SESSION['factura']['total'], $_GET['secreto']);
                         }else{
-                            $pagoF = 'Paypal';
+                            $pago = 'paypal';
+                            $campos['mensaje'] = ConstruirMsgPaypalVenta($_SESSION['usr']['nombre'], $campos['asunto'], $_SESSION['factura']['total'], $_GET['secreto']);
                         }
-                        // if($pagoF != 'Paypal'){
-                            
-                            $campos['asunto'] = 'Pago mediante '.$pagoF.' para compra en '.$Empresa['nombre'];
-                            $campos['mensaje'] = ConstruirMsgCompra($_SESSION['usr']['nombre'], $campos['asunto'], ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$_SESSION['factura']['total']), $_GET['secreto'], $pagoF);
-                            $a = EnviarEmail($_SESSION['usr']['email'], $campos['asunto'], $campos['mensaje']);
-                            
-                            $campos['asunto'] = 'Nueva venta realizada mediante '.$pagoF;
-                            if ($_GET['fpago'] == 'tpv'){
-                                $pago = 'tpv';
-                                $campos['mensaje'] = ConstruirMsgTPVVenta($_SESSION['usr']['nombre'], $campos['asunto'], $_SESSION['factura']['total'], $_GET['secreto']);
-                            }else if ($_GET['fpago'] == 'aplazame'){
-                                $pago = 'aplazame';
-                                $campos['mensaje'] = ConstruirMsgAplazame($_SESSION['usr']['nombre'], $campos['asunto'], $_SESSION['factura']['total'], $_GET['secreto']);
-                            }else{
-                                $pago = 'paypal';
-                                $campos['mensaje'] = ConstruirMsgPaypalVenta($_SESSION['usr']['nombre'], $campos['asunto'], $_SESSION['factura']['total'], $_GET['secreto']);
-                            }
-                            $a = EnviarEmail($Empresa['email'], $campos['asunto'], $campos['mensaje']);
-                            if(isset($_SESSION['compra']['entrega']['factura']) && $_SESSION['compra']['entrega']['factura'] == 1)
-                                EnviarEmail($Empresa['email'],'Necesaria factura', 'El cliente ha solicitado que se le envíe una factura.');
-                        // }else{
-                            //Borrar cesta si ha llegado hasta aquí, se presupone pago ok.
-                            $sqlB = "DELETE FROM bd_carrito WHERE idusuario='".$_GET['uid']."'";
-                            $queryB = mysqli_query($dbi, $sqlB);
-                        // }
-                        
-                        
-                        if($_SESSION['compra']['afiliadopaypal'] != ''){  
-                            $sqlpais = "SELECT email FROM bd_distribuidores WHERE nombre = '".$_SESSION['compra']['afiliadopaypal']."'";
-                            $query = mysqli_query($dbi, $sqlpais);
-                            if (mysqli_num_rows($query) > 0){
-                                $assoc = mysqli_fetch_assoc($query);
-                                if($assoc['email'] != ''){
-                                    $campos['mensaje'] = AvisarDeCompraAGestionarAfil($pago, $secreto, $Empresa['url']);
-                                    $a = EnviarEmail($assoc['email'], $campos['asunto'], $campos['mensaje']);       
-                                }
+                        $a = EnviarEmail($Empresa['email'], $campos['asunto'], $campos['mensaje']);
+                        if(isset($_SESSION['compra']['entrega']['factura']) && $_SESSION['compra']['entrega']['factura'] == 1)
+                            EnviarEmail($Empresa['email'],'Necesaria factura', 'El cliente ha solicitado que se le envíe una factura.');
+                    
+                        //Borrar cesta si ha llegado hasta aquí, se presupone pago ok.
+                        $sqlB = "DELETE FROM bd_carrito WHERE idusuario='".$_GET['uid']."'";
+                        $queryB = mysqli_query($dbi, $sqlB);
+                    
+                    
+                    
+                    if($_SESSION['compra']['afiliadopaypal'] != ''){  
+                        $sqlpais = "SELECT email FROM bd_distribuidores WHERE nombre = '".$_SESSION['compra']['afiliadopaypal']."'";
+                        $query = mysqli_query($dbi, $sqlpais);
+                        if (mysqli_num_rows($query) > 0){
+                            $assoc = mysqli_fetch_assoc($query);
+                            if($assoc['email'] != ''){
+                                $campos['mensaje'] = AvisarDeCompraAGestionarAfil($pago, $secreto, $Empresa['url']);
+                                $a = EnviarEmail($assoc['email'], $campos['asunto'], $campos['mensaje']);       
                             }
                         }
-                        
-                        $factura = '/'.$_GET['secreto'];
-                        if($pagoF != 'Paypal'){
-                            header('Location: '.$draizp.'/'.$_SESSION['lenguaje'].'finalizado'.$factura);
-                        }else{
-                            header('Location: '.$draizp.'/'.$_SESSION['lenguaje'].'finalizado2'.$factura);
-                        }
-                    }      
-                break;
+                    }
+                    
+                    $factura = '/'.$_GET['secreto'];
+                    if($pagoF != 'Paypal'){
+                        header('Location: '.$draizp.'/'.$_SESSION['lenguaje'].'finalizado'.$factura);
+                    }else{
+                        header('Location: '.$draizp.'/'.$_SESSION['lenguaje'].'finalizado2'.$factura);
+                    }
+                }      
+            break;
 				
 			default:			// Caso por defecto!
 				echo '';

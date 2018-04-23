@@ -2917,14 +2917,14 @@ function Presupuesto($usuario)
 		require_once('./componentes/paypal/paypal.class.php');
 
 		$p = new paypal_class;             // initiate an instance of the class
-		// $p->paypal_url = 'https://www.paypal.com/cgi-bin/webscr';     // paypal url
-                $p->paypal_url = 'https://www.sandbox.paypal.com/cgi-bin/webscr'; //paypal pruebas
+		$p->paypal_url = 'https://www.paypal.com/cgi-bin/webscr';     // paypal url
+                // $p->paypal_url = 'https://www.sandbox.paypal.com/cgi-bin/webscr'; //paypal pruebas
 
 		$this_script = '//'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];
 		$urlNotificacion = '//'.$_SERVER['HTTP_HOST'].'/index.php?sys_action=pagook3&amp;uid='.$_SESSION['usr']['id'].'&amp;ses='.$_SESSION['usr']['sesion'].'&amp;secreto='.$secreto.'&amp;fpago=paypal';
-		$linkReturn = '//'.$_SERVER['HTTP_HOST'].'/index.php?sys_action=return&amp;uid='.$_SESSION['usr']['id'].'&amp;secreto='.$secreto.'&amp;ses='.$_SESSION['usr']['sesion'].'&amp;fpago=paypal';
-		$linkReturn2 = '//'.$_SERVER['HTTP_HOST'].'/index.php?sys_action=return2&uid='.$_SESSION['usr']['id'].'&secreto='.$secreto.'&ses='.$_SESSION['usr']['sesion'].'&amp;fpago=paypal';
-        $linkCancel = $linkReturn;
+		$linkReturn = '//'.$_SERVER['HTTP_HOST'].'/index.php?sys_action=return2&uid='.$_SESSION['usr']['id'].'&secreto='.$secreto.'&ses='.$_SESSION['usr']['sesion'].'&amp;fpago=paypal';
+		$linkCancel = '//'.$_SERVER['HTTP_HOST'].'/index.php?sys_action=return&amp;uid='.$_SESSION['usr']['id'].'&amp;secreto='.$secreto.'&amp;ses='.$_SESSION['usr']['sesion'].'&amp;fpago=paypal';
+       
 		
 		// EJECUCIÓN PARA PAYPAL
         $p->add_field('business', $Empresa['paypal']);
@@ -2945,7 +2945,7 @@ function Presupuesto($usuario)
             $empresilla = $Empresa['nombre'];
         }
                 
-		$p->add_field('return', $linkReturn2);
+		$p->add_field('return', $linkReturn);
 		$p->add_field('cancel_return', $linkCancel);
 		$p->add_field('notify_url', $urlNotificacion);
 		$p->add_field('item_name', $empresilla.'('.$secreto.')');

@@ -1102,76 +1102,82 @@
 	function EnviarEmail($para, $asunto, $mensaje)
 	{
 		global $Empresa;
-		if($Empresa['envimail'] == 0){
-                    require_once('./scripts/PHPMailerAutoload.php');
+                        
+        if($Empresa['envimail'] == 0){
+            require_once('./scripts/PHPMailerAutoload.php');
 
-                    $mail = new PHPMailer;
-                    $mail->isSendmail();
+            $mail = new PHPMailer;
+            $mail->isSendmail();
 
-                    //$mail->setFrom(implode(';', $para), 'First Last');
-                    //$mail->addReplyTo($cc, '');
-                    $mail->addAddress($para);
-                    $mail->setFrom("$Empresa[email]", "$Empresa[nombre]");
+            $mail->addAddress($para);
+            $mail->setFrom("$Empresa[email]", "$Empresa[nombre]");
 
-                    $mail->Subject = $asunto;
-                    $mail->IsHTML(true);
-                    $mail->CharSet = "UTF-8";
-                    $mail->msgHTML($mensaje);
+            $mail->Subject = $asunto;
+            $mail->IsHTML(true);
+            $mail->CharSet = "UTF-8";
+            $mail->msgHTML($mensaje);
+            
+            if (!$mail->send())
+                    return false;
+            else
+                    return true;
+        }else{
+            require_once('./scripts/class.phpmailer.php');
+            require_once('./scripts/class.smtp.php');
 
-                    if (!$mail->send())
-                            return $mail->ErrorInfo;
-                    else
-                            return true;
-                }else{
-                    require_once('./scripts/class.phpmailer.php');
-                    require_once('./scripts/class.smtp.php');
+            try {
+                $mail = new PHPMailer();
+                // $mail->SMTPDebug  = 2;
+                $mail->isSMTP();
+                $mail->SMTPAuth = true;
+                $mail->Timeout=30;
+                $mail->CharSet = "UTF-8";
+                if ($Empresa['segSmtp'] == 0)
+                    $seg = 'tls';
+                else
+                    $seg = 'ssl';
 
-                    $mail = new PHPMailer();
-                    $mail->isSMTP();
-                    $mail->SMTPAuth = true;
-                    $mail->Timeout=30;
-                    $mail->CharSet = "UTF-8";
+                $mail->SMTPSecure = $seg;
+                $mail->Host = $Empresa['hostSmtp'];
+                $mail->Port = $Empresa['puertoSmtp'];
+                $mail->Username   = $Empresa['mailSmtp'];
+                $mail->Password   = $Empresa['passSmtp'];
 
-                    if ($Empresa['segSmtp'] == 0)
-                        $seg = 'tls';
-                    else
-                        $seg = 'ssl';
-        
-                    $mail->SMTPSecure = $seg;
-                    $mail->Host = $Empresa['hostSmtp'];
-                    $mail->Port = $Empresa['puertoSmtp'];
-                    $mail->Username   = $Empresa['mailSmtp'];
-                    $mail->Password   = $Empresa['passSmtp'];
+                $mail->SetFrom("$Empresa[email]", "$Empresa[nombre]");
+                $mail->AddReplyTo("$Empresa[email]","$Empresa[nombre]");
+                $mail->AddAddress($para);
 
-                    $mail->SetFrom("$Empresa[email]", "$Empresa[nombre]");
-                    $mail->AddReplyTo("$Empresa[email]","$Empresa[nombre]");
-                    $mail->AddAddress($para);
-
-                    $mail->Subject = "$asunto";
-                    $mail->AltBody = $mensaje;
-                    $mail->MsgHTML("$mensaje.");
-                    
+                $mail->Subject = "$asunto";
+                $mail->AltBody = $mensaje;
+                $mail->MsgHTML("$mensaje.");
+                
+                $exito = $mail->send();
+                $intentos=1; 
+                
+                while ((!$exito) && ($intentos < 2)) {
                     $exito = $mail->send();
-
-                    $intentos=1; 
-                     while ((!$exito) && ($intentos < 2)) {
-                            $exito = $mail->send();
-                            $intentos=$intentos+1;    
-                   }
-                   if(!$exito)
-                    {
-                        //echo $mail->Host ." - ". $mail->Port ." - ". $mail->Username ." - ". $mail->Password."<br>";
-                        //echo "Problemas enviando correo electrónico a ".$valor;
-                        //echo "<br/>".$mail->ErrorInfo;  exit;
-                        return $mail->ErrorInfo;
-                    }
-                    else
-                    {
-                        //echo "Mensaje enviado correctamente..."; exit;
-                        return true;
-                    }
+                    $intentos=$intentos+1;    
                 }
-	}
+                
+                if(!$exito)
+                {
+                    if(!is_null($retornoExtendido))
+                        return '<div class="alert alert-danger" role="alert">Mailer Error: ' . $mail->ErrorInfo . '</div>';
+                    return $mail->ErrorInfo;
+                }
+                else
+                {
+                    if(!is_null($retornoExtendido))
+                        return '<div class="alert alert-success" role="alert">Los ajustes de envío de email son correctos. Se ha enviado un email de prueba a ' . $para . '</div>';
+                    return true;
+                }
+            } catch (phpmailerException $e) {
+                return 'entro'; //Pretty error messages from PHPMailer
+            } catch (Exception $e) {
+                return 'entro'; //Boring error messages from anything else!
+            }
+        }
+    }
 
 	function EnviarEmailPresupuesto($para, $asunto, $mensaje, $de)
 	{
