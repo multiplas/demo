@@ -187,7 +187,7 @@
 
                        <?php include "menu-personalizacion.php"; ?>
                         
-                       <li class="dropup <?=$menusel == 'herramientas-menu' ? 'active' : ''?><?=$menusel == 'eliminarinfo' ? ' active' : ''?>">
+                       <li class="dropup <?=$menusel == 'herramientas-menu' ? 'active' : ''?><?=$menusel == 'eliminarinfo' ? ' active' : ''?><?=$menusel == 'importar-pro-cat' ? ' active' : ''?>">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Herramientas <i class="icon-chevron-up"></i></a>
                             <ul class="dropdown-menu" style="width:99%;" role="menu">
                                 <li<?=$menusel == 'herramientas-menu' ? ' class="active"' : ''?>>
@@ -195,6 +195,9 @@
                                 </li>
                                 <li<?=$menusel == 'eliminarinfo' ? ' class="active"' : ''?>>
                                     <a href="eliminar_dbinfo.php"><i class="icon-chevron-right"></i> Eliminar Información</a>
+                                </li>
+                                <li<?=$menusel == 'importar-pro-cat' ? ' class="active"' : ''?>>
+                                    <a href="importar-pro-cat.php"><i class="icon-chevron-right"></i> Importar producto / categoría </a>
                                 </li>
                             </ul>
                         </li>
