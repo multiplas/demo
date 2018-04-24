@@ -153,6 +153,15 @@
             move_uploaded_file($_FILES['logo']['tmp_name'], $fichero_subido);
         }
     }
+
+    if (@$_GET['accion'] == 'editfact'){
+        $resultaop = $System->EditarDatosFacturacion($_POST['id'],$_POST['nombre'],$_POST['nif'],$_POST['direccion'],$_POST['localidad'],$_POST['provincia'],$_POST['pais'],$_POST['cp']);
+    }
+
+    if (@$_GET['accion'] == 'editfactenv'){
+        $resultaop = $System->EditarDatosEnvio($_POST['id'],$_POST['nombre'],$_POST['direccion'],$_POST['localidad'],$_POST['provincia'],$_POST['pais'],$_POST['cp'],$_POST['telefono']);
+    }
+
     if (@$_GET['accion'] == 'editprt'){
         $dir_subida = '../logos/';
         $extension = explode('.', $_FILES['logo']['name']);
@@ -991,7 +1000,13 @@
                         break;
 		case 'facturas.php':
 			$listados = $System->CargarFacturas(1000000);
-                        $nacesSN = $System->NacexSiNo();
+            $nacesSN = $System->NacexSiNo();
+            if(isset($_GET['facturaID'])){
+                $datosFacturacion = $System->GetFacturaInfo($_GET['facturaID']);
+            }
+            if(isset($_GET['envioID'])){
+                $datosEnvio = $System->GetEnvioInfo($_GET['envioID']);
+            }
 			break;
                 case 'comentarios.php':
 			$listados = $System->CargarComentarios(1000000);

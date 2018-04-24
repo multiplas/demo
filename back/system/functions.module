@@ -2670,14 +2670,37 @@
 			
 			return $query;
 		}
-                
+
+		function GetFacturaInfo($id){
+			$sql = "SELECT * FROM bd_compra_direccion WHERE idcompra = $id";
+			
+			$query = mysqli_query($this->conexion, $sql);
+			if (mysqli_num_rows($query) == 1){
+				$assoc = mysqli_fetch_assoc($query);
+			}
+
+			return $assoc;
+		}
+
+		function GetEnvioInfo($id){
+			$sql = "SELECT * FROM bd_compra_direccion_envio WHERE idcompra = $id";
+			
+			$query = mysqli_query($this->conexion, $sql);
+			if (mysqli_num_rows($query) == 1){
+				$assoc = mysqli_fetch_assoc($query);
+			}
+
+			return $assoc;
+		}
+
+
                 function CargarFacturas($limit = 10000)
 		{
 			$resultados = array();
 			
 			
 			$sql = "SELECT f.id AS id, CONCAT(f.ano, f.id) AS numero, f.fecha AS fecha, u.nombre AS nombre, u.RazonSocial AS RazonSocial, u.id AS uid, u.dni AS nif, u.telefono AS telefono, cd.nombre AS nombreF, u.id AS uid, cd.dni AS nifF, cd.direccion AS direccion, cd.provincia AS provincia, cd.localidad AS localidad, cd.cp AS cp,
-                    cd.pais AS pais, cde.nombre AS nombreE, cde.direccion AS direccionE, cde.provincia AS provinciaE, cde.localidad AS localidadE, cde.cp AS cpE, cde.pais AS paisE, cde.telefono AS telefonoE, (c.precio + c.portes) AS total, f.sesion AS sesion, f.estado AS estado, f.formapago AS formapago, 
+                    cd.pais AS pais, cde.nombre AS nombreE, cde.direccion AS direccionE, cde.provincia AS provinciaE, cde.localidad AS localidadE, cd.idcompra AS idDireccionFactura, cde.idcompra AS idDireccionEnvio, cde.cp AS cpE, cde.pais AS paisE, cde.telefono AS telefonoE, (c.precio + c.portes) AS total, f.sesion AS sesion, f.estado AS estado, f.formapago AS formapago, 
                     c.transportista AS transportista, c.afiliado AS afiliado
 					FROM bd_facturas f, bd_compra c, bd_compra_direccion cd, bd_compra_direccion_envio cde, bd_users u, bd_portes p
                     WHERE f.sesion = c.secreto
@@ -4092,6 +4115,18 @@
 			}
 
 			return $resultado;
+		}
+
+		function EditarDatosFacturacion($id, $nombre, $nif, $direccion, $localidad, $provincia, $pais, $cp){
+			$sql = "UPDATE bd_compra_direccion SET nombre='$nombre',dni='$nif',direccion='$direccion',pais='$pais',provincia='$provincia',localidad='$localidad',cp='$cp' WHERE idcompra = $id";
+			$query = mysqli_query($this->conexion, $sql);
+			return $query;
+		}
+
+		function EditarDatosEnvio($id, $nombre, $direccion, $localidad, $provincia, $pais, $cp, $telefono){
+			$sql = "UPDATE bd_compra_direccion_envio SET nombre='$nombre',direccion='$direccion',pais='$pais',provincia='$provincia',localidad='$localidad',cp='$cp',telefono='$telefono' WHERE idcompra=$id";
+			$query = mysqli_query($this->conexion, $sql);
+			return $query;
 		}
 		
 		function CargarNoticias($limit = 10000, $orden = 'id DESC')
