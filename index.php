@@ -1573,7 +1573,8 @@
                                    
                     require_once($draiz.'/sistema/mod_cestaycompra.php');   
                     require_once($draiz.'/sistema/mod_contacto.php');
-                    $_SESSION['factura'] = RealizarCompra($_GET['uid'], $_GET['secreto'], $_GET['fpago']);
+                    RealizarCompra($_GET['uid'], $_GET['secreto'], $_GET['fpago']);
+                    $_SESSION['factura'] = Factura($_GET['secreto'], $_GET['uid']);
                     if($_GET['fpago'] == 'tpv'){
                         $pagoF = 'TPV Virtual';
                     }else if($_GET['fpago'] == 'aplazame'){
@@ -1597,7 +1598,8 @@
                             $pago = 'paypal';
                             $campos['mensaje'] = ConstruirMsgPaypalVenta($_SESSION['usr']['nombre'], $campos['asunto'], $_SESSION['factura']['total'], $_GET['secreto']);
                         }
-                        $a = EnviarEmail($Empresa['email'], $campos['asunto'], $campos['mensaje']);
+                        
+                        $a = EnviarEmail('multiplas72@gmail.com', $campos['asunto'], $campos['mensaje']);
                         if(isset($_SESSION['compra']['entrega']['factura']) && $_SESSION['compra']['entrega']['factura'] == 1)
                             EnviarEmail($Empresa['email'],'Necesaria factura', 'El cliente ha solicitado que se le envíe una factura.');
                     
