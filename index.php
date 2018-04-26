@@ -1599,7 +1599,7 @@
                             $campos['mensaje'] = ConstruirMsgPaypalVenta($_SESSION['usr']['nombre'], $campos['asunto'], $_SESSION['factura']['total'], $_GET['secreto']);
                         }
                         
-                        $a = EnviarEmail('multiplas72@gmail.com', $campos['asunto'], $campos['mensaje']);
+                        $a = EnviarEmail($Empresa['email'], $campos['asunto'], $campos['mensaje']);
                         if(isset($_SESSION['compra']['entrega']['factura']) && $_SESSION['compra']['entrega']['factura'] == 1)
                             EnviarEmail($Empresa['email'],'Necesaria factura', 'El cliente ha solicitado que se le envíe una factura.');
                     
