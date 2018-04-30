@@ -261,13 +261,18 @@
 		$resultaop = $System->ModificarCategoriaAtributo($_POST['idm'], $_POST['atributo'], $_POST['mensaje'], @$_POST['obligatorio'], @$_POST['obligatorio2'], @$_POST['desglosado'], @$_POST['oculto'], $_POST['contenido2']);
 	
     if($_GET['accion'] == 'addMarcasFile' && $_POST['idm'] != null){
-        $dir_subida = '../ficheros/';
-        $fecha_subida = date("Y-m-d-H-i-s");
-        $fecha_format = str_replace('-','',$fecha_subida);
-        $nombre_fichero = $fecha_format.'_'.$_FILES['fichero_usuario']['name'];
-        $fichero_subido = $dir_subida . basename($nombre_fichero);
-        if(move_uploaded_file($_FILES['fichero_usuario']['tmp_name'], $fichero_subido))
-		    $resultaop = $System->AddFileToMarca($_POST['idm'], $nombre_fichero, $_POST['rol']);
+        if(isset($_FILES['fichero_usuario']['name']) && !empty($_FILES['fichero_usuario']['name'])){
+            $dir_subida = '../ficheros/';
+            $fecha_subida = date("Y-m-d-H-i-s");
+            $fecha_format = str_replace('-','',$fecha_subida);
+            $nombre_fichero = $fecha_format.'_'.$_FILES['fichero_usuario']['name'];
+            $fichero_subido = $dir_subida . basename($nombre_fichero);
+            if(move_uploaded_file($_FILES['fichero_usuario']['tmp_name'], $fichero_subido))
+                $resultaop = $System->AddFileToMarca($_POST['idm'], $nombre_fichero, $_POST['rol'], 0);
+        }
+        else if(isset($_POST['urlMarca']) && !empty($_POST['urlMarca'])){
+            $resultaop = $System->AddFileToMarca($_POST['idm'], $_POST['urlMarca'], $_POST['rol'], 1);
+        }
     }
 
     if($_GET['accion'] == 'deleteMarcasFile' && $_POST['idm'] != null){

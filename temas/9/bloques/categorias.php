@@ -32,8 +32,14 @@
                        
 		?>
 				<div class="producto" <?=(($i % 4) == 0) ? 'style="margin-left:0;margin-bottom:1.8em;"' : 'style="margin-bottom:1.8em;"'?>>
+                    <?php 
+                    if(!empty($categorias2[$i]['url']))
+                        $url = $categorias2[$i]['url'];
+                    else
+                        $url = $draizp.'/'.$_SESSION['lenguaje'].'productos/'.$categorias2[$i]['id'].'/'.$nombre.'/';
+                    ?>
                     
-					<a href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>productos/<?=$categorias2[$i]['id']?>/<?=$nombre?>/">
+					<a href="<?=$url?>">
                                             <figure class="<?=$efecto?>" style="background-color:<?=$CFefecto?>;">
                                             <img class="zoom" src="<?=$draizp.'/imagenesproductos/'.$categorias2[$i]['imagen'] ?>" alt="<?=$categorias2[$i]['nombre']?>" />
                                             <figcaption style="background-color:<?=$CFefecto?>;">

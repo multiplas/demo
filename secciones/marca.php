@@ -146,6 +146,7 @@
 		if(isset($attachedFiles) && !empty($attachedFiles)){
 			foreach($attachedFiles as $file){
 				if($file['rol'] == $_SESSION['usr']['rol'] || $file['rol'] == 3)://Visible para todos los clientes
+					if($file['url'] == 0){
 					$tipoFichero = explode('.',$file['fichero']);
 					$tipoFichero = $tipoFichero[count($tipoFichero)-1];
 					if($tipoFichero == 'pdf')
@@ -160,6 +161,18 @@
 						<a class="link-file" href="../ficheros/<?=$file['fichero']?>" target="_blank" ><?php echo (strlen($file['fichero']) > 30)? substr($file['fichero'],0,30).'...' : $file['fichero']?></a>
 					</div>
 					<?php
+					}
+					else{
+						$fichero_imagen = 'pdf.png';//Siempre pdf para enlaces
+						?>
+						<div class="fichero-list inline">		
+							<span>
+								<img src="../marcas/<?=$fichero_imagen?>" alt="">
+							</span> 					
+							<a class="link-file" href="<?=$file['fichero']?>" target="_blank" >Descargar</a>
+						</div>
+						<?php
+					}
 				endif;
 			}
 		}

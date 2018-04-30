@@ -6026,12 +6026,12 @@
 			return $query;
 		}
 
-		function AddFileToMarca($idMarca, $nombreFichero, $rol)
+		function AddFileToMarca($idMarca, $nombreFichero, $rol, $url = 0 ) //Si url es 0 se entiende que es un fichero
 		{
 			$idMarca = mysqli_real_escape_string($this->conexion, htmlspecialchars($idMarca));
             $nombreFichero = mysqli_real_escape_string($this->conexion, htmlspecialchars($nombreFichero));
 
-			$sql = "INSERT INTO bd_marca_fichero VALUES (null, $idMarca, '$nombreFichero', $rol)";
+			$sql = "INSERT INTO bd_marca_fichero VALUES (null, $idMarca, '$nombreFichero', $rol, $url)";
 					
 			$query = mysqli_query($this->conexion, $sql);
 			

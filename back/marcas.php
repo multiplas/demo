@@ -10,6 +10,12 @@ jQuery(document).ready(function(){
     jQuery('#fichero_usuario').change(function(){
         jQuery('#addMarcasFile').submit();
     });
+    jQuery("#urlMarca").keyup(function(){
+        jQuery('.botonAgregarUrl').css('display','inherit');
+    });
+    jQuery('#fichero_usuario').change(function(){
+        jQuery('#addMarcasFile').submit();
+    });
     jQuery('.delete-file').click(function(){
         jQuery('#delete-file-id').val($(this).attr("data-file"));
         jQuery('#delete-file-name').val($(this).attr("data-file-name"));
@@ -374,7 +380,7 @@ span.rol {
                     }
                         ?>
                     <form enctype="multipart/form-data" id="addMarcasFile" class="form-horizontal"  action="marcas.php?accion=addMarcasFile" method="POST">
-                        <fieldset>
+                        <fieldset>                        
                             <label class="control-label" for="rol">Rol de Usuario </label>
                             <div class="control-group">
                                 <select name="rol" id="rol">
@@ -382,6 +388,10 @@ span.rol {
                                     <option value="<?=$rol['id']?>"><?=$rol['rol']?></option>
                                     <?php } ?>
                                 </select>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label" for="rol">URL: </label> <input type="text" name="urlMarca" id="urlMarca">
+                                <input type="submit" class="botonAgregarUrl btn btn-default" style="display: none;"  value="Agregar URL"/>
                             </div>
                             <div class="control-group">
                                 <label class="control-label" for="fichero_usuario">Añadir Fichero</label>
