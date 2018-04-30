@@ -26,6 +26,10 @@
     color: #333;
 }
 
+#grupo-submenu{
+    height: auto !important;
+}
+
 #cart_product_name span{
     color: #333;
     font-weight: bolder;
