@@ -151,23 +151,23 @@
                         <!-- block -->
                          
                          <script>
-                            $(document).ready(function () {
+                            jQuery(document).ready(function () {
                                 var data_id = '';
                                 var data_name = '';
                                 
-                                $('.open-Modal').click(function () {
+                                jQuery('.open-Modal').click(function () {
                                     
-                                    //alert('error 00');
-                                    if (typeof $(this).data('id') !== 'undefined') {
-                                        data_id = $(this).data('id');
-                                        data_name = $(this).data('name');
-                                        //alert('valor: ' + $(this).data('id'));
+                                    alert('error 00');
+                                    if (typeof jQuery(this).data('id') !== 'undefined') {
+                                        data_id = jQuery(this).data('id');
+                                        data_name = jQuery(this).data('name');
+                                        //alert('valor: ' + jQuery(this).data('id'));
                                     }
-                                    //$('#id-elemento').text(data_id);
-                                    $('#elemento').text(data_name);
+                                    //jQuery('#id-elemento').text(data_id);
+                                    jQuery('#elemento').text(data_name);
                                 })
                                 
-                                $('#btn-eliminar').click(function () {
+                                jQuery('#btn-eliminar').click(function () {
                                     var url = "?eliminars=" + data_id;
                                     location.href = url;
                                 })
@@ -203,7 +203,7 @@
                                 <div class="span12">
                                    <div class="table-toolbar">
                                       <div class="btn-group">
-                                         <a href="#subirsl" onclick="javascript: $('#add').css('display', 'block');"><button class="btn btn-success">Añadir Slider <i class="icon-plus icon-white"></i></button></a>
+                                         <a href="#subirsl" onclick="javascript: jQuery('#add').css('display', 'block');"><button class="btn btn-success">Añadir Slider <i class="icon-plus icon-white"></i></button></a>
                                       </div>
                                       <!--<div class="btn-group pull-right">
                                          <button data-toggle="dropdown" class="btn dropdown-toggle">Tools <span class="caret"></span></button>

@@ -26,9 +26,10 @@
     color: #333;
 }
 
-#grupo-submenu{
+/*Activar para webs con demasiados elementos en el menu*/
+/* #grupo-submenu{
     height: auto !important;
-}
+} */
 
 #cart_product_name span{
     color: #333;

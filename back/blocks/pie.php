@@ -29,8 +29,8 @@
         <script src="vendors/chosen.jquery.min.js"></script>
         <script src="vendors/bootstrap-datepicker.js"></script>
 
-        <script src="vendors/wysiwyg/wysihtml5-0.3.0.js"></script>
-        <script src="vendors/wysiwyg/bootstrap-wysihtml5.js"></script>
+        <!-- <script src="vendors/wysiwyg/wysihtml5-0.3.0.js"></script>
+        <script src="vendors/wysiwyg/bootstrap-wysihtml5.js"></script> -->
 
         <script src="vendors/wizard/jquery.bootstrap.wizard.min.js"></script>
 
