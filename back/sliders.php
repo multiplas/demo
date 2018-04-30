@@ -157,7 +157,7 @@
                                 
                                 jQuery('.open-Modal').click(function () {
                                     
-                                    alert('error 00');
+                                    //alert('error 00');
                                     if (typeof jQuery(this).data('id') !== 'undefined') {
                                         data_id = jQuery(this).data('id');
                                         data_name = jQuery(this).data('name');
