@@ -7,6 +7,36 @@ class ImportCsv extends Conexion{
         parent::__construct($cnst_dbn);
     }
 
+    function BuscarMarca($marca){
+        $marca = mysqli_real_escape_string($this->conexion, htmlspecialchars($marca));
+
+        $resultados = array();
+        $sql="SELECT id
+        FROM bd_marcas WHERE marca = '$marca' LIMIT 1";
+        $query = mysqli_query($this->conexion, $sql);
+
+        if (mysqli_num_rows($query) > 0){
+            while ($assoc = mysqli_fetch_assoc($query)) {
+                $resultados = $assoc;
+            }
+            return $resultados;
+        }
+        else{
+            return false;
+        }
+
+    }
+
+    function InsertMarca($marca){
+        $marca = mysqli_real_escape_string($this->conexion, htmlspecialchars($marca));
+
+        $sql="INSERT INTO bd_marcas(marca, visible)
+VALUES ('$marca',1) ";
+        $query = mysqli_query($this->conexion, $sql);
+
+        return $query;
+    }
+
     function BuscarCat($categoria){
         $categoria = mysqli_real_escape_string($this->conexion, htmlspecialchars($categoria));
 
@@ -37,32 +67,42 @@ VALUES ('$categoria',NULL) ";
         return $query;
     }
 
-    function UpdateProducto($nombre, $descripcion, $imagen, $precio, $referencia, $categorias){
+    function UpdateProducto($nombre, $descripcion, $imagen, $precio, $referencia, $categorias, $stock, $marca, $ptransporte, $impuesto, $pvp_impuesto){
         $nombre = mysqli_real_escape_string($this->conexion, htmlspecialchars($nombre));
         $descripcion = mysqli_real_escape_string($this->conexion, htmlspecialchars($descripcion));
         $imagen = mysqli_real_escape_string($this->conexion, htmlspecialchars($imagen));
         $precio = mysqli_real_escape_string($this->conexion, htmlspecialchars($precio));
         $referencia = mysqli_real_escape_string($this->conexion, htmlspecialchars($referencia));
         $categorias = mysqli_real_escape_string($this->conexion, htmlspecialchars($categorias));
+        $stock = mysqli_real_escape_string($this->conexion, htmlspecialchars($stock));
+        $marca = mysqli_real_escape_string($this->conexion, htmlspecialchars($marca));
+        $ptransporte = mysqli_real_escape_string($this->conexion, htmlspecialchars($ptransporte));
+        $impuesto = mysqli_real_escape_string($this->conexion, htmlspecialchars($impuesto));
+        $pvp_impuesto = mysqli_real_escape_string($this->conexion, htmlspecialchars($pvp_impuesto));
 
         $sql="UPDATE bd_productos
-         SET nombre = '$nombre', descripcion = '$descripcion', imagenprincipal = '$imagen', precio = $precio, idcat = '$categorias', update_at = NOW()
+         SET nombre = '$nombre', descripcion = '$descripcion', imagenprincipal = '$imagen', precio = $precio, idcat = '$categorias', unidades = '$stock', idmarca = '$marca', precio_transporte_ind ='$ptransporte', iva = '$impuesto', update_at = NOW()
          WHERE referencia = '$referencia' LIMIT 1";
         $query = mysqli_query($this->conexion, $sql);
 
         return mysqli_affected_rows($this->conexion);
     }
 
-    function InsertProducto($nombre, $descripcion, $imagen, $precio, $referencia, $categorias){
+    function InsertProducto($nombre, $descripcion, $imagen, $precio, $referencia, $categorias, $stock, $marca, $ptransporte, $impuesto, $pvp_impuesto){
         $nombre = mysqli_real_escape_string($this->conexion, htmlspecialchars($nombre));
         $descripcion = mysqli_real_escape_string($this->conexion, htmlspecialchars($descripcion));
         $imagen = mysqli_real_escape_string($this->conexion, htmlspecialchars($imagen));
         $precio = mysqli_real_escape_string($this->conexion, htmlspecialchars($precio));
         $referencia = mysqli_real_escape_string($this->conexion, htmlspecialchars($referencia));
         $categorias = mysqli_real_escape_string($this->conexion, htmlspecialchars($categorias));
+        $stock = mysqli_real_escape_string($this->conexion, htmlspecialchars($stock));
+        $marca = mysqli_real_escape_string($this->conexion, htmlspecialchars($marca));
+        $ptransporte = mysqli_real_escape_string($this->conexion, htmlspecialchars($ptransporte));
+        $impuesto = mysqli_real_escape_string($this->conexion, htmlspecialchars($impuesto));
+        $pvp_impuesto = mysqli_real_escape_string($this->conexion, htmlspecialchars($pvp_impuesto));
 
-        $sql = "INSERT INTO bd_productos (nombre, descripcion, imagenprincipal, precio, referencia, idcat)
-					VALUES ('$nombre', '$descripcion', '$imagen', $precio, '$referencia', $categorias)";
+        $sql = "INSERT INTO bd_productos (nombre, descripcion, imagenprincipal, precio, referencia, idcat, unidades, idmarca, precio_transporte_ind, iva)
+					VALUES ('$nombre', '$descripcion', '$imagen', $precio, '$referencia', '$categorias', '$stock', '$marca', '$ptransporte', '$impuesto')";
 
         $query = mysqli_query($this->conexion, $sql);
         return $query;

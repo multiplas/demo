@@ -25,15 +25,45 @@ if (isset($_POST['import'])) {
             $c6 = $_POST["categoria"];
             $subir_cat = $_POST["subir_cat"];
             $subir_img = $_POST["subir_img"];
+            $subir_marca = $_POST["subir_marca"];
+            $c7 = $_POST["impuesto"];
+            $c8 = $_POST["pvp_impuesto"];
+            $c9 = $_POST["ptransporte"];
+            $c10 = $_POST["marca"];
+            $c11 = $_POST["stock"];
+            if ($_POST["delimitador"]=='')
+                $delimitador = '';
+            else
+                $delimitador = $_POST["delimitador"];
 
             fgetcsv($file_data);
 
-            while ($row = fgetcsv($file_data)) {
+            //Cantidad de productos a importar
+            $archivo_csv=fgetcsv($file_data);
+            $countcsv = count($archivo_csv)-3;
+            $long_progress=100/$countcsv;
+            $count_interno=0;
+
+            while ($row = fgetcsv($file_data, null, $delimitador)) {
+echo "<script>
+$('#progreso_barra_load').show();
+</script>";
                 //Campos del archivo .csv
                 $nombre = $row[$c1];
                 $descripcion = $row[$c2];
                 $precio = $row[$c4];
                 $referencia = $row[$c5];
+                $impuesto = $_POST[$c7];
+                $pvp_impuesto = $_POST[$c8];
+                $ptransporte = $row[$c9];
+                $stock= $row[$c11];
+
+                    //validando si se desea o no subir marca
+                    if (isset($_POST["marca"]))
+                        $marca = $row[$c10];
+                    else
+                        $marca = '';
+
                     //validando si se desea o no subir imagen
                     if (isset($_POST["imagen"]))
                         $imagen = $row[$c3];
@@ -45,6 +75,21 @@ if (isset($_POST['import'])) {
                         $categoria = $row[$c6];
                     else
                         $categoria = '';
+
+                //Si se desea registrar marcas
+                if($subir_marca == 'on') {
+                    //comprobado si la marca existe
+                    $buscar_marca = $import_csv->BuscarMarca($marca);
+
+                    //si no existe la marca la crea
+                    if ($buscar_marca == false) {
+                        $import_marca = $import_csv->InsertMarca($marca);
+                        $buscar_marca = $import_csv->BuscarMarca($marca);
+                    }
+
+                    //obteniendo id de marca
+                    $marca = $buscar_marca['id'];
+                }
 
                 //Si se desea registrar categorías
                 if($subir_cat == 'on') {
@@ -69,15 +114,25 @@ if (isset($_POST['import'])) {
                 }
 
                 //comprobado si el producto existe
-                $buscar_producto = $import_csv->UpdateProducto($nombre, $descripcion, $imagen, $precio, $referencia, $categoria);
+                $buscar_producto = $import_csv->UpdateProducto($nombre, $descripcion, $imagen, $precio, $referencia, $categoria, $stock, $marca, $ptransporte, $impuesto, $pvp_impuesto);
 
                 //si no existe el producto lo crea
                 if ($buscar_producto == 0) {
                     $insert_p_total++;
-                    $import_producto = $import_csv->InsertProducto($nombre, $descripcion, $imagen, $precio, $referencia, $categoria);
+                    $import_producto = $import_csv->InsertProducto($nombre, $descripcion, $imagen, $precio, $referencia, $categoria, $stock, $marca, $ptransporte, $impuesto, $pvp_impuesto);
                     if($import_producto){
                         $insert_p++;
                     }
+                }
+
+                if($buscar_producto)
+                {
+                    $count_interno= $count_interno+$long_progress;
+                    echo "<script>
+                $('#progress_bar').val($count_interno);
+               
+                </script>";
+                    $buscar_producto=false;
                 }
             }
             if ( $insert_p_total ==  $insert_p){

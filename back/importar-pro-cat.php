@@ -1,10 +1,49 @@
 <?php
 require_once('blocks/cabecera.php');
-require_once('system/herramientas/import-pro-cat/execution-import.php');
-
 ?>
-    <div class="span9" id="content">
+
+<style>
+    progress[value] {
+        /* Eliminamos la apariencia por defecto */
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        /* Quitamos el borde que aparece en Firefox */
+        border: none;
+
+        /* Aplicamos las dimensiones */
+        width: 100%;
+        height: 20px;
+
+        /* Aplicamos color a la barra */
+        color: blue;
+    }
+
+    /* Compatibilidad de color en Firefox y Chrome */
+    progress::-moz-progress-bar { background: #0063a6; }
+    progress::-webkit-progress-value { background: #0063a6
+</style>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            setTimeout(function() {
+                $("#progreso_barra_load").fadeOut(1500);
+            },3000);
+        });
+    </script>
+
+
+<div class="span9" id="content">
         <div class="loader"></div>
+
+        <div class="alert alert-info alert-dismissable" id="progreso_barra_load" style="display: none">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+
+            <progress id="progress_bar" max="100" value="0"></progress>
+        </div>
+        <?php
+            require_once('system/herramientas/import-pro-cat/execution-import.php');
+        ?>
         <div class="alert alert-info alert-dismissable">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
             <h4>Herramientas</h4>
@@ -49,87 +88,85 @@ require_once('system/herramientas/import-pro-cat/execution-import.php');
                         <label>Nombre del producto</label>
                     </div>
                     <div class="span8">
-                        <select name="nombre">
-                            <option value="0" selected>Columna 1</option>
-                            <option value="1">Columna 2</option>
-                            <option value="2">Columna 3</option>
-                            <option value="3">Columna 4</option>
-                            <option value="4">Columna 5</option>
-                            <option value="5">Columna 6</option>
-                        </select>
+                        <input type="number" name="nombre">
                     </div>
                     <div class="span3">
                         <label>Descripción</label>
                     </div>
                     <div class="span8">
-                        <select name="descripcion">
-                            <option value="0">Columna 1</option>
-                            <option value="1" selected>Columna 2</option>
-                            <option value="2">Columna 3</option>
-                            <option value="3">Columna 4</option>
-                            <option value="4">Columna 5</option>
-                            <option value="5">Columna 6</option>
-                        </select>
+                        <input type="number" name="descripcion">
                     </div>
                     <div class="span3">
                         <label>Imágen</label>
                     </div>
                     <div class="span8">
-                        <select name="imagen" id="imagen">
-                            <option value="0">Columna 1</option>
-                            <option value="1">Columna 2</option>
-                            <option value="2" selected>Columna 3</option>
-                            <option value="3">Columna 4</option>
-                            <option value="4">Columna 5</option>
-                            <option value="5">Columna 6</option>
-                        </select>
+                        <input type="number" name="imagen" id="imagen">
                     </div>
                     <div class="span3">
-                        <label>Precio</label>
+                        <label>Impuestos</label>
                     </div>
                     <div class="span8">
-                        <select name="precio">
-                            <option value="0">Columna 1</option>
-                            <option value="1">Columna 2</option>
-                            <option value="2">Columna 3</option>
-                            <option value="3" selected>Columna 4</option>
-                            <option value="4">Columna 5</option>
-                            <option value="5">Columna 6</option>
-                        </select>
+                        <input type="number" name="impuesto">
                     </div>
+                        <div class="span3">
+                            <label>PVP s/impuestos</label>
+                        </div>
+                        <div class="span8">
+                            <input type="number" name="precio">
+                        </div>
+                        <div class="span3">
+                            <label>PVP c/impuestos</label>
+                        </div>
+                        <div class="span8">
+                            <input type="number" name="pvp_impuesto">
+                        </div>
                     <div class="span3">
                         <label>Referencia</label>
                     </div>
                     <div class="span8">
-                        <select name="referencia">
-                            <option value="0">Columna 1</option>
-                            <option value="1">Columna 2</option>
-                            <option value="2">Columna 3</option>
-                            <option value="3">Columna 4</option>
-                            <option value="4" selected>Columna 5</option>
-                            <option value="5">Columna 6</option>
-                        </select>
+                        <input type="number" name="referencia" id="referencia" required>
                     </div>
                         <div class="span3">
                             <label>Categoría</label>
                         </div>
                         <div class="span8">
-                            <select name="categoria" id="categoria">
-                                <option value="0">Columna 1</option>
-                                <option value="1">Columna 2</option>
-                                <option value="2">Columna 3</option>
-                                <option value="3">Columna 4</option>
-                                <option value="4">Columna 5</option>
-                                <option value="5" selected>Columna 6</option>
-                            </select>
+                            <input type="number" name="categoria" id="categoria">
+                        </div>
+                        <div class="span3">
+                            <label>Precio de Transporte</label>
+                        </div>
+                        <div class="span8">
+                            <input type="number" name="ptransporte" id="ptransporte">
+                        </div>
+                        <div class="span3">
+                            <label>Marca</label>
+                        </div>
+                        <div class="span8">
+                            <input type="number" name="marca" id="marca">
+                        </div>
+                        <div class="span3">
+                            <label>Stock</label>
+                        </div>
+                        <div class="span8">
+                            <input type="number" name="stock" id="stock">
                         </div>
                         <div class="span3">
                             <input id="micheckbox_cat" class="micheckbox" type="checkbox" name="subir_cat" checked>
                             Crear Categorías
                         </div>
-                        <div class="span8">
+                        <div class="span3">
                             <input id="micheckbox_img" class="micheckbox2" type="checkbox" name="subir_img" checked>
-                            Subir imágenes
+                            Subir Imágenes
+                        </div>
+                        <div class="span5">
+                            <input id="micheckbox_marca" class="micheckbox" type="checkbox" name="subir_marca" checked>
+                            Crear Marcas
+                        </div>
+                        <div class="span3">
+                            <label>Delimitador</label>
+                        </div>
+                        <div class="span3">
+                            <input id="delimitador" name="delimitador" type="text">
                         </div>
                     <div class="span12">
                         <input type="hidden" name="import">
@@ -150,19 +187,30 @@ require_once('system/herramientas/import-pro-cat/execution-import.php');
         //Envío de formulario por Ajax
         $(document).ready(function(){
 
-            $('#upload_csv').on("submit", function(e){
-                e.preventDefault();
-                $.ajax({
-                    url:"?",
-                    method:"POST",
-                    data:new FormData(this),
-                    contentType:false,
-                    cache:false,
-                    processData:false,
-                    success: function(data){
+            //validando envio de formulario
 
-                    }
-                })
+
+
+                $('#upload_csv').on("submit", function(e) {
+                    //validando envio de formulario
+                    if ($("#referencia").val()=='') {
+                        alert("Debe indicar la columna de la referencia");
+                        return false;
+                    }else{
+
+                    e.preventDefault();
+                    $.ajax({
+                        url: "?",
+                        method: "POST",
+                        data: new FormData(this),
+                        contentType: false,
+                        cache: false,
+                        processData: false,
+                        success: function (data) {
+
+                        }
+                    });
+                }
             });
 
             $( '.micheckbox' ).on( 'click', function() {
@@ -181,7 +229,14 @@ require_once('system/herramientas/import-pro-cat/execution-import.php');
                     $("#imagen").prop('disabled', true);
                 }
             });
+
         });
     </script>
+
+
+
+
+
+
 
 <?php require_once('blocks/pie.php'); ?>
