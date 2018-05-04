@@ -61,34 +61,37 @@
     display: block;
 }
 </style>
+<?php 
+$actual_link = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+?>
 <div class="social-sharing3 metro-social metro-height"> 
     <li>
-        <a class="metro-facebook" target="_blank" onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" href="http://www.facebook.com/sharer.php?u=<?=$Empresa['url']?>/<?=$_SESSION['lenguaje']?>pagina/<?=$pagina['id']?>/<?=$nombre?>">
+        <a class="metro-facebook" target="_blank" onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" href="http://www.facebook.com/sharer.php?u=<?=$actual_link?>">
         </a>
     </li> 
 
     <li>
-        <a class="metro-googleplus" target="_blank" onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" href="http://plus.google.com/share?url=<?=$Empresa['url']?>/<?=$_SESSION['lenguaje']?>pagina/<?=$pagina['id']?>/<?=$nombre?>/">
+        <a class="metro-googleplus" target="_blank" onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" href="http://plus.google.com/share?url=<?=$actual_link?>">
         </a>
     </li>
         
     <li>
-        <a class="metro-twitter" target="_blank" onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" href="http://twitter.com/share?url=<?=$Empresa['url']?>/<?=$_SESSION['lenguaje']?>pagina/<?=$pagina['id']?>/<?=$nombre?>/&amp;text=%0d&amp;">
+        <a class="metro-twitter" target="_blank" onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" href="http://twitter.com/share?url=<?=$actual_link?>&amp;text=%0d&amp;">
         </a>
     </li>
  
     <li>
-        <a class="metro-linkedin" target="_blank" onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" href="http://www.linkedin.com/shareArticle?mini=true&amp;url=<?=$Empresa['url']?>/<?=$_SESSION['lenguaje']?>pagina/<?=$pagina['id']?>/<?=$nombre?>/&amp;title=%0d">
+        <a class="metro-linkedin" target="_blank" onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" href="http://www.linkedin.com/shareArticle?mini=true&amp;url=<?=$actual_link?>&amp;title=%0d">
         </a>
     </li>
  
     <li>
-        <a class="metro-pinterest" target="_blank" onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" href="http://pinterest.com/pin/create/button/?url=<?=$Empresa['url']?>/<?=$_SESSION['lenguaje']?>pagina/<?=$pagina['id']?>/<?=$nombre?>/&amp;media=&amp;description=%0d">
+        <a class="metro-pinterest" target="_blank" onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" href="http://pinterest.com/pin/create/button/?url=<?=$actual_link?>&amp;media=&amp;description=%0d">
         </a>
     </li>
  
     <li>
-        <a class="rss-feed" target="_blank" onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" href="https://web.skype.com/share?url=<?=$Empresa['url']?>/<?=$_SESSION['lenguaje']?>pagina/<?=$pagina['id']?>/<?=$nombre?>/&amp;lang=es-es">
+        <a class="rss-feed" target="_blank" onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" href="https://web.skype.com/share?url=<?=$actual_link?>&amp;lang=es-es">
         </a>
     </li>
     

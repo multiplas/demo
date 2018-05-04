@@ -86,15 +86,6 @@ a.sumome-share-client-share img, .sumome-share-client-share span {
     z-index: 10000000;
 }
 
-.sumome-share-client-wrapper.sumome-share-client-wrapper-left-page {
-    position: fixed;
-    width: 50px;
-    margin: 0;
-    top: 40%;
-    left: 0;
-    z-index: 10000000;
-}
-
 .sumome-share-client-wrapper {
     color: #222;
     padding: 0;
@@ -126,47 +117,100 @@ a.sumome-share-client-share img, .sumome-share-client-share span {
     background: #01aef0 !important;
 }
 
+@media (max-width: 600px) {
+    .social-sharing4 ul{
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #333333;
+    }
+    .social-sharing4 li {
+        float: left;
+    }
+    .social-sharing4 li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 16px;
+        text-decoration: none;
+    }
+    .social-sharing4 li a:hover {
+        background-color: #111111;
+    }
+    .sumome-share-client-wrapper.sumome-share-client-wrapper-left-page {
+        width: 100%;
+        position: fixed;
+        margin: 0;
+        top: auto;
+        bottom: 0;
+        left: 0;
+        z-index: 10000000;
+    }
+}
+
 </style>
+
+<?php
+if(isset($pagina['id']) && !empty($pagina['id'])){
+    $fbUrl = "http://www.facebook.com/sharer.php?u=".$Empresa['url']."/".$_SESSION['lenguaje']."pagina/".$pagina['id']."/".$nombre;
+    $goUrl = "http://plus.google.com/share?url=".$Empresa['url']."/".$_SESSION['lenguaje']."pagina/".$pagina['id']."/".$nombre."/";
+    $twUrl = "http://twitter.com/share?url=".$Empresa['url']."/".$_SESSION['lenguaje']."pagina/".$pagina['id']."/".$nombre."/&amp;text=%0d&amp;";
+    $liUrl = "http://www.linkedin.com/shareArticle?mini=true&amp;url=".$Empresa['url']."/".$_SESSION['lenguaje']."pagina/".$pagina['id']."/".$nombre."/&amp;title=%0d";
+    $piUrl = "http://pinterest.com/pin/create/button/?url=".$Empresa['url']."/".$_SESSION['lenguaje']."pagina/".$pagina['id']."/".$nombre."/&amp;media=&amp;description=%0d";
+    $skUrl = "https://web.skype.com/share?url=".$Empresa['url']."/".$_SESSION['lenguaje']."pagina/".$pagina['id']."/".$nombre."/&amp;lang=es-es";
+}
+else{
+    $fbUrl = "http://www.facebook.com/sharer.php?u=".$Empresa['url']."/";
+    $goUrl = "http://plus.google.com/share?url=".$Empresa['url']."/";
+    $twUrl = "http://twitter.com/share?url=".$Empresa['url']."/&amp;text=%0d&amp;";
+    $liUrl = "http://www.linkedin.com/shareArticle?mini=true&amp;url=".$Empresa['url']."/&amp;title=%0d";
+    $piUrl = "http://pinterest.com/pin/create/button/?url=".$Empresa['url']."/&amp;media=&amp;description=%0d";
+    $skUrl = "https://web.skype.com/share?url=".$Empresa['url']."/&amp;lang=es-es";
+}
+
+?>
 <div class="sumome-share-client-wrapper sumome-share-client-wrapper-left-page sumome-share-client-counts sumome-share-client-light sumome-share-client-medium">
     <div class="social-sharing4 sumome-share-client sumome-share-client-left-page sumome-share-client-counts sumome-share-client-light sumome-share-client-medium"> 
-        <li>
-            <a class="share-fb sumome-share-client-animated sumome-share-client-share sumome-share-client-count" target="_blank" onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" href="http://www.facebook.com/sharer.php?u=<?=$Empresa['url']?>/<?=$_SESSION['lenguaje']?>pagina/<?=$pagina['id']?>/<?=$nombre?>">
-            <img src="<?=$draizp?>/logos/facebook.png" alt="">
+        <ul>
+            <li>
+                <a class="share-fb sumome-share-client-animated sumome-share-client-share sumome-share-client-count" target="_blank" onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" href="<?=$fbUrl?>">
+                <img src="<?=$draizp?>/logos/facebook.png" alt="">
+                </a>
+            </li> 
+
+            <li>
+                <a class="share-go sumome-share-client-animated sumome-share-client-share sumome-share-client-count" target="_blank" onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" href="<?=$goUrl?>">
+                <img src="<?=$draizp?>/logos/google.png" alt="">
+
             </a>
-        </li> 
-
-        <li>
-            <a class="share-go sumome-share-client-animated sumome-share-client-share sumome-share-client-count" target="_blank" onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" href="http://plus.google.com/share?url=<?=$Empresa['url']?>/<?=$_SESSION['lenguaje']?>pagina/<?=$pagina['id']?>/<?=$nombre?>/">
-            <img src="<?=$draizp?>/logos/google.png" alt="">
-
-        </a>
-        </li>
-            
-        <li>
-            <a class="share-tw sumome-share-client-animated sumome-share-client-share sumome-share-client-count" target="_blank" onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" href="http://twitter.com/share?url=<?=$Empresa['url']?>/<?=$_SESSION['lenguaje']?>pagina/<?=$pagina['id']?>/<?=$nombre?>/&amp;text=%0d&amp;">
-            <img src="<?=$draizp?>/logos/twitter.png" alt="">
-        </a>
-        </li>
-    
-        <li>
-            <a class="share-li sumome-share-client-animated sumome-share-client-share sumome-share-client-count" target="_blank" onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" href="http://www.linkedin.com/shareArticle?mini=true&amp;url=<?=$Empresa['url']?>/<?=$_SESSION['lenguaje']?>pagina/<?=$pagina['id']?>/<?=$nombre?>/&amp;title=%0d">
-            <img src="<?=$draizp?>/logos/linkedin.png" alt="">
-
-        </a>
-        </li>
-    
-        <li>
-            <a class="share-pi sumome-share-client-animated sumome-share-client-share sumome-share-client-count" target="_blank" onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" href="http://pinterest.com/pin/create/button/?url=<?=$Empresa['url']?>/<?=$_SESSION['lenguaje']?>pagina/<?=$pagina['id']?>/<?=$nombre?>/&amp;media=&amp;description=%0d">
-            <img src="<?=$draizp?>/logos/pinterest.png" alt="">
-        </a>
-        </li>
-    
-        <li>
-            <a class="share-sk sumome-share-client-animated sumome-share-client-share sumome-share-client-count" target="_blank" onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" href="https://web.skype.com/share?url=<?=$Empresa['url']?>/<?=$_SESSION['lenguaje']?>pagina/<?=$pagina['id']?>/<?=$nombre?>/&amp;lang=es-es">
-            <img src="<?=$draizp?>/logos/skype.png" alt="">
-        </a>
-        </li>
+            </li>
+                
+            <li>
+                <a class="share-tw sumome-share-client-animated sumome-share-client-share sumome-share-client-count" target="_blank" onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" href="<?=$twUrl?>">
+                <img src="<?=$draizp?>/logos/twitter.png" alt="">
+            </a>
+            </li>
         
+            <li>
+                <a class="share-li sumome-share-client-animated sumome-share-client-share sumome-share-client-count" target="_blank" onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" href="<?=$liUrl?>">
+                <img src="<?=$draizp?>/logos/linkedin.png" alt="">
+
+            </a>
+            </li>
+        
+            <li>
+                <a class="share-pi sumome-share-client-animated sumome-share-client-share sumome-share-client-count" target="_blank" onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" href="<?=$piUrl?>">
+                <img src="<?=$draizp?>/logos/pinterest.png" alt="">
+            </a>
+            </li>
+        
+            <li>
+                <a class="share-sk sumome-share-client-animated sumome-share-client-share sumome-share-client-count" target="_blank" onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" href="<?=$skUrl?>">
+                <img src="<?=$draizp?>/logos/skype.png" alt="">
+            </a>
+            </li>
+        </ul>
     
     </div>
 </div>
