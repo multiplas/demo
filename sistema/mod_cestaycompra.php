@@ -2537,10 +2537,10 @@ function Presupuesto($usuario)
 							$query2 = mysqli_query($dbi, "INSERT INTO bd_compra_productos 
 								VALUES(null, $compraid, $assoc[idproducto], $assoc[cantidad], 0, '$assoc[talla]', '$assoc[fechas]', '$assoc[extra]', 0, $producto[idline], 0, $assoc[personalizacion]);");
 					}
-                                        if($producto[precio] >=0)
-                                            $precioP = $producto[precio];
+                                        if($producto['precio'] >=0)
+                                            $precioP = $producto['precio'];
                                         else
-                                            $precioP = $producto[precio]*-1;
+                                            $precioP = $producto['precio']*-1;
                                             
 					$sql = "INSERT INTO bd_compra_productos 
 								VALUES(null, $compraid, $producto[id], $producto[cantidad], '$producto[descuento]', '$producto[talla]', '$producto[fechas]', '$producto[extra]', ".(@$producto['pack'] === true ? 1 : 0).", ".(@$producto['pack'] === true ? $producto['idline'] : 'NULL').", '$precioP', '$producto[personalizacion]');";

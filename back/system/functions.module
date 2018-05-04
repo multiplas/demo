@@ -959,7 +959,7 @@
             
 			$sql = "SELECT *
 					FROM bd_compra
-                    WHERE estado IN ('transferencia', 'contrareembolso', 'tienda', 'domiciliacion', 'domiciliacionSubscripcion', 'financiacionDirecta', 'tarjeta')
+                    WHERE estado = 'pendiente de pago'
                     AND id = $idcompra;";
 			$query = mysqli_query($this->conexion, $sql);
 			
@@ -972,7 +972,7 @@
                 $id = mysqli_insert_id($this->conexion);
                 $sql = "UPDATE bd_compra
                         SET estado = 'pagado'
-                        WHERE estado IN ('transferencia', 'contrareembolso', 'tienda', 'domiciliacion', 'domiciliacionSubscripcion', 'financiacionDirecta', 'tarjeta')
+                        WHERE estado = 'pendiente de pago'
                         AND id = $idcompra;";
                 $query = mysqli_query($this->conexion, $sql);
 			}
@@ -1781,7 +1781,7 @@
 					WHERE estado IN ('transferencia', 'paypal', 'domiciliacion', 'contrareembolso', 'tienda', 'pendiente de pago');";*/
                         $sql = "SELECT COUNT(id) AS contador
 					FROM bd_compra
-					WHERE estado IN ('transferencia', 'paypal', 'domiciliacion', 'contrareembolso', 'tienda');";
+					WHERE estado IN ('pendiente de pago');";
 			$query = mysqli_query($this->conexion, $sql);
 			
 			if (mysqli_num_rows($query) == 1)
@@ -2362,8 +2362,8 @@
 			}
 			
 			$sql = "INSERT INTO bd_productos
-					VALUES (null, '$nombre', '$nombrein', '$descripcion', '$descripcionin', $imgname, $unidades, $stock, $precio, '$tprecio', '$comprecio', 0, '$descuento', '$descuentoe', $marca, $cat, $cat1, $cat2, $cat3, $cat4,  0, $peso, '$referencia', $iva, $disponible, 0, 0, '$metatitulo', '$metadescripcion', 0, $tipo, $paypalm, $domicim, $fDirecta, $aplazame, $caplazame, $caplazame1, $nfentrada, $nfsalida, $NCatAtriF, 0, '$mostraretq', '$mostraretqAgo', '$mostraretqOfe', '$maxDias', '$disponibilidad', '$plazoEnt', $orden, '$pagotado', '$agotado',$precio_t_i);";
-                                           
+					VALUES (null, '$nombre', '$nombrein', '$descripcion', '$descripcionin', $imgname, $unidades, $stock, $precio, '$tprecio', '$comprecio', 0, '$descuento', '$descuentoe', $marca, $cat, $cat1, $cat2, $cat3, $cat4,  0, $peso, '$referencia', $iva, $disponible, 0, 0, '$metatitulo', '$metadescripcion', 0, $tipo, $paypalm, $domicim, $fDirecta, $aplazame, $caplazame, $caplazame1, $nfentrada, $nfsalida, $NCatAtriF, 0, '$mostraretq', '$mostraretqAgo', '$mostraretqOfe', '$maxDias', '$disponibilidad', '$plazoEnt', $orden, '$pagotado', '$agotado',$precio_t_i, NOW());";
+
 			$query = mysqli_query($this->conexion, $sql);
                          
             $sql = "SELECT MAX(id) AS id FROM bd_productos";
@@ -3008,10 +3008,11 @@
 			$sql = "SELECT u.nombre AS nombre, c.secreto AS secreto,
                     c.fecha AS fecha, c.precio AS precio, c.portes AS portes,c.id AS id, c.estado AS estado
 					FROM bd_compra c, bd_users u
-                    WHERE c.estado IN ('paypal', 'transferencia', 'contrareembolso', 'tienda', 'domiciliacion', 'domiciliacionSubscripcion', 'financiacionDirecta', 'tarjeta')
+                    WHERE c.estado = 'pendiente de pago'
                     AND c.idusuario = u.id
 					ORDER BY c.fecha DESC, c.id DESC
 					LIMIT $limit;";
+					
 			$query = mysqli_query($this->conexion, $sql);
 			
 			if (mysqli_num_rows($query) > 0)
@@ -4777,6 +4778,62 @@
 
 			return $resultado;
 		}
+
+		function CreateTableIconosConfig(){
+			$sql = "CREATE TABLE IF NOT EXISTS bd_iconos_config (
+				id bigint(1) NOT NULL,
+				valor bigint(1) NOT NULL DEFAULT '0',				
+				UNIQUE KEY id (id)
+				) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
+
+			$query = mysqli_query($this->conexion, $sql);
+
+			$sqlInsertData = "INSERT INTO bd_iconos_config (id, valor) VALUES (0, 0);";
+			$sqlInsertData2 = "INSERT INTO bd_iconos_config (id, valor) VALUES (1, 0);";//Para el lateral
+			
+			$query = mysqli_query($this->conexion, $sqlInsertData);
+			$query = mysqli_query($this->conexion, $sqlInsertData2);
+		}
+
+		function CargarConfiguracionFlotante()
+		{
+			$resultado = null;
+			
+			$sql = "SELECT *
+					FROM bd_iconos_config WHERE id = 0";
+					
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) == 1)
+			{
+				$assoc = mysqli_fetch_assoc($query);
+				$resultado = $assoc;
+			}
+			else{
+				$this->CreateTableIconosConfig();
+				echo "La tabla no existía, ahora ha sido creada con éxito. Por favor, recargue la página para continuar.";
+			}
+
+			return $resultado;
+		}
+
+		function CargarConfiguracionFlotanteLateral()
+		{
+			$resultado = null;
+			
+			$sql = "SELECT *
+					FROM bd_iconos_config WHERE id = 1";
+					
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) == 1)
+			{
+				$assoc = mysqli_fetch_assoc($query);
+				$resultado = $assoc;
+			}			
+
+			return $resultado;
+		}
                 function CargarNacex()
 		{
 			$resultado = null;
@@ -6530,9 +6587,27 @@
             $query = mysqli_query($this->conexion, $sql);
             
             return $query;
+		}
+		
+		function IconosFlotantesModificar($iconosFlotantes){
+            $iconosFlotantes = mysqli_real_escape_string($this->conexion, htmlspecialchars($iconosFlotantes));
+          
+            
+            $sql = "UPDATE bd_iconos_config SET valor = $iconosFlotantes WHERE id = 0";
+            $query = mysqli_query($this->conexion, $sql);
+            
+            return $query;
         }
 
-
+		function IconosFlotantesLateralesModificar($iconosFlotantes){
+            $iconosFlotantes = mysqli_real_escape_string($this->conexion, htmlspecialchars($iconosFlotantes));
+          
+            
+            $sql = "UPDATE bd_iconos_config SET valor = $iconosFlotantes WHERE id = 1";
+            $query = mysqli_query($this->conexion, $sql);
+            
+            return $query;
+        }
 		
 		function ConfiguracionModificar($empresa, $compGaleria, $cif, $email, $telefono, $telefono2, $telefono3, $wassap, $fax, $mapskey, $mapszoom, $mapscoor,
                 $mcatalogo, $ordenacionI, $horario, $facebook, $googlep, $twitter, $youtube, $pinterest, $instagram, $linkedin, $etiqpro, $etiqAct, $tipoportes,

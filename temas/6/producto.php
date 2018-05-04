@@ -442,46 +442,7 @@
                                         left: 5px;
                                     }
                                 </style>
-                                <div class="social-sharing2" style="text-align: center;" data-permalink="http://demo.tiendavirtualprofesional.com/es/producto/6700/producto-1/">
-                                    <a target="_blank" onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" href="http://www.facebook.com/sharer.php?u=http://demo.tiendavirtualprofesional.com/es/producto/6700/producto-1/">
-                                      <span class="icon icon-facebook" aria-hidden="true"></span>
-                                      <span class="share-title">Compartir</span>
-                                    </a>
-
-                                    <!-- https://dev.twitter.com/docs/intents -->
-                                    <a target="_blank" onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" href="http://twitter.com/share?url=http://demo.tiendavirtualprofesional.com/es/producto/6700/producto-1/&amp;text=%0d&amp;">
-                                      <span class="icon icon-twitter" aria-hidden="true"></span>
-                                      <span class="share-title">Tweet</span>
-                                    </a>
-
-                                    <!--
-                                      https://developers.pinterest.com/pin_it/
-                                      Pinterest get data from the same Open Graph meta tags Facebook uses
-                                    -->
-                                    <a target="_blank" onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" href="http://pinterest.com/pin/create/button/?url=http://demo.tiendavirtualprofesional.com/es/producto/6700/producto-1/&amp;media=&amp;description=%0d">
-                                      <span class="icon icon-pinterest" aria-hidden="true"></span>
-                                      <span class="share-title">Pin it</span>
-                                    </a>
-
-                                    <!-- https://developers.google.com/+/web/share/ -->
-                                    <a target="_blank" onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" href="http://plus.google.com/share?url=http://demo.tiendavirtualprofesional.com/es/producto/6700/producto-1/">
-                                      <!-- Cannot get Google+ share count with JS yet -->
-                                      <span class="icon icon-google" aria-hidden="true"></span>
-                                      <span class="share-title">+1</span>
-                                    </a>
-
-                                    <!-- https://developer.linkedin.com/plugins/share -->
-                                    <a target="_blank" onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" href="http://www.linkedin.com/shareArticle?mini=true&amp;url=http://demo.tiendavirtualprofesional.com/es/producto/6700/producto-1/&amp;title=%0d">
-                                      <span class="icon icon-linkedin" aria-hidden="true"></span>
-                                      <span class="share-title">Compartir</span>
-                                    </a>
-
-                                    <!-- http://blogs.skype.com/2015/11/04/introducing-share-button-effortless-sharing-that-sparks-richer-conversations/ -->
-                                    <a target="_blank" onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" href="https://web.skype.com/share?url=http://demo.tiendavirtualprofesional.com/es/producto/6700/producto-1/&amp;lang=es-es">
-                                      <span class="icon icon-skype" aria-hidden="true"></span>
-                                      <span class="share-title">Compartir</span>
-                                    </a>
-                              </div>
+                                <?php include('./bloques/social_sharing2.php'); ?>
                             
                         </div>
                         <?php if($producto['aplazame'] == 1){ ?>

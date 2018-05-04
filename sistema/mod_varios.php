@@ -1740,4 +1740,34 @@ function MenuCategoriasGal()
 
         return $resultado;
     }
+
+    function loadIconStatus(){
+        global $dbi;
+        $resultado = '';
+
+        $sql = "SELECT * FROM bd_iconos_config WHERE id = '0'";
+        $query = mysqli_query($dbi, $sql);
+        if (mysqli_num_rows($query) == 1)
+        {
+            $assoc = mysqli_fetch_assoc($query);
+            $resultado = $assoc;
+        }
+
+        return $resultado;
+    }
+
+    function loadIconLateralStatus(){
+        global $dbi;
+        $resultado = '';
+
+        $sql = "SELECT * FROM bd_iconos_config WHERE id = '1'";
+        $query = mysqli_query($dbi, $sql);
+        if (mysqli_num_rows($query) == 1)
+        {
+            $assoc = mysqli_fetch_assoc($query);
+            $resultado = $assoc;
+        }
+
+        return $resultado;
+    }
 ?>

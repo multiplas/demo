@@ -20,7 +20,7 @@
                                     <a href="extrasPedido.php"><i class="icon-chevron-right"></i> Campos extras en Pedido</a>
                                 </li>
                                 <li<?=$menusel == 'iconosRedes' ? ' class="active"' : ''?>>
-                                    <a href="iconosRedes.php"><i class="icon-chevron-right"></i> Iconos Redes Sociales</a>
+                                    <a href="iconosRedes.php"><i class="icon-chevron-right"></i> Redes Sociales</a>
                                 </li>
                                 <li<?=$menusel == 'cesta' ? ' class="active"' : ''?>>
                                     <a href="cesta.php"><i class="icon-chevron-right"></i> Cesta</a>

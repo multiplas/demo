@@ -1,4 +1,15 @@
 				<?php require_once('blocks/cabecera.php'); ?>
+                <script type="text/javascript">
+                jQuery(document).ready(function(){
+                    jQuery('#iconosFlotantes').on('click', function(){
+                        jQuery('#iconosFlotantesForm').submit();
+                    });
+                    jQuery('#iconosFlotantesLaterales').on('click', function(){
+                        jQuery('#iconosFlotantesLateralesForm').submit();
+                    });
+                    
+                })
+                </script>
                 <div class="span9" id="content">
 					<?php if ($resultaop) { ?>
 						<div class="row-fluid">
@@ -189,6 +200,30 @@
                                         
 									  </fieldset>
 									</form>
+                                    <?php if(isset($iconosFlotantes) && !empty($iconosFlotantes)): ?>
+                                        <form action="iconosRedes.php?iconFloat=true" id="iconosFlotantesForm" method="post" class="form-horizontal" >   
+                                            <fieldset>
+                                                <div class="control-group">
+                                                    <label class="control-label" for="iconosFlotantes">activar/desactivar compartir en productos</label>
+                                                    <div class="controls">
+                                                        <input type="checkbox" name="iconosFlotantes" id="iconosFlotantes" <?php echo ($iconosFlotantes['valor'] == 0) ? '' : 'checked' ?>>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                        </form>
+                                    <?php endif; ?>
+                                    <?php if(isset($iconosFlotantesLaterales) && !empty($iconosFlotantesLaterales)): ?>
+                                        <form action="iconosRedes.php?iconLateralFloat=true" id="iconosFlotantesLateralesForm" method="post" class="form-horizontal" >   
+                                            <fieldset>
+                                                <div class="control-group">
+                                                    <label class="control-label" for="iconosFlotantesLaterales">activar/desactivar compartir lateral</label>
+                                                    <div class="controls">
+                                                        <input type="checkbox" name="iconosFlotantesLaterales" id="iconosFlotantesLaterales" <?php echo ($iconosFlotantesLaterales['valor'] == 0) ? '' : 'checked' ?>>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                        </form>
+                                    <?php endif; ?>
 								</div>
 							</div>
 						</div>

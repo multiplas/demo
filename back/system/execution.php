@@ -785,6 +785,22 @@
     if (@$_GET['configurarnacex'] != null){
 		$resultaop = $System->EnvíoNacex($_POST['id_fact'], $_POST['tservicio'], $_POST['tcobro'], $_POST['tenvio'], $_POST['bultos'], $_POST['kilos'], $_POST['envase'], $_POST['vrecogida'], $_POST['nombreE'], $_POST['direccionE'], $_POST['cpE'], $_POST['localidadE'], $_POST['telefonoE'], $_POST['paisE'], $_POST['Contenido'], $_POST['vdeclarado']);
     }
+
+    if($_GET['iconFloat'] != null){
+        if(isset($_POST['iconosFlotantes']))
+            $flotantes = 1;
+        else 
+            $flotantes = 0;
+        $resultaop = $System->IconosFlotantesModificar($flotantes);   
+    }
+
+    if($_GET['iconLateralFloat'] != null){
+        if(isset($_POST['iconosFlotantesLaterales']))
+            $flotantes = 1;
+        else 
+            $flotantes = 0;
+        $resultaop = $System->IconosFlotantesLateralesModificar($flotantes);   
+    }
     
     if (@$_GET['IconosR'] != null){
                 $dir_subida = '../iconosRedes/';
@@ -1302,7 +1318,10 @@
                 case 'cabpie.php':
 			$elemento = $System->CargarConfiguracion();
                 case 'iconosRedes.php':
-			$elemento = $System->CargarConfiguracion();
+            $elemento = $System->CargarConfiguracion();
+            $iconosFlotantes = $System->CargarConfiguracionFlotante();
+            $iconosFlotantesLaterales = $System->CargarConfiguracionFlotanteLateral();
+            break;
         case 'metodospago.php':
 			$elemento = $System->CargarConfiguracion();
             if(@$_GET['tpv'] == 1){

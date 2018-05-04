@@ -2534,7 +2534,13 @@
                 <div class="presupuesto_button"><a href="<?=$draizp?>/presupuesto_cont">Ir a Presupuesto</a> </div>
             </div>
         </div>
-
+        <?php
+            $iconLateralStatus = loadIconLateralStatus();
+            
+            if(!empty($iconLateralStatus) && $iconLateralStatus['valor'] == 1)
+                include('./bloques/social_sharing4.php'); 
+            
+            ?>
             <?=$Empresa['chat'];?>
             
             <?php if($Empresa['actanu'] == 1 && $_SESSION['anuncio'] != 1){ ?>

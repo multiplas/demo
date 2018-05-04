@@ -109,7 +109,7 @@ jQuery(document).ready(function(){
 						$product_url = get_product_url($draizp, $_SESSION['lenguaje'], $productos[$i]['id'], $nombre);					
 				?>
 						<div class="<?=$classex?> producto">
-							<a href="<?=$product_url?>"><img class="zoom" src="<?=$draizp?>/imagenesproductos/<?=$productos[$i]['imagen']?>" alt="<?=$productos[$i]['nombre']?>" /></a>
+							<a href="<?=$product_url?>"><img class="<?=$Empresa['ftamano'] == 1 ? 'zoom': 'pers zoom'?>" src="<?=$draizp?>/imagenesproductos/<?=$productos[$i]['imagen']?>" alt="<?=$productos[$i]['nombre']?>" /></a>
 							<span class="descripcion"><?=$productos[$i]['nombre']?></span>
 							<span class="descuento"><?=$productos[$i]['descuento'] != 0 ? '-'.$productos[$i]['descuento'].' '.$productos[$i]['descuentoe'] : ''?></span>
 							<span class="precioa"><?=$productos[$i]['descuento'] != 0 ? number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$productos[$i]['precio_ant']), 2, ',', '.').$_SESSION['moneda'] : ''?></span><br>
