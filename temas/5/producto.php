@@ -526,7 +526,7 @@
                                                 $nombreAtr .= "(".$atributo['nombre'].") ";
                                             }
                                             ?>
-                                            <div style="display:<?=$atributo['oculto'] == 'No' ? 'table-row' : 'none'?>;">
+                                            <div style="display:<?=$atributo['oculto'] == 'No' ? 'table' : 'none'?>;width:100%;">
                                             <div style="display:table-cell;vertical-align:middle;width:66%;">
                                                 <label style="color: #333; font-size: 1.20rem; margin-right: 15px; margin-top: 7px;" ><?=$atributo['nombre']?>: <?=$atributo['descripcion'] != '' ? '<i id="icono_info'.$i.'" class="fa fa-info-circle" style="cursor: pointer;" data-desc="'.$atributo['descripcion'].'"></i>' : '' ?></label>
                                             </div>
@@ -690,7 +690,7 @@
                             } ?>
                             <div style="display: table;width:100%;">
                                 <div style="display:table-row;">
-                                <div style="display:table-cell;vertical-align:middle;width:76%;">
+                                <div style="display:table-cell;vertical-align:middle;width:66%;">
                                     <label style="color: #333; font-size: 1.20rem; margin-right: 15px; margin-top: 7px;<?=$producto['precio'] != 'Consultar' ? '' : ' display: none;'?>"><?=$auxcan?>:</label>
                                 </div>
                                 <div style="display:table-cell;height:50px;vertical-align:middle;">
@@ -1008,7 +1008,7 @@
                             </div>
                             <?php } ?>
                             <div style="display:table-row; z-index: 0">
-                                <div style="display:table-cell;vertical-align:middle;width:76%; z-index: 0">
+                                <div style="display:table-cell;vertical-align:middle;width:66%; z-index: 0">
                                     <label style="color: #333; font-size: 1.20rem; margin-right: 15px; margin-top: 7px; z-index: 0" ></label>
                                 </div>
                                 <div style="display:table-cell;text-align:right;height:50px;vertical-align:middle; z-index: 0">
@@ -1196,7 +1196,7 @@
                             
                         </div>
                         <?php if($producto['aplazame'] == 1){ ?>
-                            <div style="display:table-row;">
+                            <div style="display: table;width:100%;">
                                 <div style="display:table-cell;vertical-align:middle;width:100%;">
                                     <span style="padding:0 !important;font-size:2em;margin-right: 15px; margin-top: 7px;" class="precio"><small>Financialo con Aplazame por <?=number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$producto['caplazame1']), 2, ',', '.')?><?=$_SESSION['moneda']?> + <?=number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$producto['caplazame']), 2, ',', '.')?><?=$_SESSION['moneda']?> al mes</small></span>
                                 </div>
