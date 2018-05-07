@@ -216,7 +216,7 @@
                                         <form action="iconosRedes.php?iconLateralFloat=true" id="iconosFlotantesLateralesForm" method="post" class="form-horizontal" >   
                                             <fieldset>
                                                 <div class="control-group">
-                                                    <label class="control-label" for="iconosFlotantesLaterales">activar/desactivar compartir lateral</label>
+                                                    <label class="control-label" for="iconosFlotantesLaterales">activar/desactivar compartir lateral flotante</label>
                                                     <div class="controls">
                                                         <input type="checkbox" name="iconosFlotantesLaterales" id="iconosFlotantesLaterales" <?php echo ($iconosFlotantesLaterales['valor'] == 0) ? '' : 'checked' ?>>
                                                     </div>

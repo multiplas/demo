@@ -2745,19 +2745,24 @@ function Presupuesto($usuario)
 	{
 		global $Empresa, $dbi;
 		require_once('./sistema/mod_contacto.php');
-                require_once('./sistema/mod_varios.php');
+            require_once('./sistema/mod_varios.php');
 
                 $secreto = time();
                 $cambio = ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],1);
 		$precio = CrearUnaCompraPendiente($_SESSION['usr']['id'], $penvio, $transp, $secreto, 'pendiente de pago', array ($_SESSION['compra']['entrega']['nombre'], $_SESSION['compra']['entrega']['dni'], $_SESSION['compra']['entrega']['direccion'], $_SESSION['compra']['entrega']['pais'], $_SESSION['compra']['entrega']['provincia'], $_SESSION['compra']['entrega']['localidad'], $_SESSION['compra']['entrega']['cp'], $_SESSION['compra']['entrega']['paisid']), array ($_SESSION['compra']['entrega']['nombreE'], $_SESSION['compra']['entrega']['direccionE'], $_SESSION['compra']['entrega']['paisE'], $_SESSION['compra']['entrega']['provinciaE'], $_SESSION['compra']['entrega']['localidadE'], $_SESSION['compra']['entrega']['cpE'], $_SESSION['compra']['entrega']['telefono']), $cambio, $Empresa['moneda'], $_SESSION['divisa']);
-		$urlNotificacion = '//'.$_SERVER['HTTP_HOST'].'/index.php?sys_action=pagook&uid='.$_SESSION['usr']['id'].'&ses='.$_SESSION['usr']['sesion'].'&secreto='.$secreto.'&fpago=tpv';
-                $urlNotificacion2 = '//'.$_SERVER['HTTP_HOST'].'/index.php?sys_action=return2&uid='.$_SESSION['usr']['id'].'&secreto='.$secreto.'&ses='.$_SESSION['usr']['sesion'].'&fpago=tpv';
-		$linkReturn = '//'.$_SERVER['HTTP_HOST'].'/index.php?sys_action=return&uid='.$_SESSION['usr']['id'].'&secreto='.$secreto.'&ses='.$_SESSION['usr']['sesion'];
+        
+        if( isset($_SERVER['HTTPS'] ) )
+            $protocol = 'https://';
+        else
+            $protocol = 'http://';
+        $urlNotificacion = $protocol.$_SERVER['HTTP_HOST'].'/index.php?sys_action=pagook&uid='.$_SESSION['usr']['id'].'&ses='.$_SESSION['usr']['sesion'].'&secreto='.$secreto.'&fpago=tpv';
+                $urlNotificacion2 = $protocol.$_SERVER['HTTP_HOST'].'/index.php?sys_action=return2&uid='.$_SESSION['usr']['id'].'&secreto='.$secreto.'&ses='.$_SESSION['usr']['sesion'].'&fpago=tpv';
+		$linkReturn = $protocol.$_SERVER['HTTP_HOST'].'/index.php?sys_action=return&uid='.$_SESSION['usr']['id'].'&secreto='.$secreto.'&ses='.$_SESSION['usr']['sesion'];
 		$linkReturn = $urlNotificacion;
-		$linkCancel = '//'.$_SERVER['HTTP_HOST'].'/'.$_SESSION['lenguaje'].'finalizado#contenido';
+		$linkCancel = $protocol.$_SERVER['HTTP_HOST'].'/'.$_SESSION['lenguaje'].'finalizado#contenido';
         
                 $_SESSION['finalizacion']['precio'] = $precio;
-             
+                $precio = round($precio, 2);
     
 		// Se incluye la librería
 		require_once('./componentes/redsys/apiRedsys.php');
@@ -2794,7 +2799,7 @@ function Presupuesto($usuario)
                 $miObj->setParameter("DS_MERCHANT_MERCHANTURL",$url);
                 $miObj->setParameter("DS_MERCHANT_URLOK",$urlOK);		
                 $miObj->setParameter("DS_MERCHANT_URLKO",$urlKO);
-
+                
                 //Datos de configuración
                 $version="HMAC_SHA256_V1";
                 $kc = $assoc['kc'];//Clave recuperada de CANALES
@@ -2845,11 +2850,16 @@ function Presupuesto($usuario)
                 $secreto = uniqid();
                 $cambio = ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],1);
 		$precio = CrearUnaCompraPendiente($_SESSION['usr']['id'], $penvio, $transp, $secreto, 'pendiente de pago', array ($_SESSION['compra']['entrega']['nombre'], $_SESSION['compra']['entrega']['dni'], $_SESSION['compra']['entrega']['direccion'], $_SESSION['compra']['entrega']['pais'], $_SESSION['compra']['entrega']['provincia'], $_SESSION['compra']['entrega']['localidad'], $_SESSION['compra']['entrega']['cp'], $_SESSION['compra']['entrega']['paisid']), array ($_SESSION['compra']['entrega']['nombreE'], $_SESSION['compra']['entrega']['direccionE'], $_SESSION['compra']['entrega']['paisE'], $_SESSION['compra']['entrega']['provinciaE'], $_SESSION['compra']['entrega']['localidadE'], $_SESSION['compra']['entrega']['cpE'], $_SESSION['compra']['entrega']['telefono']), $cambio, $Empresa['moneda'], $_SESSION['divisa']);
-		$urlNotificacion = '//'.$_SERVER['HTTP_HOST'].'/index.php?sys_action=pagook2&uid='.$_SESSION['usr']['id'].'&ses='.$_SESSION['usr']['sesion'].'&secreto='.$secreto.'&fpago=aplazame';
-                $urlNotificacion2 = '//'.$_SERVER['HTTP_HOST'].'/index.php?sys_action=return2&uid='.$_SESSION['usr']['id'].'&secreto='.$secreto.'&ses='.$_SESSION['usr']['sesion'].'&fpago=aplazame';
-		$linkReturn = '//'.$_SERVER['HTTP_HOST'].'/index.php?sys_action=return&uid='.$_SESSION['usr']['id'].'&secreto='.$secreto.'&ses='.$_SESSION['usr']['sesion'];
+        
+        if( isset($_SERVER['HTTPS'] ) )
+            $protocol = 'https://';
+        else
+            $protocol = 'http://';
+        $urlNotificacion = $protocol.$_SERVER['HTTP_HOST'].'/index.php?sys_action=pagook2&uid='.$_SESSION['usr']['id'].'&ses='.$_SESSION['usr']['sesion'].'&secreto='.$secreto.'&fpago=aplazame';
+                $urlNotificacion2 = $protocol.$_SERVER['HTTP_HOST'].'/index.php?sys_action=return2&uid='.$_SESSION['usr']['id'].'&secreto='.$secreto.'&ses='.$_SESSION['usr']['sesion'].'&fpago=aplazame';
+		$linkReturn = $protocol.$_SERVER['HTTP_HOST'].'/index.php?sys_action=return&uid='.$_SESSION['usr']['id'].'&secreto='.$secreto.'&ses='.$_SESSION['usr']['sesion'];
 		$linkReturn = $urlNotificacion;
-		$linkCancel = '//'.$_SERVER['HTTP_HOST'].'/'.$_SESSION['lenguaje'].'finalizado#contenido';
+		$linkCancel = $protocol.$_SERVER['HTTP_HOST'].'/'.$_SESSION['lenguaje'].'finalizado#contenido';
         
                 $_SESSION['finalizacion']['precio'] = $precio;
                 $precio2 = str_replace(",", "", $precio)*100;
@@ -2919,11 +2929,14 @@ function Presupuesto($usuario)
 		$p = new paypal_class;             // initiate an instance of the class
 		$p->paypal_url = 'https://www.paypal.com/cgi-bin/webscr';     // paypal url
                 // $p->paypal_url = 'https://www.sandbox.paypal.com/cgi-bin/webscr'; //paypal pruebas
-
-		$this_script = '//'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];
-		$urlNotificacion = '//'.$_SERVER['HTTP_HOST'].'/index.php?sys_action=pagook3&amp;uid='.$_SESSION['usr']['id'].'&amp;ses='.$_SESSION['usr']['sesion'].'&amp;secreto='.$secreto.'&amp;fpago=paypal';
-		$linkReturn = '//'.$_SERVER['HTTP_HOST'].'/index.php?sys_action=return2&uid='.$_SESSION['usr']['id'].'&secreto='.$secreto.'&ses='.$_SESSION['usr']['sesion'].'&amp;fpago=paypal';
-		$linkCancel = '//'.$_SERVER['HTTP_HOST'].'/index.php?sys_action=return&amp;uid='.$_SESSION['usr']['id'].'&amp;secreto='.$secreto.'&amp;ses='.$_SESSION['usr']['sesion'].'&amp;fpago=paypal';
+        if( isset($_SERVER['HTTPS'] ) )
+            $protocol = 'https://';
+        else
+            $protocol = 'http://';
+		$this_script = $protocol.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];
+		$urlNotificacion = $protocol.$_SERVER['HTTP_HOST'].'/index.php?sys_action=pagook3&amp;uid='.$_SESSION['usr']['id'].'&amp;ses='.$_SESSION['usr']['sesion'].'&amp;secreto='.$secreto.'&amp;fpago=paypal';
+		$linkReturn = $protocol.$_SERVER['HTTP_HOST'].'/index.php?sys_action=return2&uid='.$_SESSION['usr']['id'].'&secreto='.$secreto.'&ses='.$_SESSION['usr']['sesion'].'&amp;fpago=paypal';
+		$linkCancel = $protocol.$_SERVER['HTTP_HOST'].'/index.php?sys_action=return&amp;uid='.$_SESSION['usr']['id'].'&amp;secreto='.$secreto.'&amp;ses='.$_SESSION['usr']['sesion'].'&amp;fpago=paypal';
        
 		
 		// EJECUCIÓN PARA PAYPAL
@@ -2967,11 +2980,15 @@ function Presupuesto($usuario)
 		$secreto = uniqid();
                 $cambio = ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],1);
 		$precio = CrearUnaCompraPendiente($_SESSION['usr']['id'], $penvio, $transp, $secreto, 'pendiente de pago', array ($_SESSION['compra']['entrega']['nombre'], $_SESSION['compra']['entrega']['dni'], $_SESSION['compra']['entrega']['direccion'], $_SESSION['compra']['entrega']['pais'], $_SESSION['compra']['entrega']['provincia'], $_SESSION['compra']['entrega']['localidad'], $_SESSION['compra']['entrega']['cp'], $_SESSION['compra']['entrega']['paisid']), array ($_SESSION['compra']['entrega']['nombreE'], $_SESSION['compra']['entrega']['direccionE'], $_SESSION['compra']['entrega']['paisE'], $_SESSION['compra']['entrega']['provinciaE'], $_SESSION['compra']['entrega']['localidadE'], $_SESSION['compra']['entrega']['cpE'], $_SESSION['compra']['entrega']['telefono']), $cambio, $Empresa['moneda'], $_SESSION['divisa']);
-		
-		$this_script = '//'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];
-		$urlNotificacion = '//'.$_SERVER['HTTP_HOST'].'/index.php?sys_action=pagook3&amp;uid='.$_SESSION['usr']['id'].'&amp;ses='.$_SESSION['usr']['sesion'].'&amp;secreto='.$secreto.'&amp;fpago=paypalSubscripcion';
-		$linkReturn = '//'.$_SERVER['HTTP_HOST'].'/index.php?sys_action=return&amp;uid='.$_SESSION['usr']['id'].'&amp;secreto='.$secreto.'&amp;ses='.$_SESSION['usr']['sesion'];
-		$linkReturn2 = '//'.$_SERVER['HTTP_HOST'].'/index.php?sys_action=return2&uid='.$_SESSION['usr']['id'].'&secreto='.$secreto.'&ses='.$_SESSION['usr']['sesion'];
+        
+        if( isset($_SERVER['HTTPS'] ) )
+            $protocol = 'https://';
+        else
+            $protocol = 'http://';
+		$this_script = $protocol.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];
+		$urlNotificacion = $protocol.$_SERVER['HTTP_HOST'].'/index.php?sys_action=pagook3&amp;uid='.$_SESSION['usr']['id'].'&amp;ses='.$_SESSION['usr']['sesion'].'&amp;secreto='.$secreto.'&amp;fpago=paypalSubscripcion';
+		$linkReturn = $protocol.$_SERVER['HTTP_HOST'].'/index.php?sys_action=return&amp;uid='.$_SESSION['usr']['id'].'&amp;secreto='.$secreto.'&amp;ses='.$_SESSION['usr']['sesion'];
+		$linkReturn2 = $protocol.$_SERVER['HTTP_HOST'].'/index.php?sys_action=return2&uid='.$_SESSION['usr']['id'].'&secreto='.$secreto.'&ses='.$_SESSION['usr']['sesion'];
                 $linkCancel = $linkReturn;
 		
                 $paypalC = $Empresa['paypal'];

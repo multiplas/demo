@@ -150,24 +150,15 @@ a.sumome-share-client-share img, .sumome-share-client-share span {
 }
 
 </style>
+<?php 
+$actual_link = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 
-<?php
-if(isset($pagina['id']) && !empty($pagina['id'])){
-    $fbUrl = "http://www.facebook.com/sharer.php?u=".$Empresa['url']."/".$_SESSION['lenguaje']."pagina/".$pagina['id']."/".$nombre;
-    $goUrl = "http://plus.google.com/share?url=".$Empresa['url']."/".$_SESSION['lenguaje']."pagina/".$pagina['id']."/".$nombre."/";
-    $twUrl = "http://twitter.com/share?url=".$Empresa['url']."/".$_SESSION['lenguaje']."pagina/".$pagina['id']."/".$nombre."/&amp;text=%0d&amp;";
-    $liUrl = "http://www.linkedin.com/shareArticle?mini=true&amp;url=".$Empresa['url']."/".$_SESSION['lenguaje']."pagina/".$pagina['id']."/".$nombre."/&amp;title=%0d";
-    $piUrl = "http://pinterest.com/pin/create/button/?url=".$Empresa['url']."/".$_SESSION['lenguaje']."pagina/".$pagina['id']."/".$nombre."/&amp;media=&amp;description=%0d";
-    $skUrl = "https://web.skype.com/share?url=".$Empresa['url']."/".$_SESSION['lenguaje']."pagina/".$pagina['id']."/".$nombre."/&amp;lang=es-es";
-}
-else{
-    $fbUrl = "http://www.facebook.com/sharer.php?u=".$Empresa['url']."/";
-    $goUrl = "http://plus.google.com/share?url=".$Empresa['url']."/";
-    $twUrl = "http://twitter.com/share?url=".$Empresa['url']."/&amp;text=%0d&amp;";
-    $liUrl = "http://www.linkedin.com/shareArticle?mini=true&amp;url=".$Empresa['url']."/&amp;title=%0d";
-    $piUrl = "http://pinterest.com/pin/create/button/?url=".$Empresa['url']."/&amp;media=&amp;description=%0d";
-    $skUrl = "https://web.skype.com/share?url=".$Empresa['url']."/&amp;lang=es-es";
-}
+    $fbUrl = "//www.facebook.com/sharer.php?u=".$actual_link;
+    $goUrl = "//plus.google.com/share?url=".$actual_link;
+    $twUrl = "//twitter.com/share?url=".$actual_link;
+    $liUrl = "//www.linkedin.com/shareArticle?mini=true&amp;url=".$actual_link;
+    $piUrl = "//pinterest.com/pin/create/button/?url=".$actual_link;
+    $skUrl = "//web.skype.com/share?url=".$actual_link;
 
 ?>
 <div class="sumome-share-client-wrapper sumome-share-client-wrapper-left-page sumome-share-client-counts sumome-share-client-light sumome-share-client-medium">

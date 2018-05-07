@@ -90,11 +90,13 @@ jQuery(document).ready(function(){
 		</div>
 		
 		<div id="panel-izquierdo">
-                        <?php //include('./bloques/menu_prods.php'); ?>
-			<?php include('./bloques/filtros.php'); ?>
-			<?php if(!empty($atributos)): ?>
-			<span name="BtReset" class="button">Limpiar Filtros</span>
-			<?php endif; ?>
+			<?php //include('./bloques/menu_prods.php'); ?>
+			<form action="<?=$_SERVER['REQUEST_URI']?>" method="post">
+				<?php include('./bloques/filtros.php'); ?>
+				<?php if(!empty($atributos)): ?>
+				<span name="BtReset" class="button">Limpiar Filtros</span>
+				<?php endif; ?>
+			</form>
 		</div>
 		<div id="productos">
 			<?php

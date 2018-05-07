@@ -14,9 +14,9 @@
 		{
 			$miCategoria = null;
 			?>
+				
 			<div class="panel-izquierdo">
 			<?php
-			
 				foreach ($atributos AS $atributo)
 				{
 					

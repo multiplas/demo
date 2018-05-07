@@ -101,9 +101,9 @@ $bloques = getBloqsInfo();
             <div id="logopie">
                 <?php if($Empresa['logoinf'] != ''){ ?><img src="<?=$draizp?>/source/<?=$Empresa['logoinf']?>" style="max-height: 150px; max-width: 100%;"><?php } ?>
                 <br><br>
-                <?php if($Empresa['mgfacebook'] != '' && ($Empresa['mgflugar'] == 0 || $Empresa['mgflugar'] == 2)){ ?>
+                <!-- <?php if($Empresa['mgfacebook'] != '' && ($Empresa['mgflugar'] == 0 || $Empresa['mgflugar'] == 2)){ ?>
                     <iframe src="https://www.facebook.com/plugins/page.php?href=<?=$Empresa['mgfacebook']?>&tabs=&width=340&height=230&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId" width="340" height="230" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
-                <?php } ?>
+                <?php } ?> -->
             </div>
                 
 		<div id="lalala">

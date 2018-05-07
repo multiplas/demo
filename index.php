@@ -1304,15 +1304,16 @@
                 }
 				header('Location: '.$draizp.'/'.$_SESSION['lenguaje'].'confirmacion');
 				break;
-			case 'realizar_pago':
+            case 'realizar_pago':
+            
                 if(isset($_SESSION['compra']['pago']['penvio']))
                     $penvio = $_SESSION['compra']['pago']['penvio'];
                 else
-                    $penvio = $_POST[penvio];
+                    $penvio = $_POST['penvio'];
                 if(isset($_SESSION['compra']['pago']['transp']))
                     $transp = $_SESSION['compra']['pago']['transp'];
                 else
-                    $transp = $_POST[transp];
+                    $transp = $_POST['transp'];
                 $penvio = floatval($penvio);
 
 				$_SESSION['compra']['paso'] = 4;
