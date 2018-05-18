@@ -4,15 +4,29 @@
 
 <?php 
 include_once './sistema/mod_varios.php';//Necesario para mostrar las categorias en bloque
+
+function loadFile($url) {
+    $ch = curl_init();
+  
+    curl_setopt($ch, CURLOPT_HEADER, 0);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_URL, $url);
+  
+    $data = curl_exec($ch);
+    curl_close($ch);
+  
+    return $data;
+  }
+  
+  
 if($inicio == 3){
     echo '<div id="contenido">';
-    $ip = $_SERVER['REMOTE_ADDR']; // the IP address to query
-    $query = @unserialize(file_get_contents('http://ip-api.com/php/'.$ip));
-    if($query && $query['status'] == 'success') {
-      echo '<p><b>Tu ubicación:</b> '.$query['city'].'</p><br>';
-    } else {
-      echo 'Unable to get location';
-    }
+    // $ip = $_SERVER['REMOTE_ADDR']; // the IP address to query
+    // $details = json_decode(file_get_contents("http://ipinfo.io/{$ip}/json"));
+    // if(!empty($details))
+    //     echo '<p><b>Tu ubicación:</b> '.$details->city.'</p><br>';
+    // else
+    //     echo 'Unable to get location';
 
     include_once('./bloques/novedades.php');
     include_once('./bloques/masvendidos.php');

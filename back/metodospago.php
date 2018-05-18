@@ -294,6 +294,13 @@
                                                     <div class="controls">
                                                         <input type="text" class="span6" id="mon_tpv" name="mon_tpv" placeholder="Nª Moneda TPV" value="<?=$elemento['mon_tpv']?>">
                                                     </div><br>
+                                                    <label class="control-label" for="tpv">TPV Inseguro</label>
+                                                    <div class="controls">
+                                                        <select id="tpvInseguro" name="tpvInseguro"  class="span6">
+                                                            <option value="0" <?=$elemento['tpv2'] == "0" ? 'selected' : ''?>>Desactivado</option>     
+                                                            <option value="1" <?=$elemento['tpv2'] == "1" ? 'selected' : ''?>>Activado</option>  
+                                                        </select><br><br>
+                                                    </div><br>
                                                     <label class="control-label" for="tpv">Clave Secreta </label>
                                                     <div class="controls">
                                                         <input type="text" class="span6" id="kc" name="kc" placeholder="Clave Secreta" value="<?=$elemento['kc']?>">

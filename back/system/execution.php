@@ -741,7 +741,7 @@
     }
 
     if (@$_GET['configurarmetodos'] != null){
-		$resultaop = $System->MetodosModificar($_POST['cuenta'], $_POST['bic'], $_POST['paypal'], $_POST['ippaypal'], $_POST['ifpaypal'], $_POST['ccr'], $_POST['pagotienda'], $_POST['iban'], $_POST['url'], $_POST['fuc'], $_POST['ter'], $_POST['mon_tpv'], $_POST['kc'], $_POST['aplazamePuK'], $_POST['aplazamePrK']);
+		$resultaop = $System->MetodosModificar($_POST['cuenta'], $_POST['bic'], $_POST['paypal'], $_POST['ippaypal'], $_POST['ifpaypal'], $_POST['ccr'], $_POST['pagotienda'], $_POST['iban'], $_POST['url'], $_POST['fuc'], $_POST['ter'], $_POST['mon_tpv'], $_POST['kc'], $_POST['aplazamePuK'], $_POST['aplazamePrK'], $_POST['tpvInseguro']);
     }
 
     if (@$_GET['colorear'] != null)

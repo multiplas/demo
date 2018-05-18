@@ -373,6 +373,10 @@ require_once('blocks/cabecera.php');
                             <input id="micheckbox_visible" class="micheckbox" type="checkbox" name="visible"  <?=$visible == 'on' ? 'checked' : ''?> >
                             Visible
                         </div>
+                        <div class="span2">
+                            <input id="micheckbox_eliminar_cat" class="micheckbox" type="checkbox" name="eliminar_cat"  <?=$eliminar_cat == 'on' ? 'checked' : ''?> >
+                            Eliminar Categorías
+                        </div>
                         <div class="span12">
                             <br>
                         </div>

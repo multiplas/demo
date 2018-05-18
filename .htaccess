@@ -41,6 +41,11 @@ RewriteRule ^(\w+)/(\w+)/([-_\w]+)/(\w+)/?$ index.php?$1=$2&nombre=$3&pagina=$4
 RewriteRule ^(\w+)/(\w+)/?$ index.php?$1=$2
 RewriteRule ^(\w+)/?$ index.php?$1
 
+#RewriteCond %{HTTP_HOST} ^aceiteslarecovera.com
+#RewriteRule (.*) https://www.aceiteslarecovera.com/$1 [R=301,L]
+
+RewriteCond %{HTTP_HOST} !^www\.
+RewriteRule ^(.*)$ https://www.%{HTTP_HOST}/$1 [R=301,L]
 
 errordocument 404 /temporal/error/error404.html
 </IfModule>

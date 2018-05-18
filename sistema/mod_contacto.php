@@ -1134,10 +1134,18 @@
                 $mail->CharSet = "UTF-8";
                 if ($Empresa['segSmtp'] == 0)
                     $seg = 'tls';
-                else
+                else if ($Empresa['segSmtp'] == 1)
                     $seg = 'ssl';
-
-                $mail->SMTPSecure = $seg;
+                if(isset($seg))
+                    $mail->SMTPSecure = $seg;
+                else
+                    $mail->SMTPOptions = array(
+                        'ssl' => array(
+                        'verify_peer' => false,
+                        'verify_peer_name' => false,
+                        'allow_self_signed' => true
+                        )
+                    );  
                 $mail->Host = $Empresa['hostSmtp'];
                 $mail->Port = $Empresa['puertoSmtp'];
                 $mail->Username   = $Empresa['mailSmtp'];
@@ -1211,13 +1219,20 @@
                     $mail->SMTPAuth = true;
                     $mail->Timeout=30;
                     $mail->CharSet = "UTF-8";
-
                     if ($Empresa['segSmtp'] == 0)
                         $seg = 'tls';
-                    else
+                    else if ($Empresa['segSmtp'] == 1)
                         $seg = 'ssl';
-        
-                    $mail->SMTPSecure = $seg;
+                    if(isset($seg))
+                        $mail->SMTPSecure = $seg;
+                    else
+                        $mail->SMTPOptions = array(
+                            'ssl' => array(
+                            'verify_peer' => false,
+                            'verify_peer_name' => false,
+                            'allow_self_signed' => true
+                            )
+                        );  
                     $mail->Host = $Empresa['hostSmtp'];
                     $mail->Port = $Empresa['puertoSmtp'];
                     $mail->Username   = $Empresa['mailSmtp'];

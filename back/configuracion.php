@@ -962,7 +962,8 @@
                                                 <select id="segSmtp" name="segSmtp" class="">
                                                     <option value="0" <?=($elemento['segSmtp'] == 0 ? ' selected' : '')?>>TLS</option>
                                                     <option value="1" <?=($elemento['segSmtp'] == 1 ? ' selected' : '')?>>SSL</option>
-                                                </select><br>
+                                                    <option value="2" <?=($elemento['segSmtp'] == 2 ? ' selected' : '')?>>Insecure</option>
+                                                    </select><br>
                                               <span style="color: #09F; font-size: 0.70rem;">Sólo necesario en caso de elegir Envío Email por smtp</span>
                                           </div>
                                           </div>
@@ -976,7 +977,7 @@
                                           <div class="control-group">
                                             <label class="control-label" for="passSmtp">Contraseña Email Smtp</label>
                                             <div class="controls">
-                                                <input type="text" class="span6" id="passSmtp" name="passSmtp" placeholder="Contraseña email para envío por smtp" value="<?=$elemento['passSmtp']?>" ><br>
+                                                <input type="password" class="span6" id="passSmtp" name="passSmtp" placeholder="Contraseña email para envío por smtp" value="<?=$elemento['passSmtp']?>" ><br>
                                                 <span style="color: #09F; font-size: 0.70rem;">Sólo necesario en caso de elegir Envío Email por smtp</span>
                                             </div>
                                           </div>

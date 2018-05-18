@@ -6485,7 +6485,7 @@
 			return $query;
 		}
         
-        function MetodosModificar($cuenta, $bic, $paypal, $ippaypal, $ifpaypal, $ccr, $pagotienda, $iban, $url, $fuc, $ter, $mon, $kc, $aplazamePuK, $aplazamePrK)
+        function MetodosModificar($cuenta, $bic, $paypal, $ippaypal, $ifpaypal, $ccr, $pagotienda, $iban, $url, $fuc, $ter, $mon, $kc, $aplazamePuK, $aplazamePrK, $tpvInseguro)
 		{
 			$cuenta = mysqli_real_escape_string($this->conexion, htmlspecialchars($cuenta));
             $paypal = mysqli_real_escape_string($this->conexion, htmlspecialchars($paypal));
@@ -6501,6 +6501,7 @@
             $kc = mysqli_real_escape_string($this->conexion, htmlspecialchars($kc));
             $aplazamePuK = mysqli_real_escape_string($this->conexion, htmlspecialchars($aplazamePuK));
             $aplazamePrK = mysqli_real_escape_string($this->conexion, htmlspecialchars($aplazamePrK));
+            $tpvInseguro = mysqli_real_escape_string($this->conexion, htmlspecialchars($tpvInseguro));
             
             if($url != '')
                 $tpv = 1;
@@ -6512,7 +6513,7 @@
             
             $sql = "UPDATE bd_empresa
 					SET cuenta = '$cuenta', bicswift = '$bic', paypal = '$paypal', ippaypal = '$ippaypal', ifpaypal = '$ifpaypal', tasacontrareembolso = $ccr, entienda = $pagotienda, iban = '$iban',
-                                            tpv = '$tpv', url = '$url', fuc = '$fuc', ter = '$ter', mon_tpv = '$mon', kc = '$kc', aplazamePuK = '$aplazamePuK', aplazamePrK = '$aplazamePrK'
+                                            tpv = '$tpv', url = '$url', fuc = '$fuc', ter = '$ter', mon_tpv = '$mon', kc = '$kc', aplazamePuK = '$aplazamePuK', aplazamePrK = '$aplazamePrK', tpv2 = '$tpvInseguro'
 					WHERE id = 1;";
             $query = mysqli_query($this->conexion, $sql);
             return $query;
@@ -6731,7 +6732,9 @@
                                         $imgname5 = uniqid().'_'.$imgfacebookD['name'];
                                         move_uploaded_file($imgfacebookD['tmp_name'], '../source/'.$imgname5);
                                         $imgname5 = ", imgfacebookD = '$imgnam5'";
-                                }
+								}
+					if(empty($rma_gastos))
+								$rma_gastos = 0;
 
                     $sql = "UPDATE bd_empresa
                         SET nombre = '$empresa', cif = '$cif', email = '$email',
@@ -6743,7 +6746,8 @@
                             fax = '$fax', horario = '$horario', factura = '$factura', cestaU = '$cestaU', dPedido = '$dPedido', condiciones = '$condiciones', nacex = '$nacex', compGaleria = '$compGaleria',
                             msgtop = '$msgtop', msgbottom = '$msgbottom', msgdiasmax = '$msgdiasmax', dominio = '$dominio', descripcionHTML = '$descripcionHTML', impuesto = $impuesto, desglose = $desglose, moneda = '$divisa',
                             envimail = '$tipomail', mailSmtp = '$emailSmtp', passSmtp = '$passSmtp', puertoSmtp = '$puertoSmtp', hostSmtp = '$hostSmtp', segSmtp = '$segSmtp', menu = '$menu', registro = '$registro'$imgname $imgname2 $imgname4 $imgname3 $imgname5
-                        WHERE id = 1;";
+						WHERE id = 1;";
+						
                      $query = mysqli_query($this->conexion, $sql);
             
 			
@@ -8152,10 +8156,18 @@
 					$mail->CharSet = "UTF-8";
 					if ($Empresa['segSmtp'] == 0)
 						$seg = 'tls';
-					else
+					else if ($Empresa['segSmtp'] == 1)
 						$seg = 'ssl';
-
-					$mail->SMTPSecure = $seg;
+					if(isset($seg))
+						$mail->SMTPSecure = $seg;
+					else
+						$mail->SMTPOptions = array(
+							'ssl' => array(
+							'verify_peer' => false,
+							'verify_peer_name' => false,
+							'allow_self_signed' => true
+							)
+						);  
 					$mail->Host = $Empresa['hostSmtp'];
 					$mail->Port = $Empresa['puertoSmtp'];
 					$mail->Username   = $Empresa['mailSmtp'];
@@ -8172,9 +8184,11 @@
 					$exito = $mail->send();
 					$intentos=1; 
 
+					
 					while ((!$exito) && ($intentos < 2)) {
 						$exito = $mail->send();
 						$intentos=$intentos+1;    
+						//$mail->Debugoutput = function($str, $level) {echo "debug level $level; message: $str";};
 					}
 					if(!$exito)
 					{
