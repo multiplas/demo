@@ -1148,6 +1148,9 @@
                 case 'productos_opc.php':
                     $config = $System->CargarConfiguracion();
                     break;
+                case 'stock.php':
+                    $listados = $System->CargarProductosVendidos();
+                    break;
                 case 'visualizacion.php':
 			$listados = $System->CargarProductos(1000000);
                         $idiomas = $System->CargarIdiomas(1000000);

@@ -2718,20 +2718,26 @@ function Presupuesto($usuario)
 			if (mysqli_num_rows($query) > 0)
 				while($assoc = mysqli_fetch_assoc($query))
 				{
-					$sql2 = "UPDATE bd_productos
-							SET unidades=unidades-$assoc[cantidad]
-							WHERE id=$assoc[idproducto];";
-					$query2 = mysqli_query($dbi, $sql2);
-					$sql3 = "INSERT INTO bd_productos_vendidos 
-							VALUES($assoc[idproducto], $assoc[cantidad]);";
-					$query3 = mysqli_query($dbi, $sql3);
-					$sql4 = "UPDATE bd_productos_vendidos
-							SET ventas=ventas+$assoc[cantidad]
-							WHERE id_producto=$assoc[idproducto];";
-					$query4 = mysqli_query($dbi, $sql4);
-					
-					if (!$query2 || !$query3 || !$query4)
-						$prod = -1;
+                    if($assoc['idproducto'] != '-1') {
+                        $sql2 = "UPDATE bd_productos
+                                SET unidades=unidades-$assoc[cantidad]
+                                WHERE id=$assoc[idproducto];";
+                        $query2 = mysqli_query($dbi, $sql2);
+                        $sql3 = "INSERT INTO bd_productos_vendidos 
+                                VALUES(null, $assoc[idproducto], $assoc[cantidad], (
+                            SELECT id 
+                            FROM bd_compra 
+                            WHERE secreto='$secreto'
+                        ), NOW());";
+                        $query3 = mysqli_query($dbi, $sql3);
+                        // $sql4 = "UPDATE bd_productos_vendidos
+                        //         SET ventas=ventas+$assoc[cantidad]
+                        //         WHERE id_producto=$assoc[idproducto];";
+                        // $query4 = mysqli_query($dbi, $sql4);
+                        
+                        if (!$query2 || !$query3)
+                            $prod = -1;
+                    }
 				}
 		}
 		else
