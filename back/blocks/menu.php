@@ -51,7 +51,7 @@
                         <li<?=$menusel == 'comentarios' ? ' class="active"' : ''?>>
                             <a href="comentarios.php"><i class="icon-chevron-right"></i> Comentarios</a>
                         </li>
-                        <li class="dropdown <?=$menusel == 'productos' ? 'active' : ''?><?=$menusel == 'productos_distribuidores' ? ' active' : ''?><?=$menusel == 'categorias' ? 'active' : ''?><?=$menusel == 'categorias_orden' ? 'active' : ''?><?=$menusel == 'productos_relacionados' ? 'active' : ''?><?=$menusel == 'relacion_atributos' ? 'active' : ''?><?=$menusel == 'atributoscat' ? 'active' : ''?><?=$menusel == 'cuotas' ? 'active' : ''?><?=$menusel == 'masvendidos' ? 'active' : ''?><?=$menusel == 'novedades' ? 'active' : ''?><?=$menusel == 'visualizacion' ? 'active' : ''?><?=$menusel == 'ficherosProd' ? 'active' : ''?><?=$menusel == 'etiquetas' ? 'active' : ''?><?=$menusel == 'csv' ? 'active' : ''?>">
+                        <li class="dropdown <?=$menusel == 'productos' ? 'active' : ''?><?=$menusel == 'productos_distribuidores' ? ' active' : ''?><?=$menusel == 'categorias' ? 'active' : ''?><?=$menusel == 'categorias_orden' ? 'active' : ''?><?=$menusel == 'productos_relacionados' ? 'active' : ''?><?=$menusel == 'relacion_atributos' ? 'active' : ''?><?=$menusel == 'atributoscat' ? 'active' : ''?><?=$menusel == 'cuotas' ? 'active' : ''?><?=$menusel == 'masvendidos' ? 'active' : ''?><?=$menusel == 'stock' ? 'active' : ''?><?=$menusel == 'novedades' ? 'active' : ''?><?=$menusel == 'visualizacion' ? 'active' : ''?><?=$menusel == 'ficherosProd' ? 'active' : ''?><?=$menusel == 'etiquetas' ? 'active' : ''?><?=$menusel == 'csv' ? 'active' : ''?>">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Productos <i class="icon-chevron-down"></i><span title="Productos ocultos" style="margin-right:2px;" class="badge badge-info pull-right"><?=$contadores['productoso']?></span><span title="Productos visibles totales" class="badge badge-important pull-right"><?=$contadores['productosv']?></span></a>
                             <ul class="dropdown-menu" style="width:99%;" role="menu">
                                 <li<?=$menusel == 'productos' ? ' class="active"' : ''?>>
@@ -90,6 +90,9 @@
                                 </li>
                                 <li<?=$menusel == 'masvendidos' ? ' class="active"' : ''?>>
                                     <a href="masvendidos.php"><i class="icon-chevron-right"></i> Más Vendidos</a>
+                                </li>
+                                <li<?=$menusel == 'stock' ? ' class="active"' : ''?>>
+                                    <a href="stock.php"><i class="icon-chevron-right"></i> Stock</a>
                                 </li>
                                 <li<?=$menusel == 'novedades' ? ' class="active"' : ''?>>
                                     <a href="novedades.php"><i class="icon-chevron-right"></i> Novedades</a>

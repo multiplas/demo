@@ -4778,6 +4778,21 @@
 			return $resultado;
 		}
 
+		function CargarProductosVendidos(){
+			$resultados = array();
+			
+			$sql = "SELECT nombre, unidades, ventas, idcompra, fecha 
+					FROM bd_productos_vendidos, bd_productos WHERE bd_productos_vendidos.idproducto = bd_productos.id";
+					
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) > 0)
+			while ($assoc = mysqli_fetch_assoc($query))
+				$resultados[] = $assoc;
+
+			return $resultados;
+		}
+
 		function CreateTableIconosConfig(){
 			$sql = "CREATE TABLE IF NOT EXISTS bd_iconos_config (
 				id bigint(1) NOT NULL,
@@ -5841,7 +5856,8 @@
 			$padre = mysqli_real_escape_string($this->conexion, htmlspecialchars($padre));
 			
 			$sql = "INSERT INTO bd_categorias
-					VALUES (null, '$nombre', '', $padre, '', 0, $menu, 0, '');";
+					VALUES (null, '$nombre', '', $padre, '', 0, $menu, 0, '', null, null, null, null);";
+					
 			$query = mysqli_query($this->conexion, $sql);
 			
 			return $query;
@@ -5916,6 +5932,7 @@
 			
 			$sql = "INSERT INTO bd_categorias
 					VALUES (null, '$nombre', '', $padre, '', 0, $menu, 1, '$ext', '$tituloSeo', '$descripcionSeo', '$metaKeys', '$textoMarca');";
+			
 			$query = mysqli_query($this->conexion, $sql);
 			
 			return mysqli_insert_id($this->conexion);
