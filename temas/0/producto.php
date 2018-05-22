@@ -44,21 +44,21 @@
 	<div style="background: #E6E7E9; border: solid 2px #EEE; display: <?=@$_GET['nombre'] == 'yes' ? 'block' : 'none'?>; left: 20%; padding: 3% 5%; position: absolute; top: 25%; width: 50%; z-index: 99999;">
 		<h2>Ha añadido el producto a la cesta</h2>
 		<p>El producto "<strong><?=@$producto['nombre']?></strong>" ha sido añadido correctamente a la cesta. Ahora puede verlo en su cesta.</p>
-		<a href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>/cesta" class="button">ver mi cesta</a>
+		<a href="<?=$draizp?>/cesta" class="button">ver mi cesta</a>
 		<a href="#" onclick="$(this).parent().css('display', 'none');" class="button buttonGray" style="min-width: 10px !important;">Seguir comprando</a>
 	</div>
     
     <div style="background: #E6E7E9; border: solid 2px #EEE; display: <?=@$_GET['nombre'] == 'yesp' ? 'block' : 'none'?>; left: 20%; padding: 3% 5%; position: absolute; top: 25%; width: 50%; z-index: 99999;">
 		<h2>Ha añadido el producto a presupuesto</h2>
 		<p>El producto "<strong><?=@$producto['nombre']?></strong>" ha sido añadido correctamente al presupuesto. Ahora puede verlo en sus presupuestos.</p>
-		<a href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>/presupuesto" class="button">ver mi presupuesto</a>
+		<a href="<?=$draizp?>/presupuesto" class="button">ver mi presupuesto</a>
 		<a href="#" onclick="$(this).parent().css('display', 'none');" class="button buttonGray" style="min-width: 10px !important;">Seguir comprando</a>
 	</div>
     
     <div style="background: #E6E7E9; border: solid 2px #EEE; display: <?=@$_GET['nombre'] == 'no' ? 'block' : 'none'?>; left: 20%; padding: 3% 5%; position: absolute; top: 25%; width: 50%; z-index: 99999;">
 		<h2>No se ha podido añadir el producto a la cesta</h2>
 		<p>El producto "<strong><?=@$producto['nombre']?></strong>" no ha sido añadido a la cesta por diferencias en la forma de pago con los productos de su cesta. Tramite la cesta, y luego añada este producto.</p>
-		<a href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>/cesta" class="button">ver mi cesta</a>
+		<a href="<?=$draizp?>/cesta" class="button">ver mi cesta</a>
 		<a href="#" onclick="$(this).parent().css('display', 'none');" class="button buttonGray" style="min-width: 10px !important;">Seguir comprando</a>
 	</div>
     
