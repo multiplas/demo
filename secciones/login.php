@@ -83,19 +83,19 @@
 			<span name="BtSubmit" class="button"><?=$aux0?></span>&nbsp;&nbsp;&nbsp;<a href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>cuenta/recovery"><?=$aux5?></a>
 			
             <?php
-                $ip = $_SERVER['REMOTE_ADDR']; // the IP address to query
-                $query = @unserialize(file_get_contents('http://ip-api.com/php/'.$ip));
-                if($query && $query['status'] == 'success') {
-                    echo '<input type="hidden" id="lon" name="lon"  value="'.$query['lon'].'" />';
-                    echo '<input type="hidden" id="lat" name="lat"  value="'.$query['lat'].'" />';
-                    echo '<input type="hidden" id="ciu" name="ciu"  value="'.$query['city'].'" />';
-                    echo '<input type="hidden" id="pai" name="pai"  value="'.$query['country'].'" />';
-                } else {
+                // $ip = $_SERVER['REMOTE_ADDR']; // the IP address to query
+                // $query = @unserialize(file_get_contents('http://ip-api.com/php/'.$ip));
+                // if($query && $query['status'] == 'success') {
+                //     echo '<input type="hidden" id="lon" name="lon"  value="'.$query['lon'].'" />';
+                //     echo '<input type="hidden" id="lat" name="lat"  value="'.$query['lat'].'" />';
+                //     echo '<input type="hidden" id="ciu" name="ciu"  value="'.$query['city'].'" />';
+                //     echo '<input type="hidden" id="pai" name="pai"  value="'.$query['country'].'" />';
+                // } else {
                     echo '<input type="hidden" id="lon" name="lon"  value="0" />';
                     echo '<input type="hidden" id="lat" name="lat"  value="0" />';
                     echo '<input type="hidden" id="ciu" name="ciu"  value="" />';
                     echo '<input type="hidden" id="pai" name="pai"  value="" />';
-                }
+                // }
             ?>
 		</form>
                 <p><b>¿No tienes cuenta? Registrate <a href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>registro">aquí</a></b></p>

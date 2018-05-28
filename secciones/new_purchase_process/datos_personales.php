@@ -193,6 +193,32 @@ if(isset($_POST['checksubs'])){
     $userFinded = mysqli_fetch_assoc($getSub);
 }
 
+if(empty($_SESSION['compra']['entrega']['direccion']) && isset($_SESSION['usr'])){//Inicializar los valores de entrega a los de facturacion por defecto
+    $_SESSION['compra']['entrega']['nombre'] = $_SESSION['usr']['nombre'];
+    $_SESSION['compra']['entrega']['dni'] = $_SESSION['usr']['dni'];
+    $_SESSION['compra']['entrega']['telefono'] = $_SESSION['usr']['telefono'];
+    $_SESSION['compra']['entrega']['email'] = $_SESSION['usr']['email'];
+    $_SESSION['compra']['entrega']['direccion'] = $_SESSION['usr']['direccion'];
+    $_SESSION['compra']['entrega']['pais'] =  Pais($_SESSION['usr']['pais']);
+    $_SESSION['compra']['entrega']['provincia'] = $_SESSION['usr']['provincia'];
+    $_SESSION['compra']['entrega']['paisid'] = $_SESSION['usr']['pais'];
+    $_SESSION['compra']['entrega']['provinciaid'] = $_SESSION['usr']['provinciaid'];
+    $_SESSION['compra']['entrega']['localidad'] = $_SESSION['usr']['poblacion'];
+    $_SESSION['compra']['entrega']['cp'] = $_SESSION['usr']['cp'];
+    $_SESSION['compra']['entrega']['nombreE'] = $_SESSION['usr']['nombre'];
+    $_SESSION['compra']['entrega']['direccionE'] = $_SESSION['usr']['direccion'];
+    $_SESSION['compra']['entrega']['paisE'] = $_SESSION['usr']['pais'];
+    $_SESSION['compra']['entrega']['direccionE'] = $_SESSION['usr']['direccion'];
+    $_SESSION['compra']['entrega']['paisE'] = Pais($_SESSION['usr']['pais']);
+    $_SESSION['compra']['entrega']['provinciaE'] = $_SESSION['usr']['provincia'];
+    $_SESSION['compra']['entrega']['paisidE'] = $_SESSION['usr']['pais'];
+    $_SESSION['compra']['entrega']['localidadE'] = $_SESSION['usr']['poblacion'];
+    $_SESSION['compra']['entrega']['cpE'] = $_SESSION['usr']['cpEnv'];
+    $_SESSION['compra']['entrega']['provinciaidE'] = $_SESSION['usr']['provinciaid'];
+    $_SESSION['compra']['entrega']['factura'] = $factura;
+    $_SESSION['usr']['paisEnv'] = $_SESSION['usr']['pais'];
+}
+
 ?>
 
 <div class="container-fluid">

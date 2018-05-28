@@ -113,11 +113,11 @@ function getLogoCabeceraStatus(){
             ?>
 			<a href="<?=$draizp?>/<?php echo !empty($_SESSION['lenguaje'])?$_SESSION['lenguaje'].'/':'' ?>cuenta"><span id="cuenta"<?=($_SESSION['usr'] != null ? 'class="opcuenta"' : '')?> class="boton"><?=($_SESSION['usr'] != null ? 'Mi cuenta' : $aux)?></span></a>
             <?php
-                if(count($cestanum)>0){
+                // if(count($cestanum)>0){
             ?>
                     <a href="<?=$draizp?>/<?php echo !empty($_SESSION['lenguaje'])?$_SESSION['lenguaje'].'/':'' ?>cesta"><span id="cesta" class="boton"><?=$aux2?></span> <span class="num-cesta"><?=count($cestanum)?></span></a>
             <?php
-                }
+                // }
                 if(count($presupuestonum)>0){
             ?>
                 <a href="<?=$draizp?>/<?php echo !empty($_SESSION['lenguaje'])?$_SESSION['lenguaje'].'/':'' ?>presupuesto"><span id="presupuesto" class="boton">Presupuesto</span> <span class="num-cesta"><?=count($presupuestonum)?></span></a>

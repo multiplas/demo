@@ -137,18 +137,18 @@
 			
             <?php
                 $ip = $_SERVER['REMOTE_ADDR']; // the IP address to query
-                $query = @unserialize(file_get_contents('http://ip-api.com/php/'.$ip));
-                if($query && $query['status'] == 'success') {
-                    echo '<input type="hidden" id="lonr" name="lonr"  value="'.$query['lon'].'" />';
-                    echo '<input type="hidden" id="latr" name="latr"  value="'.$query['lat'].'" />';
-                    echo '<input type="hidden" id="ciur" name="ciur"  value="'.$query['city'].'" />';
-                    echo '<input type="hidden" id="pair" name="pair"  value="'.$query['country'].'" />';
-                } else {
+                // $query = @unserialize(file_get_contents('http://ip-api.com/php/'.$ip));
+                // if($query && $query['status'] == 'success') {
+                //     echo '<input type="hidden" id="lonr" name="lonr"  value="'.$query['lon'].'" />';
+                //     echo '<input type="hidden" id="latr" name="latr"  value="'.$query['lat'].'" />';
+                //     echo '<input type="hidden" id="ciur" name="ciur"  value="'.$query['city'].'" />';
+                //     echo '<input type="hidden" id="pair" name="pair"  value="'.$query['country'].'" />';
+                // } else {
                     echo '<input type="hidden" id="lonr" name="lonr"  value="0" />';
                     echo '<input type="hidden" id="latr" name="latr"  value="0" />';
                     echo '<input type="hidden" id="ciur" name="ciur"  value="" />';
                     echo '<input type="hidden" id="pair" name="pair"  value="" />';
-                }
+                // }
             ?>
 			
                         <span id="dnierr" name="dnierr" style="display: none; color: red"><b>¡DNI inválido!</b><br></span>

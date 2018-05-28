@@ -30,7 +30,7 @@ function activa2(){
 }
 
 
-    jQuery(document).on("click", "#botoncitoCom22", function(){
+    jQuery("#botoncitoCom22").on("click", function(){
         if(document.getElementById("nombre").value == ''){
             jQuery("#nombre").attr('style', 'border-color: red; border-style: solid; border-width: 3px;');
         }else{

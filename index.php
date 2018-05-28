@@ -657,10 +657,10 @@
                                     
                                     $atributos = substr($atributos, 0, -3);
                                     
-                                    if(isset($_GET['cantidad']))
-                                        $cantidad = $_GET['cantidad'];
-                                    else
+                                    if(isset($_POST['cantidadmuliselect']))
                                         $cantidad = $_POST['cantidadmuliselect'];
+                                    else
+                                        $cantidad = $_GET['cantidad'];
                                     
                                     if(estaDisponibleAnadir($_GET['addcart'])){
                                         if($sepuedeAnadir == 'Si'){
@@ -734,10 +734,10 @@
                                     
                                         $atributos = substr($atributos, 0, -3);
                                         
-                                        if(isset($_GET['cantidad']))
-                                            $cantidad = $_GET['cantidad'];
-                                        else
+                                        if(isset($_POST['cantidadmuliselect']))
                                             $cantidad = $_POST['cantidadmuliselect'];
+                                        else
+                                            $cantidad = $_GET['cantidad'];
 					
                                         if(estaDisponibleAnadir($_GET['addcart'])){
                                             if($sepuedeAnadir == 'Si'){

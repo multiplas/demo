@@ -126,81 +126,92 @@
                                 document.getElementById("5").style.display='none';
                                 document.getElementById("6").style.display='none';
                                 document.getElementById("7").style.display='none';
-                                document.getElementById("p6").classList.remove('active'); 
+                                document.getElementById("8").style.display='none';
                                 document.getElementById("p1").classList.add('active'); 
                                 document.getElementById("p2").classList.remove('active'); 
                                 document.getElementById("p3").classList.remove('active'); 
                                 document.getElementById("p4").classList.remove('active');
                                 document.getElementById("p5").classList.remove('active'); 
+                                document.getElementById("p6").classList.remove('active'); 
                                 document.getElementById("p7").classList.remove('active'); 
+                                document.getElementById("p8").classList.remove('active'); 
                             }else if(valor == '2'){
-                                document.getElementById("2").style.display='block';
                                 document.getElementById("1").style.display='none';
+                                document.getElementById("2").style.display='block';
                                 document.getElementById("3").style.display='none';
                                 document.getElementById("4").style.display='none';
                                 document.getElementById("5").style.display='none';
                                 document.getElementById("6").style.display='none';
                                 document.getElementById("7").style.display='none';
-                                document.getElementById("p6").classList.remove('active'); 
+                                document.getElementById("8").style.display='none';
                                 document.getElementById("p1").classList.remove('active'); 
                                 document.getElementById("p2").classList.add('active'); 
                                 document.getElementById("p3").classList.remove('active'); 
                                 document.getElementById("p4").classList.remove('active');
                                 document.getElementById("p5").classList.remove('active'); 
+                                document.getElementById("p6").classList.remove('active'); 
                                 document.getElementById("p7").classList.remove('active'); 
+                                document.getElementById("p8").classList.remove('active'); 
                             }else if(valor == '3'){
-                                document.getElementById("3").style.display='block';
                                 document.getElementById("1").style.display='none';
                                 document.getElementById("2").style.display='none';
+                                document.getElementById("3").style.display='block';
                                 document.getElementById("4").style.display='none';
                                 document.getElementById("5").style.display='none';
                                 document.getElementById("6").style.display='none';
                                 document.getElementById("7").style.display='none';
-                                document.getElementById("p6").classList.remove('active'); 
+                                document.getElementById("8").style.display='none';
                                 document.getElementById("p1").classList.remove('active'); 
                                 document.getElementById("p2").classList.remove('active'); 
                                 document.getElementById("p3").classList.add('active'); 
                                 document.getElementById("p4").classList.remove('active');
                                 document.getElementById("p5").classList.remove('active'); 
+                                document.getElementById("p6").classList.remove('active'); 
                                 document.getElementById("p7").classList.remove('active'); 
+                                document.getElementById("p8").classList.remove('active'); 
                             }else if(valor == '4'){
-                                document.getElementById("4").style.display='block';
                                 document.getElementById("1").style.display='none';
                                 document.getElementById("2").style.display='none';
                                 document.getElementById("3").style.display='none';
+                                document.getElementById("4").style.display='block';
                                 document.getElementById("5").style.display='none';
                                 document.getElementById("6").style.display='none';
                                 document.getElementById("7").style.display='none';
-                                document.getElementById("p6").classList.remove('active'); 
+                                document.getElementById("8").style.display='none';
                                 document.getElementById("p1").classList.remove('active'); 
                                 document.getElementById("p2").classList.remove('active'); 
                                 document.getElementById("p3").classList.remove('active'); 
                                 document.getElementById("p4").classList.add('active');
                                 document.getElementById("p5").classList.remove('active'); 
+                                document.getElementById("p6").classList.remove('active'); 
                                 document.getElementById("p7").classList.remove('active'); 
+                                document.getElementById("p8").classList.remove('active'); 
                             }else if(valor == '5'){
-                                document.getElementById("5").style.display='block';
                                 document.getElementById("1").style.display='none';
                                 document.getElementById("2").style.display='none';
                                 document.getElementById("3").style.display='none';
                                 document.getElementById("4").style.display='none';
+                                document.getElementById("5").style.display='block';
                                 document.getElementById("6").style.display='none';
+                                document.getElementById("8").style.display='none';
                                 document.getElementById("7").style.display='none';
-                                document.getElementById("p6").classList.remove('active'); 
                                 document.getElementById("p1").classList.remove('active'); 
                                 document.getElementById("p2").classList.remove('active'); 
                                 document.getElementById("p3").classList.remove('active');
                                 document.getElementById("p4").classList.remove('active'); 
                                 document.getElementById("p5").classList.add('active'); 
+                                document.getElementById("p6").classList.remove('active'); 
                                 document.getElementById("p7").classList.remove('active'); 
+                                document.getElementById("p8").classList.remove('active'); 
                             }else if(valor == '6'){
-                                document.getElementById("6").style.display='block';
-                                document.getElementById("5").style.display='none';
                                 document.getElementById("1").style.display='none';
                                 document.getElementById("2").style.display='none';
                                 document.getElementById("3").style.display='none';
                                 document.getElementById("4").style.display='none';
+                                document.getElementById("5").style.display='none';
+                                document.getElementById("6").style.display='block';
                                 document.getElementById("7").style.display='none';
+                                document.getElementById("8").style.display='none';
                                 document.getElementById("p1").classList.remove('active'); 
                                 document.getElementById("p2").classList.remove('active'); 
                                 document.getElementById("p3").classList.remove('active');
@@ -208,21 +219,42 @@
                                 document.getElementById("p5").classList.remove('active');
                                 document.getElementById("p6").classList.add('active'); 
                                 document.getElementById("p7").classList.remove('active'); 
+                                document.getElementById("p8").classList.remove('active');
                             }else if(valor == '7'){
-                                document.getElementById("7").style.display='block';
-                                document.getElementById("5").style.display='none';
                                 document.getElementById("1").style.display='none';
                                 document.getElementById("2").style.display='none';
                                 document.getElementById("3").style.display='none';
                                 document.getElementById("4").style.display='none';
+                                document.getElementById("5").style.display='none';
                                 document.getElementById("6").style.display='none';
+                                document.getElementById("7").style.display='block';
+                                document.getElementById("8").style.display='none';
                                 document.getElementById("p1").classList.remove('active'); 
                                 document.getElementById("p2").classList.remove('active'); 
                                 document.getElementById("p3").classList.remove('active');
                                 document.getElementById("p4").classList.remove('active'); 
                                 document.getElementById("p5").classList.remove('active');
                                 document.getElementById("p6").classList.remove('active'); 
+                                document.getElementById("p8").classList.remove('active'); 
                                 document.getElementById("p7").classList.add('active'); 
+                            }
+                            else if(valor == '8'){
+                                document.getElementById("1").style.display='none';
+                                document.getElementById("2").style.display='none';
+                                document.getElementById("3").style.display='none';
+                                document.getElementById("4").style.display='none';
+                                document.getElementById("5").style.display='none';
+                                document.getElementById("6").style.display='none';
+                                document.getElementById("7").style.display='none';
+                                document.getElementById("8").style.display='block';
+                                document.getElementById("p1").classList.remove('active'); 
+                                document.getElementById("p2").classList.remove('active'); 
+                                document.getElementById("p3").classList.remove('active');
+                                document.getElementById("p4").classList.remove('active'); 
+                                document.getElementById("p5").classList.remove('active');
+                                document.getElementById("p6").classList.remove('active'); 
+                                document.getElementById("p7").classList.remove('active'); 
+                                document.getElementById("p8").classList.add('active'); 
                             }
                         }
                     
@@ -244,6 +276,7 @@
                                       <li id="p5" ><a href="#" onclick="javascript:cambiarpestana('5')">Domiciliación</a></li>
                                       <li id="p6" ><a href="#" onclick="javascript:cambiarpestana('6')">En tienda</a></li>
                                       <li id="p7" ><a href="#" onclick="javascript:cambiarpestana('7')">Aplazame</a></li>
+                                      <li id="p8" ><a href="#" onclick="javascript:cambiarpestana('8')">TPV Inseguro</a></li>
                                         
                                     </ul>
 									  <fieldset>
@@ -294,13 +327,7 @@
                                                     <div class="controls">
                                                         <input type="text" class="span6" id="mon_tpv" name="mon_tpv" placeholder="Nª Moneda TPV" value="<?=$elemento['mon_tpv']?>">
                                                     </div><br>
-                                                    <label class="control-label" for="tpv">TPV Inseguro</label>
-                                                    <div class="controls">
-                                                        <select id="tpvInseguro" name="tpvInseguro"  class="span6">
-                                                            <option value="0" <?=$elemento['tpv2'] == "0" ? 'selected' : ''?>>Desactivado</option>     
-                                                            <option value="1" <?=$elemento['tpv2'] == "1" ? 'selected' : ''?>>Activado</option>  
-                                                        </select><br><br>
-                                                    </div><br>
+                                                    
                                                     <label class="control-label" for="tpv">Clave Secreta </label>
                                                     <div class="controls">
                                                         <input type="text" class="span6" id="kc" name="kc" placeholder="Clave Secreta" value="<?=$elemento['kc']?>">
@@ -391,6 +418,21 @@
                                         <button type="submit" style="margin: 0px 0px 0px 10%;" class="btn btn-success">Guardar Cambios</button>
 
                                       </div>
+                                    <div id="8" style="display:none;">
+                                        
+                                        <legend>Activar TPV Inseguro</legend>
+                                    
+                                    <div class="control-group">
+                                        <label class="control-label" for="tpv">TPV Inseguro</label>
+                                        <div class="controls">
+                                            <select id="tpvInseguro" name="tpvInseguro"  class="span6">
+                                                <option value="0" <?=$elemento['tpv2'] == "0" ? 'selected' : ''?>>Desactivado</option>     
+                                                <option value="1" <?=$elemento['tpv2'] == "1" ? 'selected' : ''?>>Activado</option>  
+                                            </select><br><br>
+                                        </div><br>
+                                    </div>
+                                    <button type="submit" style="margin: 0px 0px 0px 10%;" class="btn btn-success">Guardar Cambios</button>
+                                    </div>
                                       </fieldset>
 								</div>
                                 </form>

@@ -117,6 +117,7 @@
 	function UserLogOut()
 	{
 		$_SESSION['usr'] = null;
+		$_SESSION['compra']['entrega'] = null;
 	}
 	
 	
