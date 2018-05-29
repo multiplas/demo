@@ -412,6 +412,9 @@ color: red;
     .purchase-process .datos-personales-derecha{
         padding-left: 0px;
     }
+    .fancybox-opened {
+        z-index: 70000 !important;
+    }
     .purchase-process .datos-personales-izquierda{
         border: none;
         padding-right: 0px; 

@@ -182,8 +182,8 @@ function activa2(){
     
     function comprobar(){
         if(jQuery("#email").val() != ''){
-            jQuery.post(jQuery('#dirValue').val(), {mail: jQuery("#email").val()}, function(respuesta){ 
-                if(respuesta.trim() == 'true'){
+            jQuery.post("/ajax/verifyEmail.php", {email: jQuery("#email").val()}, function(respuesta){ 
+                if(respuesta == 'true'){
                     jQuery("#botoncitoCof").attr('style', 'visibility: hidden;');
                     jQuery("#emailinv").attr('style', 'display: none; color: red');
                     jQuery("#yareg").attr('style', 'display: block; color: red');

@@ -326,8 +326,8 @@ jQuery(document).on("click", "#botoncitoCom22", function(){
     
     function comprobar(){
         if(jQuery("#email").val() != ''){
-            jQuery.post("<?=$draizp?>/ajax/registro.php", {mail: jQuery("#email").val()}, function(respuesta){ 
-                if(respuesta.trim() == 'true'){
+            jQuery.post("<?=$draizp?>/ajax/verifyEmail.php", {email: jQuery("#email").val()}, function(respuesta){ 
+                if(respuesta == 'true'){
                     jQuery("#botoncitoCof").attr('style', 'visibility: hidden;');
                     jQuery("#emailinv").attr('style', 'display: none; color: red');
                     jQuery("#yareg").attr('style', 'display: block; color: red');

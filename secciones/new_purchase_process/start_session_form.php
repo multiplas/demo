@@ -10,6 +10,57 @@
 </div>
 <script>
     jQuery(document).ready(function(){
+        jQuery('#email').focusout(function(){
+            jQuery.ajax({
+                method: "POST",
+                url:   'ajax/verifyEmail.php',
+                data:  {"email" : jQuery('#email').val()},
+                // beforeSend: function () {
+                //     $("#resultado").html("Procesando, espere por favor...");
+                // },
+                success:  function (html) {
+                    if(html == "true"){ // El email Existe
+                        jQuery("#yareg").css("display", "inherit");
+                    }
+                    else{
+                        jQuery("#yareg").css("display", "none");
+                    }
+                },
+                error: function( jqXHR, textStatus, errorThrown ) {
+                    alert(errorThrown);
+                    if (jqXHR.status === 0) {
+
+                    alert('Not connect: Verify Network.');
+
+                    } else if (jqXHR.status == 404) {
+
+                    alert('Requested page not found [404]');
+
+                    } else if (jqXHR.status == 500) {
+
+                    alert('Internal Server Error [500].');
+
+                    } else if (textStatus === 'parsererror') {
+
+                    alert('Requested JSON parse failed.');
+
+                    } else if (textStatus === 'timeout') {
+
+                    alert('Time out error.');
+
+                    } else if (textStatus === 'abort') {
+
+                    alert('Ajax request aborted.');
+
+                    } else {
+
+                    alert('Uncaught Error: ' + jqXHR.responseText);
+
+                    }
+                }
+            });
+        });
+
         jQuery("#password").change(function() {
             jQuery(".repitePass").css("display","inherit");
         });    
@@ -49,6 +100,7 @@
     <h4>Rellena el siguiente formulario para tramitar la compra</h4>
     <div class="row">
         <div class="col-xs-12">
+            <span id="respuesta" name="yareg" style=" color: red"></span>
             <span id="emailinv" name="emailinv" style="display: none; color: red"><b>¡Correo electronico inválido!</b><br></span>
             <span id="yareg" name="yareg" style="display: none; color: red"><b>¡Correo electronico ya registrado!</b> Logeate <a href="cuenta">aquí</a><br></span>
             <span id="emailD" name="emailD" style="display: none; color: red"><b>¡Correos electronicos distintos!</b><br></span>

@@ -573,7 +573,7 @@
                         $contadorVM = 0;
 				foreach ($categorias AS $padre)
 				{
-                                    if($contadorVM < 6){
+                                    if($contadorVM < 10){ // Limite de categorias a mostrar
                     $nombre = utf8_encode(strtr(utf8_decode($padre['nombre']), utf8_decode($tofind), $replac));
                     $nombre = strtolower($nombre);
                     $nombre = preg_replace('([^A-Za-z0-9])', '-', $nombre);

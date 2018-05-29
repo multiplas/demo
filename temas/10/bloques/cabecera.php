@@ -535,7 +535,7 @@ p.resultAutoComplete:hover
                 
                
     </style>
-
+<link href="/temas/12/bloques/css/font-awesome.min.css" rel="stylesheet">
 
 </div>
 <?php if($fCabecera != ''){ ?>
