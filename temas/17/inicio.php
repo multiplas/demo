@@ -62,7 +62,13 @@
 
     /* Estilo personalizado plantilla 17 */
 
-    
+    .imagenes-panel-derecho ul{
+        list-style: none;
+    }
+
+    .imagenes-panel-derecho li {
+        margin: 0 0px 10px 0px;
+    }
 
 
     </style>
@@ -76,16 +82,16 @@
                     include_once('./componentes/slider3.php'); 
                 } ?>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-4 imagenes-panel-derecho">
                 <ul>
                     <li>
-                        <img src="" alt="">
+                        <img src="<?=$urlImageSuperior?>" alt="">
                     </li>
                     <li>
-                        <img src="" alt="">
+                        <img src="<?=$urlImageMedio?>" alt="">
                     </li>
                     <li>
-                        <img src="" alt="">
+                        <img src="<?=$urlImageInferior?>" alt="">
                     </li>
                 </ul>
             </div>

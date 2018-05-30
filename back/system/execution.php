@@ -293,7 +293,14 @@
         $resultaop = $System->DeleteCartImage($id_fichero);
     }
 
-    
+    if($_GET['accion'] == 'deleteThemeImage'){
+        $nombre_fichero = $_POST['delete-file-name'];
+        $id_fichero = $_POST['delete-file-id'];
+        $dir_subida = '../ficheros/';
+        $fichero_eliminado = $dir_subida . basename($nombre_fichero);
+        unlink($fichero_eliminado);
+        $resultaop = $System->DeleteThemeImage($id_fichero);
+    }
 
     if($_GET['accion'] == 'addCartImage'){
         $dir_subida = '../ficheros/';
@@ -312,7 +319,7 @@
         $nombre_fichero = $fecha_format.'_'.$_FILES['fichero_usuario']['name'];
         $fichero_subido = $dir_subida . basename($nombre_fichero);
         if(move_uploaded_file($_FILES['fichero_usuario']['tmp_name'], $fichero_subido))
-		    $resultaop = $System->AddImageToTheme($_FILES['fichero_usuario']['name'], $nombre_fichero);
+		    $resultaop = $System->AddImageToTheme($_FILES['fichero_usuario']['name'], $nombre_fichero, $_POST['posicion']);
     }
 
     if($_GET['accion'] == 'updateImagesStatus'){
@@ -1384,7 +1391,7 @@
 			$elemento = $System->CargarBarraStatus();
             break;
         case 'personalizarContainerResponsive.php':
-			$elemento = $System->CargarContainerResponsiveStatus();
+            $imagenesContainerResponsive = $System->CargarImagenesContainerResponsive();
             break;
         case 'plantilla.php':
 			$elemento = $System->CargarPlantillas();

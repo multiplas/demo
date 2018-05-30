@@ -1770,4 +1770,16 @@ function MenuCategoriasGal()
 
         return $resultado;
     }
+
+    function loadThemeImages(){
+        global $dbi;
+        $resultado = array();
+        $sql = "SELECT * FROM bd_container_responsive";
+        $query = mysqli_query($dbi, $sql);
+        if (mysqli_num_rows($query) > 0){
+            while ($assoc = mysqli_fetch_assoc($query))
+                $resultado[] = $assoc;	
+        }	
+        return $resultado;
+    }
 ?>

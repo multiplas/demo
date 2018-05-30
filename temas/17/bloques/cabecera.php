@@ -293,6 +293,7 @@ $principalColors = getColors();
         width: 100%;
         max-width: 100% !important;
         overflow: visible !important;
+        border-bottom: solid #ddd 1px !important;
     }
 
     /* product list */
@@ -485,7 +486,37 @@ $principalColors = getColors();
         background: #fcac19;
         margin: 20px 0 20px 0;
     }
-    
+
+    /* Menu */
+
+    .submenu {
+        padding-top: 0.75em !important;
+    }
+
+    .submenu span {
+        font-weight: bold;
+        font-size: 1.3em;
+        line-height: 1.25;
+        padding-top: 4px;
+        display: inline-block;
+        border-left: solid 1px #ddd;
+        padding-left: 30px;
+        padding-right: 30px;
+        letter-spacing: 1px;
+    }
+
+    .index-menu {
+        font-weight: bold;
+        font-size: 1.3em;
+        line-height: 1.25;
+        padding-top: 4px;
+        display: inline-block;
+        /* border-left: solid 1px #ddd; */
+        padding-left: 30px;
+        padding-right: 30px;
+        letter-spacing: 1px;
+        padding-top: 0.81em !important;
+    }
 
     @media (max-width:830px)
     { 
@@ -580,6 +611,21 @@ $(document).ready(function() {
     // });
 });
 </script>
+
+<?php 
+$themeImages = loadThemeImages();
+$urlBanner = '';
+$urlImageSuperior = '';
+$urlImageMedio = '';
+$urlImageInferior = '';
+foreach($themeImages as $image){
+    if($image['posicion'] == "bannerCabecera") $urlBanner = $draizp."/ficheros/".$image['valor'];
+    if($image['posicion'] == "imagenLateral1") $urlImageSuperior = $draizp."/ficheros/".$image['valor'];
+    if($image['posicion'] == "imagenLateral2") $urlImageMedio = $draizp."/ficheros/".$image['valor'];
+    if($image['posicion'] == "imagenLateral3") $urlImageInferior = $draizp."/ficheros/".$image['valor'];
+}
+
+?>
 <div class="container-fluid bloque-nav-top">
     <div class="container nav-top">
         <div class="row">
@@ -664,7 +710,9 @@ $(document).ready(function() {
     <div style="">
 <?php } ?>
 <div class="container">
-    <div class="banner-cabecera"></div>
+    <div class="banner-cabecera">
+        <img src="<?=$urlBanner?>" alt="">
+    </div>
 </div>
 <div id="cabecera">     
     <div class="container">

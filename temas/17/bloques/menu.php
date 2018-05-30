@@ -2,7 +2,7 @@
 <div id="grupo-submenu"  style="background: #fff none repeat scroll 0 0;text-align: right;">
 	<div id="submenu">
 		<ul>
-			<li><a href="<?=$draizp?>/">Inicio</a></li>
+			<li><a href="<?=$draizp?>/"><span class="index-menu">Inicio</span></a></li>
 			<?php
                 $control = 0;
 				foreach ($categorias AS $padre)
@@ -20,9 +20,9 @@
 			?>
 				<li>
 					<?php if(empty($padre['url'])): ?>
-						<a href="<?=$draizp?>/productos/<?=$padre['id']?>/<?=$nombre?>/" class="submenu"><?=$padre['nombre']?></a>
+						<a href="<?=$draizp?>/productos/<?=$padre['id']?>/<?=$nombre?>/" class="submenu"><span><?=$padre['nombre']?></span></a>
 					<?php else: ?>
-					<a href="<?=$draizp?><?=$padre['url']?>" class="submenu"><?=$padre['nombre']?></a>
+					<a href="<?=$draizp?><?=$padre['url']?>" class="submenu"><span><?=$padre['nombre']?></span></a>
 					<?php endif; ?>
 					<?php
 						if (count($padre['categorias']) > 0 && $padre['categorias'] != null)

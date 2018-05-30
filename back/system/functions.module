@@ -1305,16 +1305,7 @@
 			return $query;		
 		}
 
-		function AddImageToTheme($nombre, $valor){
-			$nombre = mysqli_real_escape_string($this->conexion, htmlspecialchars($nombre));
-            $valor = mysqli_real_escape_string($this->conexion, htmlspecialchars($valor));
-
-			$sql = "INSERT INTO bd_imagenes_carrito VALUES (null, '$nombre', '$valor')";
-					
-			$query = mysqli_query($this->conexion, $sql);
-			
-			return $query;		
-		}
+		
 
 		function CargarImagenesCarritoStatus(){
 			$resultado = '';
@@ -7066,35 +7057,56 @@
 			return $query;
 		}
 
+		function AddImageToTheme($nombre, $valor, $posicion){
+			$nombre = mysqli_real_escape_string($this->conexion, htmlspecialchars($nombre));
+            $valor = mysqli_real_escape_string($this->conexion, htmlspecialchars($valor));
+
+			$sql = "INSERT INTO bd_container_responsive VALUES (null, '$nombre', '$valor', '$posicion')";
+					
+			$query = mysqli_query($this->conexion, $sql);
+
+			if (!$query) { //Significa que ha fallado la inserción, procedo a actualizar
+				$sql = "UPDATE bd_container_responsive SET nombre = '$nombre', valor = '$valor' WHERE posicion = '$posicion'";
+				$query = mysqli_query($this->conexion, $sql);
+			}
+			
+			return $query;		
+		}
+
+		function DeleteThemeImage($id){
+			$id = mysqli_real_escape_string($this->conexion, htmlspecialchars($id));
+			
+			$sql = "DELETE FROM bd_container_responsive
+					WHERE id = $id;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			return $query;
+		}
+
+		function CargarImagenesContainerResponsive(){
+			$resultado = array();
+			$sql = "SELECT * FROM bd_container_responsive";
+			$query = mysqli_query($this->conexion, $sql);
+			if (mysqli_num_rows($query) > 0){
+				while ($assoc = mysqli_fetch_assoc($query))
+					$resultado[] = $assoc;	
+			}		
+			else{
+				$this->CreateTableContainerResponsive();
+			}	
+
+			return $resultado;
+		}
+
 		function CreateTableContainerResponsive(){
 			$sql = "CREATE TABLE IF NOT EXISTS bd_container_responsive (
 				id INT NOT NULL AUTO_INCREMENT, 
 				nombre VARCHAR (300) NOT NULL, 
 				valor VARCHAR(600), 
+				posicion VARCHAR (100) NOT NULL UNIQUE,
 				PRIMARY KEY (id))";	
 
 			$query = mysqli_query($this->conexion, $sql);
-
-			$sqlInsertData = "INSERT INTO `bd_container_responsive` (`id`, `nombre`, `valor`) VALUES (1, 'status', '0' );";
-			
-			$query = mysqli_query($this->conexion, $sqlInsertData);		
-		}
-
-		function CargarContainerResponsiveStatus(){			
-			$resultado = '';
-			
-			$sql = "SELECT * FROM bd_container_responsive WHERE id = '1'";
-			$query = mysqli_query($this->conexion, $sql);
-			if (mysqli_num_rows($query) == 1)
-			{
-				$assoc = mysqli_fetch_assoc($query);
-				$resultado = $assoc;
-			}
-			else{
-				$this->CreateTableContainerResponsive();
-				echo "La tabla no existía, ahora ha sido creada con éxito. Por favor, recargue la página para continuar.";
-			}
-			return $resultado;
 			
 		}
 

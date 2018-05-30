@@ -1,14 +1,11 @@
 <?php require_once('blocks/cabecera.php'); ?>
                 <script>
                 jQuery(document).ready(function(){
-                    jQuery('#formImageStatus').change(function(){
-                        jQuery('#formImageStatus').submit();
-                    });
                     jQuery('.add-file').click(function(){
-                        jQuery('#addMarcasFile').css('display', 'inherit');
+                        jQuery('#addThemeFile').css('display', 'inherit');
                     });
                     jQuery('#fichero_usuario').change(function(){
-                        jQuery('#addMarcasFile').submit();
+                        jQuery('#addThemeFile').submit();
                     });
                     jQuery('.delete-file').click(function(){
                         jQuery('#delete-file-id').val($(this).attr("data-file"));
@@ -48,7 +45,7 @@
                     border-radius: 2px;
                     margin-left: 50px;
                 }
-                #addMarcasFile{
+                #addThemeFile{
                     display: none;
                 }
                 .link-file img {
@@ -74,13 +71,7 @@
 						</div>
 					<?php } ?>
                     <div class="row-fluid">
-                        <h4>Mostrar Imagenes de Banco en Carrito</h4>
-                        <form id="formImageStatus" action="imagenes_carrito.php?accion=updateImagesStatus" method="post" class="form-horizontal" enctype="multipart/form-data">
-                            <select name="imageStatus" id="imageStatus">
-                                <option value="0" <?php if($imagenesCarritoStatus['valor'] == '0') echo 'selected' ?>>Desactivado</option>
-                                <option value="1" <?php if($imagenesCarritoStatus['valor'] == '1') echo 'selected' ?>>Activado</option>
-                            </select>
-                        </form>
+                        <h4>Imagenes para el Tema Container Responsive</h4>                        
                         <hr>
                     </div>
                      <div class="row-fluid">
@@ -91,18 +82,32 @@
                             <div style="padding-top:10px;" class="block-content collapse in">
                                 <div class="span12">
                                     <?php
-                                    if(isset($imagenesCarrito) && !empty($imagenesCarrito)){
-                                        foreach($imagenesCarrito as $file){
+                                    if(isset($imagenesContainerResponsive) && !empty($imagenesContainerResponsive)){
+                                        foreach($imagenesContainerResponsive as $file){
+                                            $nombreHumano = '';
+                                            if($file['posicion'] == "bannerCabecera") $nombreHumano = 'Banner para Cabecera';
+                                            if($file['posicion'] == "imagenLateral1") $nombreHumano = 'Imagen lateral Derecha Superior';
+                                            if($file['posicion'] == "imagenLateral2") $nombreHumano = 'Imagen lateral Derecha Medio';
+                                            if($file['posicion'] == "imagenLateral3") $nombreHumano = 'Imagen lateral Derecha Inferior';
                                             ?>
                                             <div class="fichero-list">                                            
-                                               <a class="link-file" href="../ficheros/<?=$file['valor']?>" target="_blank" ><img src="../ficheros/<?=$file['valor']?>" alt=""> <?=$file['nombre']?></a><span class="delete-file" title="Eliminar archivo" data-file-name="<?=$file['valor']?>" data-file="<?=$file['id']?>">X</span>
+                                               <span style="margin-right: 100px;">Posición: <?=$nombreHumano?> </span> <a class="link-file" href="../ficheros/<?=$file['valor']?>" target="_blank" ><img src="../ficheros/<?=$file['valor']?>" alt=""> <?=$file['nombre']?></a><span class="delete-file" title="Eliminar archivo" data-file-name="<?=$file['valor']?>" data-file="<?=$file['id']?>">X</span>
                                             </div>
                                             <?php
                                         }
                                     }
                                      ?>                                    
-                                    <form enctype="multipart/form-data" id="addMarcasFile" class="form-horizontal"  action="imagenes_carrito.php?accion=addCartImage" method="POST">
+                                    <form enctype="multipart/form-data" id="addThemeFile" class="form-horizontal"  action="personalizarContainerResponsive.php?accion=addThemeImage" method="POST">
                                         <fieldset>
+                                            <div class="control-group">
+                                                <label class="control-label" for="posicion">Posición de la Imagen</label>
+                                                <select name="posicion" id="posicion">
+                                                    <option value="bannerCabecera" <?php if($imagenesContainerResponsive['posicion'] == 'bannerCabecera') echo 'selected' ?>>Banner para Cabecera</option>
+                                                    <option value="imagenLateral1" <?php if($imagenesContainerResponsive['posicion'] == 'imagenLateral1') echo 'selected' ?>>Imagen lateral Derecha Superior</option>
+                                                    <option value="imagenLateral2" <?php if($imagenesContainerResponsive['posicion'] == 'imagenLateral2') echo 'selected' ?>>Imagen lateral Derecha Medio</option>
+                                                    <option value="imagenLateral3" <?php if($imagenesContainerResponsive['posicion'] == 'imagenLateral3') echo 'selected' ?>>Imagen lateral Derecha Inferior</option>
+                                                </select>
+                                            </div>
                                             <div class="control-group">
                                                 <label class="control-label" for="fichero_usuario">Añadir Imagen</label>
                                                 <input class="input-file uniform_on" id="fichero_usuario" name="fichero_usuario" type="file" />
@@ -110,7 +115,7 @@
                                         </fieldset>
                                     </form>
                                     <button type="button" class="btn btn-primary add-file" title="Añadir archivo">+</button>
-                                    <form enctype="multipart/form-data" id="deleteImagesFile" class="form-horizontal"  action="imagenes_carrito.php?accion=deleteImagesFile" method="POST">
+                                    <form enctype="multipart/form-data" id="deleteImagesFile" class="form-horizontal"  action="personalizarContainerResponsive.php?accion=deleteThemeImage" method="POST">
                                         <input type="hidden" id="delete-image-name" name="delete-image-name" value=""/>
                                         <input type="hidden" id="delete-file-id" name="delete-file-id" value=""/>
                                     </form>
