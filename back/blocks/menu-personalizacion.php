@@ -1,4 +1,17 @@
-﻿<li class="dropup <?=$menusel == 'colores' ? 'active' : ''?><?=$menusel == 'plantilla' ? ' active' : ''?><?=$menusel == 'fuentes' ? ' active' : ''?><?=$menusel == 'footercopyright' ? ' active' : ''?><?=$menusel == 'bloqueobarra' ? ' active' : ''?><?=$menusel == 'mensaje_publicitario' ? ' active' : ''?><?=$menusel == 'cabpie' ? ' active' : ''?><?=$menusel == 'extrasPedido' ? ' active' : ''?><?=$menusel == 'iconosRedes' ? ' active' : ''?><?=$menusel == 'cesta' ? ' active' : ''?><?=$menusel == 'pagos' ? ' active' : ''?><?=$menusel == 'productos_opc' ? ' active' : ''?><?=$menusel == 'filtroenproductos' ? ' active' : ''?><?=$menusel == 'pedido' ? ' active' : ''?><?=$menusel == 'bloques' ? ' active' : ''?><?=$menusel == 'megaMenu' ? ' active' : ''?>">
+﻿<?php
+session_start();
+require_once "../back/config_db_cms.php";
+require_once "../back/config/conectar_cms.php";
+require_once('./system/functions.module');	
+
+$System = new MySystem("BD_CLIENTE");
+
+$System->ControlDeSesiones();
+
+$cabecera = $System->CargarTemaCabecera();
+
+?>
+<li class="dropup <?=$menusel == 'personalizarTemaContainer' ? 'active' : ''?><?=$menusel == 'colores' ? 'active' : ''?><?=$menusel == 'plantilla' ? ' active' : ''?><?=$menusel == 'fuentes' ? ' active' : ''?><?=$menusel == 'footercopyright' ? ' active' : ''?><?=$menusel == 'bloqueobarra' ? ' active' : ''?><?=$menusel == 'mensaje_publicitario' ? ' active' : ''?><?=$menusel == 'cabpie' ? ' active' : ''?><?=$menusel == 'extrasPedido' ? ' active' : ''?><?=$menusel == 'iconosRedes' ? ' active' : ''?><?=$menusel == 'cesta' ? ' active' : ''?><?=$menusel == 'pagos' ? ' active' : ''?><?=$menusel == 'productos_opc' ? ' active' : ''?><?=$menusel == 'filtroenproductos' ? ' active' : ''?><?=$menusel == 'pedido' ? ' active' : ''?><?=$menusel == 'bloques' ? ' active' : ''?><?=$menusel == 'megaMenu' ? ' active' : ''?>">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Personalización <i class="icon-chevron-up"></i></a>
                             <ul class="dropdown-menu" style="width:99%;" role="menu">
                                 <li<?=$menusel == 'plantilla' ? ' class="active"' : ''?>>
@@ -70,5 +83,10 @@
                                 <li<?=$menusel == 'logofullwidth' ? ' class="active"' : ''?>>
                                     <a href="logo_tamano_completo.php"><i class="icon-chevron-right"></i> Logo Tamaño completo (Cabecera)</a>
                                 </li>
+                                <?php if($cabecera == 17): //Solo se aplica para el tema Container Responsive ?>
+                                <li<?=$menusel == 'personalizarTemaContainer' ? ' class="active"' : ''?>>
+                                    <a href="personalizarContainerResponsive.php"><i class="icon-chevron-right"></i> Personalizar Container Responsive</a>
+                                </li>
+                                <?php endif; ?>
                             </ul>
                         </li>

@@ -1,4 +1,4 @@
-<?php if($cabecera == 16){ ?>
+<?php if($cabecera == 17){ ?>
 <div id="grupo-submenu"  style="background: #fff none repeat scroll 0 0;text-align: right;">
 	<div id="submenu">
 		<ul>

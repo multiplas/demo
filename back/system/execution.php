@@ -305,6 +305,16 @@
 		    $resultaop = $System->AddImageToCart($_FILES['fichero_usuario']['name'], $nombre_fichero);
     }
 
+    if($_GET['accion'] == 'addThemeImage'){
+        $dir_subida = '../ficheros/';
+        $fecha_subida = date("Y-m-d-H-i-s");
+        $fecha_format = str_replace('-','',$fecha_subida);
+        $nombre_fichero = $fecha_format.'_'.$_FILES['fichero_usuario']['name'];
+        $fichero_subido = $dir_subida . basename($nombre_fichero);
+        if(move_uploaded_file($_FILES['fichero_usuario']['tmp_name'], $fichero_subido))
+		    $resultaop = $System->AddImageToTheme($_FILES['fichero_usuario']['name'], $nombre_fichero);
+    }
+
     if($_GET['accion'] == 'updateImagesStatus'){
         $resultaop = $System->UpdateImagenesCartStatus($_POST['imageStatus']);
     }
@@ -1372,6 +1382,9 @@
             break;
         case 'bloqueo_barra.php':
 			$elemento = $System->CargarBarraStatus();
+            break;
+        case 'personalizarContainerResponsive.php':
+			$elemento = $System->CargarContainerResponsiveStatus();
             break;
         case 'plantilla.php':
 			$elemento = $System->CargarPlantillas();

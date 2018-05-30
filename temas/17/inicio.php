@@ -2,30 +2,6 @@
     $(document).ready(function(){
     });
 </script>
-<?php 
-include_once './sistema/mod_varios.php';//Necesario para mostrar las categorias en bloque
-if($inicio == 3){
-    echo '<div id="contenido">';
-
-    $ip = $_SERVER['REMOTE_ADDR']; // the IP address to query
-    $query = @unserialize(file_get_contents('http://ip-api.com/php/'.$ip));
-    if($query && $query['status'] == 'success') {
-      echo '<p><b>Tu ubicación:</b> '.$query['city'].'</p><br>';
-    } else {
-      echo 'Unable to get location';
-    }
-
-    include_once('./bloques/novedades.php');
-    include_once('./bloques/masvendidos.php');
-    echo '</div>';
-}else{
-    if (count($sliders) > 0) { 
-                if($inicio == 2){
-                    //echo '<div id="contenido" style="max-width:1100px !important;padding-top:0px;">'; 
-                }
-            include_once('./componentes/slider3.php'); 
-        } ?>
-
     <style>
         @import url(http://fonts.googleapis.com/css?family=Istok+Web);
         @keyframes slidy {
@@ -84,15 +60,44 @@ if($inicio == 3){
 
     }
 
+    /* Estilo personalizado plantilla 17 */
+
+    
+
 
     </style>
+    <div class="container cabecera-slider">
+        <div class="row">
+            <div class="col-sm-8">
+                <?php 
+                include_once './sistema/mod_varios.php';//Necesario para mostrar las categorias en bloque
+            
+                if (count($sliders) > 0) { 
+                    include_once('./componentes/slider3.php'); 
+                } ?>
+            </div>
+            <div class="col-sm-4">
+                <ul>
+                    <li>
+                        <img src="" alt="">
+                    </li>
+                    <li>
+                        <img src="" alt="">
+                    </li>
+                    <li>
+                        <img src="" alt="">
+                    </li>
+                </ul>
+            </div>
+        </div>    
+    </div>
     <!--
     <?php
         $prefijo_img = $draizp.'/back/uploads/';
-
+        
         if (count($sliders) > 0)
         {
-    ?>
+            ?>
 
     <div id="captioned-gallery">
         <figure class="slider">
@@ -176,7 +181,7 @@ if($inicio == 3){
         </script>
             <div>
         <?php
-                include_once('./componentes/slider2.php');
+                //include_once('./componentes/slider2.php');
                 echo '</div>';
                 $entradas = Noticia(2);
         ?>
@@ -332,7 +337,7 @@ if($inicio == 3){
     //include_once('./bloques/masvendidos.php'); 
     echo '</div>';
 }
-}
+
 ?>
 
 <?php

@@ -1302,8 +1302,18 @@
 					
 			$query = mysqli_query($this->conexion, $sql);
 			
-			return $query;
-		
+			return $query;		
+		}
+
+		function AddImageToTheme($nombre, $valor){
+			$nombre = mysqli_real_escape_string($this->conexion, htmlspecialchars($nombre));
+            $valor = mysqli_real_escape_string($this->conexion, htmlspecialchars($valor));
+
+			$sql = "INSERT INTO bd_imagenes_carrito VALUES (null, '$nombre', '$valor')";
+					
+			$query = mysqli_query($this->conexion, $sql);
+			
+			return $query;		
 		}
 
 		function CargarImagenesCarritoStatus(){
@@ -7054,6 +7064,51 @@
 			$query = mysqli_query($this->conexion, $sql);
 			
 			return $query;
+		}
+
+		function CreateTableContainerResponsive(){
+			$sql = "CREATE TABLE IF NOT EXISTS bd_container_responsive (
+				id INT NOT NULL AUTO_INCREMENT, 
+				nombre VARCHAR (300) NOT NULL, 
+				valor VARCHAR(600), 
+				PRIMARY KEY (id))";	
+
+			$query = mysqli_query($this->conexion, $sql);
+
+			$sqlInsertData = "INSERT INTO `bd_container_responsive` (`id`, `nombre`, `valor`) VALUES (1, 'status', '0' );";
+			
+			$query = mysqli_query($this->conexion, $sqlInsertData);		
+		}
+
+		function CargarContainerResponsiveStatus(){			
+			$resultado = '';
+			
+			$sql = "SELECT * FROM bd_container_responsive WHERE id = '1'";
+			$query = mysqli_query($this->conexion, $sql);
+			if (mysqli_num_rows($query) == 1)
+			{
+				$assoc = mysqli_fetch_assoc($query);
+				$resultado = $assoc;
+			}
+			else{
+				$this->CreateTableContainerResponsive();
+				echo "La tabla no existía, ahora ha sido creada con éxito. Por favor, recargue la página para continuar.";
+			}
+			return $resultado;
+			
+		}
+
+		function CargarTemaCabecera(){
+			$sql = "SELECT cabecera FROM bd_configuracion WHERE id = 1";
+
+			$query = mysqli_query($this->conexion, $sql);
+
+			if (mysqli_num_rows($query) == 1)
+			{
+				$assoc = mysqli_fetch_assoc($query);
+			}
+
+			return $assoc['cabecera'];
 		}
         
         function ModificarCuota($id, $meses)

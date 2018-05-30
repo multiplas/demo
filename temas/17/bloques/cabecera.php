@@ -23,30 +23,31 @@ $principalColors = getColors();
         width: auto;
         border-bottom: none;
         background: #fff;
+        height: 80px;
     }
-    #cabecera{
+    /* #cabecera{
         border-top: 1px solid #ccc;
-    }
+    } */
     #top>div {
         width: 20%;
         display: inline-block;
     }
-    .icono-header{
+    /* .icono-header{
         width: 20px;
         border: 1px solid #ccc;
         padding: 5px;
-    }
+    } */
 
     .dropdown{
         position: absolute;
-        top: 0;
+        bottom: 0;
         right: 0;
         z-index: 70000;
     }
 
     .dropdown-toggle{
         background: transparent !important;
-        color: #333 !important;
+        color: <?=$principalColors['colordestacado']?> !important;
         border: none !important;
         box-shadow: none !important;
     }
@@ -74,9 +75,16 @@ $principalColors = getColors();
     }
 
     .nav-top {
-        padding-top: 10px;
-        height: 45px;
+        padding-top: 0px;
+        height: 135px;
         font-size: 13px;
+       
+        z-index: 99;
+        margin-bottom: 5px;
+    }
+
+    .nav-top .row{
+        height: 100%;
     }
 
     #cabecera #logo {
@@ -92,8 +100,15 @@ $principalColors = getColors();
     }
 
     #cabecera #menu-right{
-        float:right;
-        width: 75%;
+        width: 100%;
+    }
+
+    #grupo-submenu a:hover, #grupo-submenu #submenu ul li:hover>a{
+        color: <?=$principalColors['colordestacado']?> !important;
+    }
+
+    #grupo-submenu #submenu ul li ul li a:hover{
+        color: <?=$principalColors['colordestacado']?> !important;
     }
 
     #grupo-contenido #contenido {
@@ -180,6 +195,24 @@ $principalColors = getColors();
 
     .usuario li a{
         font-weight: 500;
+    }
+
+    /* tamaños para el slider */
+
+    #sli img {
+        height: 400px;
+        width: auto;
+        /* position: relative; */
+        left: 50%;
+    }
+
+    .fotorama__stage.fotorama__pointer {
+        height: 400px !important;
+    }
+
+    .cabecera-slider {
+        height: 400px !important;
+        margin-bottom: 50px;
     }
 
     .usuario li a {
@@ -366,16 +399,8 @@ $principalColors = getColors();
     }
 
     .search-button, .bag-button {
-        padding-right: 15px;
-        padding-left: 15px;
-        border: 1px solid #aaa;
-        margin: 0px 0px 0px 10px;
-        background: #999;
+        width: 100%;
         cursor: pointer;
-    }
-
-    .search-button:hover, .bag-button:hover {
-        background: #999 !important;
     }
 
     .search-button i, .bag-button i, .bag-button span{
@@ -399,6 +424,68 @@ $principalColors = getColors();
         opacity: 0;
     }
 
+    .logo-fondo{
+        background: url(<?=$draizp?>/source/<?=$logoSup?>);
+        background-repeat: no-repeat;
+        background-position: left;
+        z-index: 100;
+    }
+
+    .bloque-nav-top{
+        background: url(<?=$draizp?>/source/<?=$fCabecera?>) repeat-x;
+        -moz-box-shadow: 0px 1px 4px 1px;
+        -webkit-box-shadow: 0px 1px 4px 1px;
+        box-shadow: 0px 1px 4px 1px;
+        margin-bottom: 5px;
+    }
+
+    .nav-right-menu li {       
+        list-style: none;
+        background: none;
+        border: none;
+        padding: 7px;
+    }
+
+    .bag-button a {
+        background: #ffffff70 !important;
+        height: 35px;
+        padding: 8px;
+    }
+
+    .nav-right-menu {
+        bottom: 0;
+        position: absolute;
+        right: 0;
+        color: <?=$principalColors['colordestacado']?>;
+        margin-bottom: 3px;
+    }
+
+    .nav-right-menu span {
+        font-size: 15px;
+        font-weight: bolder;
+        letter-spacing: 0.5px;
+    }
+    
+    .nav-right-menu i {
+        font-size: 17px;
+        padding-right: 5px;
+        padding-left: 5px;
+    }
+
+    .boton-buscar {
+        text-align: center;
+        border: solid 1px;
+        padding: 2px 20px 3px 6px;
+        font-size: 10px;
+    }
+
+    .banner-cabecera{
+        width: 100%;
+        height: 70px;
+        background: #fcac19;
+        margin: 20px 0 20px 0;
+    }
+    
 
     @media (max-width:830px)
     { 
@@ -477,79 +564,113 @@ $(document).ready(function() {
         $( this ).find( '.ver-mas-img' ).addClass("estado-inicial");
         $( this ).find( '.vistazo-rapido' ).addClass("estado-inicial");
     });
-    $(document).mouseup(function(e) 
-    {
-        var container = $(".search-button");
-        var container2 = $("#buscador");
-        // if the target of the click isn't the container nor a descendant of the container
-        if (!container.is(e.target) && container.has(e.target).length === 0) 
-        {
-            if (!container2.is(e.target) && container2.has(e.target).length === 0) 
-                $('.formulario-buscador').css('height','0px');
-        }
-        else{
-            $('.formulario-buscador').css('height','62px');
-        }
-    });
+    // $(document).mouseup(function(e) 
+    // {
+    //     var container = $(".search-button");
+    //     var container2 = $("#buscador");
+    //     // if the target of the click isn't the container nor a descendant of the container
+    //     if (!container.is(e.target) && container.has(e.target).length === 0) 
+    //     {
+    //         if (!container2.is(e.target) && container2.has(e.target).length === 0) 
+    //             $('.formulario-buscador').css('height','0px');
+    //     }
+    //     else{
+    //         $('.formulario-buscador').css('height','62px');
+    //     }
+    // });
 });
 </script>
-<div class="container nav-top">
-    <div class="row">
-        <div class="col-xs-12 col-sm-3 align-middle">
-                <span class="icono-header"><i class="far fa-envelope"></i></span>
-                <span><strong>Email:</strong></span>
-                <span><a href="mailto:<?=$Empresa['email']?>"><?=$Empresa['email']?></a></span>		
-        </div>
-        <div class="col-sm-3 align-middle">
-                <span class="icono-header"><i class="fas fa-phone"></i></span>
-                <span><strong>Telefono:</strong></span>
-                <span><a href="tel:<?=$Empresa['telefono']?>"><?=$Empresa['telefono']?></a></span>		
-        </div>
-        <div class="col-sm-4 align-middle">
-                <span class="icono-header"><i class="far fa-clock"></i></span>
-                <span><strong>Horario:</strong></span>
-                <span><?=$Empresa['horario']?></span>	
-        </div>
-        <div class="col-sm-2">
-            <div class="dropdown show">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Mi cuenta
-                </button>
-                <?php if ($_SESSION['usr'] != null) { ?>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                        <a class="dropdown-item" href="<?=$draizp?>/cuenta">Mi cuenta</a>
-                        <a class="dropdown-item" href="<?=$draizp?>/acc/salir">Desconectarse</a>
-                    </div>
-                <?php }else{ ?>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                        <a class="dropdown-item" href="<?=$draizp?>/cuenta">Conectarse</a>
-                    </div>
-                <?php } ?>    
+<div class="container-fluid bloque-nav-top">
+    <div class="container nav-top">
+        <div class="row">
+            <div class="col-xs-12 col-sm-4 align-middle logo-fondo" >
+                    <!-- <span class="icono-header"><i class="far fa-envelope"></i></span>
+                    <span><strong>Email:</strong></span>
+                    <span><a href="mailto:<?=$Empresa['email']?>"><?=$Empresa['email']?></a></span>		 -->
             </div>
-        </div>
+            <div class="col-sm-4 align-middle">
+            <div class="row">
+                <div class="col-sm-4"></div>
+                <div class="col-sm-4">
+                    
+                </div>
+                <div class="col-sm-4">
+                    <div class="dropdown show right-bottom">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Mi cuenta
+                        </button>
+                        <?php if ($_SESSION['usr'] != null) { ?>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <a class="dropdown-item" href="<?=$draizp?>/cuenta">Mi cuenta</a>
+                                <a class="dropdown-item" href="<?=$draizp?>/acc/salir">Desconectarse</a>
+                            </div>
+                        <?php }else{ ?>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <a class="dropdown-item" href="<?=$draizp?>/cuenta">Conectarse</a>
+                            </div>
+                        <?php } ?>    
+                    </div>
+                </div>
+            </div>
+            </div>
+            <div class="col-sm-4 align-middle text-right">
+                    <ul class="pull-right nav-right-menu">
+                        <li>
+                            <span class="icono-header"><i class="fas fa-phone"></i></span>
+                            <span><a href="tel:<?=$Empresa['telefono']?>"><?=$Empresa['telefono']?></a></span>		
+                        </li>
+                        <li class="bag-button">
+                            <a href="<?=$draizp?>/cesta"><i class="fas fa-shopping-bag "></i> <span> <?=count($cestanum)?> artículo(s) </span></a>				
+                        </li>
+                        <li class="search-button">
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <form action="<?=$draizp?>/<?=$_POST['buscar']?>" class="" method="post">
+                                        <input style="background: <?=$principalColors['fondosubmenuhoverresp']?>;color:<?=$principalColors['colorgeneralinicio']?>;height: 23px; border:none; padding-left: 25px;width: 100%;" name="buscar" type="text" id="busc" value="<?=(isset($_POST['buscar'])) ? $_POST['buscar'] : '';?>" /><span id="BtBuscar" style="background: #4b4b4b url(../source/lupa.png);background-position: center;background-repeat: no-repeat;" name="BtSubmit"></span>
+                                    </form>
+                                </div>
+                                <div class="col-sm-2" style="padding: 0;">
+                                    <div class="boton-buscar">Buscar</div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <br>
 
+            </div>
+            <!-- <div class="col-sm-2">
+                <div class="dropdown show">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Mi cuenta
+                    </button>
+                    <?php if ($_SESSION['usr'] != null) { ?>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item" href="<?=$draizp?>/cuenta">Mi cuenta</a>
+                            <a class="dropdown-item" href="<?=$draizp?>/acc/salir">Desconectarse</a>
+                        </div>
+                    <?php }else{ ?>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item" href="<?=$draizp?>/cuenta">Conectarse</a>
+                        </div>
+                    <?php } ?>    
+                </div>
+            </div> -->
+
+        </div>
     </div>
 </div>
 
 <?php if($fCabecera != ''){ ?>
-    <div style="background-image:url(<?=$draizp?>/source/<?=$fCabecera?>);background-repeat: no-repeat;">
+    <div style="">
 <?php } ?>
-<div id="buscador" class="container">
-    <?php
-        if($inicio != 2){
-    ?>
-        <form action="<?=$draizp?>/<?=$_POST['buscar']?>" class="formulario-buscador" method="post">
-            <input style="background: <?=$principalColors['fondosubmenuhoverresp']?>;color:<?=$principalColors['colorgeneralinicio']?>;height: 100%;padding-left: 25px;width: 100%;" name="buscar" type="text" id="busc" placeholder="Buscar<?=$aux?>..." value="<?=(isset($_POST['buscar'])) ? $_POST['buscar'] : '';?>" /><span id="BtBuscar" style="background: #4b4b4b url(../source/lupa.png);background-position: center;background-repeat: no-repeat;" name="BtSubmit"></span>
-        </form>
-    <?php
-        }
-    ?>
+<div class="container">
+    <div class="banner-cabecera"></div>
 </div>
 <div id="cabecera">     
     <div class="container">
-        <div id="logo">
+        <!-- <div id="logo">
             <?php if($logoSup != ''){ ?><a href="<?=$draizp?>/"><img src="<?=$draizp?>/source/<?=$logoSup?>" alt="" /></a><?php } ?>
-        </div>
+        </div> -->
         <div id="menu-right">
             <!-- <?=$Empresa['localidad']?> | <?=$Empresa['provincia']?><br>
             <a href="tel:+34<?=number_format($Empresa['telefono'], 0, '', ' ')?>"><?php echo number_format($Empresa['telefono'], 0, '', ' '). '</a> | <a href="mailto:'.$Empresa['email'].'" >' .$Empresa['email']. '</a>'; ?> -->

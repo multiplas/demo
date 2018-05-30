@@ -277,7 +277,7 @@ require_once('blocks/cabecera.php');
                                                     <option value="13" <?=($elemento['inicio'] == 13 ? ' selected' : '')?>>Categorías (Padre)</option>
                                                     <option value="15" <?=($elemento['inicio'] == 15 ? ' selected' : '')?>>Remax</option>
                                                     <option value="16" <?=($elemento['inicio'] == 16 ? ' selected' : '')?>>Minimal Fixed (Bootstrap)</option>
-                                                    <option value="16" <?=($elemento['inicio'] == 17 ? ' selected' : '')?>>Container Responsive (Bootstrap)</option>
+                                                    <option value="17" <?=($elemento['inicio'] == 17 ? ' selected' : '')?>>Container Responsive (Bootstrap)</option>
                                         </select><br>
                                     </div><br>
                                     <div class="control-group">
