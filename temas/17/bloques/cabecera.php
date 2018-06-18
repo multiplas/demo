@@ -2,7 +2,7 @@
 <link href="//use.fontawesome.com/releases/v5.0.7/css/all.css" rel="stylesheet">
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
+<link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet"> 
 <!-- jQuery library -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
@@ -39,8 +39,7 @@ $principalColors = getColors();
     } */
 
     .dropdown{
-        position: absolute;
-        bottom: 0;
+        bottom: 3px;
         right: 0;
         z-index: 70000;
     }
@@ -53,7 +52,7 @@ $principalColors = getColors();
     }
 
     .dropdown button, .dropdown a{
-        font-size:13px;
+        font-size:15px;
     }
 
     #top {
@@ -211,8 +210,8 @@ $principalColors = getColors();
     }
 
     .cabecera-slider {
-        height: 400px !important;
-        margin-bottom: 50px;
+        max-height: 450px !important;
+        margin-bottom: 30px;
     }
 
     .usuario li a {
@@ -331,7 +330,14 @@ $principalColors = getColors();
     }
     .product-price{
         text-align: center;
-        color: red; 
+        border: none;
+        color: #657080;
+        
+        font-weight: bold;
+        height: 35px;
+        /* margin-left: 200px; */
+        padding: 0px;
+        width: auto;
     }
     .ver-mas-img {
         position: absolute;
@@ -468,7 +474,7 @@ $principalColors = getColors();
     }
     
     .nav-right-menu i {
-        font-size: 17px;
+        font-size: 16px;
         padding-right: 5px;
         padding-left: 5px;
     }
@@ -476,14 +482,17 @@ $principalColors = getColors();
     .boton-buscar {
         text-align: center;
         border: solid 1px;
-        padding: 2px 20px 3px 6px;
-        font-size: 10px;
+        padding: 2px 6px 4px 6px;
+        font-size: 14px;
+        color: white;
+        margin-top: 0px;
+        cursor: pointer;
     }
 
     .banner-cabecera{
         width: 100%;
         height: 70px;
-        background: #fcac19;
+        background: #fff;
         margin: 20px 0 20px 0;
     }
 
@@ -518,6 +527,88 @@ $principalColors = getColors();
         padding-top: 0.81em !important;
     }
 
+    .contenido-tema-container{
+        border-top: solid #ddd 1px;
+    }
+
+    .top-ventas-titulo{
+        margin: 15px 0 30px 0;
+    }
+
+    #grupo-contenido #contenido #panel-izquierdo{
+        width: 100% !important;
+    }
+
+    #grupo-contenido #contenido #panel-izquierdo .panel-izquierdo{
+        width: 100% !important;
+        /* display: inline-flex; */
+    }
+    #grupo-contenido #contenido #panel-izquierdo .panel-izquierdo h3{
+        padding-right: 10px !important;
+    }   
+    
+    #grupo-contenido #contenido #panel-superior div#ordenar{
+        margin-left: 0px !important;
+    }
+
+    .search-button form {
+        padding-top: 0px;
+    }
+
+    #grupo-contenido #contenido #panel-superior div#ordenar select, #grupo-contenido #contenido #panel-inferior div#ordenar select {
+        height: 35px !important;
+        border-radius: 2px !important;
+        width: 200px;
+        cursor: pointer;
+    }
+
+    /* Producto */
+
+    #formulario_cesta h1{
+        font-weight: bold !important;
+        font-size: 1.3em;
+        line-height: 1.25;
+        padding-top: 4px;
+        display: inline-block;
+        letter-spacing: 1px;
+    }
+
+    .div-descripcion{
+        max-height: 140px;
+        overflow: hidden;
+        transition: all 1s;
+    }
+
+    .ver-mas-descripcion {
+        font-size: 14px;
+        color: #666;
+        padding: 10px 0 10px 0;
+        margin-top: 5px;
+    }
+
+    #grupo-contenido #contenido #producto .producto-r .talla select, #grupo-contenido #contenido #producto .producto-r .talla input[type="text"] {
+        border: solid 1px #CCC;
+        border-radius: 2px;
+        box-sizing: border-box;
+        font-family: inherit;
+        font-size: 14px;
+        font-weight: lighter;
+        height: auto;
+        margin-bottom: 0px;
+        max-width: 270px;
+        padding: 1px 2px;
+        width: 100%;
+    }
+
+    .web-title h1 {
+        font-size: 25px;
+        color: #fff;
+        font-family: 'Indie Flower', cursive;
+        padding: 27px 0px 0px 11px;
+        margin-bottom: 0px;
+        white-space: nowrap;
+    }
+
     @media (max-width:830px)
     { 
         #buscador2{
@@ -530,6 +621,19 @@ $principalColors = getColors();
     
     @media (max-width:500px)
     { 
+        #grupo-contenido #contenido{
+            padding: auto;
+        }
+
+        .bloque-nav-top{
+            display: none;
+        }
+
+        .banner-cabecera img{
+            width: 100%;
+            padding-top: 30px;
+        }
+
         #buscador2{
             position: absolute;
             left:5%; 
@@ -568,47 +672,37 @@ $principalColors = getColors();
 
 
 <script>
-$(document).ready(function() {
-    $( window ).scroll(function() {
-        if($(window).scrollTop() > 50){
-            $('#cabecera').addClass('fix-navbar');
-            $('#cabecera').css('cssText','max-width: 100% !important');
+jQuery(document).ready(function() {
+    jQuery( window ).scroll(function() {
+        if(jQuery(window).scrollTop() > 240){
+            jQuery('#cabecera').addClass('fix-navbar');
+            jQuery('#cabecera').css('cssText','max-width: 100% !important');
         }
         else{
-            $('#cabecera').removeClass('fix-navbar');
-            $('#cabecera').css('cssText','max-width: 1200px !important');
+            jQuery('#cabecera').removeClass('fix-navbar');
+            jQuery('#cabecera').css('cssText','max-width: 1200px !important');
         }
     });
-    $('.ver-mas-img')
+    jQuery('.ver-mas-img')
     .mouseenter(function(){
-        $( this ).find( 'a').css('background-color','#333');
+        jQuery( this ).find( 'a').css('background-color','#333');
     })
     .mouseleave(function(){
-        $( this ).find( 'a').css('background-color','<?=$principalColors['colordestacado']?>');
+        jQuery( this ).find( 'a').css('background-color','<?=$principalColors['colordestacado']?>');
     });
-    $('.single-product')
+    jQuery('.single-product')
     .mouseenter(function(){
-        $( this ).find( '.ver-mas-img' ).removeClass("estado-inicial");
-        $( this ).find( '.vistazo-rapido' ).removeClass("estado-inicial");
+        jQuery( this ).find( '.ver-mas-img' ).removeClass("estado-inicial");
+        jQuery( this ).find( '.vistazo-rapido' ).removeClass("estado-inicial");
     })
     .mouseleave(function(){
-        $( this ).find( '.ver-mas-img' ).addClass("estado-inicial");
-        $( this ).find( '.vistazo-rapido' ).addClass("estado-inicial");
+        jQuery( this ).find( '.ver-mas-img' ).addClass("estado-inicial");
+        jQuery( this ).find( '.vistazo-rapido' ).addClass("estado-inicial");
     });
-    // $(document).mouseup(function(e) 
-    // {
-    //     var container = $(".search-button");
-    //     var container2 = $("#buscador");
-    //     // if the target of the click isn't the container nor a descendant of the container
-    //     if (!container.is(e.target) && container.has(e.target).length === 0) 
-    //     {
-    //         if (!container2.is(e.target) && container2.has(e.target).length === 0) 
-    //             $('.formulario-buscador').css('height','0px');
-    //     }
-    //     else{
-    //         $('.formulario-buscador').css('height','62px');
-    //     }
-    // });
+    jQuery('.boton-buscar').on('click', function(){
+        jQuery('.formulario-buscador').submit();
+    });
+    
 });
 </script>
 
@@ -618,48 +712,59 @@ $urlBanner = '';
 $urlImageSuperior = '';
 $urlImageMedio = '';
 $urlImageInferior = '';
+$urlIconoMasVendidos = '';
+$urlIconoNovedades = '';
+
+$direccionBanner = '';
+$direccionImageSuperior = '';
+$direccionImageMedio = '';
+$direccionImageInferior = '';
+$direccionMasVendidos = '';
+$direccionNovedades = '';
+
 foreach($themeImages as $image){
+    /* Valores para el SRC de las imagenes */
     if($image['posicion'] == "bannerCabecera") $urlBanner = $draizp."/ficheros/".$image['valor'];
     if($image['posicion'] == "imagenLateral1") $urlImageSuperior = $draizp."/ficheros/".$image['valor'];
     if($image['posicion'] == "imagenLateral2") $urlImageMedio = $draizp."/ficheros/".$image['valor'];
     if($image['posicion'] == "imagenLateral3") $urlImageInferior = $draizp."/ficheros/".$image['valor'];
+    if($image['posicion'] == "iconoMasVendidos") $urlIconoMasVendidos = $draizp."/ficheros/".$image['valor'];
+    if($image['posicion'] == "iconoNovedades") $urlIconoNovedades = $draizp."/ficheros/".$image['valor'];
+
+    /* Valores para el HREF de los enlaces*/
+    if($image['posicion'] == "bannerCabecera") $direccionBanner = $image['url'];
+    if($image['posicion'] == "imagenLateral1") $direccionImageSuperior = $image['url'];
+    if($image['posicion'] == "imagenLateral2") $direccionImageMedio = $image['url'];
+    if($image['posicion'] == "imagenLateral3") $direccionImageInferior = $image['url'];
+    if($image['posicion'] == "iconoMasVendidos") $direccionMasVendidos = $image['url'];
+    if($image['posicion'] == "iconoNovedades") $direccionNovedades = $image['url'];
 }
 
 ?>
 <div class="container-fluid bloque-nav-top">
     <div class="container nav-top">
         <div class="row">
-            <div class="col-xs-12 col-sm-4 align-middle logo-fondo" >
+            <div class="col-xs-12 col-sm-2 align-middle logo-fondo" >
                     <!-- <span class="icono-header"><i class="far fa-envelope"></i></span>
                     <span><strong>Email:</strong></span>
                     <span><a href="mailto:<?=$Empresa['email']?>"><?=$Empresa['email']?></a></span>		 -->
             </div>
-            <div class="col-sm-4 align-middle">
-            <div class="row">
-                <div class="col-sm-4"></div>
-                <div class="col-sm-4">
-                    
-                </div>
-                <div class="col-sm-4">
-                    <div class="dropdown show right-bottom">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Mi cuenta
-                        </button>
-                        <?php if ($_SESSION['usr'] != null) { ?>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                <a class="dropdown-item" href="<?=$draizp?>/cuenta">Mi cuenta</a>
-                                <a class="dropdown-item" href="<?=$draizp?>/acc/salir">Desconectarse</a>
-                            </div>
-                        <?php }else{ ?>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                <a class="dropdown-item" href="<?=$draizp?>/cuenta">Conectarse</a>
-                            </div>
-                        <?php } ?>    
+            <div class="col-sm-8 align-middle">
+                <div class="row">
+                    <div class="col-xs-12 web-title">
+                        <h1>Calzado para toda la familia de excelente calidad a precios estupendos</h1>
                     </div>
-                </div>
+                    <div class="col-sm-10">
+                        <form action="<?=$draizp?>/<?=$_POST['buscar']?>" class="formulario-buscador" method="post">
+                            <input style="background: <?=$principalColors['fondosubmenuhoverresp']?>;color:<?=$principalColors['colorgeneralinicio']?>;height: 30px; border:none; padding-left: 20px;width: 100%;" name="buscar" type="text" id="busc" value="<?=(isset($_POST['buscar'])) ? $_POST['buscar'] : '';?>" /><span id="BtBuscar" style="background: #4b4b4b url(../source/lupa.png);background-position: center;background-repeat: no-repeat;" name="BtSubmit"></span>
+                        </form>
+                    </div>
+                    <div class="col-sm-2" style="padding: 0;">
+                        <div class="boton-buscar">Buscar</div>
+                    </div>
+                </div>                
             </div>
-            </div>
-            <div class="col-sm-4 align-middle text-right">
+            <div class="col-sm-2 align-middle text-right">
                     <ul class="pull-right nav-right-menu">
                         <li>
                             <span class="icono-header"><i class="fas fa-phone"></i></span>
@@ -668,16 +773,21 @@ foreach($themeImages as $image){
                         <li class="bag-button">
                             <a href="<?=$draizp?>/cesta"><i class="fas fa-shopping-bag "></i> <span> <?=count($cestanum)?> artículo(s) </span></a>				
                         </li>
-                        <li class="search-button">
-                            <div class="row">
-                                <div class="col-sm-10">
-                                    <form action="<?=$draizp?>/<?=$_POST['buscar']?>" class="" method="post">
-                                        <input style="background: <?=$principalColors['fondosubmenuhoverresp']?>;color:<?=$principalColors['colorgeneralinicio']?>;height: 23px; border:none; padding-left: 25px;width: 100%;" name="buscar" type="text" id="busc" value="<?=(isset($_POST['buscar'])) ? $_POST['buscar'] : '';?>" /><span id="BtBuscar" style="background: #4b4b4b url(../source/lupa.png);background-position: center;background-repeat: no-repeat;" name="BtSubmit"></span>
-                                    </form>
-                                </div>
-                                <div class="col-sm-2" style="padding: 0;">
-                                    <div class="boton-buscar">Buscar</div>
-                                </div>
+                        <li class="">
+                            <div class="dropdown show right-bottom">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Mi cuenta
+                                </button>
+                                <?php if ($_SESSION['usr'] != null) { ?>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                        <a class="dropdown-item" href="<?=$draizp?>/cuenta">Mi cuenta</a>
+                                        <a class="dropdown-item" href="<?=$draizp?>/acc/salir">Desconectarse</a>
+                                    </div>
+                                <?php }else{ ?>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                        <a class="dropdown-item" href="<?=$draizp?>/cuenta">Conectarse</a>
+                                    </div>
+                                <?php } ?>    
                             </div>
                         </li>
                     </ul>
@@ -711,7 +821,11 @@ foreach($themeImages as $image){
 <?php } ?>
 <div class="container">
     <div class="banner-cabecera">
-        <img src="<?=$urlBanner?>" alt="">
+        <?php if(empty($direccionBanner)): ?>
+            <img src="<?=$urlBanner?>" alt="">
+        <?php else: ?>
+            <a href="<?=$direccionBanner?>"><img src="<?=$urlBanner?>" alt=""></a>
+        <?php endif; ?>
     </div>
 </div>
 <div id="cabecera">     

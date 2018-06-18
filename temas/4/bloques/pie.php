@@ -150,7 +150,7 @@ $bloques = getBloqsInfo();
                                     echo '<p><a href="'.$draizp.'/'.$_SESSION['lenguaje'].'presupuesto_cont">Solicitar Presupuesto</a></p>';
                                 } ?>
                                 <p><a href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>contacto"><?=$auxcont?></a></p>
-                                <?php if($pieTiendas == 1){ ?><p><a href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>tiendas">Tiendas</a></p><?php } ?>
+                                <?php if($pieTiendas == 1){ ?><p><a href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>tiendas">Puntos de recogida</a></p><?php } ?>
                                  <?php
                                     if(count($enlacesP) > 0){ 
                                         $no_permitidas= array ("á","é","í","ó","ú","Á","É","Í","Ó","Ú","ñ","À","Ã","Ì","Ò","Ù","Ã™","Ã ","Ã¨","Ã¬","Ã²","Ã¹","ç","Ç","Ã¢","ê","Ã®","Ã´","Ã»","Ã‚","ÃŠ","ÃŽ","Ã”","Ã›","ü","Ã¶","Ã–","Ã¯","Ã¤","«","Ò","Ã","Ã„","Ã‹");

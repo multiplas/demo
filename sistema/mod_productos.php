@@ -397,7 +397,7 @@
 		
 		$ids .= $idpadre;
 
-		$sql = "SELECT a.id AS aid, a.atributo AS nombre, at.obligatorio AS obligatorio, at.atributo AS categoria, pa.precio AS precio
+		$sql = "SELECT a.id AS aid, a.atributo AS nombre, at.obligatorio AS obligatorio, at.atributo AS categoria, pa.precio AS precio, pa.precioextra AS precioextra
 				FROM bd_atributo_tipo at, bd_atributo a, bd_producto_atributo pa, bd_productos p 
 				WHERE p.id=pa.idproducto 
 				AND pa.idatributo=a.id 
@@ -415,7 +415,8 @@
 						'categoria' => $assoc['categoria'],
 						'atributo' => $assoc['nombre'],
                                                 'obligatorio' => $assoc['obligatorio'],
-                                                'precio' => $assoc['precio']
+												'precio' => $assoc['precio'],
+												'precioextra' => $assoc['precioextra']
 					)
 				);
 			unset($atributos[0]);
@@ -1202,7 +1203,7 @@
 		global $dbi;
 		$atributo[] = null;
 		
-		$sql = "SELECT a.atributo AS atributo, at.atributo AS nombre, pa.atrDefecto AS defecto, at.mensaje AS mensaje, at.obligatorio AS obligatorio, at.oculto AS oculto, pa.precio AS precio, at.descripcion AS descripcion
+		$sql = "SELECT a.atributo AS atributo, at.atributo AS nombre, pa.atrDefecto AS defecto, at.mensaje AS mensaje, at.obligatorio AS obligatorio, at.oculto AS oculto, pa.precio AS precio, at.descripcion AS descripcion, pa.precioextra AS precioextra
 				FROM bd_productos p, bd_producto_atributo pa, bd_atributo a, bd_atributo_tipo at
 				WHERE pa.idproducto=p.id 
 				AND pa.idatributo=a.id
@@ -1218,6 +1219,7 @@
 							'nombre' => $assoc['nombre'],
 							'obligatorio' => $assoc['obligatorio'],
 							'precio' => $assoc['precio'],
+							'precioextra' => $assoc['precioextra'],
 							'descripcion' => $assoc['descripcion'],
 							'oculto' => $assoc['oculto'],
 							'mensaje' => $assoc['mensaje'],

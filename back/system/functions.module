@@ -7057,16 +7057,16 @@
 			return $query;
 		}
 
-		function AddImageToTheme($nombre, $valor, $posicion){
+		function AddImageToTheme($nombre, $valor, $posicion, $url){
 			$nombre = mysqli_real_escape_string($this->conexion, htmlspecialchars($nombre));
             $valor = mysqli_real_escape_string($this->conexion, htmlspecialchars($valor));
 
-			$sql = "INSERT INTO bd_container_responsive VALUES (null, '$nombre', '$valor', '$posicion')";
+			$sql = "INSERT INTO bd_container_responsive VALUES (null, '$nombre', '$valor', '$posicion', '$url')";
 					
 			$query = mysqli_query($this->conexion, $sql);
 
 			if (!$query) { //Significa que ha fallado la inserción, procedo a actualizar
-				$sql = "UPDATE bd_container_responsive SET nombre = '$nombre', valor = '$valor' WHERE posicion = '$posicion'";
+				$sql = "UPDATE bd_container_responsive SET nombre = '$nombre', valor = '$valor', url = '$url' WHERE posicion = '$posicion'";
 				$query = mysqli_query($this->conexion, $sql);
 			}
 			
@@ -7104,6 +7104,7 @@
 				nombre VARCHAR (300) NOT NULL, 
 				valor VARCHAR(600), 
 				posicion VARCHAR (100) NOT NULL UNIQUE,
+				url VARCHAR (300),
 				PRIMARY KEY (id))";	
 
 			$query = mysqli_query($this->conexion, $sql);
@@ -7436,6 +7437,11 @@
 			$descripcion_po = mysqli_real_escape_string($this->conexion, $descripcion_po);
                         $descripcion_ca = mysqli_real_escape_string($this->conexion, $descripcion_ca);
                         $descripcion_ru = mysqli_real_escape_string($this->conexion, $descripcion_ru);
+
+			$carpeta = '../imagenesTiendas/';
+			if (!file_exists($carpeta)) {
+				mkdir($carpeta, 0777, true);
+			}
 			
             $imgname = "";
 			if ($img['error'] != 4)
@@ -7482,6 +7488,11 @@
 			$descripcion_po = mysqli_real_escape_string($this->conexion, $descripcion_po);
                         $descripcion_ca = mysqli_real_escape_string($this->conexion, $descripcion_ca);
                         $descripcion_ru = mysqli_real_escape_string($this->conexion, $descripcion_ru);
+			
+			$carpeta = '../imagenesTiendas/';
+			if (!file_exists($carpeta)) {
+				mkdir($carpeta, 0777, true);
+			}
 			
             $imgname = "'',";
 			if ($img['error'] != 4)

@@ -68,13 +68,16 @@
 
     .imagenes-panel-derecho li {
         margin: 0 0px 10px 0px;
+        max-height: 130px;
+        max-width: 300px;
+        overflow: hidden;
     }
 
 
     </style>
-    <div class="container cabecera-slider">
+    <div class="container">
         <div class="row">
-            <div class="col-sm-8">
+            <div class="col-sm-8 cabecera-slider">
                 <?php 
                 include_once './sistema/mod_varios.php';//Necesario para mostrar las categorias en bloque
             
@@ -85,204 +88,45 @@
             <div class="col-sm-4 imagenes-panel-derecho">
                 <ul>
                     <li>
-                        <img src="<?=$urlImageSuperior?>" alt="">
+                        <?php if(empty($direccionImageSuperior)): ?>
+                            <img src="<?=$urlImageSuperior?>" alt="">
+                        <?php else: ?>
+                            <a href="<?=$direccionImageSuperior?>"><img src="<?=$urlImageSuperior?>" alt=""></a>
+                        <?php endif; ?>
                     </li>
                     <li>
-                        <img src="<?=$urlImageMedio?>" alt="">
+                        <?php if(empty($direccionImageMedio)): ?>
+                            <img src="<?=$urlImageMedio?>" alt="">
+                        <?php else: ?>
+                            <a href="<?=$direccionImageMedio?>"><img src="<?=$urlImageMedio?>" alt=""></a>
+                        <?php endif; ?>
                     </li>
                     <li>
-                        <img src="<?=$urlImageInferior?>" alt="">
+                        <?php if(empty($direccionImageInferior)): ?>
+                            <img src="<?=$urlImageInferior?>" alt="">
+                        <?php else: ?>
+                            <a href="<?=$direccionImageInferior?>"><img src="<?=$urlImageInferior?>" alt=""></a>
+                        <?php endif; ?>
                     </li>
                 </ul>
             </div>
         </div>    
     </div>
-    <!--
-    <?php
-        $prefijo_img = $draizp.'/back/uploads/';
-        
-        if (count($sliders) > 0)
+    <!-- Empieza el contenido  -->
+    <div id="contenido" >
+    <style>
+        @media (max-width:940px)
         {
-            ?>
 
-    <div id="captioned-gallery">
-        <figure class="slider">
-            <?php
-                foreach ($sliders AS $slider)
-                {
-                ?>
-                    <figure>
-                        <img src="<?=$prefijo_img.$slider['imagen']?>" alt="<?=$slider['contenido']?>">
-                        <figcaption><?=$slider['contenido']?></figcaption>
-                    </figure>
-                <?php
-                }
-            ?>
-        </figure>
-    </div>
-
-    <?php }?>
-    -->
-    <?php 
-        if($inicio == 2){
-    ?>
-        <div>
-    <?php 
-        }else{      
-    ?>
-        <div id="contenido">
-    <?php 
+            .publicacion {
+                width: auto !important;
+                margin: 0 !important;
+                margin-bottom: 3% !important;
+                display: block !important;
+            }
         }
-    ?>
-        <!--<div id="productos">
-            <a href="<?=$draizp?>/productos/115" class="superpr">
-                <img src="<?=$draizp?>/source/ejemplo_banner1.jpg" src="">
-                <span>
-                    Lorem ipsum dolor sit<em>Ver más</em>
-                </span>
-            </a>
-            <a href="<?=$draizp?>/productos/118" class="superpr">
-                <img src="<?=$draizp?>/source/ejemplo_banner2.jpg" src="">
-                <span>
-                    Lorem ipsum dolor sit aemet<em>Ver más</em>
-                </span>
-            </a>
-        </div>-->
-        <?php 
-            if($inicio == 2){
-                $productosMN = ProductosConCriterio(8, 'novedades');
-        ?>
-        <div style="width:100% !important;margin:0 !important;">
-            <div class="slider4">
-                <?php
-                for ($i = 0; $i < count($productosMN); $i++)
-                {
-                    $nombre = utf8_encode(strtr(utf8_decode($productosMN[$i]['nombre']), utf8_decode($tofind), $replac));
-                    $nombre = strtolower($nombre);
-                    $nombre = preg_replace('([^A-Za-z0-9])', '-', $nombre);
-                ?>
-                <div class="slide" style="text-align:center;"><a href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>/producto/<?=$productosMN[$i]['id']?>/<?=$nombre?>/"><span style="position:absolute;top:75%;right:2%;background:rgba(0, 0, 0, 0.54);color:white;padding:5px;width:92%;"><?=strtoupper($productosMN[$i]['nombre'])?></span><img src="<?=$draizp?>/imagenesproductos/<?=$productosMN[$i]['imagen']?>"></a></div>
-                <?php
-                }
-                ?>
-            </div>
-        </div>
-            </div>
-        <script src="<?=$darizp?>/componentes/jquery.bxslider/jquery.bxslider.js"></script>
-        <script>
-            $(document).ready(function(){
-              $('.slider4').bxSlider({
-                slideWidth: 300,
-                minSlides: 4,
-                maxSlides: 4,
-                moveSlides: 1,
-                slideMargin: 40,
-                pager: false,
-                responsive: true,
-                controls: false,
-                auto: true,
-                autoHover: true
-              });
-            });
-        </script>
-            <div>
-        <?php
-                //include_once('./componentes/slider2.php');
-                echo '</div>';
-                $entradas = Noticia(2);
-        ?>
-                <style>
-
-                    .publicacion{
-                        width:46% !important;
-                        display:inline-block;
-                        margin:0px 10px;
-                    }
-
-                    @media screen and (max-width: 990px) { 
-                    .publicacion {
-                        width:415px !important;
-                    }
-                    }
-
-                    @media screen and (max-width: 970px) { 
-                    .publicacion {
-                        width:96.4% !important;
-                    }
-                        }
-
-                </style>
-                <div id="contenido">
-                <span class="tfiltro"><h2 style="margin-left:-20px;">ÚLTIMAS NOTICIAS</h2></span>
-                    <hr>
-                <div class="muestra">
-        <?php
-                foreach ($entradas AS $entrada){
-
-                        $texto_size = 40;
-                        $text = $entrada['contenido'];
-                        $text = strip_tags($text);
-                        $textlen = strlen($text);
-                        $pos = 0;
-                        $espacios = 0;
-                        while ($espacios < $texto_size && $pos < $textlen)
-                        {
-                            if ($text[$pos] == ' ')
-                                $espacios++;
-                            if ($espacios < $texto_size && $pos < $textlen)
-                                $pos++;
-                        }
-                        $pos--;
-                        $sppos = strpos($text, ' ', $pos);
-                        if ($sppos < 1) $sppos = $textlen - 1;
-                        if (strlen($text) > $sppos)
-                        {
-                            $descripcion = str_replace("\r\n", '<br>', substr($text, 0, $sppos));
-                            if (strlen($text) > $sppos)
-                                $descripcion .= '...';
-                        }
-        ?>
-                    <div class="publicacion">
-                            <a href="<?=$draizp?>/pagina/<?=$entrada['id']?>" title="Ver &laquo;<?=$entrada['nombre']?>&raquo;">
-                                <h2><?=utf8_decode($entrada['nombre'])?></h2>
-                                <?php
-                                    if ($entrada['imagen'] != null)
-                                    {
-                                        ?>
-                                        <span style="display: block; margin-bottom: 10px; max-height: 170px; overflow: hidden; text-align: center; width: 100%;">
-                                            <img class="zoom" src="<?=$draizp?>/imagenesproductos/<?=$entrada['imagen']?>" alt="<?=$entrada['nombre']?>">
-                                        </span>
-                                        <?php
-                                    }
-                                ?>
-                            </a>
-                            <p><?=$descripcion?></p>
-
-                            <span style="float: left; font-size: 10px; font-style: italic; line-height: 32px;"><?=date_format(date_create($entrada['fecha']), 'd-m-Y')?></span>
-
-                        </div>
-            <?php
-                }
-            ?>
-                </div>
-            </div>
-        <?php
-            }else{
-                
-                ?>
-                    <style>
-                        @media (max-width:940px)
-                        {
-
-                            .publicacion {
-                                width: auto !important;
-                                margin: 0 !important;
-                                margin-bottom: 3% !important;
-                                display: block !important;
-                            }
-                        }
-                    </style>
-    <div class="container">
+    </style>
+    <div class="container contenido-tema-container">
     <div id="vistazo-rapido-container">
         
     </div>
@@ -291,10 +135,66 @@
     if(!is_null($resultado) && $resultado['valor'] == 1) //Esta activado
         include_once('./temas/16/bloques/categorias.php');           //Comento lo de abajo 
     ?>
+    <!-- PRODUCTOS MAS VENDIDOS -->
     <div class="row">
-        <h3 class="col-sm-12 text-center" style="color: <?=$principalColors['colordestacado']?> ">Top Ventas</h3>
+        <h3 class="col-sm-12 text-center top-ventas-titulo" style="color: <?=$principalColors['colordestacado']?> "> 
+        <?php if(empty($direccionMasVendidos)): ?>
+            <img src="<?=$urlIconoMasVendidos?>" alt="">
+        <?php else: ?>
+            <a href="<?=$direccionMasVendidos?>"><img src="<?=$urlIconoMasVendidos?>" alt=""></a>
+        <?php endif; ?>
+        
+        LOS MÁS VENDIDOS</h3>
     <?php
-    $ultimosProductos = ProductosConCriterio(12,'ventas');
+    $ultimosProductos = ProductosConCriterio(8,'ventas');
+    foreach($ultimosProductos as $producto){
+        $productoNombreUrl = str_replace(' ','-',strtolower($producto['nombre']));
+        $productoNombreUrl = utf8_encode($productoNombreUrl);
+        $productoNombreUrl = strtolower($productoNombreUrl);
+        $productoNombreUrl = preg_replace('([^A-Za-z0-9])', '-', $productoNombreUrl);	  
+        $urlProducto = $draizp.'/'.'producto/'.$producto['id'].'/'.$productoNombreUrl.'/';
+        $urlImagen = $draizp.'/'.'imagenesproductos/'.$producto['imagen'];
+        ?>
+        <div class="col-sm-3 single-product">
+            <div class="imagen-producto text-center">
+                <a href="<?=$urlProducto?>">
+                    <img class="img-responsive" src="<?=$urlImagen?>" alt=""/>
+                </a>
+                <div class="interaccion">
+                    <div class="ver-mas-img btn btn-primary estado-inicial"><a href="<?php echo str_replace(' ','-',$urlProducto)?>">Ver más</a></div>
+                    <form action="<?=$draizp?>/acc/anadir/<?=$producto['id']?>" method="post">
+                        <button type="submit" data-product="<?=$producto['id']?>" class="vistazo-rapido estado-inicial btn btn-success">
+                        <i class="fas fa-shopping-cart"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="product-info">
+                <div class="titulo-producto">
+                    <h4><?=$producto['nombre']?></h4>
+                </div>
+                <div class="descripcion-producto">
+                    <?=trim(strip_tags( $producto['descripcion']))?>
+                </div>
+                <div class="product-price"><?=number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$producto['precio']), 2, ',', '.')?> <?=$producto['precio'] > 0 ? $_SESSION['moneda'] : ''?><?=$producto['precio'] == 'Consultar' ? $producto['precio']: ''?></div>
+            </div>
+        </div>
+
+    <?php
+    }
+    ?>
+    </div>
+    <!-- ULTIMAS NOVEDADES -->
+    <div class="row">
+        <h3 class="col-sm-12 text-center top-ventas-titulo" style="color: <?=$principalColors['colordestacado']?> ">
+        <?php if(empty($direccionNovedades)): ?>
+            <img src="<?=$urlIconoNovedades?>" alt="">
+        <?php else: ?>
+            <a href="<?=$direccionNovedades?>"><img src="<?=$urlIconoNovedades?>" alt=""></a>
+        <?php endif; ?>
+        ÚLTIMAS NOVEDADES DE LA COLECCIÓN</h3>
+    <?php
+    $ultimosProductos = ProductosConCriterio(8,'novedades');
     foreach($ultimosProductos as $producto){
         $productoNombreUrl = str_replace(' ','-',strtolower($producto['nombre']));
         $productoNombreUrl = utf8_encode($productoNombreUrl);
@@ -342,7 +242,6 @@
     //include_once('./bloques/novedades.php');
     //include_once('./bloques/masvendidos.php'); 
     echo '</div>';
-}
 
 ?>
 

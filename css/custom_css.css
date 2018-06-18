@@ -172,7 +172,7 @@
 }
 
 .purchase-process #articulo input, .purchase-process #articulo select{
-    max-width: inherit !important;
+    max-width: none !important;
     border: 1px solid #ccc;
     font-size: 14px;
     padding-top: 17px;

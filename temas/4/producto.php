@@ -1,4 +1,15 @@
 <script>
+    var precioBase = 0;
+
+    jQuery(document).ready(function(){
+        precioBase = jQuery("#totalspan").data("precio");
+    });
+
+    function updateBasePrice(){
+        var precioActual = parseFloat(jQuery("#totalspan").html().replace(',','.'));
+        precioBase = precioActual;
+    }
+
     function openModal() {
         document.getElementById('myModal').style.display = "block";
         document.getElementById('myModal2').style.display = "block";
@@ -17,12 +28,20 @@
 
     function changePricePerUnit(data)
     {
-        var units = jQuery(data).val();
-        var price = jQuery("#totalspan").data("precio");
-        var totalPrice = (Math.round( (units * price) * 100 )/100 ).toString();
-        jQuery("#totalspan").empty();
-        
-        return jQuery("#totalspan").text(totalPrice.replace(".",","));
+        if(precioBase == 0){
+            var units = jQuery(data).val();
+            var price = jQuery("#totalspan").data("precio");
+            var totalPrice = (Math.round( (units * price) * 100 )/100 ).toString();
+            jQuery("#totalspan").empty();
+            
+            return jQuery("#totalspan").text(totalPrice.replace(".",","));
+        }
+        else{
+            units = jQuery(data).val();
+            totalPrice = (Math.round( (units * precioBase) * 100 )/100 ).toString();
+            
+            return jQuery("#totalspan").text(totalPrice.replace(".",","));
+        }
         
     }
 </script>
@@ -483,6 +502,7 @@
                                                                 tot = temp['1'];
                                                             }
                                                             jQuery("#<?=$nombreJS?>").attr('data-precio', precioAnt);
+                                                            jQuery("#cantidadmuliselect").val('1');
                                                             jQuery('#totalspan').attr('data-precio', tot);
                                                             tot = parseFloat(tot);
                                                             tot = tot.toFixed(2);
@@ -490,18 +510,21 @@
                                                             tot = tot.replace(".",",");
                                                             tot = tot.replace("/",".");
                                                             jQuery('#totalspan').html(tot);
+                                                            updateBasePrice();
                                                         }else if (temp[0] == 'e'){
                                                             var tot = jQuery('#totalspan').attr('data-precio');
                                                             tot = parseFloat(tot) - parseFloat(jQuery("#<?=$nombreJS?>").attr('data-precio'));
                                                             if(jQuery( "#<?=$nombreJS?>" ).val() != '')
                                                                 tot = tot + parseFloat(temp['1']);
                                                             jQuery("#<?=$nombreJS?>").attr('data-precio', temp['1']);
+                                                            jQuery("#cantidadmuliselect").val('1');
                                                             jQuery('#totalspan').attr('data-precio', tot);
                                                             tot = tot.toFixed(2);
                                                             tot = tot.replace(",","/");
                                                             tot = tot.replace(".",",");
                                                             tot = tot.replace("/",".");
                                                             jQuery('#totalspan').html(tot);
+                                                            updateBasePrice();
                                                         }else if (temp[0] == 'i'){
                                                             var tot = jQuery('#totalspan').attr('data-precio');
                                                             tot = parseFloat(tot) - parseFloat(jQuery("#<?=$nombreJS?>").attr('data-precio'));
@@ -509,12 +532,14 @@
                                                                 tot = tot + parseFloat(temp['1']);
                                                             }
                                                             jQuery("#<?=$nombreJS?>").attr('data-precio', temp['1']);
+                                                            jQuery("#cantidadmuliselect").val('1');
                                                             jQuery('#totalspan').attr('data-precio', tot);
                                                             tot = tot.toFixed(2);
                                                             tot = tot.replace(",","/");
                                                             tot = tot.replace(".",",");
                                                             tot = tot.replace("/",".");
                                                             jQuery('#totalspan').html(tot);
+                                                            updateBasePrice();
                                                         }
                                                     });
                                                     jQuery.post("/ajax/foto.php", {id: <?=$producto['id']?>, valor: jQuery( "#<?=$nombreJS?>" ).val()}, function(respuesta){ 
@@ -540,7 +565,10 @@
                                 
                                         </script>
                                             <?php if($atributo['obligatorio'] == 'Si' && $atributo['nombre'] == 'Fianza'){
-                                                $totalAtr += $atributo['precio'];
+                                                if($atributo['precio'] != 0)
+                                                    $totalAtr += $atributo['precio'];
+                                                else
+                                                    $totalAtr += $atributo['precioextra'];
                                                 $nombreAtr .= "(".$atributo['nombre'].") ";
                                             }
                                             ?>
@@ -574,7 +602,11 @@
                                             $c = 1;
                                         }else if($atributo['nombre'] != $aux && $c == 1){
                                             if($atributo['obligatorio'] == 'Si' && $atributo['nombre'] == 'Fianza'){
+                                                if($atributo['precio'] != 0)
                                                 $totalAtr += $atributo['precio'];
+                                            else
+                                                $totalAtr += $atributo['precioextra'];
+
                                                 $nombreAtr .= "(".$atributo['nombre'].") ";
                                             }
                                 ?>
@@ -607,6 +639,7 @@
                                                                 tot = temp['1'];
                                                             }
                                                             jQuery("#<?=$nombreJS?>").attr('data-precio', precioAnt);
+                                                            jQuery("#cantidadmuliselect").val('1');
                                                             jQuery('#totalspan').attr('data-precio', tot);
                                                             tot = parseFloat(tot);
                                                             tot = tot.toFixed(2);
@@ -614,18 +647,21 @@
                                                             tot = tot.replace(".",",");
                                                             tot = tot.replace("/",".");
                                                             jQuery('#totalspan').html(tot);
+                                                            updateBasePrice();
                                                         }else if (temp[0] == 'e'){
                                                             var tot = jQuery('#totalspan').attr('data-precio');
                                                             tot = parseFloat(tot) - parseFloat(jQuery("#<?=$nombreJS?>").attr('data-precio'));
                                                             if(jQuery( "#<?=$nombreJS?>" ).val() != '')
                                                                 tot = tot + parseFloat(temp['1']);
                                                             jQuery("#<?=$nombreJS?>").attr('data-precio', temp['1']);
+                                                            jQuery("#cantidadmuliselect").val('1');
                                                             jQuery('#totalspan').attr('data-precio', tot);
                                                             tot = tot.toFixed(2);
                                                             tot = tot.replace(",","/");
                                                             tot = tot.replace(".",",");
                                                             tot = tot.replace("/",".");
                                                             jQuery('#totalspan').html(tot);
+                                                            updateBasePrice();
                                                         }else if (temp[0] == 'i'){
                                                             var tot = jQuery('#totalspan').attr('data-precio');
                                                             tot = parseFloat(tot) - parseFloat(jQuery("#<?=$nombreJS?>").attr('data-precio'));
@@ -633,12 +669,14 @@
                                                                 tot = (tot + parseFloat(temp['1']));
                                                             }
                                                             jQuery("#<?=$nombreJS?>").attr('data-precio', temp['1']);
+                                                            jQuery("#cantidadmuliselect").val('1');
                                                             jQuery('#totalspan').attr('data-precio', tot);
                                                             tot = tot.toFixed(2);
                                                             tot = tot.replace(",","/");
                                                             tot = tot.replace(".",",");
                                                             tot = tot.replace("/",".");
                                                             jQuery('#totalspan').html(tot);
+                                                            updateBasePrice();
                                                         }
                                                     });
                                                     jQuery.post("/ajax/foto.php", {id: <?=$producto['id']?>, valor: jQuery( "#<?=$nombreJS?>" ).val()}, function(respuesta){ 
@@ -808,6 +846,7 @@
                                                                 tot = respuesta;
                                                             }
                                                             jQuery('#totalspan').html(tot);
+                                                            updateBasePrice();
                                                         });
                                                         jQuery('#btSubmit').attr('style', 'cursor: pointer; margin: 25px auto; border-radius: 3px; line-height: 18px; font-weight: normal; padding: 6px; font-size: 16px;');
                                                         jQuery('#btSubmit').removeAttr('disabled');
@@ -866,6 +905,7 @@
                                                                 tot = respuesta;
                                                             }
                                                             jQuery('#totalspan').html(tot);
+                                                            updateBasePrice();
                                                         });
                                                      }
                                                      if(jQuery('#fentrada').val() != ""){
@@ -924,6 +964,7 @@
                                                             tot = respuesta;
                                                         }
                                                         jQuery('#totalspan').html(tot);
+                                                        updateBasePrice();
                                                     });
                                                  }
                                         }else{
@@ -1008,6 +1049,7 @@
                                                                 tot = respuesta;
                                                             }
                                                             jQuery('#totalspan').html(tot);
+                                                            updateBasePrice();
                                                         });
 
 

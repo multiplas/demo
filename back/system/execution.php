@@ -319,7 +319,7 @@
         $nombre_fichero = $fecha_format.'_'.$_FILES['fichero_usuario']['name'];
         $fichero_subido = $dir_subida . basename($nombre_fichero);
         if(move_uploaded_file($_FILES['fichero_usuario']['tmp_name'], $fichero_subido))
-		    $resultaop = $System->AddImageToTheme($_FILES['fichero_usuario']['name'], $nombre_fichero, $_POST['posicion']);
+		    $resultaop = $System->AddImageToTheme($_FILES['fichero_usuario']['name'], $nombre_fichero, $_POST['posicion'], $_POST['url']);
     }
 
     if($_GET['accion'] == 'updateImagesStatus'){

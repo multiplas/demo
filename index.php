@@ -593,6 +593,8 @@
             break;
 			case 'anadir':		// Añadir producto al carrito.
                             require_once($draiz.'/sistema/mod_cestaycompra.php');
+                            
+                            
                             $sepuedeAnadir = 'Si';
                             $faltaAtr = '';
                             
@@ -623,6 +625,7 @@
                                         if ($_POST[$nom] != ''){
                                             $atributos .= $_POST[$nom].' - ';
                                         }
+                                        
                                         
                                         if($assoc['obligatorio2'] == 'Si' && $_POST[$nom] == ''){
                                             $sqlPosibles = "SELECT id FROM bd_atributo WHERE tipoid = '".$assoc['id']."'";
@@ -661,6 +664,8 @@
                                         $cantidad = $_POST['cantidadmuliselect'];
                                     else
                                         $cantidad = $_GET['cantidad'];
+
+                                        
                                     
                                     if(estaDisponibleAnadir($_GET['addcart'])){
                                         if($sepuedeAnadir == 'Si'){

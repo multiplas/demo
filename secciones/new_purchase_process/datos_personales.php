@@ -12,7 +12,7 @@
     var oldPorte = 0;
     var isFormValid = true;
 
-    jQuery(window).load(function(){        
+    jQuery(window).on('load',function(){        
         var porteOriginal = parseFloat(jQuery('#nuevopenvio').val());
         jQuery('#nuevopenvio').val( jQuery('#nuevopenvio').val() - porteOriginal);      
         jQuery('#nuevotransp').val(jQuery('#nuevotransp2').val()); 
@@ -434,29 +434,31 @@ if(empty($_SESSION['compra']['entrega']['direccion']) && isset($_SESSION['usr'])
     </div>
 
 <hr>
-<div class="row">
-    <div class="col-xs-12 col-sm-offset-1 col-sm-10">
-        <div class="col-xs-4">
-            <span id="BtSubmit" type="submit" class="btn btn-primary custom-btn" onclick="location.href='<?=$draizp?>/<?=$_SESSION['lenguaje']?>cesta';"><?=$auxvol?></span>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12 col-sm-offset-1 col-sm-10">
+            <div class="col-xs-4 col-sm-4">
+                <span id="BtSubmit" type="submit" class="btn btn-primary custom-btn" onclick="location.href='<?=$draizp?>/<?=$_SESSION['lenguaje']?>cesta';"><?=$auxvol?></span>
+            </div>
+            <?php   if($purchase_process_type != 4  && $purchase_process_type != 5): ?>
+            <div class="col-xs-4 col-sm-4">
+                <span class="btn btn-primary custom-btn update-data">Actualizar datos</span>
+            </div>
+            <?php else: ?>
+            <div class="col-xs-4 col-sm-4">
+                <span class="btn btn-primary custom-btn ultra-update-data">Continuar ></span>
+            </div>
+            <?php endif; ?>
+            <?php if(isset($_SESSION['usr'])): ?>
+            <div class="col-xs-4 col-sm-4">
+                <span class="btn btn-primary custom-btn pay-form" style="float: right; display:none;">Pagar y finalizar el pedido</span>
+            </div>
+            <?php else: ?>
+            <div class="col-xs-4 col-sm-4">
+                <span class="btn btn-primary custom-btn pay-form" style="float: right; display:none;" disabled>Pagar y finalizar el pedido</span><br>
+                <small>Es necesario actualizar los datos de envio.</small>
+            </div>
+            <?php endif; ?>
         </div>
-        <?php   if($purchase_process_type != 4  && $purchase_process_type != 5): ?>
-        <div class="col-xs-4">
-            <span class="btn btn-primary custom-btn update-data">Actualizar datos</span>
-        </div>
-        <?php else: ?>
-        <div class="col-xs-4">
-            <span class="btn btn-primary custom-btn ultra-update-data">Continuar ></span>
-        </div>
-        <?php endif; ?>
-        <?php if(isset($_SESSION['usr'])): ?>
-        <div class="col-xs-4">
-            <span class="btn btn-primary custom-btn pay-form" style="float: right; display:none;">Pagar y finalizar el pedido</span>
-        </div>
-        <?php else: ?>
-        <div class="col-xs-4">
-            <span class="btn btn-primary custom-btn pay-form" style="float: right; display:none;" disabled>Pagar y finalizar el pedido</span><br>
-            <small>Es necesario actualizar los datos de envio.</small>
-        </div>
-        <?php endif; ?>
     </div>
 </div>

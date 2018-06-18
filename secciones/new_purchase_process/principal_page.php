@@ -17,8 +17,10 @@ if (isset($_GET['confirmacion']) && $_SESSION['compra']['paso'] >= 3)
 else if (isset($_GET['datos_personales']) && $_SESSION['compra']['paso'] >= 1 || isset($_GET['pedido']) && $_SESSION['compra']['paso'] >= 0 || isset($_GET['pago']) && $_SESSION['compra']['paso'] >= 2)
 {
     $usuario = UserLoadData($_SESSION['usr']['id']);
-   
-    include_once('breadcrumb.php'); //No necesario en onepageCheckout
+    if($cabecera == 17)
+        include_once('breadcrumb_containerResponsive.php'); //No necesario en onepageCheckout
+    else
+        include_once('breadcrumb.php'); //No necesario en onepageCheckout
     if(!isset($_SESSION['compra']['entrega'])){
         $_SESSION['compra']['entrega'] = array(
             'nombre' => $usuario['nombre'],

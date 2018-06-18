@@ -190,7 +190,7 @@ $bloques = getBloqsInfo();
                         <a href="mailto:<?=$Empresa['email']?>"><?=$Empresa['email']?></a>
                     </li>
                     <li>
-                        <a href="<?=$draizp?>/contacto"><?=$Empresa['horario']?></a>
+                        <a href="<?=$draizp?>/contacto"><?php echo (isset($Empresa['horario']) && !empty($Empresa['horario'])) ? $Empresa['horario'] : '24 horas - 7 días/semana' ?></a>
                     </li>
                 </div>
                 <div class="col-sm-3 contactanos">
@@ -360,8 +360,7 @@ $bloques = getBloqsInfo();
             <div class="row" style="width:100%;">
                 <div class="col-xs-12 col-sm-6">
                     <span class="copyright">
-                        © 2017 FarmaVitalista. Diseño web por
-                        <a href="https://www.camaltec.es/">Grupo Camaltec</a>
+                        © 2018 Diseño web por <a href="https://www.camaltec.es/">Grupo Camaltec</a> | <a href="https://www.camaltec.es/diseno-desarrollo-web-alicante/">Diseño Web Alicante</a>
                     </span>
                 </div>
                 <div class="col-xs-12 col-sm-6">

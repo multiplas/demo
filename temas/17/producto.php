@@ -22,9 +22,24 @@
         var totalPrice = (Math.round( (units * price) * 100 )/100 ).toString();
         jQuery("#totalspan").empty();
         
-        return jQuery("#totalspan").text(totalPrice.replace(".",","));
-        
+        return jQuery("#totalspan").text(totalPrice.replace(".",","));        
     }
+    
+    jQuery(document).ready(function(){
+        var iteracion = 0;
+        jQuery('.ver-mas-descripcion').on('click',function(){
+            if(iteracion == 0){
+                iteracion = 1;
+                jQuery('.div-descripcion').css('max-height','400px');
+                jQuery('.ver-mas-descripcion').html('Ver menos <i class="fas fa-angle-up"></i>');
+            }
+            else{
+                iteracion = 0;
+                jQuery('.div-descripcion').css('max-height','140px');
+                jQuery('.ver-mas-descripcion').html('Ver más <i class="fas fa-angle-down"></i>');
+            }
+        });
+    });
 </script>
 
 <style>
@@ -210,16 +225,17 @@
                             margin: 25px auto;
                         }
                         
-                        .sale-label{
-                            background-color: #ff6600;
-                            border-radius: 4px;
-                            color: #fff !important;
-                            float: right;
-                            font-size: 14px !important;
+                        .sale-label {
+                            background-color: #e74e4e;
+                            border-radius: 2px;
+                            color: #ffffff;
+                            font-size: 13px !important;
                             font-weight: normal;
-                            padding: 2px 4px;
-                            text-transform: uppercase;
+                            padding: 0px 14px;
+                            text-transform: capitalize;
                             z-index: 10;
+                            position: relative !important;
+                            margin-left: 2px;
                         }
                         
                         table:not(#tcesta):not(#tpedido):not(#comprabar) tr td {
@@ -288,14 +304,16 @@
                         }
                         
                         .sale-label {
-                            background-color: #5cb85c;
-                            border-radius: 4px;
-                            color: #fff !important;
-                            float: right;
-                            font-size: 18px;
-                            padding: 2px 4px;
-                            text-transform: uppercase;
+                            background-color: #e74e4e;
+                            border-radius: 2px;
+                            color: #ffffff;
+                            font-size: 13px !important;
+                            font-weight: normal;
+                            padding: 0px 14px;
+                            text-transform: capitalize;
                             z-index: 10;
+                            position: relative !important;
+                            margin-left: 2px;
                         }
                         
                         .button{
@@ -318,15 +336,14 @@
                             display: table-cell !important;
                         }
                         
-                        .sale-label{
-                            background-color: <?=$colores['oferta_fondo']?>;
-                            border-radius: 4px;
-                            color: <?=$colores['oferta_letra']?>; !important;
-                            float: right;
-                            font-size: 12px !important;
-                            font-weight: bold;
-                            padding: 2px 4px;
-                            text-transform: uppercase;
+                        .sale-label {
+                            background-color: #e74e4e;
+                            border-radius: 2px;
+                            color: #ffffff;
+                            font-size: 13px !important;
+                            font-weight: normal;
+                            padding: 0px 14px;
+                            text-transform: capitalize;
                             z-index: 10;
                             position: relative !important;
                             margin-left: 2px;
@@ -423,7 +440,15 @@
                             <?=$Empresa['etiqpro'] == 1 ? '<br><br>' : ''?>
                             <h1 itemprop="name" style="font-weight: normal;"><?=$producto['nombre']?></h1><br>
                             
-                            <b>Referencia:</b> <?=$producto['referencia']?><br><br>
+
+                            <div style="display:table-row; z-index: 0">
+                                <div style="display:table-cell;vertical-align:middle;width:76%; z-index: 0">
+                                    <b>Referencia:</b> <?=$producto['referencia']?> 
+                                </div>
+                                <div style="display:table-cell;text-align:right;height:50px;vertical-align:middle; z-index: 0">
+                                    <label style="color: #575757; font-size: 17px; margin-right: 15px; margin-top: 5px; z-index: 0" ><span class="sale-label">Disponible</span></label>
+                                </div>
+                            </div>
                             
                             <?php
                         $texto_size = 30;
@@ -448,14 +473,17 @@
                             if (strlen($text) > $sppos)
                                 $descripcion .= '...';
                         }*/
-                        $descripcion = substr(html_entity_decode($text), 0, 300);
-                        if(strlen($producto['descripcion']) > 300)
-                            $descripcion .= "...";
+                        $descripcion = html_entity_decode($text);
                         ?>
-                            <?=$descripcion?><br><br>
+                            <div class="div-descripcion">
+                                <?=$descripcion?>
+                            </div>
                             
                             <?php if($producto['plazoEnt'] != ''){ ?><b>Plazo de Entrega:</b> <?=$producto['plazoEnt']?><br><br><?php } ?>
                         
+                        <?php if(strlen($producto['descripcion']) > 300): ?>
+                            <div class="text-center"><span class="btn ver-mas-descripcion">Ver más <i class="fas fa-angle-down"></i></span></div>
+                        <?php endif; ?>
                         <div style="display:table; width:100%; border-top: 1px solid rgba(150, 150, 150, 0.3);"><br>
                                 <?php
                                     $aux = null;
@@ -550,7 +578,7 @@
                                             ?>
                                             <div style="display:<?=$atributo['oculto'] == 'No' ? 'table-row' : 'none'?>;">
                                             <div style="display:table-cell;vertical-align:middle;width:66%;">
-                                                <label style="color: #333; font-size: 1.20rem; margin-right: 15px; margin-top: 7px;" ><?=$atributo['nombre']?>: <?=$atributo['descripcion'] != '' ? '<i id="icono_info'.$i.'" class="fa fa-info-circle" style="cursor: pointer;" data-desc="'.$atributo['descripcion'].'"></i>' : '' ?></label>
+                                                <label style="color: #333;font-size: 17px; margin-right: 15px; margin-top: 7px;" ><?=ucfirst(strtolower($atributo['nombre']))?>: <?=$atributo['descripcion'] != '' ? '<i id="icono_info'.$i.'" class="fa fa-info-circle" style="cursor: pointer;" data-desc="'.$atributo['descripcion'].'"></i>' : '' ?></label>
                                             </div>
                                             <div style="display:table-cell;height:50px;vertical-align:middle;">
                                                 <div style="margin:0 !important;width:100% !important;" class="talla">
@@ -587,7 +615,7 @@
                                             </div>
                                             <div style="display:<?=$atributo['oculto'] == 'No' ? 'table-row' : 'none'?>;">
                                             <div style="display:table-cell;vertical-align:middle;width:66%;">
-                                                <label style="color: #333; font-size: 1.20rem; margin-right: 15px; margin-top: 7px;" ><?=$atributo['nombre']?>: <?=$atributo['descripcion'] != '' ? '<i id="icono_info'.$i.'" class="fa fa-info-circle" style="cursor: pointer;" data-desc="'.$atributo['descripcion'].'"></i>' : '' ?></label>
+                                                <label style="color: #333; font-size: 17px; margin-right: 15px; margin-top: 7px;" ><?=strtolower($atributo['nombre'])?>: <?=$atributo['descripcion'] != '' ? '<i id="icono_info'.$i.'" class="fa fa-info-circle" style="cursor: pointer;" data-desc="'.$atributo['descripcion'].'"></i>' : '' ?></label>
                                             </div>
                                             <div style="display:table-cell;height:50px;vertical-align:middle;">
                                             <script>
@@ -711,7 +739,7 @@
                             <div style="display:table;width:100%;">
                                 <div style="display:table-row;">
                                     <div style="display:table-cell;vertical-align:middle;width:66%;">
-                                        <label style="color: #333; font-size: 1.20rem; margin-right: 15px; margin-top: 7px;<?=$producto['precio'] != 'Consultar' ? '' : ' display: none;'?>">Financiación:</label>
+                                        <label style="color: #333; font-size: 17px; margin-right: 15px; margin-top: 7px;<?=$producto['precio'] != 'Consultar' ? '' : ' display: none;'?>">Financiación:</label>
                                     </div>
                                     <div style="display:table-cell;height:50px;vertical-align:middle;">
                                         <div class="talla" style="margin:0 !important;width:100% !important;">
@@ -730,7 +758,7 @@
                             <div style="display: table;width:100%;">
                                 <div style="display:table-row;">
                                 <div style="display:table-cell;vertical-align:middle;width:76%;">
-                                    <label style="color: #333; font-size: 1.20rem; margin-right: 15px; margin-top: 7px;<?=$producto['precio'] != 'Consultar' ? '' : ' display: none;'?>"><?=$auxcan?>:</label>
+                                    <label style="color: #333; font-size: 17px; margin-right: 15px; margin-top: 7px;<?=$producto['precio'] != 'Consultar' ? '' : ' display: none;'?>"><?=$auxcan?>:</label>
                                 </div>
                                 <div style="display:table-cell;height:50px;vertical-align:middle;">
                                     <div class="talla" style="margin:0 !important;width:100% !important;">
@@ -747,7 +775,7 @@
                             <?php if($producto['rfentrada'] == 1){ ?>                    
                             <div style="width:100%;">
                                 <div style="display:table-cell;vertical-align:middle;width:66%;">
-                                    <label style="color: #333; font-size: 1.20rem; margin-right: 15px; margin-top: 7px;">Fecha Entrada:</label>
+                                    <label style="color: #333; font-size: 17px; margin-right: 15px; margin-top: 7px;">Fecha Entrada:</label>
                                 </div>
                                 <div style="display:table-cell;height:50px;vertical-align:middle;">
                                     <div class="talla" style="margin:0 !important;width:100% !important;">
@@ -944,7 +972,7 @@
                             <?php if($producto['rfsalida'] == 1){ ?>                    
                             <div id="fsalidaB" style="width:100%; display: none;">
                                 <div style="display:table-cell;vertical-align:middle;width:66%;">
-                                    <label style="color: #333; font-size: 1.20rem; margin-right: 15px; margin-top: 7px;">Fecha Salida:</label>
+                                    <label style="color: #333; font-size: 17px; margin-right: 15px; margin-top: 7px;">Fecha Salida:</label>
                                 </div>
                                 <div style="display:table-cell;height:50px;vertical-align:middle;">
                                     <div class="talla" style="margin:0 !important;width:100% !important;">
@@ -1050,14 +1078,7 @@
                                 </script>
                             </div>
                             <?php } ?>
-                            <div style="display:table-row; z-index: 0">
-                                <div style="display:table-cell;vertical-align:middle;width:76%; z-index: 0">
-                                    <label style="color: #333; font-size: 1.20rem; margin-right: 15px; margin-top: 7px; z-index: 0" ></label>
-                                </div>
-                                <div style="display:table-cell;text-align:right;height:50px;vertical-align:middle; z-index: 0">
-                                    <label style="color: #575757; font-size: 1.20rem; margin-right: 15px; margin-top: 7px; z-index: 0" ><span class="sale-label">Disponible</span></label>
-                                </div>
-                            </div>
+                            
                             <div style="border-top: 1px solid rgba(150, 150, 150, 0.3);color: #e74e4e;">
                                 <div style="display:table-cell;vertical-align:middle;width:100%;">
                                     <span itemprop="price" id="preciopr" style="padding:0 !important;font-size:2em;margin-right: 15px; top: 7px;" class="precio"><b><span id="totalspan" data-precio="<?=$producto['precio']?>" data-preciobase="<?=$producto['precio']?>"><?=number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$producto['precio']), 2, ',', '.')?></span><?=$producto['precio'] != 'Consultar' ? $_SESSION['moneda'] : ''?> <?=@$totalAtr > 0 ? '<small style="opacity: 0.7;">+ '. number_format($totalAtr, 2, ',', '.') .$_SESSION['moneda'] . ' '.$nombreAtr.'</small>' : ''?></b></span>
@@ -1171,41 +1192,14 @@
                                     
                                 </style>
                                 
-                                <div class="social-sharing2" style="padding-left: 5px; padding-right: 5px; margin-bottom: 10px; border: 1px solid rgb(221, 221, 221);" data-permalink="<?=$Empresa['url']?>/<?=$_SESSION['lenguaje']?>producto/<?=$producto['id']?>/<?=$nombre?>">
-                                    <span class="tfiltro">Etiquetas</span><br><br>
-                                    
-                                    <style>
-                                        .etiquetas_estilo{
-                                            font-size: 13px;
-                                            line-height: 16px;
-                                            font-weight: bold;
-                                            padding: 4px 9px 5px 9px;
-                                            border: 1px solid #d6d4d4;
-                                            margin: 0 3px 3px 0;
-                                        }
-
-                                        .etiquetas_estilo:hover{
-                                            background-color: grey;
-                                            color: white;
-                                        }
-                                    </style>
-                                        <?php
-
-                                                foreach ($etiquetasProducto AS $etq)
-                                                {
-                                        $nombre = utf8_encode(strtr(utf8_decode($etq['nombre']), utf8_decode($tofind), $replac));
-                                        $nombre = strtolower($nombre);
-                                        $nombre = preg_replace('([^A-Za-z0-9])', '-', $nombre);	   
-                                        ?>
-                                            <div class="etiquetas_estilo_contenedor">
-                                                <a class="etiquetas_estilo" style="height: 20px !important ;text-align:center" href="<?=$draizp?>/<?=$_SESSION['lenguaje']?>buscarEtq/<?=$etq['id']?>/<?=$nombre?>"><?=$etq['nombre']?></a>
-                                            </div>
-
-
-                                        <?php
-                                                }
-                                        ?>
-                                </div>
+                                <?php $iconStatus = loadIconStatus();
+                                
+                                if(!empty($iconStatus) && $iconStatus['valor'] == 1)
+                                    include('./bloques/social_sharing3.php'); 
+                                else
+                                    include('./bloques/social_sharing2.php'); 
+                                
+                                ?>
                                 
                                 <?php
                                     $nombre = strtolower($producto['nombre']);
@@ -1218,7 +1212,6 @@
                                     $nombre = str_replace("ñ", "n", $nombre);
                                     $nombre = str_replace("--", "-", $nombre);
                                 ?>
-                                <?php include('./bloques/social_sharing2.php'); ?>
                             
                         </div>
                         <?php if($producto['aplazame'] == 1){ ?>

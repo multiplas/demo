@@ -95,7 +95,10 @@
         }
     });
                                                                                             
-</script>        
+</script>    
+<?php if($cabecera == 17): ?>    
+<div class="container">
+<?php endif; ?>
 <form method="post" id="register_form_3" name="datosper" action="<?=$draizp?>/acc/pago" onsubmit="return activa2()" autocomplete="off">
     <h4>Rellena el siguiente formulario para tramitar la compra</h4>
     <div class="row">
@@ -225,3 +228,6 @@
         </div>
     </div>
 </form>
+<?php if($cabecera == 17): ?>    
+</div>
+<?php endif; ?>

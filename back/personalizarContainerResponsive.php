@@ -1,11 +1,26 @@
 <?php require_once('blocks/cabecera.php'); ?>
                 <script>
+                function isUrlValid(url) {
+                    return /^(https?|s?ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(url);
+                }
                 jQuery(document).ready(function(){
+                    var urlValida = true;
+                    jQuery('#url').focusout(function(){
+                        if(jQuery('#url').val() != ''){
+                            isUrlValid(jQuery('#url').val()) ? urlValida = true : urlValida = false;
+                        }
+                        else{
+                            urlValida = true;
+                        }
+                    });
                     jQuery('.add-file').click(function(){
                         jQuery('#addThemeFile').css('display', 'inherit');
                     });
                     jQuery('#fichero_usuario').change(function(){
-                        jQuery('#addThemeFile').submit();
+                        if(urlValida == true)
+                            jQuery('#addThemeFile').submit();
+                        else
+                            jQuery('#url').css('boder', 'solid red 1px');
                     });
                     jQuery('.delete-file').click(function(){
                         jQuery('#delete-file-id').val($(this).attr("data-file"));
@@ -81,6 +96,11 @@
                             </div>
                             <div style="padding-top:10px;" class="block-content collapse in">
                                 <div class="span12">
+                                    <h5>Dimensiones Recomendadas</h5>
+                                    <ul>
+                                        <li>Para el Banner Superior: 1140 x 100</li>
+                                        <li>Para las imágenes laterales: 290 x 130</li>
+                                    </ul>
                                     <?php
                                     if(isset($imagenesContainerResponsive) && !empty($imagenesContainerResponsive)){
                                         foreach($imagenesContainerResponsive as $file){
@@ -89,9 +109,11 @@
                                             if($file['posicion'] == "imagenLateral1") $nombreHumano = 'Imagen lateral Derecha Superior';
                                             if($file['posicion'] == "imagenLateral2") $nombreHumano = 'Imagen lateral Derecha Medio';
                                             if($file['posicion'] == "imagenLateral3") $nombreHumano = 'Imagen lateral Derecha Inferior';
+                                            if($file['posicion'] == "iconoMasVendidos") $nombreHumano = 'Icono Para Más Vendidos';
+                                            if($file['posicion'] == "iconoNovedades") $nombreHumano = 'Icono Para Novedades';
                                             ?>
                                             <div class="fichero-list">                                            
-                                               <span style="margin-right: 100px;">Posición: <?=$nombreHumano?> </span> <a class="link-file" href="../ficheros/<?=$file['valor']?>" target="_blank" ><img src="../ficheros/<?=$file['valor']?>" alt=""> <?=$file['nombre']?></a><span class="delete-file" title="Eliminar archivo" data-file-name="<?=$file['valor']?>" data-file="<?=$file['id']?>">X</span>
+                                        <span style="margin-right: 100px;">Posición: <?=$nombreHumano?> </span> <?php if(!empty($file['url'])): ?><br><span title="<?=$file['url']?>" >URL: <?=substr($file['url'],0,38)?>...</span> <?php endif; ?> <a class="link-file" href="../ficheros/<?=$file['valor']?>" target="_blank" ><img src="../ficheros/<?=$file['valor']?>" alt=""> <?=$file['nombre']?></a><span class="delete-file" title="Eliminar archivo" data-file-name="<?=$file['valor']?>" data-file="<?=$file['id']?>">X</span>
                                             </div>
                                             <?php
                                         }
@@ -106,7 +128,13 @@
                                                     <option value="imagenLateral1" <?php if($imagenesContainerResponsive['posicion'] == 'imagenLateral1') echo 'selected' ?>>Imagen lateral Derecha Superior</option>
                                                     <option value="imagenLateral2" <?php if($imagenesContainerResponsive['posicion'] == 'imagenLateral2') echo 'selected' ?>>Imagen lateral Derecha Medio</option>
                                                     <option value="imagenLateral3" <?php if($imagenesContainerResponsive['posicion'] == 'imagenLateral3') echo 'selected' ?>>Imagen lateral Derecha Inferior</option>
+                                                    <option value="iconoMasVendidos" <?php if($imagenesContainerResponsive['posicion'] == 'iconoMasVendidos') echo 'selected' ?>>Icono Para Más Vendidos</option>
+                                                    <option value="iconoNovedades" <?php if($imagenesContainerResponsive['posicion'] == 'iconoNovedades') echo 'selected' ?>>Icono Para Novedades</option>
                                                 </select>
+                                            </div>
+                                            <div class="control-group">
+                                                <label class="control-label" for="fichero_usuario">Añadir Url</label>
+                                                <input id="url" name="url" type="text" /><span style="font-size:9px; color:green">Opcional</span>
                                             </div>
                                             <div class="control-group">
                                                 <label class="control-label" for="fichero_usuario">Añadir Imagen</label>
