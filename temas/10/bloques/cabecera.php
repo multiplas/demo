@@ -269,7 +269,15 @@ p.resultAutoComplete:hover
 
 
 #cabecera{
-    width: 90% !important;
+    /* width: 90% !important; */
+}
+
+.publicacion .zoom{
+    height: auto;
+    max-width: 100%;
+    width: auto;
+    margin-top: -20%;
+
 }
     @media (min-width:992px){
         #cabecera{

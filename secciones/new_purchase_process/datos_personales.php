@@ -399,7 +399,7 @@ if(empty($_SESSION['compra']['entrega']['direccion']) && isset($_SESSION['usr'])
                 </div>
                 <div class="form-group">
                     <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="1" name="checksubs" id="checksubs" <?php if(isset($userFinded))echo 'checked' ?>>                    
+                    <input class="form-check-input" type="checkbox" value="1" name="checksubs" id="checksubs" <?php echo 'checked' ?>>                    
                         Quiero recibir noticias y ofertas exclusivas
                     </div>
                 </div>
