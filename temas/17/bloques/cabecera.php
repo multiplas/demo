@@ -468,7 +468,7 @@ $principalColors = getColors();
     }
 
     .nav-right-menu span {
-        font-size: 15px;
+        font-size: 13px;
         font-weight: bolder;
         letter-spacing: 0.5px;
     }
@@ -626,12 +626,25 @@ $principalColors = getColors();
         }
 
         .bloque-nav-top{
+            /* display: none; */
+        }
+
+        .bloque-nav-top {
+            overflow: hidden;
+            min-height: 160px;
+        }
+
+        .menu-nav-derecha{
             display: none;
         }
 
         .banner-cabecera img{
             width: 100%;
             padding-top: 30px;
+        }
+
+        .logo-fondo{
+            display: none;
         }
 
         #buscador2{
@@ -642,7 +655,7 @@ $principalColors = getColors();
 
         .nav-top {
             height: 130px;
-            display: none;
+            /* display: none; */
         }
         .nav-top div {
             margin-bottom: 11px;
@@ -754,21 +767,24 @@ foreach($themeImages as $image){
                     <div class="col-xs-12 web-title">
                         <h1>Calzado para toda la familia de excelente calidad a precios estupendos</h1>
                     </div>
-                    <div class="col-sm-10">
+                    <div class="col-xs-8 col-sm-10">
                         <form action="<?=$draizp?>/<?=$_POST['buscar']?>" class="formulario-buscador" method="post">
                             <input style="background: <?=$principalColors['fondosubmenuhoverresp']?>;color:<?=$principalColors['colorgeneralinicio']?>;height: 30px; border:none; padding-left: 20px;width: 100%;" name="buscar" type="text" id="busc" value="<?=(isset($_POST['buscar'])) ? $_POST['buscar'] : '';?>" /><span id="BtBuscar" style="background: #4b4b4b url(../source/lupa.png);background-position: center;background-repeat: no-repeat;" name="BtSubmit"></span>
                         </form>
                     </div>
-                    <div class="col-sm-2" style="padding: 0;">
+                    <div class="col-xs-4 col-sm-2" style="padding: 0;">
                         <div class="boton-buscar">Buscar</div>
                     </div>
                 </div>                
             </div>
-            <div class="col-sm-2 align-middle text-right">
+            <div class="col-sm-2 align-middle text-right menu-nav-derecha">
                     <ul class="pull-right nav-right-menu">
                         <li>
                             <span class="icono-header"><i class="fas fa-phone"></i></span>
-                            <span><a href="tel:<?=$Empresa['telefono']?>"><?=$Empresa['telefono']?></a></span>		
+                            <span><a href="tel:<?=$Empresa['telefono']?>"><?=$Empresa['telefono']?></a></span>	
+                            <?php if(isset($Empresa['telefono2']) && !empty($Empresa['telefono2'])): ?>	
+                                - <span><a href="tel:<?=$Empresa['telefono2']?>"><?=$Empresa['telefono2']?></a></span>
+                            <?php endif; ?>	
                         </li>
                         <li class="bag-button">
                             <a href="<?=$draizp?>/cesta"><i class="fas fa-shopping-bag "></i> <span> <?=count($cestanum)?> artículo(s) </span></a>				
