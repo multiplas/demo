@@ -24,7 +24,7 @@
 		$consulta = "SELECT * FROM bd_city";
 	 
 		if($estado != ''){
-			$consulta .= " WHERE CountryCode = '$estado'";
+			$consulta .= " WHERE CountryCode = '$estado' AND District NOT LIKE 'Islas Canarias' AND District NOT LIKE 'Islas Baleares'";
 		}
 		
 		$consulta .= " ORDER BY Name";
