@@ -2692,8 +2692,7 @@
 
 			return $assoc;
 		}
-
-
+		
                 function CargarFacturas($limit = 10000)
 		{
 			$resultados = array();
@@ -2731,6 +2730,39 @@
                                             array_push($assoc, $assoc2);
                                         }
                                         $resultados[] = $assoc;
+								}
+			foreach ($resultados as $key => $value){
+				$resultados[$key]['transportista'] = $this->getTransportista($resultados[$key]['transportista']);
+			}
+
+			//Hacemos lo mismo para cargar las compras a tienda, excluidas en la consulta de arriba por no tener factura
+			$sql = "SELECT c.id AS id, CONCAT(20189, c.id) AS numero, c.fecha AS fecha, u.nombre AS nombre, u.RazonSocial AS RazonSocial, u.id AS uid, u.dni AS nif, u.telefono AS telefono, cd.nombre AS nombreF, u.id AS uid, cd.dni AS nifF, cd.direccion AS direccion, cd.provincia AS provincia, cd.localidad AS localidad, cd.cp AS cp, 
+			cd.pais AS pais, cde.nombre AS nombreE, cde.direccion AS direccionE, cde.provincia AS provinciaE, cde.localidad AS localidadE, cd.idcompra AS idDireccionFactura, cde.idcompra AS idDireccionEnvio, cde.cp AS cpE, cde.pais AS paisE, cde.telefono AS telefonoE, (c.precio + c.portes) AS total, f.sesion AS sesion, f.estado AS 
+			estado, COALESCE ('Pago en tienda') AS formapago, c.transportista AS transportista, c.afiliado AS afiliado FROM bd_facturas f, bd_compra c, bd_compra_direccion cd, bd_compra_direccion_envio cde, bd_users u, bd_portes p 
+			WHERE (cd.idcompra = c.id OR c.id NOT IN (SELECT idcompra FROM bd_compra_direccion)) AND (cde.idcompra = c.id OR c.id NOT IN (SELECT idcompra FROM bd_compra_direccion_envio)) AND u.id = c.idusuario AND c.estado = 'tienda' 
+			GROUP BY c.id ORDER BY c.fecha DESC, f.id DESC LIMIT $limit;";
+
+			$query = mysqli_query($this->conexion, $sql);
+
+			if (mysqli_num_rows($query) > 0)
+				while ($assoc = mysqli_fetch_assoc($query)){
+										if($assoc['formapago'] == 'domiciliacion' || $assoc['formapago'] == 'domiciliacionSubscripcion'){
+											$sql_dom = "SELECT d.nentidad AS nentidad, d.iban, d.entidad, d.oficina, d.dc, d.ccc, d.ccc2 FROM  bd_domiciliacion AS d, bd_compra AS c WHERE d.id_compra = c.id AND c.secreto = '".$assoc['sesion']."'";
+											$query2 = mysqli_query($this->conexion, $sql_dom);
+											$assoc2 = mysqli_fetch_assoc($query2);
+											array_push($assoc, $assoc2);
+										}else if($assoc['formapago'] == 'financiacionDirecta'){
+											$sql_dom = "SELECT d.nentidad AS nentidad, d.iban, d.entidad, d.oficina, d.dc, d.ccc, d.ccc2, fd.cuota, pc.meses FROM  bd_domiciliacion AS d, bd_compra AS c, bd_productos_fdirecta AS fd, bd_productos_cuotas AS pc WHERE d.id_compra = c.id AND fd.id_fd = c.idcuotas AND pc.id_c = fd.meses AND c.secreto = '".$assoc['sesion']."'";
+											$query2 = mysqli_query($this->conexion, $sql_dom);
+											$assoc2 = mysqli_fetch_assoc($query2);
+											array_push($assoc, $assoc2);
+										}else if($assoc['formapago'] == 'tarjeta'){
+											$sql_dom = "SELECT t.nombre AS nombre, t.numero AS numero, t.fecha AS fecha, t.cvc AS cvc FROM  bd_tarjetas t, bd_compra c WHERE t.id_compra = c.id";
+											$query2 = mysqli_query($this->conexion, $sql_dom);
+											$assoc2 = mysqli_fetch_assoc($query2);
+											array_push($assoc, $assoc2);
+										}
+										$resultados[] = $assoc;
 								}
 			foreach ($resultados as $key => $value){
 				$resultados[$key]['transportista'] = $this->getTransportista($resultados[$key]['transportista']);
@@ -2855,26 +2887,31 @@
 			return $resultados;
 		}
 		
-		function CargarFactura($id)
+		function CargarFactura($id, $tienda = 'no')
 		{
 			$resultados = array();
 			$id = mysqli_real_escape_string($this->conexion, htmlspecialchars($id));
 			
-			$sql = "SELECT p.id AS idp, p.nombre AS nombre, CONCAT(f.ano, f.id) AS numero, cp.cantidad AS cantidad,
-                    cp.extra AS extra, cp.talla AS talla
-					FROM bd_facturas f, bd_compra c, bd_compra_productos cp, bd_productos p
-                    WHERE f.sesion = c.secreto
-                    AND cp.idcompra = c.id
-                    AND p.id = cp.idproducto
-                    AND f.id = $id
-                    AND (cp.pack = 1 OR cp.packid IS NULL)
-					ORDER BY nombre ASC, idp ASC;";
-					
+			if($tienda == 'yes')
+				$sql = "SELECT p.id AS idp, p.nombre AS nombre, CONCAT(c.fecha, c.id) AS numero, cp.cantidad AS cantidad, cp.extra AS extra, cp.talla AS talla 
+						FROM bd_compra c, bd_compra_productos cp, bd_productos p 
+						WHERE cp.idcompra = c.id AND p.id = cp.idproducto AND c.id = $id AND (cp.pack = 1 OR cp.packid IS NULL) 
+						ORDER BY nombre ASC, idp ASC;";
+			else
+				$sql = "SELECT p.id AS idp, p.nombre AS nombre, CONCAT(f.ano, f.id) AS numero, cp.cantidad AS cantidad,
+						cp.extra AS extra, cp.talla AS talla
+						FROM bd_facturas f, bd_compra c, bd_compra_productos cp, bd_productos p
+						WHERE f.sesion = c.secreto
+						AND cp.idcompra = c.id
+						AND p.id = cp.idproducto
+						AND f.id = $id
+						AND (cp.pack = 1 OR cp.packid IS NULL)
+						ORDER BY nombre ASC, idp ASC;";
 			$query = mysqli_query($this->conexion, $sql);
 			
 			if (mysqli_num_rows($query) > 0)
 				while ($assoc = mysqli_fetch_assoc($query))
-					$resultados[] = $assoc;
+					$resultados[] = $assoc;		
 
 			return $resultados;
 		}

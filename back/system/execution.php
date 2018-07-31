@@ -1036,7 +1036,8 @@
                         $listadosalt = $System->CargarProductos(1000000);
                         $elemento = $System->CargarConfiguracion();;
                         break;
-		case 'facturas.php':
+        case 'facturas.php':
+            //$comprasTienda = $System->CargarFacturasTienda(100000);
 			$listados = $System->CargarFacturas(1000000);
             $nacesSN = $System->NacexSiNo();
             if(isset($_GET['facturaID'])){
@@ -1068,7 +1069,7 @@
 			$listados2 = $System->CargarContrareembolsos(1000000);
 			break;
 		case 'detalle.php':
-			$listados = $System->CargarFactura($_GET['id']);
+			$listados = $System->CargarFactura($_GET['id'],$_GET['tienda']);
                         $listado2 = $System->CargarExtrasPedido($_GET['id']);
 			break;
                 case 'detalle_rma.php':
