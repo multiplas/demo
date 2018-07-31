@@ -17,6 +17,17 @@
             transition: 0.4s;
         }
 
+        .check-all {
+            cursor: pointer;
+            width: 22%;
+            /* background: red; */
+            text-align: center;
+            padding: 5px 0px 4px 0;
+            background: #eeeeee;
+            border: solid 1px #ccc;
+            text-transform: capitalize;
+        }
+
         /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
         .active, .accordion:hover {
             background-color: #ccc;
@@ -57,6 +68,24 @@
         </script>
 
         <script>
+            function checkboxchecked(caller){
+                checked = 2; //iterativo que evalue el primero para sel/des todos
+                id = $(caller).attr( "data-hidden" );
+                $('#'+id).find('input[name="disp[]"]').each(function(index){
+                    if(checked == 2){
+                        if($(this).is(":checked"))
+                            checkall = false;
+                        else
+                            checkall = true;
+                        checked = 1;
+                    }
+                    if(checkall)
+                        $(this).prop('checked', true );
+                    else
+                        $(this).prop('checked', false );
+                });
+            }
+
             $(document).ready(function() {
 
                 //Creando textareas con ckeditor v4.8.0_full
@@ -630,6 +659,9 @@
                                                     ?>
                                                     <div class="btn btn-link collapse-button" data-label="collapseAttr<?=$collapse?>"><?=$atr['nombre']?></div>
                                                     <div id="collapseAttr<?=$collapse?>" style="display:none">
+                                                       <div style="width:100%">
+                                                       <div data-hidden="collapseAttr<?=$collapse?>" onclick="checkboxchecked(this);" class="check-all" >Marcar/Desmarcar todos</div>
+                                                       </div>
                                                         <table>
                                                         <tr>
                                                     <?php
