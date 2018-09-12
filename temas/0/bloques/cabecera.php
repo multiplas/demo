@@ -323,7 +323,7 @@ if($logoStatus['valor'] == 1):
 	</div>
 </div>
 <?php 
-if($logoStatus['valor'] == 1):
+if(isset($logoStatus['valor']) && $logoStatus['valor'] == 1):
 ?>
 </div>
 <?php endif; ?>

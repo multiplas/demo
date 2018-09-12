@@ -957,7 +957,7 @@
 			
 			$sql = "SELECT *
 					FROM bd_compra
-                    WHERE estado IN ('pendiente de pago', 'contrareembolso', 'transferencia') AND id =$idcompra;";
+                    WHERE estado IN ('pendiente de pago', 'contrareembolso', 'transferencia', 'tienda') AND id =$idcompra;";
 					
 			$query = mysqli_query($this->conexion, $sql);
 			
@@ -970,7 +970,7 @@
                 $id = mysqli_insert_id($this->conexion);
                 $sql = "UPDATE bd_compra
                         SET estado = 'pagado'
-                        WHERE estado IN ('pendiente de pago', 'contrareembolso', 'transferencia') AND id = $idcompra;";
+                        WHERE estado IN ('pendiente de pago', 'contrareembolso', 'transferencia', 'tienda') AND id = $idcompra;";
                 $query = mysqli_query($this->conexion, $sql);
 			}
 			
@@ -1777,7 +1777,7 @@
 			/*$sql = "SELECT COUNT(id) AS contador
 					FROM bd_compra
 					WHERE estado IN ('transferencia', 'paypal', 'domiciliacion', 'contrareembolso', 'transferencia', 'tienda', 'pendiente de pago');";*/
-                        $sql = "SELECT COUNT(c.id) AS contador FROM bd_compra c, bd_users u WHERE c.estado IN ('pendiente de pago', 'contrareembolso', 'transferencia') AND c.idusuario = u.id ORDER BY c.fecha DESC, c.id DESC LIMIT 1000000;";
+                        $sql = "SELECT COUNT(c.id) AS contador FROM bd_compra c, bd_users u WHERE c.estado IN ('pendiente de pago', 'contrareembolso', 'transferencia', 'tienda') AND c.idusuario = u.id ORDER BY c.fecha DESC, c.id DESC LIMIT 1000000;";
 			
 			$query = mysqli_query($this->conexion, $sql);
 			if (mysqli_num_rows($query) == 1)
@@ -3072,7 +3072,7 @@
 			$sql = "SELECT u.nombre AS nombre, c.secreto AS secreto,
                     c.fecha AS fecha, c.precio AS precio, c.portes AS portes,c.id AS id, c.estado AS estado
 					FROM bd_compra c, bd_users u
-                    WHERE c.estado IN ('pendiente de pago', 'contrareembolso', 'transferencia')
+                    WHERE c.estado IN ('pendiente de pago', 'contrareembolso', 'transferencia', 'tienda')
                     AND c.idusuario = u.id
 					ORDER BY c.fecha DESC, c.id DESC
 					LIMIT $limit;";

@@ -771,6 +771,7 @@
 			$ids = '';
 			$sql = "SELECT id_producto FROM bd_productos_vendidos ORDER BY ventas DESC LIMIT $cantidad;";
 			$query = mysqli_query($dbi, $sql);
+			if (!is_null($query) && mysqli_num_rows($query) > 0)
 			while($assoc = mysqli_fetch_array($query))
 				$ids .= $assoc['id_producto'].',';
 			if (strlen($ids) > 0) $ids = substr($ids, 0, strlen($ids) - 1);
