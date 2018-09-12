@@ -74,18 +74,18 @@
 </style>
 
 <script>
-            $(document).on("scroll", function(){
-                var desplazamientoActual = $(document).scrollTop();
+            jQuery(document).on("scroll", function(){
+                var desplazamientoActual = jQuery(document).scrollTop();
                 if(desplazamientoActual >= 200){
-                    $('#casita').removeClass('divLogo2');
-                    $('#casita').addClass('divLogo');
-                    $('#logo_fijo').removeClass('divLogo');
-                    $('#logo_fijo').addClass('divLogo2');
+                    jQuery('#casita').removeClass('divLogo2');
+                    jQuery('#casita').addClass('divLogo');
+                    jQuery('#logo_fijo').removeClass('divLogo');
+                    jQuery('#logo_fijo').addClass('divLogo2');
                 }else{
-                    $('#logo_fijo').removeClass('divLogo2');
-                    $('#logo_fijo').addClass('divLogo');
-                    $('#casita').removeClass('divLogo');
-                    $('#casita').addClass('divLogo2');
+                    jQuery('#logo_fijo').removeClass('divLogo2');
+                    jQuery('#logo_fijo').addClass('divLogo');
+                    jQuery('#casita').removeClass('divLogo');
+                    jQuery('#casita').addClass('divLogo2');
                 }
             });
 </script>

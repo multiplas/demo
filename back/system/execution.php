@@ -147,7 +147,7 @@
 	if (@$_GET['accion'] == 'subirprt'){
         $dir_subida = '../logos/';
         $extension = explode('.', $_FILES['logo']['name']);
-		$resultaop2 = $System->NuevoPorte($_POST[nombre], $_POST['gratisE'], $_POST['precioE'], $_POST['gratisC'], $_POST['precioC'], $_POST['gratisB'], $_POST['precioB'], $_POST['gratisCM'], $_POST['precioCM'], $_POST['gratisEU'], $_POST['precioEU'], $_POST['gratisI'], $_POST['precioI'],$_POST['gratisA'], $_POST['precioA'], $extension[1]);
+		$resultaop2 = $System->NuevoPorte($_POST['nombre'], $_POST['gratisE'], $_POST['precioE'], $_POST['gratisC'], $_POST['precioC'], $_POST['gratisB'], $_POST['precioB'], $_POST['gratisCM'], $_POST['precioCM'], $_POST['gratisEU'], $_POST['precioEU'], $_POST['gratisI'], $_POST['precioI'],$_POST['gratisA'], $_POST['precioA'], $extension[1]);
         if($_FILES['logo']['size'] > 0){
             $fichero_subido = $dir_subida . $resultaop2 . "." . $extension[1];
             move_uploaded_file($_FILES['logo']['tmp_name'], $fichero_subido);
@@ -803,7 +803,7 @@
 		$resultaop = $System->EnvíoNacex($_POST['id_fact'], $_POST['tservicio'], $_POST['tcobro'], $_POST['tenvio'], $_POST['bultos'], $_POST['kilos'], $_POST['envase'], $_POST['vrecogida'], $_POST['nombreE'], $_POST['direccionE'], $_POST['cpE'], $_POST['localidadE'], $_POST['telefonoE'], $_POST['paisE'], $_POST['Contenido'], $_POST['vdeclarado']);
     }
 
-    if($_GET['iconFloat'] != null){
+    if(isset($_GET['iconFloat']) && $_GET['iconFloat'] != null){
         if(isset($_POST['iconosFlotantes']))
             $flotantes = 1;
         else 
@@ -811,7 +811,7 @@
         $resultaop = $System->IconosFlotantesModificar($flotantes);   
     }
 
-    if($_GET['iconLateralFloat'] != null){
+    if(isset($_GET['iconLateralFloat']) && $_GET['iconLateralFloat'] != null){
         if(isset($_POST['iconosFlotantesLaterales']))
             $flotantes = 1;
         else 
@@ -1093,6 +1093,9 @@
                 case 'ficherosProd.php':
 			$listados = $System->CargarFichProd(10000);
                         $productos = $System->CargarProductos(1000000);
+            break;
+            case 'admincurriculums.php':
+			$listados = $System->CargarCurris(10000);
 			break;
                 case 'marcas.php':
                 $listadosalt = $System->CargarMarcas(10000);

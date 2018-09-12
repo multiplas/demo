@@ -2114,7 +2114,7 @@
             
             // ******************************************************
 		}
-	}
+    }
 	else if (isset($_GET['pagina']))
 	{ // Elementos de paginas en página.
 		if ($_GET['pagina'] != "")
@@ -2208,7 +2208,7 @@
 
         }
         //$galeria = scandir('imagenes/galeria');
-	}
+	} 
     else if (isset($_GET['galeriasecc']))
 	{ // Elementos de paginas en página.
         $menu = MenuCategoriasGal();
@@ -2659,7 +2659,8 @@
                 else if (isset($_GET['entradas']))
 					include_once($draiz.'/secciones/entradas.php');
 				else if (isset($_GET['galeria']))
-					include_once($draiz.'/secciones/galeria.php');
+                    include_once($draiz.'/secciones/galeria.php');
+                
                 else if (isset($_GET['galeriasecc']))
 					include_once($draiz.'/secciones/galeriasecc.php');
 				else if (isset($_GET['contacto']))
@@ -2729,7 +2730,9 @@
 				else
 					include_once($draiz.'/secciones/inicio.php');
             }else{
-                                if (isset($_POST['buscar']))
+                if (isset($_GET['curriculum']))
+                    include_once($draiz.'/secciones/curriculum.php');
+                else if (isset($_POST['buscar']))
 					include_once($draiz.'/secciones/buscar.php');
 				else if (!$_GET || $_POST['idioma'])
 					include_once($draiz.'/secciones/inicio.php');
@@ -2879,6 +2882,7 @@
         /* Truco para no tener que buscar el archivo tema por tema */
         // print_r(get_included_files ());
         // print_r(get_defined_vars ());
+        // echo 'Versión actual de PHP: ' . phpversion();
         // die;
 		?>
 	</body>

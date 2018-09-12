@@ -11,9 +11,12 @@ $System->ControlDeSesiones();
 $cabecera = $System->CargarTemaCabecera();
 
 ?>
-<li class="dropup <?=$menusel == 'personalizarTemaContainer' ? 'active' : ''?><?=$menusel == 'colores' ? 'active' : ''?><?=$menusel == 'plantilla' ? ' active' : ''?><?=$menusel == 'fuentes' ? ' active' : ''?><?=$menusel == 'footercopyright' ? ' active' : ''?><?=$menusel == 'bloqueobarra' ? ' active' : ''?><?=$menusel == 'mensaje_publicitario' ? ' active' : ''?><?=$menusel == 'cabpie' ? ' active' : ''?><?=$menusel == 'extrasPedido' ? ' active' : ''?><?=$menusel == 'iconosRedes' ? ' active' : ''?><?=$menusel == 'cesta' ? ' active' : ''?><?=$menusel == 'pagos' ? ' active' : ''?><?=$menusel == 'productos_opc' ? ' active' : ''?><?=$menusel == 'filtroenproductos' ? ' active' : ''?><?=$menusel == 'pedido' ? ' active' : ''?><?=$menusel == 'bloques' ? ' active' : ''?><?=$menusel == 'megaMenu' ? ' active' : ''?>">
+<li class="dropup <?=$menusel == 'personalizarTemaContainer' ? 'active' : ''?><?=$menusel == 'colores' ? 'active' : ''?><?=$menusel == 'admincurriculums' ? 'active' : ''?><?=$menusel == 'plantilla' ? ' active' : ''?><?=$menusel == 'fuentes' ? ' active' : ''?><?=$menusel == 'footercopyright' ? ' active' : ''?><?=$menusel == 'bloqueobarra' ? ' active' : ''?><?=$menusel == 'mensaje_publicitario' ? ' active' : ''?><?=$menusel == 'cabpie' ? ' active' : ''?><?=$menusel == 'extrasPedido' ? ' active' : ''?><?=$menusel == 'iconosRedes' ? ' active' : ''?><?=$menusel == 'cesta' ? ' active' : ''?><?=$menusel == 'pagos' ? ' active' : ''?><?=$menusel == 'productos_opc' ? ' active' : ''?><?=$menusel == 'filtroenproductos' ? ' active' : ''?><?=$menusel == 'pedido' ? ' active' : ''?><?=$menusel == 'bloques' ? ' active' : ''?><?=$menusel == 'megaMenu' ? ' active' : ''?>">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Personalización <i class="icon-chevron-up"></i></a>
                             <ul class="dropdown-menu" style="width:99%;" role="menu">
+                                <li<?=$menusel == 'admincurriculums' ? ' class="active"' : ''?>>
+                                    <a href="admincurriculums.php"><i class="icon-chevron-right"></i> Administrar Curriculums</a>
+                                </li>
                                 <li<?=$menusel == 'plantilla' ? ' class="active"' : ''?>>
                                     <a href="plantilla.php"><i class="icon-chevron-right"></i> Línea de estilo</a>
                                 </li>

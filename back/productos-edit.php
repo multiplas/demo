@@ -781,8 +781,6 @@
                                         </div>
                                         <input type="hidden" name="catributos" value="<?=$i?>" />
                                     </fieldset>
-                                </div>
-                                <div id="body-tab-pe10" class="div-tabs">
                                     <fieldset>
                                         <legend>F. Pagos - Financiación</legend>
                                         <div class="control-group">
@@ -910,6 +908,8 @@
                                             </table>
                                         </div>
                                     </fieldset>
+                                </div>
+                                <div id="body-tab-pe10" class="div-tabs">
                                 </div>
 
                                 <?php

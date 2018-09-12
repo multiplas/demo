@@ -725,9 +725,6 @@
 		
 		function NuevoPorte($nombre, $gratisE,$precioE,$gratisC,$precioC,$gratisB,$precioB,$gratisCM,$precioCM,$gratisEU,$precioEU,$gratisI,$precioI,$gratisA,$precioA, $extension)
 		{
-			$region = mysqli_real_escape_string($this->conexion, htmlspecialchars($region));
-			$precio = mysqli_real_escape_string($this->conexion, htmlspecialchars($precio));
-			$max = mysqli_real_escape_string($this->conexion, htmlspecialchars($max));
                         
                         if ($gratisE == '')
                             $gratisE = 'NULL';
@@ -786,7 +783,8 @@
                         else
                             $precioA = $_POST['precioA'];
 			
-			$sql = "INSERT INTO bd_portes VALUES (null, '$_POST[nombre]',$gratisE,$precioE,$gratisB,$precioB,$gratisC,$precioC,$gratisCM,$precioCM,$gratisEU,$precioEU,$gratisI,$precioI,$gratisA,$precioA,1,'$extension')";
+			$sql = "INSERT INTO bd_portes VALUES (null, '$_POST[nombre]',$gratisE,$precioE,$gratisB,$precioB,$gratisC,$precioC,$gratisCM,$precioCM,$gratisEU,$precioEU,$gratisI,$precioI,1,'$extension',$gratisA,$precioA)";
+
 			$query = mysqli_query($this->conexion, $sql);
 
 			return mysqli_insert_id($this->conexion);
@@ -1779,11 +1777,9 @@
 			/*$sql = "SELECT COUNT(id) AS contador
 					FROM bd_compra
 					WHERE estado IN ('transferencia', 'paypal', 'domiciliacion', 'contrareembolso', 'transferencia', 'tienda', 'pendiente de pago');";*/
-                        $sql = "SELECT COUNT(id) AS contador
-					FROM bd_compra
-					WHERE estado IN ('pendiente de pago', 'contrareembolso', 'transferencia');";
-			$query = mysqli_query($this->conexion, $sql);
+                        $sql = "SELECT COUNT(c.id) AS contador FROM bd_compra c, bd_users u WHERE c.estado IN ('pendiente de pago', 'contrareembolso', 'transferencia') AND c.idusuario = u.id ORDER BY c.fecha DESC, c.id DESC LIMIT 1000000;";
 			
+			$query = mysqli_query($this->conexion, $sql);
 			if (mysqli_num_rows($query) == 1)
 			{
 				$assoc = mysqli_fetch_assoc($query);
@@ -2363,7 +2359,7 @@
 			
 			$sql = "INSERT INTO bd_productos
 					VALUES (null, '$nombre', '$nombrein', '$descripcion', '$descripcionin', $imgname, $unidades, $stock, $precio, '$tprecio', '$comprecio', 0, '$descuento', '$descuentoe', $marca, $cat, $cat1, $cat2, $cat3, $cat4,  0, $peso, '$referencia', $iva, $disponible, 0, 0, '$metatitulo', '$metadescripcion', 0, $tipo, $paypalm, $domicim, $fDirecta, $aplazame, $caplazame, $caplazame1, $nfentrada, $nfsalida, $NCatAtriF, 0, '$mostraretq', '$mostraretqAgo', '$mostraretqOfe', '$maxDias', '$disponibilidad', '$plazoEnt', $orden, '$pagotado', '$agotado',$precio_t_i, NOW());";
-
+			
 			$query = mysqli_query($this->conexion, $sql);
                          
             $sql = "SELECT MAX(id) AS id FROM bd_productos";
@@ -2463,7 +2459,17 @@
                         $CatAtriF = mysqli_real_escape_string($this->conexion, htmlspecialchars($CatAtriF));
                         $MaxDias = mysqli_real_escape_string($this->conexion, htmlspecialchars($MaxDias));
                         $nombreF = mysqli_real_escape_string($this->conexion, htmlspecialchars($nombreF));
-            $precio_t_i = mysqli_real_escape_string($this->conexion, htmlspecialchars($precio_t_i));
+			$precio_t_i = mysqli_real_escape_string($this->conexion, htmlspecialchars($precio_t_i));
+			
+			/* asegurar de que no hay campos vacios */
+			if(empty($paypalm))
+				$paypalm = 0;
+			if(empty($domicim))
+				$domicim = 0;
+			if(empty($fDirecta))
+				$fDirecta = 0;
+			if(empty($Aplazame))
+				$Aplazame = 0;
             
             if ($cat2 != null && $cat2 != '')
                 $cat2 = mysqli_real_escape_string($this->conexion, htmlspecialchars($cat2));
@@ -2545,8 +2551,8 @@
                     meta_descripcion = '$metadescripcion', stockminimo = $stock, precio = $precio, iva = $iva, descuento = $descuento, mostraretq = '$mostraretq', mostraretqOfe = '$mostraretqOfe',
                     descuentoe = $descuentoe, idcat = $cat1, idcat2 = $cat2, idcat3 = $cat3, atributoAsociado = '$CatAtriF', tprecio = '$tprecio', comprecio = '$comprecio', mostraretqAgo = '$mostraretqAgo',
                     idcat4 = $cat4, idcat5 = $cat5, idmarca = $marca, paypalm = $paypalm, domicim = $domicim, fDirecta = $fDirecta, aplazame = $Aplazame, caplazame = $caplazame, caplazame1 = $caplazame1, pagotado = '$pagotado', agotado = '$agotado', tipo= '$tipo', peso = $peso, referencia = '$referencia', disponibilidad = '$disponibilidad', plazoEnt = '$plazoEnt', disponible = $disponible, rfentrada = $nfentrada, rfsalida = $nfsalida $imgname
-                    WHERE id = $id;";
-                        
+					WHERE id = $id;";
+					    
 			$query = mysqli_query($this->conexion, $sql);
 
             $sql = "SELECT * FROM bd_producto_idioma
@@ -2701,7 +2707,7 @@
 			$sql = "SELECT f.id AS id, CONCAT(f.ano, f.id) AS numero, f.fecha AS fecha, u.nombre AS nombre, u.RazonSocial AS RazonSocial, u.id AS uid, u.dni AS nif, u.telefono AS telefono, cd.nombre AS nombreF, u.id AS uid, cd.dni AS nifF, cd.direccion AS direccion, cd.provincia AS provincia, cd.localidad AS localidad, cd.cp AS cp,
                     cd.pais AS pais, cde.nombre AS nombreE, cde.direccion AS direccionE, cde.provincia AS provinciaE, cde.localidad AS localidadE, cd.idcompra AS idDireccionFactura, cde.idcompra AS idDireccionEnvio, cde.cp AS cpE, cde.pais AS paisE, cde.telefono AS telefonoE, (c.precio + c.portes) AS total, f.sesion AS sesion, f.estado AS estado, f.formapago AS formapago, 
                     c.transportista AS transportista, c.afiliado AS afiliado
-					FROM bd_facturas f, bd_compra c, bd_compra_direccion cd, bd_compra_direccion_envio cde, bd_users u, bd_portes p
+					FROM bd_facturas f, bd_compra c, bd_compra_direccion cd, bd_compra_direccion_envio cde, bd_users u
                     WHERE f.sesion = c.secreto
                     AND (cd.idcompra = c.id OR c.id NOT IN (SELECT idcompra FROM bd_compra_direccion))
                     AND (cde.idcompra = c.id OR c.id NOT IN (SELECT idcompra FROM bd_compra_direccion_envio))
@@ -2709,6 +2715,7 @@
                     GROUP BY f.id
 					ORDER BY f.fecha DESC, f.id DESC
 					LIMIT $limit;";
+			
 			$query = mysqli_query($this->conexion, $sql);
 			
 			if (mysqli_num_rows($query) > 0)
@@ -2731,9 +2738,9 @@
                                         }
                                         $resultados[] = $assoc;
 								}
-			foreach ($resultados as $key => $value){
-				$resultados[$key]['transportista'] = $this->getTransportista($resultados[$key]['transportista']);
-			}
+			// foreach ($resultados as $key => $value){
+				// $resultados[$key]['transportista'] = $this->getTransportista($resultados[$key]['transportista']);
+			// }
 
 			//Hacemos lo mismo para cargar las compras a tienda, excluidas en la consulta de arriba por no tener factura
 			$sql = "SELECT c.id AS id, CONCAT(20189, c.id) AS numero, c.fecha AS fecha, u.nombre AS nombre, u.RazonSocial AS RazonSocial, u.id AS uid, u.dni AS nif, u.telefono AS telefono, cd.nombre AS nombreF, u.id AS uid, cd.dni AS nifF, cd.direccion AS direccion, cd.provincia AS provincia, cd.localidad AS localidad, cd.cp AS cp, 
@@ -2765,7 +2772,9 @@
 										$resultados[] = $assoc;
 								}
 			foreach ($resultados as $key => $value){
-				$resultados[$key]['transportista'] = $this->getTransportista($resultados[$key]['transportista']);
+				if($resultados[$key]['transportista'] != 0)
+					$resultados[$key]['transportista'] = $this->getTransportista($resultados[$key]['transportista']);
+				
 			}
 			
 			return $resultados;
@@ -2780,34 +2789,52 @@
 			return $assoc['id'];
 		}
 
+		function getFromPortesProvincias($id){
+			$resultado = '';
+			$sql = "SELECT id_transp FROM  `bd_portes_provincias` WHERE id = $id";
+			$query = mysqli_query($this->conexion, $sql);
+			if (mysqli_num_rows($query) > 0){//Buscamos en portes_provincias
+				while ($assoc = mysqli_fetch_assoc($query)){
+					$resultado = $assoc['id_transp'];
+				}
+			}
+			return $resultado;
+		}
+
 		function getTransportista($id){
 			$resultado = '';
-			
-			$sql = "SELECT transportista FROM  `bd_portes` WHERE id = $id";
-			$query = mysqli_query($this->conexion, $sql);
-			if (mysqli_num_rows($query) > 0){//Buscamos en portes
-				while ($assoc = mysqli_fetch_assoc($query)){
-					$resultado = $assoc['transportista'];
-				}
-			}
-			if(empty($resultado)){//Buscariamos en portes_provincia_precio pero no tiene sentido, porque el transportista se encuentra en bd_transportista_precio
-				$sql = "SELECT nombre FROM  `bd_transportista_peso` WHERE id = $id";
+			$contador = 1;
+			do{
+				$sql = "SELECT transportista FROM  `bd_portes` WHERE id = $id";
 				$query = mysqli_query($this->conexion, $sql);
 				if (mysqli_num_rows($query) > 0){//Buscamos en portes
 					while ($assoc = mysqli_fetch_assoc($query)){
-						$resultado = $assoc['nombre'];
+						$resultado = $assoc['transportista'];
 					}
 				}
-			}
-			if(empty($resultado)){//Por ultimo buscamos el transportista en la tabla de transportistas
-				$sql = "SELECT nombre FROM  `bd_transportista` WHERE id = $id";
-				$query = mysqli_query($this->conexion, $sql);
-				if (mysqli_num_rows($query) > 0){//Buscamos en portes
-					while ($assoc = mysqli_fetch_assoc($query)){
-						$resultado = $assoc['nombre'];
+				if(empty($resultado)){//Buscariamos en portes_provincia_precio pero no tiene sentido, porque el transportista se encuentra en bd_transportista_precio
+					$sql = "SELECT nombre FROM  `bd_transportista_peso` WHERE id = $id";
+					$query = mysqli_query($this->conexion, $sql);
+					if (mysqli_num_rows($query) > 0){//Buscamos en portes
+						while ($assoc = mysqli_fetch_assoc($query)){
+							$resultado = $assoc['nombre'];
+						}
 					}
 				}
+				
+				if(empty($resultado)){//Por ultimo buscamos el transportista en la tabla de transportistas
+					$sql = "SELECT nombre FROM  `bd_transportista` WHERE id = $id";
+					$query = mysqli_query($this->conexion, $sql);
+					if (mysqli_num_rows($query) > 0){//Buscamos en portes
+						while ($assoc = mysqli_fetch_assoc($query)){
+							$resultado = $assoc['nombre'];
+						}
+					}
+				}
+				$contador++;
+				$id = $this->getFromPortesProvincias($id);
 			}
+			while(empty($resultado) || $contador <= 2);
 			return $resultado;
 		}
                 
@@ -5564,6 +5591,36 @@
 
 			return $resultados;
 		}
+
+		function CargarCurris($limit = 10000)
+		{
+			$resultados = array();
+			
+			$sql = "SELECT * FROM bd_curriculums ORDER BY id ASC LIMIT $limit;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) > 0){
+				while ($assoc = mysqli_fetch_assoc($query))
+					$resultados[] = $assoc;
+			}
+			else{
+				$this->CreateTableCurriculums();
+			}	
+
+			return $resultados;
+		}
+
+		function CreateTableCurriculums(){
+    
+			$sql = "CREATE TABLE IF NOT EXISTS `bd_curriculums` (
+				`id` int NOT NULL AUTO_INCREMENT ,
+				`nombre` TEXT,
+				`nombreFichero` TEXT,
+				UNIQUE KEY `id` (`id`)
+				) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
+
+			$query = mysqli_query($this->conexion, $sql);
+		}
         
         function CargarCategoriasImg($limit = 10000)
 		{
@@ -5894,8 +5951,8 @@
 			$padre = mysqli_real_escape_string($this->conexion, htmlspecialchars($padre));
 			
 			$sql = "INSERT INTO bd_categorias
-					VALUES (null, '$nombre', '', $padre, '', 0, $menu, 0, '', null, null, null, null);";
-					
+					VALUES (null, '$nombre', '', $padre, '', 0, $menu, 0, '', null, null, null, null, null, null, null);";
+			
 			$query = mysqli_query($this->conexion, $sql);
 			
 			return $query;
@@ -8243,6 +8300,14 @@
 
 			$deleteAddressSend = "DELETE FROM bd_compra_direccion_envio WHERE idcompra = $id";
 			$deletedAddressSend = mysqli_query($this->conexion, $deleteAddressSend);
+
+			return $query;
+		}
+
+		function DeleteCurri($id){    
+			$sql = "DELETE FROM `bd_curriculums` WHERE id = $id" ;
+
+			$query = mysqli_query($this->conexion, $sql);
 
 			return $query;
 		}
