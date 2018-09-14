@@ -158,7 +158,11 @@
 						<span>
 							<img src="../marcas/<?=$fichero_imagen?>" alt="">
 						</span> 
+						<?php if(is_null($file['nombre']) || empty($file['nombre'])): ?>
 						<a class="link-file" href="../ficheros/<?=$file['fichero']?>" target="_blank" ><?php echo (strlen($file['fichero']) > 30)? substr($file['fichero'],0,30).'...' : $file['fichero']?></a>
+					<?php else: ?>
+					<a class="link-file" href="../ficheros/<?=$file['fichero']?>" target="_blank" ><?php echo (strlen($file['nombre']) > 30)? substr($file['nombre'],0,30).'...' : $file['nombre']?></a>
+					<?php endif; ?>
 					</div>
 					<?php
 					}

@@ -268,10 +268,10 @@
             $nombre_fichero = $fecha_format.'_'.$_FILES['fichero_usuario']['name'];
             $fichero_subido = $dir_subida . basename($nombre_fichero);
             if(move_uploaded_file($_FILES['fichero_usuario']['tmp_name'], $fichero_subido))
-                $resultaop = $System->AddFileToMarca($_POST['idm'], $nombre_fichero, $_POST['rol'], 0);
+                $resultaop = $System->AddFileToMarca($_POST['idm'], $nombre_fichero, $_POST['rol'], 0, $_POST['nombre_fichero']);
         }
         else if(isset($_POST['urlMarca']) && !empty($_POST['urlMarca'])){
-            $resultaop = $System->AddFileToMarca($_POST['idm'], $_POST['urlMarca'], $_POST['rol'], 1);
+            $resultaop = $System->AddFileToMarca($_POST['idm'], $_POST['urlMarca'], $_POST['rol'], 1, $_POST['nombre_fichero']);
         }
     }
 

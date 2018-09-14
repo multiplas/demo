@@ -372,8 +372,12 @@ span.rol {
                     if(isset($marcaFiles) && !empty($marcaFiles)){
                         foreach($marcaFiles as $file){
                             ?>
-                            <div class="fichero-list">                                            
-                                <span class="rol">Rol: <?=$System->GetUserByRol($file['rol'])?></span><a class="link-file" href="../ficheros/<?=$file['fichero']?>" target="_blank" ><?=$file['fichero']?></a><span class="delete-file" title="Eliminar archivo" data-file-name="<?=$file['fichero']?>" data-file="<?=$file['id']?>">X</span>
+                            <div class="fichero-list">   
+                            <?php if(!is_null($file['nombre']) && !empty($file['nombre'])): ?>                                         
+                        <span class="rol">Rol: <?=$System->GetUserByRol($file['rol'])?></span><a class="link-file" href="../ficheros/<?=$file['fichero']?>" target="_blank" ><?=$file['nombre']?></a><span class="delete-file" title="Eliminar archivo" data-file-name="<?=$file['fichero']?>" data-file="<?=$file['id']?>">X</span>
+                        <?php else: ?>             
+                            <span class="rol">Rol: <?=$System->GetUserByRol($file['rol'])?></span><a class="link-file" href="../ficheros/<?=$file['fichero']?>" target="_blank" ><?=$file['fichero']?></a><span class="delete-file" title="Eliminar archivo" data-file-name="<?=$file['fichero']?>" data-file="<?=$file['id']?>">X</span>
+                        <?php endif; ?>                                         
                             </div>
                             <?php
                         }
@@ -390,8 +394,9 @@ span.rol {
                                 </select>
                             </div>
                             <div class="control-group">
-                                <label class="control-label" for="rol">URL: </label> <input type="text" name="urlMarca" id="urlMarca">
-                                <input type="submit" class="botonAgregarUrl btn btn-default" style="display: none;"  value="Agregar URL"/>
+                            <label class="control-label" for="rol">URL: </label> <input type="text" name="urlMarca" id="urlMarca"><br>
+                            <label class="control-label" for="nombre_fichero">Nombre Fichero: </label> <input type="text" name="nombre_fichero" id="nombre_fichero">
+                            <input type="submit" class="botonAgregarUrl btn btn-default" style="display: none;"  value="Agregar URL"/>
                             </div>
                             <div class="control-group">
                                 <label class="control-label" for="fichero_usuario">Añadir Fichero</label>
