@@ -7,6 +7,17 @@ if(isset($_POST['deletecurri'])){
 }
 
 ?>
+                <script>
+                    $(document).ready(function() {
+                        //Creando textareas con ckeditor v4.8.0_full
+                        CKEDITOR.replace('texto-legal');
+                    });
+                </script>
+                <style>
+                .form-horizontal .controls {
+                    margin-left: 0px;
+                }
+                </style>
                 <div class="span9" id="content">
                     
                     <div class="alert alert-info alert-dismissable">
@@ -37,15 +48,28 @@ if(isset($_POST['deletecurri'])){
                                         data_id = $(this).data('id');
                                         data_name = $(this).data('name');
                                     $('#elemento').text(data_name);
-                                })
+                                });
                                 
                                 $('#btn-eliminar').click(function () {
                                     var url = "?eliminarficher=" + data_id;
                                     location.href = url;
-                                })
+                                });
                                 
                             });
                         </script>
+
+                        <form action="cabpie.php?CabeceraPie=true" method="post" class="form-horizontal">
+                            <fieldset>
+                            <div>
+                                <legend>Añadir Texto Legal</legend>
+                                <div class="control-group">
+                                    <div class="controls">
+                                        <textarea id="texto-legal" name="texto-legal" class="input-xlarge" style="width: 810px; height: 200px"><?=$elemento['texto-legal']?></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            </fieldset>
+                        </form>
                     
                         <!-- Modal -->
                         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

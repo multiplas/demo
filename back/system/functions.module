@@ -6199,7 +6199,7 @@
 			$idMarca = mysqli_real_escape_string($this->conexion, htmlspecialchars($idMarca));
             $nombreFichero = mysqli_real_escape_string($this->conexion, htmlspecialchars($nombreFichero));
 
-			$sql = "INSERT INTO bd_marca_fichero VALUES (null, $idMarca, '$nombreFichero', $rol, $url, '$nombre')";
+			$sql = "INSERT INTO `maquinasde_db`.`bd_marca_fichero` (`id` , `id_marca` ,`fichero` ,`rol` ,`url` ,`nombre`) VALUES (null, $idMarca, '$nombreFichero', $rol, $url, '$nombre')";
 					
 			$query = mysqli_query($this->conexion, $sql);
 			

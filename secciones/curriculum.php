@@ -15,8 +15,7 @@ function AddCurri($nombre, $nombreFichero) //Si url es 0 se entiende que es un f
     }
     else{
         echo 'Curriculum subido con éxito.';
-    }
-   
+    }   
 }
 
 function CreateTableCurri(){        
@@ -58,21 +57,32 @@ if(isset($_POST['insert_fichero'])){
 
 
 ?>
-<div id="contenido">
+<div id="contenido" class="curriculum-contenido">
     <div class="container">
-        <form enctype="multipart/form-data" id="addCurriculum" class="form-horizontal"  action="" method="POST">
-        <fieldset>                        
-            <label class="control-label" for="rol">Formulario para envío de curriculum</label>
-            <div class="control-group">
-                <label class="control-label" for="rol">Nombre y Apellidos: </label> <input type="text" name="nombre" id="nombre" required>
+        <form enctype="multipart/form-data" id="addCurriculum" class="form-horizontal signup"  action="" method="POST">          
+            <div class="header">
+                
+                <h3>Entrega de Currículum</h3>
+                
+                <p>Entrega tu currículum a través de este formulario.</p>
+                
             </div>
-            <div class="control-group">
-                <label class="control-label" for="fichero_usuario">Añadir Fichero</label>
+            <div class="sep"></div>
+            <div class="inputs">
+        
+                <label class="" for="nombre">Nombre y Apellidos: </label> <input type="text" name="nombre" id="nombre" autofocus required>
+            
+                <label class="" for="fichero_usuario">Añadir Fichero</label>
                 <input class="input-file uniform_on" id="fichero_usuario" name="fichero_usuario" type="file" />
-            </div>
-            <input type="hidden" class="span6" name="insert_fichero" value="1">
-        </fieldset>
-        <input type="submit" class="btn btn-primary add-file" title="Añadir Curriculum" value="Entregar Curriculum">
+                
+                <div class="checkboxy">
+                    <input name="cecky" id="checky" value="1" type="checkbox" required/><label class="terms">He leído y acepto la política de protección de datos</label>
+                </div>
+                
+                <input type="hidden" class="span6" name="insert_fichero" value="1">
+                <input type="submit" class="btn btn-primary add-file" title="Añadir Curriculum" value="Entregar Curriculum">
+            
+            </div>            
     </form>
     </div>
 </div>
