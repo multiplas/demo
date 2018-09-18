@@ -5610,6 +5610,39 @@
 			return $resultados;
 		}
 
+		function CargarTextoLegal($limit = 10000)
+		{
+			$resultados = array();
+			
+			$sql = "SELECT * FROM bd_texto_legal ORDER BY id ASC LIMIT $limit;";
+			$query = mysqli_query($this->conexion, $sql);
+			
+			if (mysqli_num_rows($query) > 0){
+				while ($assoc = mysqli_fetch_assoc($query))
+					$resultados[] = $assoc;
+			}
+			else{
+				$this->CreateTableTextoLegal();
+			}	
+
+			return $resultados;
+		}
+
+		function CreateTableTextoLegal(){
+    
+			$sql = "CREATE TABLE IF NOT EXISTS `bd_texto_legal` (
+				`id` int NOT NULL AUTO_INCREMENT ,
+				`texto` TEXT,
+				UNIQUE KEY `id` (`id`)
+				) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
+
+			$query = mysqli_query($this->conexion, $sql);
+
+			$sqlInsertData = "INSERT INTO `bd_texto_legal` (`id`, `texto`) VALUES (1, '' );";
+			
+			$query = mysqli_query($this->conexion, $sqlInsertData);	
+		}
+
 		function CreateTableCurriculums(){
     
 			$sql = "CREATE TABLE IF NOT EXISTS `bd_curriculums` (
@@ -6903,6 +6936,18 @@
             $f3 = html_entity_decode($f3);
             
             $sql = "UPDATE bd_empresa SET cabecera = '$f1', pie = '$f2', pieS = '$f3' WHERE id = 1";
+            $query = mysqli_query($this->conexion, $sql);
+            return $query;
+            
+        }
+
+		function ModificarTextoLegal($f1){
+            
+            $f1 = mysqli_real_escape_string($this->conexion, htmlspecialchars($f1));
+            
+            $f1 = html_entity_decode($f1);
+            
+            $sql = "UPDATE bd_texto_legal SET texto = '$f1' WHERE id = 1";
             $query = mysqli_query($this->conexion, $sql);
             return $query;
             

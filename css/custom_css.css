@@ -566,6 +566,14 @@ input:-moz-placeholder {
         to(#b9c5dd));
 }
 
+.curriculum-contenido a{
+    color: #ff9933 !important;
+}
+
+.curriculum-contenido a:hover{
+    color: #ff8a16 !important;
+}
+
 @media (max-width: 768px){
     .purchase-process .datos-personales-derecha{
         padding-left: 0px;

@@ -775,6 +775,8 @@
     
     if (@$_GET['CabeceraPie'] != null)
         $resultaop = $System->ModificarCabeceraPie($_POST['cabecera'], $_POST['pie']);
+    if (@$_GET['textoLegal'] != null)
+        $resultaop = $System->ModificarTextoLegal($_POST['textoLegal']);
     
     if (@$_GET['menspub'] != null)
         $resultaop = $System->MensajePModificar($_POST['actanu'], $_POST['enlvid'], $_POST['anchvid'], $_POST['luganu']);
@@ -1095,6 +1097,7 @@
                         $productos = $System->CargarProductos(1000000);
             break;
             case 'admincurriculums.php':
+            $textoLegal = $System->CargarTextoLegal(10000);
 			$listados = $System->CargarCurris(10000);
 			break;
                 case 'marcas.php':
