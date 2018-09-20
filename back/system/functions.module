@@ -2182,7 +2182,7 @@
 			return $resultados;
 		}
         
-        function ProductoEditarAtr($atr, $idp, $precio, $precioE, $url, $atrDef, $precioEP){
+        function ProductoEditarAtr($atr, $idp, $precio, $precioE, $url, $atrDef, $precioEP, $codigo){
             $sql = "SELECT *
 					FROM bd_producto_atributo
                     WHERE idproducto = $idp AND idatributo = $atr;";
@@ -2191,15 +2191,16 @@
             if(mysqli_num_rows($query) == 1){
                 if(strcmp($url, 'noModif') != 0){ $cadena = "AND url = '".$url."'"; }
                 $sql = "UPDATE bd_producto_atributo
-                        SET precio = $precio, atrDefecto =  $atrDef, precioextraporcentaje =  $precioEP, precioextra = $precioE $cadena
+                        SET precio = $precio, atrDefecto =  $atrDef, precioextraporcentaje =  $precioEP, precioextra = $precioE, codigo = $codigo $cadena
                         WHERE idproducto = $idp AND idatributo = $atr;";
                 $query2 = mysqli_query($this->conexion, $sql);
             }else{
                     $sql = "INSERT INTO bd_producto_atributo
-                            VALUES (null, $atr, $idp, $precio, $precioE, '$url', $atrDef, $precioEP);";
+                            VALUES (null, $atr, $idp, $precio, $precioE, '$url', $atrDef, $precioEP, $codigo);";
                
                 $query2 = mysqli_query($this->conexion, $sql);
-            }
+			}
+			
         }
         
         function EliminarAtrs($idp){

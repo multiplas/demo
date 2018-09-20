@@ -291,6 +291,9 @@
 				break;
             case 'prd':
 				$filtro .= " ORDER BY preciot DESC";
+                break;
+            case 'ref':
+				$filtro .= " ORDER BY preciot DESC";
 				break;
             case 'def':
 				$filtro .= "";
