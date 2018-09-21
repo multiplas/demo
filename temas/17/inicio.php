@@ -146,7 +146,11 @@
         
         LOS MÁS VENDIDOS</h3>
     <?php
-    $ultimosProductos = ProductosConCriterio(8,'ventas');
+    if($Empresa['mvmodo'] == 0)
+        $ultimosProductos = ProductosConCriterio(8,'ventas');
+    else
+        $ultimosProductos = ProductosMasVendidosM(8);
+    
     foreach($ultimosProductos as $producto){
         $productoNombreUrl = str_replace(' ','-',strtolower($producto['nombre']));
         $productoNombreUrl = utf8_encode($productoNombreUrl);
