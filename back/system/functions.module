@@ -118,8 +118,7 @@
 			$id = mysqli_real_escape_string($this->conexion, htmlspecialchars($id));
 			
 			$sql = "DELETE FROM bd_users
-					WHERE id = $id
-					AND rol <> 1;";
+					WHERE id = $id ;";
 			$query = mysqli_query($this->conexion, $sql);
 			
 			return $query;
@@ -1930,7 +1929,7 @@
 				return null;
 		}
 		
-		function UsuarioNuevo($nombre, $nif, $telefono, $email, $calle, $provincia, $poblacion, $cp, $pass)
+		function UsuarioNuevo($nombre, $nif, $telefono, $email, $calle, $provincia, $poblacion, $cp, $pass, $rol)
 		{
 			$nombre = mysqli_real_escape_string($this->conexion, htmlspecialchars($nombre));
 			$nif = mysqli_real_escape_string($this->conexion, htmlspecialchars($nif));
@@ -1945,7 +1944,7 @@
 			/*$sql = "INSERT INTO bd_users
 					VALUES (NULL, '$nombre', '$pass', 2, '$email', '$telefono', '$calle', '', 'Registrado', '$nif', '$cp', '$poblacion', $provincia, 'ESP', 0, 'A');";*/
 			$sql = "INSERT INTO bd_users
-					VALUES (NULL, '$nombre','', '$pass', 1, '$email', '$telefono', '$calle', '', 'Registrado', '$nif', '$cp', '$poblacion', $provincia, 'ESP', 0, 'A','Empresa','CIF');";
+					VALUES (NULL, '$nombre','', '$pass', $rol, '$email', '$telefono', '$calle', '', 'Registrado', '$nif', '$cp', '$poblacion', $provincia, 'ESP', 0, 'A','Empresa','CIF');";
 			//Ejemplo de salida de datos
 			$query = mysqli_query($this->conexion, $sql);
 			
