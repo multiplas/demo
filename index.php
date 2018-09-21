@@ -291,6 +291,9 @@
 				break;
             case 'prd':
 				$filtro .= " ORDER BY preciot DESC";
+                break;
+            case 'ref':
+				$filtro .= " ORDER BY preciot DESC";
 				break;
             case 'def':
 				$filtro .= "";
@@ -2614,7 +2617,9 @@
             if(isset($_GET['lng'])){
                
                 if (isset($_GET['pack']))
-					include_once($draiz.'/secciones/pack.php');
+                    include_once($draiz.'/secciones/pack.php');
+                if (isset($_GET['proteccion-de-datos']))
+                    include_once($draiz.'/secciones/proteccion-de-datos.php');
 				else if (isset($_GET['allpacks']))
                     include_once($draiz.'/secciones/allpacks.php');
                 else if (isset($_GET['error'])){
@@ -2730,7 +2735,9 @@
 				else
 					include_once($draiz.'/secciones/inicio.php');
             }else{
-                if (isset($_GET['curriculum']))
+                if (isset($_GET['protecciondedatos']))
+                    include_once($draiz.'/secciones/proteccion-de-datos.php');
+                else if (isset($_GET['curriculum']))
                     include_once($draiz.'/secciones/curriculum.php');
                 else if (isset($_POST['buscar']))
 					include_once($draiz.'/secciones/buscar.php');

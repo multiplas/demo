@@ -10,7 +10,7 @@ if(isset($_POST['deletecurri'])){
                 <script>
                     $(document).ready(function() {
                         //Creando textareas con ckeditor v4.8.0_full
-                        CKEDITOR.replace('texto-legal');
+                        CKEDITOR.replace('textoLegal');
                     });
                 </script>
                 <style>
@@ -58,16 +58,17 @@ if(isset($_POST['deletecurri'])){
                             });
                         </script>
 
-                        <form action="cabpie.php?CabeceraPie=true" method="post" class="form-horizontal">
+                        <form action="admincurriculums.php?textoLegal=true" method="post" class="form-horizontal">
                             <fieldset>
                             <div>
-                                <legend>Añadir Texto Legal</legend>
+                                <legend>Protección de datos</legend>
                                 <div class="control-group">
                                     <div class="controls">
-                                        <textarea id="texto-legal" name="texto-legal" class="input-xlarge" style="width: 810px; height: 200px"><?=$elemento['texto-legal']?></textarea>
+                                        <textarea id="textoLegal" name="textoLegal" class="input-xlarge" style="width: 810px; height: 200px"><?=$textoLegal[0]['texto']?></textarea>
                                     </div>
                                 </div>
                             </div>
+                            <button type="submit" style="margin: 0px 0px 0px 10%;" class="btn btn-success">Guardar Cambios</button>
                             </fieldset>
                         </form>
                     

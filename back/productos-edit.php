@@ -643,6 +643,7 @@
                                                             $precioEP = $atra['precioextraporcentaje'];
                                                             $imagen = $atra['imagen'];
                                                             $atrDefault = $atra['atrDefecto'];
+                                                            $codigo = $atra['codigo'];
                                                         }
                                                     }
                                                     if($atrNombre != $atr['nombre']){
@@ -680,6 +681,8 @@
                                                                 <div><input style="width: 50%;text-align: center;margin-left: 22%;" type="text" name="precioE<?=$atr['ida']?>" placeholder="Precio Extra" value="<?=$precioE?>" /></div>
                                                                 <label style="text-align:center;margin-top:5px;">Precio Extra (%)</label>
                                                                 <div><input style="width: 50%;text-align: center;margin-left: 22%;" type="text" name="precioEP<?=$atr['ida']?>" placeholder="Precio Extra (%)" value="<?=$precioEP?>" /></div>
+                                                                <label style="text-align:center;margin-top:5px;">Código</label>
+                                                                <div><input style="width: 50%;text-align: center;margin-left: 22%;" type="text" name="codigo<?=$atr['ida']?>" placeholder="Código" value="<?=$codigo?>" /></div>
                                                                 <div style="text-align: center"><input class="input-file uniform_on" id="imagenAtr_<?=$atr['ida']?>" name="imagenAtr_<?=$atr['ida']?>" type="file">
                                                                     <?php
                                                                     if ($imagen != null && $imagen != '')
@@ -712,6 +715,8 @@
                                                                 <div><input style="width: 50%;text-align: center;margin-left: 22%;" type="text" name="precioEP<?=$atr['ida']?>" placeholder="Precio Extra (%)" value="<?=$precioEP?>" /></div>
                                                                 <label style="text-align:center;margin-top:5px;">Precio Extra (%)</label>
                                                                 <div><input style="width: 50%;text-align: center;margin-left: 22%;" type="text" name="precioEP<?=$atr['ida']?>" placeholder="Precio Extra (%)" value="<?=$precioEP?>" /></div>
+                                                                <label style="text-align:center;margin-top:5px;">Código</label>
+                                                                <div><input style="width: 50%;text-align: center;margin-left: 22%;" type="text" name="codigo<?=$atr['ida']?>" placeholder="Código" value="<?=$codigo?>" /></div>
                                                             <div style="text-align: center"><input class="input-file uniform_on" id="imagenAtr_<?=$atr['ida']?>" name="imagenAtr_<?=$atr['ida']?>" type="file">
                                                                 <?php
                                                                 if ($imagen != null && $imagen != '')
@@ -733,6 +738,8 @@
                                                     $precio = "";
                                                     $imagen = "";
                                                     $precioE = "";
+                                                    $precioEP = "";
+                                                    $codigo = "";
                                                     $atrDefault = 0;
                                                     }
                                                     ?>                                                

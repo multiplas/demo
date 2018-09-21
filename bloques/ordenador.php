@@ -9,5 +9,7 @@
 		<option value="nod"<?=@($_SESSION['OrdenarPor'] == 'nod') ? ' selected' : ($_SESSION['OrdenarPor'] == '' ? ($Empresa['ordenacion'] == 'nod' ? 'selected' : '') : '')?>>Nombre (Descendente)</option>
 		<option value="pra"<?=@($_SESSION['OrdenarPor'] == 'pra') ? ' selected' : ($_SESSION['OrdenarPor'] == '' ? ($Empresa['ordenacion'] == 'pra' ? 'selected' : '') : '')?>>Precio (Más barato primero)</option>
 		<option value="prd"<?=@($_SESSION['OrdenarPor'] == 'prd') ? ' selected' : ($_SESSION['OrdenarPor'] == '' ? ($Empresa['ordenacion'] == 'prd' ? 'selected' : '') : '')?>>Precio (Más caro primero)</option>
+		<option value="rea"<?=@($_SESSION['OrdenarPor'] == 'rea') ? ' selected' : ($_SESSION['OrdenarPor'] == '' ? ($Empresa['ordenacion'] == 'rea' ? 'selected' : '') : '')?>>Referencia (Más bajos primero)</option>
+		<option value="red"<?=@($_SESSION['OrdenarPor'] == 'red') ? ' selected' : ($_SESSION['OrdenarPor'] == '' ? ($Empresa['ordenacion'] == 'red' ? 'selected' : '') : '')?>>Referencia (Más altos primero)</option>
 	</select>
 </div>

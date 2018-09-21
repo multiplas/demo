@@ -76,7 +76,7 @@ if(isset($_POST['insert_fichero'])){
                 <input class="input-file uniform_on" id="fichero_usuario" name="fichero_usuario" type="file" />
                 
                 <div class="checkboxy">
-                    <input name="cecky" id="checky" value="1" type="checkbox" required/><label class="terms">He leído y acepto la política de protección de datos</label>
+                    <input name="cecky" id="checky" value="1" type="checkbox" required/><label class="terms">He leído y acepto la política de <a href="/protecciondedatos">protección de datos</a></label>
                 </div>
                 
                 <input type="hidden" class="span6" name="insert_fichero" value="1">

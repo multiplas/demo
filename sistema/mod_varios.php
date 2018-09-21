@@ -1756,6 +1756,12 @@ function MenuCategoriasGal()
         return $resultado;
     }
 
+    function isCurrentUrlPath($searchKey){
+        $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+        $endofurl = strrchr(parse_url($url, PHP_URL_PATH), '/');
+        print_r($endofurl);die;
+    }
+
     function loadIconLateralStatus(){
         global $dbi;
         $resultado = '';

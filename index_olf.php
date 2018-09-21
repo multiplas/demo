@@ -272,7 +272,12 @@
 			case 'prd':
 				$filtro .= " ORDER BY preciot DESC";
 				break;
-				
+            case 'rea':
+				$filtro .= " ORDER BY referencia ASC";
+            break;	
+            case 'red':
+                $filtro .= " ORDER BY referencia DESC";
+            break;		
 			default:
 				$filtro .= "";
 				break;
@@ -301,7 +306,12 @@
 			case 'prd':
 				$filtro .= " ORDER BY preciot DESC";
 				break;
-				
+            case 'ref':
+				$filtro .= " ORDER BY referencia ASC";
+            break;	
+            case 'red':
+                $filtro .= " ORDER BY referencia DESC";
+            break;
 			default:
 				$filtro .= "";
 				break;

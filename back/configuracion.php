@@ -639,6 +639,8 @@
                                                                                         <option value="nod" <?=($elemento['ordenacion'] == 'nod' ? ' selected' : '')?>>Nombre (Descendente)</option>
                                                                                         <option value="pra" <?=($elemento['ordenacion'] == 'pra' ? ' selected' : '')?>>Precio (Más barato primero)</option>
                                                                                         <option value="prd" <?=($elemento['ordenacion'] == 'prd' ? ' selected' : '')?>>Precio (Más caro primero)</option>
+                                                                                        <option value="rea" <?=($elemento['ordenacion'] == 'rea' ? ' selected' : '')?>>Referencia (Más bajos primero)</option>
+                                                                                        <option value="red" <?=($elemento['ordenacion'] == 'red' ? ' selected' : '')?>>Referencia (Más altos primero)</option>
                                                                                     </select>
 											<span style="color: red; font-size: 0.70rem;">Requerido</span><br>
 										  </div>
