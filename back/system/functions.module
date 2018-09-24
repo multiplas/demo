@@ -2182,7 +2182,9 @@
 			return $resultados;
 		}
         
-        function ProductoEditarAtr($atr, $idp, $precio, $precioE, $url, $atrDef, $precioEP, $codigo){
+        function ProductoEditarAtr($atr, $idp, $precio, $precioE, $url, $atrDef, $precioEP, $codigo = 'null'){
+			if(empty($codigo) || !isset($codigo))
+				$codigo = 'null';
             $sql = "SELECT *
 					FROM bd_producto_atributo
                     WHERE idproducto = $idp AND idatributo = $atr;";
@@ -2200,7 +2202,6 @@
                
                 $query2 = mysqli_query($this->conexion, $sql);
 			}
-			
         }
         
         function EliminarAtrs($idp){
