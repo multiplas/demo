@@ -2834,9 +2834,10 @@
 					}
 				}
 				$contador++;
+				if(empty($resultado))
 				$id = $this->getFromPortesProvincias($id);
 			}
-			while(empty($resultado) || $contador <= 2);
+			while(empty($resultado) && $contador <= 2);
 			return $resultado;
 		}
                 
