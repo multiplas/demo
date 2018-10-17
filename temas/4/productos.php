@@ -421,6 +421,7 @@
                         });
                         jQuery('body').on('click','.nozoomf',function(){
                             window.parent.document.getElementById('imagen_modal').src = jQuery(this).attr("src");
+                            product_name = jQuery(this).attr("alt");      
                             window.parent.document.getElementById('nombre_modal').href = '<?=$draizp?>/<?=$_SESSION['lenguaje']?>contacto/'+jQuery(this).attr("data-nombre");
                             window.parent.document.getElementById('myModal').style.display = "block";
                             window.parent.document.getElementById('myModal2').style.display = "block";

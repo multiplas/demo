@@ -5,14 +5,14 @@ if(session_id() == '') {//Check if session started
 ?>
 
 <script type="text/javascript">
-(function($) {
-$(document).ready(function(){
-    $('#add_to_cart').click(function(){
+(function(jQuery) {
+jQuery(document).ready(function(){
+    jQuery('#add_to_cart').click(function(){
         if (product_name == '') {             
             return;
         } else {
             var xmlhttp = new XMLHttpRequest();
-            quantity = $('#quantity').val();
+            quantity = jQuery('#quantity').val();
             xmlhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
                     if(this.responseText == "not registered"){
@@ -21,7 +21,7 @@ $(document).ready(function(){
                     else{
                         document.getElementById("product_quantity").innerHTML = quantity;
                         document.getElementById("product_name").innerHTML = product_name;
-                        $('#added_to_cart').css("display","inherit");
+                        jQuery('#added_to_cart').css("display","inherit");
                     }
                 }
             };
@@ -29,8 +29,8 @@ $(document).ready(function(){
             xmlhttp.send();
         }
     });
-    $('#close_cart').click(function(){
-         $('#added_to_cart').css("display","none");
+    jQuery('#close_cart').click(function(){
+         jQuery('#added_to_cart').css("display","none");
     });
 });
  })(jQuery);   
