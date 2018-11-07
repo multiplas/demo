@@ -180,6 +180,9 @@
                 <div class="descripcion-producto">
                     <?=trim(strip_tags( $producto['descripcion']))?>
                 </div>
+                <?php if(number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$producto['precio_ant']), 2, ',', '.') != number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$producto['precio']), 2, ',', '.')): ?>
+                <div class="product-price product-old">Antes:  <span style="text-decoration: line-through;"><?=number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$producto['precio_ant']), 2, ',', '.')?> <?=$producto['precio_ant'] > 0 ? $_SESSION['moneda'] : ''?><?=$producto['precio_ant'] == 'Consultar' ? $producto['precio_ant']: ''?></span></div>
+                <?php endif; ?>
                 <div class="product-price"><?=number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$producto['precio']), 2, ',', '.')?> <?=$producto['precio'] > 0 ? $_SESSION['moneda'] : ''?><?=$producto['precio'] == 'Consultar' ? $producto['precio']: ''?></div>
             </div>
         </div>
@@ -228,6 +231,9 @@
                 <div class="descripcion-producto">
                     <?=trim(strip_tags( $producto['descripcion']))?>
                 </div>
+                <?php if(number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$producto['precio_ant']), 2, ',', '.') != number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$producto['precio']), 2, ',', '.')): ?>
+                <div class="product-price product-old">Antes: <span style="text-decoration: line-through;"><?=number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$producto['precio_ant']), 2, ',', '.')?> <?=$producto['precio_ant'] > 0 ? $_SESSION['moneda'] : ''?><?=$producto['precio_ant'] == 'Consultar' ? $producto['precio_ant']: ''?></span></div>
+                <?php endif; ?>
                 <div class="product-price"><?=number_format(ConvertirMoneda($Empresa['moneda'],$_SESSION['divisa'],$producto['precio']), 2, ',', '.')?> <?=$producto['precio'] > 0 ? $_SESSION['moneda'] : ''?><?=$producto['precio'] == 'Consultar' ? $producto['precio']: ''?></div>
             </div>
         </div>

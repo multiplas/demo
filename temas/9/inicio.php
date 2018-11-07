@@ -134,7 +134,7 @@ $_SESSION['anuncio'] = 1;
                         
                         <?php
                 
-                //include_once('./temas/4/bloques/masvendidos.php'); 
+                // include_once('./temas/4/bloques/masvendidos.php'); 
                 $resultado = categoryBloqStatus();
                 if(!is_null($resultado) && $resultado['valor'] == 1) //Esta activado
                     include_once('./temas/9/bloques/categorias.php');     //Comento lo de abajo

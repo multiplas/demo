@@ -573,6 +573,10 @@ input:-moz-placeholder {
 .curriculum-contenido a:hover{
     color: #ff8a16 !important;
 }
+.product-old{
+    color: red !important;
+    height: 23px !important;
+}
 
 @media (max-width: 768px){
     .purchase-process .datos-personales-derecha{
