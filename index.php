@@ -622,11 +622,19 @@
                                     $atributos = null;
                                     $fechas = null; 
                                     
+                                    
                                     while ($assoc = mysqli_fetch_assoc($query))
                                     {
+                                        
                                         $nom = str_replace(" ", "_", preg_replace("[^A-Za-z0-9]", "", $assoc['atributo']));
-                                        if ($_POST[$nom] != ''){
+                                        if ($_POST[$nom] != ''){                                           
                                             $atributos .= $_POST[$nom].' - ';
+                                        }
+                                        else{
+                                            $nom = str_replace(" ", "", preg_replace("[^A-Za-z0-9]", "", $assoc['atributo']));
+                                            if ($_POST[$nom] != ''){                                           
+                                                $atributos .= $_POST[$nom].' - ';
+                                            }
                                         }
                                         
                                         
@@ -652,7 +660,6 @@
                                             }
                                         }
                                     }
-                                    
                                     if($_POST['fentrada'] != ""){
                                         $fechas .= $_POST['fentrada'].' - ';
                                     }
